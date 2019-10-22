@@ -12,7 +12,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <h2><b> THIS LOGIN PAGE IS NOT USED, REASSIGNED TO Dektrium/Yii2_User Module</b></h2>
+	<h3 class="">
+	    <?=Html::a( " go to Yii2_User Login", ["/user/security/login"] /* $url = null*/, $options = ["title" => "register", "class"=>"btn btn-primary"] ) . "</br>";?><br></hr>
+	</h3>
     <p>Please fill out the following fields to login:</p>
 
     <div class="row">

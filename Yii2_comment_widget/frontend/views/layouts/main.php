@@ -41,6 +41,7 @@ AppAsset::register($this);
         ['label' => 'Contact', 'url' => ['/site/contact']],
 		['label' => 'Vote/comment', 'url' => ['/site/vote_comment']],
 		['label' => 'Yii2-User', 'url' => ['/site/yii2_user']],
+		['label' => 'My RBAC', 'url' => ['/site/rbac']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];

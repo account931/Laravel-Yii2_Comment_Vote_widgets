@@ -1,4 +1,4 @@
-This is advancee template.
+This is advancee template. Uses DB {yii2_comment}
 # to be transfered to RBAC ReadMe
 
 Table of content
@@ -171,6 +171,13 @@ Documentation=> https://github.com/rmrevin/yii2-comments
  
  
  4.5 Admin Module in Dektrium/Yii2_User Module is at {"/user/admin/index"}. Is intended to view, create, block users. Can not assign RBAC roles to users.
+ 4.5.1 By default from start no one has access to admin page. To set some user an Admin, go to common/config/main.php =>
+     'user' => [
+        'class'  => 'dektrium\user\Module',
+        'admins' => ['your-username-goes-here'] //set admin here!!!!!
+    ],
+ 
+ //BELOW IS DEPRICATED-------------------
  4.5.1 By default Admin Module is not available, you habe no rights to visit it, to ovverride this:
     # in \vendor\dektrium\yii2-user\controllers\AdminController in {public function behaviors()} change {'switch'} to your actions u need access:
 	    'rules' => [
@@ -182,7 +189,7 @@ Documentation=> https://github.com/rmrevin/yii2-comments
 	      - create your own exception in AdminController, as variant to restrict access to all controller, add in {public function __construct()} => {if(!Yii::$app->user->can('admin')){throw new \yii\web\NotFoundHttpException("Have no rights");}
           - create RBAC 'admin' role to yourself(the account u are now logge in)=> see 8.Yii RBAC at  https://github.com/account931/yii2_REST_and_Rbac_2019/blob/master/Readme_YII2_mine_Common_Comands.txt
  
- 
+  //ABOVE IS DEPRICATED------------------
  
  =================================================================
  5. Social share => https://github.com/bigpaulie/yii2-social-share

@@ -12,6 +12,16 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-signup">
     <h1><?= Html::encode($this->title) ?></h1>
+	
+	
+	
+	
+	<h2><b> THIS SIGN UP PAGE IS NOT USED, REASSIGNED TO Dektrium/Yii2_User Module</b></h2>
+	<h3 class="">
+	    <?=Html::a( " go to Yii2_User Register", ["/user/registration/register"] /* $url = null*/, $options = ["title" => "register", "class"=>"btn btn-primary"] ) . "</br>";?><br></hr>
+	</h3>
+	
+	
 
     <p>Please fill out the following fields to signup:</p>
 

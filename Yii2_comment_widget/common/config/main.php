@@ -51,6 +51,7 @@ return [
 		//Yii2_USER => https://github.com/dektrium/yii2-user
 		'user' => [
             'class' => 'dektrium\user\Module',
+			'admins' => ['dima'] //your-username-goes-here for admin
         ],
 		//https://github.com/dektrium/yii2-user
 
