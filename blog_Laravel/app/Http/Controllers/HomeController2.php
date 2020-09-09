@@ -27,9 +27,21 @@ class HomeController2 extends Controller
      */
     public function index()
     {
+	
+    }
+	
+	
+	 /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function eloquentt()
+    {
 		$f = users::all();
 		
-        return view('home2', compact('f'));
+        return view('eloquentview', compact('f'));
         //return view('home2');
     }
+	
 }

@@ -22,6 +22,11 @@
 		
 		<div class="col-md-12">
 		   All users list by Eloquent <span class="glyphicon glyphicon-cutlery" style="font-size:2em;"></span>
+		   {{-- HTMLimage('images/cph.jpg', 'alt text', array('class' = 'css-class')) --}}
+		   <img class="img-responsive my-cph" src="{{URL::to('/')}}/images/cph.jpg"  alt=""/> <!-- image -->
+
+
+		   
 		   <?php
 		    foreach ($f as $a){
 			   echo "<div class='list-group-item'>" .$a->email . "</div>";

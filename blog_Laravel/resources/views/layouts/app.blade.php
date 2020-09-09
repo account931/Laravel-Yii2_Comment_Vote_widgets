@@ -56,7 +56,7 @@
 					
 					 <!-- Common links-->
 					 <li><a href="{{ url('/showProfile') }}">My Link showProfile</a></li>
-					 <li><a href="{{ url('/home2') }}">Home2_DB</a></li>
+					 <li><a href="{{ url('/EloquentExample') }}">Home2_DB Eloquent</a></li>
 					
                         <!-- Authentication Links -->
                         @if (Auth::guest())

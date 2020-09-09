@@ -1,5 +1,12 @@
-How to intsll Laravel:
+Credentials: admin@gmail.com =>  dimax2
 
+Table of Content:
+1.How to intsll Laravel
+2.
+3. Blade
+
+//================================================
+1.How to intsll Laravel
 http://laravel.su/docs/5.4/installation
 
 1. If first time ever, install global installer=>  composer global require "laravel/installer"
@@ -24,8 +31,13 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 
 #ACF Yii2 equivalent, let only logged users, use in Controller =>   public function __construct(){$this->middleware('auth');}
-	
-	
+
+
+
+
+
+//============================================	
+3. Blade	
 #Blade if else
      @if (Auth::guest())
                <li><a href="{{ route('register') }}">Register</a></li>
@@ -33,9 +45,28 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
                li><a href="{{ route('register') }}">Register</a></li>
      @endif
 	 
-	 
-=====================================
+#Blade Comments  =>  {{-- COMMENT HERE --}}
 
-#Active Record=> 
+#Blade image =>  <img class="img-responsive my-cph" src="{{URL::to('/')}}/images/cph.jpg"  alt=""/>
+#Blade pure php => 
+     @php
+     {{-- PHP code here --}}
+     @endphp
+	 
+#Blade ecjo => {{ $user  }}	 
+===========================================
+
+
+
+
+#Active Record / Eloquent => 
    in Controller=>     use App\users; $f = users::all(); return view('home2', compact('f')); 
    in View =>          foreach ($f as $a){
+   
+   
+ #render =>  
+      return view('home2', compact('f'));  === return View::make('page')->with('userInfo',$userInfo);
+	  
+#pass several vars => return view('showprofile')->with(compact('id', 'name'));
+	  
+ #isGuest => if(!Auth::check()){

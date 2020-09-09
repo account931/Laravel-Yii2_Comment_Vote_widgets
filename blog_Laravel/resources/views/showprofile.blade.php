@@ -11,6 +11,18 @@
                   
 
                     You are logged in!
+					
+					<p>
+					    ID: {{ $id}}
+					</p>
+					
+					<p> Name:  {{ $name}} </p>
+					
+					<p> Email:  {{ $email}}</p>
+					
+					{{-- Auth::user()->name --}}
+					{{-- Auth::user()->name --}}
+					</p>
                 </div>
             </div>
         </div>

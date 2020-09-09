@@ -75,7 +75,8 @@
                         <a href="{{ url('/register') }}">Register</a>
                     @endif
 					   <a href="{{ url('/showProfile') }}">My Link showProfile</a>
-					   <a href="{{ url('/home2') }}">Home2</a>
+					   <a href="{{ url('/EloquentExample') }}">Eloquent AR</a>
+					   <a href="{{ url('/EloquentExample') }}">New menu</a>
                 </div>
             @endif
 			
