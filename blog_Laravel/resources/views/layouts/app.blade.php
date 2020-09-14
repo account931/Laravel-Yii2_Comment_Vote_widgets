@@ -23,6 +23,9 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>   
 	<!-- Bootsrap -->
 	
+	<!-- Fa Library -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
 </head>
 <body>
     <div id="app">
@@ -54,15 +57,23 @@
                     <ul class="nav navbar-nav navbar-right">
 					
 					
-					 <!-- Common links-->
-					 <li><a href="{{ url('/showProfile') }}">My Link showProfile</a></li>
-					 <li><a href="{{ url('/EloquentExample') }}">Home2_DB Eloquent</a></li>
+					 <!-- Common links (make link highlighted )-->
+					 <!--<li><a href="{{ route('register') }}">Gii</a></li>-->
+					 <li class="{{ Request::is('showProfile*') ? 'active' : '' }}">     <a href="{{ url('/showProfile') }}">ShowProfile     </a></li>
+					 <li class="{{ Request::is('EloquentExample*') ? 'active' : '' }}"> <a href="{{ url('/EloquentExample') }}">DB Eloquent </a></li>
+					 <li><a href="{{ route('register') }}">RBAC</a></li>
+					 
+					 <li class="{{ Request::is('wpBlogg*') ? 'active' : '' }}"> <a href="{{ route('wpblog') }}" > WPress </a> </li> <!-- NOTE: name vs route -->
+					 
+					 <li><a href="{{ route('register') }}">Gii</a></li>
+                     <li class="{{ Request::is('formSubmit*') ? 'active' : '' }}">      <a href="{{ url('/formSubmit') }}"> FormSubmit  </a></li>
+
 					
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-							<li><a href="{{ route('register') }}">RegisterX</a></li>
+                            <li class="{{ Request::is('login*') ? 'active' : '' }}">  <a href="{{ route('login') }}">Login </a> </li>
+                            <li class="{{ Request::is('register*') ? 'active' : '' }}">  <a href="{{ route('register') }}">Register </a></li>
+							
 							
                         @else
 							

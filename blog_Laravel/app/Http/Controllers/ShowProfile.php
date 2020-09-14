@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 use App\users;
 
 class ShowProfile extends Controller
@@ -28,11 +30,20 @@ class ShowProfile extends Controller
 		    if(Auth::check()){
                 $user = Auth::user();
                 // Get the currently authenticated user's ID...
-               //$id = Auth::id();	
-               $id = auth()->user()->id;
-			   $name = auth()->user()->name;
-			   $email = auth()->user()->email;
+                //$id = Auth::id();	
+                $id = auth()->user()->id;
+			    $name = auth()->user()->name;
+			    $email = auth()->user()->email;
 			} else {
+		        throw new \App\Exceptions\myException('You are not logged, do it firstly.'); //my custom exception
+
+                //return "You can't access here!";
+				//abort(403, 'Unauthorized action.');
+			    //throw new ModelNotFoundException('User not found by ID ' );
+                //dd('hhhh');
+				//throw new ModelNotFoundException('User not found by ID ');
+
+                //below is not used
 				$id = "Not logged, No ID";
 				$name = "Not logged, No Name";
 				$email = "No email";

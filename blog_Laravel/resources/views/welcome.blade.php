@@ -1,4 +1,4 @@
-<!doctype html>
+<!--<!doctype html>
 <html lang="{{ app()->getLocale() }}">
     <head>
         <meta charset="utf-8">
@@ -6,6 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel CPH</title>
+-->
+
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -63,10 +65,16 @@
                 margin-bottom: 30px;
             }
         </style>
-    </head>
+    <!--</head>
     <body>
+	-->
+	
+	@extends('layouts.app')
+
+    @section('content')
+
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
+		{{-- @if (Route::has('login'))
                 <div class="top-right links">
                     @if (Auth::check())
                         <a href="{{ url('/home') }}">Home</a>
@@ -78,7 +86,7 @@
 					   <a href="{{ url('/EloquentExample') }}">Eloquent AR</a>
 					   <a href="{{ url('/EloquentExample') }}">New menu</a>
                 </div>
-            @endif
+		@endif --}}
 			
 			
 
@@ -95,7 +103,24 @@
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
+				
+				<div class="col-sm-12 col-xs-12">
+		            <div class="alert alert-danger"> 
+					    By default this home page used no layout, now was edited to use it, particulary {resources\views\layouts\app.blade.php} 
+					</div>
+			           <center><img class="img-responsive my-cph" src="{{URL::to('/')}}/images/cph.jpg"  alt=""/> <!-- image --></center>
+				    
+				</div>
+			
             </div>
+			
+			
+				
+				
         </div>
-    </body>
+		
+		@endsection
+		
+   <!-- </body>
 </html>
+-->

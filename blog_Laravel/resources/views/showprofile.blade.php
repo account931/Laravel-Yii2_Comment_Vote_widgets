@@ -5,20 +5,22 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">DashboardX</div>
+                <div class="panel-heading">Your profile</div>
 
                 <div class="panel-body">
                   
 
-                    You are logged in!
+                    @if (session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
 					
-					<p>
-					    ID: {{ $id}}
-					</p>
+					<i class="fa fa-address-card-o" style="font-size:48px;color:red; padding:0.1em; margin:0.1em 0em; border:1px solid red;"></i>
+
+					<p> ID:    {{ $id}}</p>
 					
 					<p> Name:  {{ $name}} </p>
 					
-					<p> Email:  {{ $email}}</p>
+					<p> Email: {{ $email}}</p>
 					
 					{{-- Auth::user()->name --}}
 					{{-- Auth::user()->name --}}
