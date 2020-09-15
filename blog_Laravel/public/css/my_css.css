@@ -1,0 +1,11 @@
+
+ .my-cph {width:15%; padding:1em; border: 1px solid black;}
+ 
+ /* image for wp blog emtries */
+ .img-wpblog{width:15%; padding:1em;}
+ 
+ 
+ /* Mobile */
+ @media screen and (max-width: 480px) { 
+     .img-wpblog{width:25%; padding:1em;}
+ }

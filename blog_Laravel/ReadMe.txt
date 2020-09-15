@@ -11,8 +11,10 @@ Table of Content:
 7.Forms
 8.Form Validation
 9.Migrations
-34.Highlight active menu item
+10.hasOne relation
 
+34.Highlight active menu item
+35.Miscellaneous VA Laravel
 
 
 //================================================
@@ -50,7 +52,9 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 
 //============================================	
-3. Blade	
+3. Blade
+ A blade {{}} is just the equilivant of <?php echo() ?>
+#simple example => Hello, {{ $name }}	
 #Blade if else
      @if (Auth::guest())
                <li><a href="{{ route('register') }}">Register</a></li>
@@ -67,6 +71,23 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
      @endphp
 	 
 #Blade echo => {{ $user  }}	 
+
+#Blade Foreach =>
+           @foreach ($articles as $a)
+					    <p> Article {{ $loop->iteration }}  </p>  <!-- {{ $loop->iteration }} is Blade equivalentof $i++ -->
+                        <p>Title {{ $a->wpBlog_title }}</p>
+                    @endforeach
+					
+#Blade iteration 2
+  @php($count=0)
+
+  @foreach($unit->materials as $m)
+    @if($m->type == "videos")
+        @php($count++)
+    @endif
+  @endforeach
+
+  {{$count}}
 ===========================================
 
 
@@ -192,6 +213,16 @@ https://laravel.ru/docs/v5/validation
 
 
 
+//================================================================================================
+10.hasOne relation
+1.Specify hasOne method in parent model  => 
+    public function authorName(){return $this->hasOne('App\users', 'id', 'wpBlog_author');      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
+2.Use in view =>
+   @foreach ($articles as $a){ 	p>Author:   {{ $a->authorName->name   }}</p> <!--   --> 
+
+//================================================================================================
+
+
 
 
 
@@ -204,3 +235,12 @@ https://laravel.ru/docs/v5/validation
      <li class="{{ Request::is('showProfile*') ? 'active' : '' }}">     <a href="{{ url('/showProfile') }}">ShowProfile    </a> </li>
 	 <li class="{{ Request::is('EloquentExample*') ? 'active' : '' }}"> <a href="{{ url('/EloquentExample') }}">DB Eloquent </a></li>
 
+
+	 
+	 
+	 
+	 
+//================================================================================================ 
+35.Miscellaneous VA Laravel
+#image =>           <img class="img-responsive my-cph" src="{{URL::to("/")}}/images/cph.jpg"  alt="a"/>
+#link a href => 	<li><a href="{{ route('register') }}">Gii</a></li>
