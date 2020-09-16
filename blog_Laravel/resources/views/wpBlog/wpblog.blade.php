@@ -8,14 +8,49 @@
                 <div class="panel-heading">WpBlog </div>
 
                 <div class="panel-body">
+				    
+					<button>Create new</button>
 				
+				
+				    <!-- Display Categories Dropdown with Blade -->
+					<div class="col-sm-12 col-xs-12"></br>
+					    <div class="form-group">
+					        <select class="mdb-select md-form" id="dropdownnn">
+						        <option value={{ url("/wpBlogg") }}  selected="selected">All articles</option>
+		                        @foreach ($categories as $a)
+								
+								    @php
+								    //gets to know what select <option> to make selected according to $_GET['']
+			                        if(isset($_GET['category']) && $_GET['category'] == $a->wpCategory_id){
+				                        $selectStatus = 'selected="selected"';
+			                         } else {
+					                     $selectStatus = '';
+								     }
+									 //$a->wpCategory_id
+								     @endphp
+					 
+								    <option value={{ url("/wpBlogg?category=$a->wpCategory_id") }}  {{$selectStatus }} > {{ $a->wpCategory_name}} </option>
+					            @endforeach
+						    </select>
+					    </div>
+					</div>
+					<!-- END Display Categories Dropdown with Blade -->
+
+					
                     <div class="alert alert-success">
-                        WpBlog
+					    Aricles found: {{ $articles->count() }}
 					</div>
 					
 					<!--<img class="img-responsive " src="{{URL::to('/')}}/images/error.png"  alt=""/>--> <!-- image -->
 					
 					
+					
+					
+					<!-- If no article is found -->
+					@if($articles->count() == 0)
+					    {{"Nothing found"}}
+					@endif
+					<!-- If no article is found -->
 					
 					
 					
@@ -31,8 +66,17 @@
 						<p>          {{ $a->wpBlog_text      }}</p>
 						
 						<p>Author:   {{ $a->authorName->name   }}</p> <!-- hasOne relations to show author name --> <!-- <p>Author:   {{ $a->wpBlog_author    }}</p> --> 
-						<p>Category: {{ $a->categoryName->wpCategory_name  }}</p> <!-- hasOne relations to show categoty name -->
-						<p>Status:   {{ $a->wpBlog_status    }}</p>
+						
+						<!-- END NOR WORKING -->
+						@foreach ($a->categoryNames as $b)
+						    <!--<p>Category: {{-- $b->wpCategory_name  --}}</p> --> <!-- hasMany relations to show categoty name -->
+						@endforeach 
+						<!-- END NOT WORKING -->
+						
+						 <p>Category: {{ $a->categoryNames ->wpCategory_name }}</p> <!-- hasMany relations to show categoty name -->
+						 
+						 
+						<p>Status:   {{ $a->test($a->wpBlog_status)    }}</p>
 						<hr>
 
                     @endforeach

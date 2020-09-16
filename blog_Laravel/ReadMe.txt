@@ -1,4 +1,5 @@
-Credentials: admin@gmail.com =>  dimax2
+Laravel Framework 5.4.36
+Credentials: dimmm931@gmail.com =>  dimax2
 Composer -> via Windows cmd, artisan -> via OpenServer, git -> via Windows cmd
 
 Table of Content:
@@ -11,7 +12,8 @@ Table of Content:
 7.Forms
 8.Form Validation
 9.Migrations
-10.hasOne relation
+10.hasOne/hasMany relation
+11.DB SQL queries
 
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
@@ -214,12 +216,19 @@ https://laravel.ru/docs/v5/validation
 
 
 //================================================================================================
-10.hasOne relation
-1.Specify hasOne method in parent model  => 
-    public function authorName(){return $this->hasOne('App\users', 'id', 'wpBlog_author');      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
-2.Use in view =>
-   @foreach ($articles as $a){ 	p>Author:   {{ $a->authorName->name   }}</p> <!--   --> 
+10.hasOne/hasMany relation
 
+10.1 hasOne relation
+  1.Specify hasOne method in parent model  => 
+      public function authorName(){return $this->hasOne('App\users', 'id', 'wpBlog_author');      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
+  2.Use in view =>
+      @foreach ($articles as $a){ 	p>Author:   {{ $a->authorName->name   }}</p> <!--   --> 
+
+10.2 hasMany relation
+   1.Specify hasMany method in parent model  => 
+     public function categoryNames(){return $this->belongsTo('App\models\wpress_category', 'wpBlog_category','wpCategory_id');  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');}
+   2.Use in view =>
+      <p>Category: {{ $a->categoryNames ->wpCategory_name }}</p> <!-- hasMany relations to show categoty name -->
 //================================================================================================
 
 
@@ -227,6 +236,21 @@ https://laravel.ru/docs/v5/validation
 
 
 
+//================================================================================================
+11.DB SQL queries
+  #For Eloquent ORM:
+    $articles = wpress_blog_post::all();
+    $articles =  wpress_blog_post::where('wpBlog_status', '1')->get();
+	$articles = wpress_blog_post::where('wpBlog_status', '1')->where('wpBlog_category', 1)->get();
+
+	$articles->count()
+  
+  #ћетод get() возвращает объект Illuminate\Support\Collection (дл€ версии 5.2 и ранее Ч массив) c результатами, в котором каждый результат Ч это экземпл€р PHP-объекта StdClass.
+  use Illuminate\Support\Facades\DB;  $users = $articles = DB::table('wpress_blog_post')->get();
+  use Illuminate\Support\Facades\DB; $articles = DB::table('wpress_blog_post')->where('wpBlog_status', '1')->get();
+
+
+//================================================================================================
 
 
 //================================================================================================ 
