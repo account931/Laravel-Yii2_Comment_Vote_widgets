@@ -63,6 +63,7 @@
 					 <li class="{{ Request::is('showProfile*') ? 'active' : '' }}">     <a href="{{ url('/showProfile') }}">ShowProfile     </a></li>
 					 <li class="{{ Request::is('EloquentExample*') ? 'active' : '' }}"> <a href="{{ url('/EloquentExample') }}">DB Eloquent </a></li>
 					 <li><a href="{{ route('register') }}">RBAC</a></li>
+					 <li><a href="{{ route('register') }}">REST</a></li>
 					 
 					 <li class="{{ Request::is('wpBlogg*') ? 'active' : '' }}"> <a href="{{ route('wpblog') }}" > WPress </a> </li> <!-- NOTE: name vs route -->
 					 
@@ -114,5 +115,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+	<script src="{{ asset('js/wpress_blog.js') }}"></script> <!-- wpress_blog JS -->
 </body>
 </html>

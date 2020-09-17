@@ -1,17 +1,29 @@
 <?php
-
+//Model for wpress_blog_post
 namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class wpress_blog_post extends Model
 {
+	
+   public $wpBlog_id;
+   public $wpBlog_title;
+   public $wpBlog_text;
+   public $wpBlog_author;
+   public $wpBlog_category;
+
+
   /**
    * Связанная с моделью таблица.
    *
    * @var string
    */
   protected $table = 'wpress_blog_post';
+  
+  
+  protected $fillable = ['wpBlog_author', 'title', 'description', 'category_sel'];
+  public $timestamps = false; //to override Error "Unknown Column 'updated_at'" that fires when saving new entry
   
   
   /**
@@ -53,17 +65,56 @@ class wpress_blog_post extends Model
   }
   
    /**
-    * Manula emulation of Laravel getter
+    * Manula emulation of Laravel getter, gets DB Enum values (0/1) and changed to text "Published/Not Published"
     *
     * @param  string  $value
     * @return string
     */
-   public function test($value){
+   public function getIfPublished($value){
        if($value == '1'){
 		return 'Published';
 	} else {
 		return 'Not Published';
 	}
    }
+   
+   /**
+    * truncates/crops the text
+    *
+    * @param  string  $text, int $maxLength
+    * @return string
+    */
+	public function truncateTextProcessor($text, $maxLength)
+	{
+        $length = $maxLength; 
+		if(strlen($text) > $length){
+		    $text = substr($text, 0, $length) . "......";
+		} 
+	return $text;		
+	}
+	
+	
+	
+	
+	/**
+    * saves form inputs to DB
+    *
+    * @param  
+    * @return 
+    */
+	public function saveTicket($data)
+{
+        $this->wpBlog_author = auth()->user()->id;
+        $this->	wpBlog_title = $data['title'];
+        $this->	wpBlog_text = $data['description'];
+		$this->	wpBlog_category = $data['category_sel'];
+
+        $this->save();
+        return 1;
+}
+
+
+
+
   
 }

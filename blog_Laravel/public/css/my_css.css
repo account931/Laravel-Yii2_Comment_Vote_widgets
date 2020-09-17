@@ -9,3 +9,11 @@
  @media screen and (max-width: 480px) { 
      .img-wpblog{width:25%; padding:1em;}
  }
+ 
+ 
+ 
+  /*--------------------------- WPRESS Blog */
+  .text-hidden{display:none;}
+ 
+  .text-truncated, .text-hidden{cursor:pointer;}
+  .text-truncated:hover{color:red;}

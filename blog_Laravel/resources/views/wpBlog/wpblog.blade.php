@@ -9,7 +9,8 @@
 
                 <div class="panel-body">
 				    
-					<button>Create new</button>
+					
+					<a href="{{ route('createNewWpress') }}"><button>Create new</button></a>
 				
 				
 				    <!-- Display Categories Dropdown with Blade -->
@@ -62,10 +63,13 @@
 		            @foreach ($articles as $a)
 						<p> <img class="img-wpblog" src="{{URL::to('/')}}/images/item.png"  alt=""/> </p>
 					    <p> Article number {{ $loop->iteration }}  </p> <!-- {{ $loop->iteration }} is Blade equivalentof $i++ -->						
-                        <p>Title:    {{ $a->wpBlog_title     }}</p>
-						<p>          {{ $a->wpBlog_text      }}</p>
+                        <p>Title: <b>  {{ $a->wpBlog_title     }}</b></p>
 						
-						<p>Author:   {{ $a->authorName->name   }}</p> <!-- hasOne relations to show author name --> <!-- <p>Author:   {{ $a->wpBlog_author    }}</p> --> 
+						<p class="text-truncated" title="click to expand">  {{ $a->truncateTextProcessor($a->wpBlog_text, 46)    }} </p>  <!-- truncated article text -->
+						<p class="text-hidden">     {{ $a->wpBlog_text    }} </p>  <!-- hidden article text -->
+
+						
+						<p class='small font-italic'>Author:   {{ $a->authorName->name   }}</p> <!-- hasOne relations to show author name --> <!--  " $a->wpBlog_author" returns id, "authorName()" is a model hasOne function    }}</p> --> 
 						
 						<!-- END NOR WORKING -->
 						@foreach ($a->categoryNames as $b)
@@ -73,11 +77,14 @@
 						@endforeach 
 						<!-- END NOT WORKING -->
 						
-						 <p>Category: {{ $a->categoryNames ->wpCategory_name }}</p> <!-- hasMany relations to show categoty name -->
+		
+						<p class='small font-italic'>Category: {{ $a->categoryNames ->wpCategory_name }}</p> <!-- hasMany relations to show category name, "$a->wpBlog_category" returns id of category, "categoryNames" is a model hasMany function  -->
 						 
 						 
-						<p>Status:   {{ $a->test($a->wpBlog_status)    }}</p>
-						<hr>
+						<p class='small font-italic'>Status:   {{ $a->getIfPublished($a->wpBlog_status)    }}</p>   <!-- $a->wpBlog_status is DB value Enum (0/1) -->
+						<p class='small font-italic'>Created:   {{ $a->wpBlog_created_at    }}</p>   <!-- Time -->
+
+						<hr> 
 
                     @endforeach
 				    <!-- End Display WP Blogs with Blade (variant 1) -->
@@ -86,6 +93,7 @@
 					
 				   <!-- Display  WP Blogs with pure Php (variant 2) -->
 		           <?php
+				   /*
 				   $i = 1;
 		           foreach ($articles as $a){
 			           echo "<div class='list-group-item col-sm-12 col-xs-12'>" .
@@ -96,6 +104,7 @@
 						    "</div>";
 					$i++;
 		            }
+					*/
 		           ?>
 				   
 		          </div>

@@ -36,17 +36,3 @@ function n(t){return void 0===t||null===t}function r(t){return void 0!==t&&null!
 
 
 
-//WP Blog Dropdown
-// **************************************************************************************
-// **************************************************************************************
-//                                                                                     ** 
-	if(document.getElementById("dropdownnn") !== null){ //additional check to avoid errors in console in actions, other than actionShowAllBlogs(), when this id does not exist
-	   document.getElementById("dropdownnn").onchange = function() {
-          //if (this.selectedIndex!==0) {
-              window.location.href = this.value;
-          //}        
-       };
-	}
-	// **                                                                                  **
-    // **************************************************************************************
-    // **************************************************************************************

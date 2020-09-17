@@ -30,7 +30,11 @@ Route::get('/showProfile', 'ShowProfile@index')->name('showprofile');  //my prof
 Route::get('/formSubmit', 'FormSubmit@index')->name('formsubmit');  //form submit example Route
 Route::post('/formSubmit', 'FormSubmit@index')->name('formsubmit');  //form submit example Route
 
-
+//Wpress Bloq
 Route::get('/wpBlogg', 'WpBlog@index')->name('wpblog');  //WpPress Blog route
+Route::get('createNewWpress', 'WpBlog@create')->name('createNewWpress');  //WpPress route for displaying form to create new entry
+Route::post('/storeNewWpress','WpBlog@store'); //Saving form fields via POST
+
+
 
 

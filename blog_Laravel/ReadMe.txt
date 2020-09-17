@@ -11,9 +11,13 @@ Table of Content:
 6.How to create new Controller/action, view and add to menu
 7.Forms
 8.Form Validation
-9.Migrations
+9.Migrations/Seeders
 10.hasOne/hasMany relation
-11.DB SQL queries
+11.DB SQL Eloquent queries
+12.Laravel Crud
+13.REST API
+14. Laravel Flash messages
+
 
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
@@ -25,7 +29,7 @@ http://laravel.su/docs/5.4/installation
 
 1. If first time ever, install global installer=>  composer global require "laravel/installer"
 2. Navigate to necessary folder and =>    laravel new yourProjectName
-3. To add authentication (login/register) =>
+3. To add authentication (login/register) (or read manual => https://vegibit.com/how-to-create-user-registration-in-laravel/ )=>
        CLI=> php artisan make:auth
 
 Эту команду надо использовать на свежем приложении, она установит шаблоны для регистрации и входа, а также роуты для всех конечных точек аутентификации. Также будет сгенерирован HomeController, который обслуживает запросы к панели настроек вашего приложения после входа. Но вы можете изменить или даже удалить это контроллер, если это необходимо для вашего приложения.
@@ -95,22 +99,6 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 
 
-#Active Record / Eloquent => 
-   in Controller=>     use App\users; $f = users::all(); return view('home2', compact('f')); 
-   in View =>          foreach ($f as $a){
-   
-   
- #render =>  
-      return view('home2', compact('f'));  === return View::make('page')->with('userInfo',$userInfo);
-	  
-#pass several vars => return view('showprofile')->with(compact('id', 'name'));
-	  
-#isGuest => if(!Auth::check()){)
-
-#current user => use Illuminate\Support\Facades\Auth;  $id = auth()->user()->id;
-
-
-# Turn on debugger => go to .env => APP_DEBUG=true
 
 
 
@@ -188,7 +176,7 @@ https://laravel.ru/docs/v5/validation
 
 
 //================================================================================================
-9.Migrations => see docs at => https://laravel.ru/docs/v5/migrations
+9.9.Migrations/Seeders    => see docs at => https://laravel.ru/docs/v5/migrations
   #create migration   =>   php artisan make:migration create_users_table
   #run all migrations =>   php artisan migrate
   
@@ -237,7 +225,7 @@ https://laravel.ru/docs/v5/validation
 
 
 //================================================================================================
-11.DB SQL queries
+11.DB SQL Eloquent queries
   #For Eloquent ORM:
     $articles = wpress_blog_post::all();
     $articles =  wpress_blog_post::where('wpBlog_status', '1')->get();
@@ -251,6 +239,52 @@ https://laravel.ru/docs/v5/validation
 
 
 //================================================================================================
+
+
+
+
+
+
+
+//================================================================================================
+12.Laravel Crud => see docs at https://appdividend.com/2017/10/15/laravel-5-5-crud-example-tutorial/
+
+//================================================================================================
+
+
+
+
+
+
+//================================================================================================
+13.REST API => see docs at  https://habr.com/ru/post/441946/
+//================================================================================================
+
+
+
+
+
+
+//================================================================================================
+14. Laravel Flash messages
+   In conroller=>
+      return redirect('/createNewWpress')->with('success', 'New support ticket has been created! Wait sometime to get resolved');
+
+		
+  In view =>		
+@if(session()->has('message'))
+    <div class="alert alert-success">
+        {{ session()->get('message') }}
+    </div>
+@endif
+//================================================================================================
+
+
+
+
+
+
+
 
 
 //================================================================================================ 
@@ -268,3 +302,26 @@ https://laravel.ru/docs/v5/validation
 35.Miscellaneous VA Laravel
 #image =>           <img class="img-responsive my-cph" src="{{URL::to("/")}}/images/cph.jpg"  alt="a"/>
 #link a href => 	<li><a href="{{ route('register') }}">Gii</a></li>
+
+#Active Record / Eloquent => 
+   in Controller=>     use App\users; $f = users::all(); return view('home2', compact('f')); 
+   in View =>          foreach ($f as $a){
+   
+   
+ #render =>  
+      return view('home2', compact('f'));  === return View::make('page')->with('userInfo',$userInfo);
+	  
+#pass several vars => return view('showprofile')->with(compact('id', 'name'));
+	  
+#isGuest => if(!Auth::check()){)
+
+#current user => use Illuminate\Support\Facades\Auth;  $id = auth()->user()->id; 
+
+
+# Turn on debugger => go to .env => APP_DEBUG=true
+
+# public $timestamps = false; //put in model to override Error "Unknown Column 'updated_at'" that fires when saving new entry
+
+
+
+
