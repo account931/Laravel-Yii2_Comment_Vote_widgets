@@ -34,7 +34,7 @@ Route::post('/formSubmit', 'FormSubmit@index')->name('formsubmit');  //form subm
 Route::get('/wpBlogg', 'WpBlog@index')->name('wpblog');  //WpPress Blog route
 Route::get('createNewWpress', 'WpBlog@create')->name('createNewWpress');  //WpPress route for displaying form to create new entry
 Route::post('/storeNewWpress','WpBlog@store'); //Saving form fields via POST
-
+Route::get('delete/{id}','WpBlog@destroy');
 
 
 

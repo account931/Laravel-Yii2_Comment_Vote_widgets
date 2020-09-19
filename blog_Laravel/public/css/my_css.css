@@ -1,7 +1,19 @@
+/* main menu link color */
+.black a {color:black !important;;}
 
- .my-cph {width:15%; padding:1em; border: 1px solid black;}
+
+/* Home page CPH image */
+.my-cph {width:24%; padding:1em; border: 1px solid black;}
  
- /* image for wp blog emtries */
+ /* Mobile */
+ @media screen and (max-width: 480px) { 
+   .my-cph {width:45%; padding:1em; border: 1px solid black;}
+   .my-title {font-size: 3em;} /* Main title -> Laravel CPH 2019 */
+ }
+ 
+ 
+ 
+ /* image for wp blog entries */
  .img-wpblog{width:15%; padding:1em;}
  
  
@@ -17,3 +29,4 @@
  
   .text-truncated, .text-hidden{cursor:pointer;}
   .text-truncated:hover{color:red;}
+  .deletee {width:2em;} /* delete icon */

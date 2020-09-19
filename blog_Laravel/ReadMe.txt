@@ -1,6 +1,7 @@
 Laravel Framework 5.4.36
 Credentials: dimmm931@gmail.com =>  dimax2
 Composer -> via Windows cmd, artisan -> via OpenServer, git -> via Windows cmd
+NPM -> composer
 
 Table of Content:
 1.How to install Laravel
@@ -11,12 +12,15 @@ Table of Content:
 6.How to create new Controller/action, view and add to menu
 7.Forms
 8.Form Validation
+8.1 Form fields Insert to DB
 9.Migrations/Seeders
 10.hasOne/hasMany relation
 11.DB SQL Eloquent queries
 12.Laravel Crud
 13.REST API
 14. Laravel Flash messages
+15. Js/Css minify Laravel Mix
+16. CRUD
 
 
 34.Highlight active menu item
@@ -106,7 +110,9 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 //================================================================================================
 4.Error handling, throw custom exceptions => 
   see docs => https://code.tutsplus.com/ru/tutorials/exception-handling-in-laravel--cms-30210
-  Usage => if(!Auth::check()){ throw new \App\Exceptions\myException('Something Went Wrong.'); }
+  Usage => 
+      use Illuminate\Support\Facades\Auth;
+      if(!Auth::check()){ throw new \App\Exceptions\myException('Something Went Wrong.'); }
   
 //=============================================================================================
  
@@ -145,7 +151,29 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 7.Forms
   to be proccessed
+  
+  #get form input => 
+         use Illuminate\Support\Facades\Input;
+		   var_dump(Input::get('description'));
+		   dd(Input::all());
+# Install require laravelcollective/html to be able to use {{ Form::open(array('url' => 'storeNewWpress')) }}
 
+    composer require laravelcollective/html
+    when the composer update the require html laravel collective then add these two line into config/app.php into the section of
+    'aliases' => [ ],
+
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+    then add the line into config/app.php
+    'providers' => [ ], and save the file
+         Collective\Html\HtmlServiceProvider::class,
+
+ #If LaravelCollective forms fields is cleared after failed validation:
+ You need to use Input::old or you could bind a model to the form https://laravel.com/docs/4.2/html#form-model-binding
+    <input type="text" class="form-control" name="title" value="{{old('title','')}}"/>
+    <textarea cols="5" rows="5" class="form-control" name="description">{{old('description','')}}</textarea>
+	
+	+ (isNeeded????) =>if ($validator->fails()) {return redirect('/createNewWpress')->withInput()->withErrors($validator);
 //================================================================================================
 
 
@@ -156,15 +184,28 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 //================================================================================================
 
-8.Form Validation
-
-https://laravel.ru/docs/v5/validation
-  to be proccessed
-
+8.Form Validation => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   at =>  public function store(Request $request)
+  #Docs => https://laravel.ru/docs/v5/validation
+  
+  use Illuminate\Support\Facades\Validator;
 //================================================================================================
 
 
 
+
+
+
+
+
+
+
+
+//================================================================================================
+
+8.1 Form fields Insert to DB  => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   at =>  public function store(Request $request)
+  Docs => https://www.studentstutorial.com/laravel/insert-data-laravel
+
+//================================================================================================
 
 
 
@@ -287,6 +328,35 @@ https://laravel.ru/docs/v5/validation
 
 
 
+//================================================================================================
+15. Js/Css minify Laravel Mix
+   Works so muck like Browserify + Gulp.......
+    All Development css/js (js/css u're changing) are located in /resources/assets/. They are not included to index.php (\resources\views\layouts). 
+	Included css/js are in /public. To convert Development assets to Production(to minify, concatenate), run => npm run production
+    «апустить все задачи Mix и минифицировать вывод => go to cmd => npm run production 
+   
+   if error {"cross-env" не €вл€етс€ внутренней или внешней командой}  =>   npm i cross-env --save
+   if error {"Node events.js:167 throw er; // Unhandled 'error' event"} =>  Removing the node_modules directory and reinstalling again using npm install should solve the problem.
+//================================================================================================
+
+
+
+
+
+
+
+
+
+//================================================================================================
+16. CRUD
+ 16.1 Delete => see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   =>  public function destroy($id) 
+ #Delete with confirm
+<a href = 'delete/{{ $a->wpBlog_id }}'> Delete  <img class="deletee" onclick="return confirm('Are you sure?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></a>
+
+//================================================================================================
+
+
+
 //================================================================================================ 
 34.Highlight active menu item
  #Highlight active menu item =>  (OR https://medium.com/@rizkhallamaau/create-a-helper-for-active-link-in-laravel-5-6-30827a760593)
@@ -313,7 +383,8 @@ https://laravel.ru/docs/v5/validation
 	  
 #pass several vars => return view('showprofile')->with(compact('id', 'name'));
 	  
-#isGuest => if(!Auth::check()){)
+#isGuest var 1 => use Illuminate\Support\Facades\Auth; if(!Auth::check()){)
+#isGuest var 2  =>   public function __construct(){$this->middleware('auth');}
 
 #current user => use Illuminate\Support\Facades\Auth;  $id = auth()->user()->id; 
 

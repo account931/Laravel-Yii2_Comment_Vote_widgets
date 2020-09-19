@@ -55,7 +55,7 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right black">
 					
 					
 					 <!-- Common links (make link highlighted )-->
@@ -64,6 +64,7 @@
 					 <li class="{{ Request::is('EloquentExample*') ? 'active' : '' }}"> <a href="{{ url('/EloquentExample') }}">DB Eloquent </a></li>
 					 <li><a href="{{ route('register') }}">RBAC</a></li>
 					 <li><a href="{{ route('register') }}">REST</a></li>
+					 <li><a href="{{ route('register') }}">Ajax</a></li>
 					 
 					 <li class="{{ Request::is('wpBlogg*') ? 'active' : '' }}"> <a href="{{ route('wpblog') }}" > WPress </a> </li> <!-- NOTE: name vs route -->
 					 

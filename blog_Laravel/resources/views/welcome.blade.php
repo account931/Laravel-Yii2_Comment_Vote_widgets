@@ -64,6 +64,7 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+			.my-main {background:lavender;}
         </style>
     <!--</head>
     <body>
@@ -73,7 +74,7 @@
 
     @section('content')
 
-        <div class="flex-center position-ref full-height">
+        <div class="flex-center position-ref full-height my-main">
 		{{-- @if (Route::has('login'))
                 <div class="top-right links">
                     @if (Auth::check())
@@ -91,17 +92,32 @@
 			
 
             <div class="content">
-                <div class="title m-b-md">
+			    
+				
+                <div class="title m-b-md my-title">
                     Laravel CPH 2019
                 </div>
 
                 <div class="links">
-				    <a href="#">MyWaze</a>
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+				    <div class="col-sm-4 col-xs-6">
+				        <a href="#">MyWaze</a>
+					</div>
+					<div class="col-sm-4 col-xs-6">
+                        <a href="https://laravel.com/docs">Documentation</a>
+					</div>
+					<div class="col-sm-4 col-xs-6">
+                        <a href="https://laracasts.com">Laracasts</a>
+					</div>
+					<div class="col-sm-4 col-xs-6">
+                        <a href="https://laravel-news.com">News</a>
+					</div>
+					<div class="col-sm-4 col-xs-6">
+                        <a href="https://forge.laravel.com">Forge</a>
+					</div>
+					<div class="col-sm-4 col-xs-6">
+                       <a href="https://github.com/laravel/laravel">GitHub</a>
+					</div>
+					<div class="col-sm-12 col-xs-12"><p>______</p></div>
                 </div>
 				
 				<div class="col-sm-12 col-xs-12">

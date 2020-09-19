@@ -5,6 +5,17 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
+			
+			
+			    <!-- Flash message -->
+				@if(session()->has('flashMessage'))
+                    <div class="alert alert-danger">
+                        {{ session()->get('flashMessage') }}
+                    </div>
+                @endif
+						
+						
+						
                 <div class="panel-heading">WpBlog </div>
 
                 <div class="panel-body">
@@ -69,21 +80,37 @@
 						<p class="text-hidden">     {{ $a->wpBlog_text    }} </p>  <!-- hidden article text -->
 
 						
-						<p class='small font-italic'>Author:   {{ $a->authorName->name   }}</p> <!-- hasOne relations to show author name --> <!--  " $a->wpBlog_author" returns id, "authorName()" is a model hasOne function    }}</p> --> 
+						<p class='small font-italic'> Author:   {{ $a->authorName->name  }}   {{-- $a->authorName['name']   --}}</p> <!-- hasOne relations to show author name --> <!--  " $a->wpBlog_author" returns id, "authorName()" is a model hasOne function    }}</p> --> 
 						
-						<!-- END NOR WORKING -->
+						<!-- END NOT WORKING -->
+						
+						@php
+						//commented in corrupted way, caused crash
+						/* 
 						@foreach ($a->categoryNames as $b)
 						    <!--<p>Category: {{-- $b->wpCategory_name  --}}</p> --> <!-- hasMany relations to show categoty name -->
-						@endforeach 
+						@endforeach  
+						*/
+						@endphp
 						<!-- END NOT WORKING -->
 						
 		
-						<p class='small font-italic'>Category: {{ $a->categoryNames ->wpCategory_name }}</p> <!-- hasMany relations to show category name, "$a->wpBlog_category" returns id of category, "categoryNames" is a model hasMany function  -->
+						<p class='small font-italic'>Category: {{ $a->categoryNames->wpCategory_name }}</p> <!-- hasMany relations to show category name, "$a->wpBlog_category" returns id of category, "categoryNames" is a model hasMany function  -->
 						 
 						 
 						<p class='small font-italic'>Status:   {{ $a->getIfPublished($a->wpBlog_status)    }}</p>   <!-- $a->wpBlog_status is DB value Enum (0/1) -->
 						<p class='small font-italic'>Created:   {{ $a->wpBlog_created_at    }}</p>   <!-- Time -->
-
+                        
+						
+						
+						<!-- Icon to delete record -->
+						@if($a->wpBlog_author == auth()->user()->id)
+							<p>
+						        <a href = 'delete/{{ $a->wpBlog_id }}'> Delete  <img class="deletee" onclick="return confirm('Are you sure?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></a>
+							</p>
+						@endif
+						
+						
 						<hr> 
 
                     @endforeach

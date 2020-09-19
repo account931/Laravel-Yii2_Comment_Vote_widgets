@@ -1,0 +1,21 @@
+/* main menu link color */
+.black a {color:black !important;;}
+
+.my-cph {width:15%; padding:1em; border: 1px solid black;}
+ 
+ /* image for wp blog emtries */
+ .img-wpblog{width:15%; padding:1em;}
+ 
+ 
+ /* Mobile */
+ @media screen and (max-width: 480px) { 
+     .img-wpblog{width:25%; padding:1em;}
+ }
+ 
+ 
+ 
+  /*--------------------------- WPRESS Blog */
+  .text-hidden{display:none;}
+ 
+  .text-truncated, .text-hidden{cursor:pointer;}
+  .text-truncated:hover{color:red;}

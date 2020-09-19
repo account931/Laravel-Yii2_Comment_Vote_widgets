@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class wpress_blog_post extends Model
 {
-	
+	//CAUSES hasmany Crashd
+   /*
    public $wpBlog_id;
    public $wpBlog_title;
    public $wpBlog_text;
    public $wpBlog_author;
    public $wpBlog_category;
-
+   */
 
   /**
    * Связанная с моделью таблица.
@@ -97,13 +98,14 @@ class wpress_blog_post extends Model
 	
 	
 	/**
-    * saves form inputs to DB
+    * saves form inputs to DB (NOT USED)
     *
     * @param  
     * @return 
     */
 	public function saveTicket($data)
-{
+    {   
+        //dd($data['title']); return;
         $this->wpBlog_author = auth()->user()->id;
         $this->	wpBlog_title = $data['title'];
         $this->	wpBlog_text = $data['description'];
@@ -111,10 +113,23 @@ class wpress_blog_post extends Model
 
         $this->save();
         return 1;
-}
+    }
 
 
-
+    
+    /**
+    * saves form inputs to DB (FINAL)
+    *
+    * @param  
+    * @return 
+    */
+	public function saveFields($data){
+		$this->wpBlog_author = auth()->user()->id;
+        $this->wpBlog_text = $data['description'];
+        $this->wpBlog_title = $data['title'];
+		$this->wpBlog_category = $data['category_sel'];
+		$this->save();
+	}
 
   
 }
