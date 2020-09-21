@@ -16,7 +16,7 @@
 						
 						
 						
-                <div class="panel-heading">WpBlog </div>
+                <div class="panel-heading text-warning">WpBlog <span class="small text-danger">(u can delete/edit only your own posts.Log in to have this option)</span> </div>
 
                 <div class="panel-body">
 				    
@@ -103,11 +103,15 @@
                         
 						
 						
-						<!-- Icon to delete record -->
-						@if($a->wpBlog_author == auth()->user()->id)
-							<p>
-						        <a href = 'delete/{{ $a->wpBlog_id }}'> Delete  <img class="deletee" onclick="return confirm('Are you sure?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></a>
-							</p>
+						<!-- Oprion Icon to delete record (only if your are the author and logged)-->
+						@if(Auth::check())
+						    @if($a->wpBlog_author == auth()->user()->id)
+							  <p>
+						        <button><a href = 'delete/{{ $a->wpBlog_id }}'><span onclick="return confirm('Are you sure to delete?')"> Delete  <img class="deletee" onclick="return confirm('Are you sure to delete?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></span></a></button>
+							    <button><a href = 'edit/{{ $a->wpBlog_id }}'>  <span onclick="return confirm('Are you sure to edit?')">Edit  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>
+
+							  </p>
+							@endif
 						@endif
 						
 						

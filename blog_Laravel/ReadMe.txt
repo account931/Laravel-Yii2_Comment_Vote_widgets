@@ -25,7 +25,7 @@ Table of Content:
 
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
-
+36. Known Errors
 
 //================================================
 1.How to inst
@@ -278,7 +278,17 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
   use Illuminate\Support\Facades\DB;  $users = $articles = DB::table('wpress_blog_post')->get();
   use Illuminate\Support\Facades\DB; $articles = DB::table('wpress_blog_post')->where('wpBlog_status', '1')->get();
 
-
+  //check if record exists, if not custom exception, traditional way like followingdoes not work =>  $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get(); if ($articleOne){exception}
+       try{
+	      $articleOne = wpress_blog_post::where('wpBlog_id',$id)->firstOrFail(); //find the article by id  ->firstOrFail();
+	   } catch (\Exception $e) {
+	      throw new \App\Exceptions\myException('Article does not exist');
+	   }
+	   
+   #find one user 
+   in Controller => 
+      $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get();
+      $articleOne[0]->wpBlog_author; // $articleOne>wpBlog_author;  DOES NOT WORK (<= NOT TRUE???)
 //================================================================================================
 
 
@@ -337,7 +347,15 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
    
    if error {"cross-env" не является внутренней или внешней командой}  =>   npm i cross-env --save
    if error {"Node events.js:167 throw er; // Unhandled 'error' event"} =>  Removing the node_modules directory and reinstalling again using npm install should solve the problem.
-//================================================================================================
+
+   
+   # npm run watch     
+   If is doesnot watch => npm run watch-poll
+   If u run {npm run watch}, after any css/js change it rebuilds files in /public (even if they were prev minified), but does not minify them, so in the end run {npm run production} to do that.
+   
+   Alternative:
+   can make all css/js edits in /public. When it comes to production< copy all css/js from /public to /resources/assets/, run {npm run production} and get in public all concatenated files
+   //================================================================================================
 
 
 
@@ -351,7 +369,11 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 16. CRUD
  16.1 Delete => see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   =>  public function destroy($id) 
  #Delete with confirm
-<a href = 'delete/{{ $a->wpBlog_id }}'> Delete  <img class="deletee" onclick="return confirm('Are you sure?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></a>
+  <a href = 'delete/{{ $a->wpBlog_id }}'> Delete  <img class="deletee" onclick="return confirm('Are you sure?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></a>
+
+  
+  16.2 Update 
+	   wpress_blog_post::where('wpBlog_id', $id)->update([  'wpBlog_text' => $data['description'], 'wpBlog_title' => $data['title'], 'wpBlog_category' => $data['category_sel'] ]);
 
 //================================================================================================
 
@@ -391,7 +413,25 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 # Turn on debugger => go to .env => APP_DEBUG=true
 
+# js confirm to delete =>  <button><a href = 'delete/{{ $a->wpBlog_id }}'> Delete  <img class="deletee" onclick="return confirm('Are you sure to delete?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></a></button>
+
+#Redirect=>
+  return redirect()->back()->with('success',"Update successfully");
+  return redirect()->back()->withInput()->withErrors($validator);
+  return redirect('/wpBlogg')->with('flashMessage',"Record deleted successfully");
+
+
+
+
+
+
+//================================================================================================
+36. Known Errors
 # public $timestamps = false; //put in model to override Error "Unknown Column 'updated_at'" that fires when saving new entry
+
+
+
+
 
 
 

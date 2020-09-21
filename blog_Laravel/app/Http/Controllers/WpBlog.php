@@ -140,10 +140,102 @@ class WpBlog extends Controller
        echo 'Click Here to go back.';
 	   */
 	   
+	   //additional check in case user directly intentionally navigates to  ../blog_Laravel/public/delete/12 to not his record
+	   try{
+	       $articleOne = wpress_blog_post::where('wpBlog_id',$id)->firstOrFail(); //find the article by id  ->firstOrFail();
+	   } catch (\Exception $e) {
+	   //if(!$articleOne){
+	      throw new \App\Exceptions\myException('Article does not exist');
+	   }
+	   
+	  
+	   
+	   if( !Auth::check() || $articleOne->wpBlog_author!= auth()->user()->id){
+		   throw new \App\Exceptions\myException('It is not your article');
+	   }
+	   
 	   wpress_blog_post::where('wpBlog_id',$id)->delete();
 	   return redirect('/wpBlogg')->with('flashMessage',"Record deleted successfully");
 
 	   
     }
+	
+	
+	/**
+     * Edit a selected record, displays edit form
+     *
+     * @param  integer $id
+     * @return 
+     */
+	public function edit($id) {
+      
+	    //additional check in case user directly intentionally navigates to  ../blog_Laravel/public/delete/12 to not his record
+	   try{
+	       $articleOne = wpress_blog_post::where('wpBlog_id',$id)->firstOrFail(); //find the article by id  ->firstOrFail();
+	   } catch (\Exception $e) {
+	   //if(!$articleOne){
+	      throw new \App\Exceptions\myException('Article does not exist');
+	   }
+	   
+	   if( !Auth::check() || $articleOne->wpBlog_author!= auth()->user()->id){
+		   throw new \App\Exceptions\myException('It is not your article to edit');
+	   }
+	   	//additional check in case user directly intentionally navigates to  ../blog_Laravel/public/delete/12 to not his record
+
+			
+			
+	   $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get();
+	   $categories = wpress_category::all(); //for dropdown
+	   
+	   return view('wpBlog.edit',  compact('articleOne', 'categories'));
+
+	   
+    }
+	
+	
+	
+	
+	/**
+     * update a selected record and return to previous edit form
+     *
+     * @param  integer $id
+     * @return 
+     */
+	public function update(Request $request, $id) {
+      
+	   
+	   //validation rules
+        $rules = [
+			'description' => 'required|string|min:3|max:255',
+			'title' => 'required|string|min:3|max:255',
+			'category_sel' => 'required|integer'
+		];
+		
+		$validator = Validator::make($request->all(),$rules);
+		if ($validator->fails()) {
+			return redirect()->back()
+			->withInput()
+			->withErrors($validator);
+		}
+		else{
+            $data = $request->input();
+			try{
+			
+				
+				wpress_blog_post::where('wpBlog_id', $id)->update([  'wpBlog_text' => $data['description'], 'wpBlog_title' => $data['title'], 'wpBlog_category' => $data['category_sel'] ]);
+                return redirect()->back()->with('success',"Update successfully");
+				
+			}
+			catch(Exception $e){
+				return redirect()->back()->with('success',"Update failed");
+			}
+		}
+
+	   
+    }
+	
+	
+	
+	
 	
 }

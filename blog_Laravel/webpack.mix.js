@@ -13,4 +13,8 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .js('resources/assets/js/wpress_blog.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+   .sass('resources/assets/sass/app.scss', 'public/css') //SAAS
+   .styles([                                      //for pure CSS
+        'resources/assets/css/my_css.css',
+        //'public/css/vendor/videojs.css'
+          ], 'public/css/my_css.css');   //final output to folder 
