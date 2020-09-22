@@ -16,14 +16,14 @@ class wpress_blog_post extends Model
    */
 
   /**
-   * Связанная с моделью таблица.
+   * Connected DB table name.
    *
    * @var string
    */
   protected $table = 'wpress_blog_post';
   
   
-  protected $fillable = ['wpBlog_author', 'title', 'description', 'category_sel'];
+  protected $fillable = ['wpBlog_author', 'title', 'description', 'category_sel'];  //????? protected $fillable = ['wpBlog_author', 'wpBlog_text', 'wpBlog_author', 'wpBlog_category'];
   public $timestamps = false; //to override Error "Unknown Column 'updated_at'" that fires when saving new entry
   
   

@@ -26,19 +26,21 @@ class WpBlog extends Controller
     public function index()
     {
 		//$articles = wpress_blog_post::all(); //Eloquent ORM
-		//$articles = wpress_blog_post::where('wpBlog_status', '1')->all();
-		$categories = wpress_category::all();//for dropdown
+		//$articles = wpress_blog_post::where('wpBlog_status', '1')->all(); //NOT ORM ELOQUENT, QueryBuilder, wont work with $articles->count()
+		$categories = wpress_category::all();//for dropdown select
+		$countArticles = wpress_blog_post::where('wpBlog_status', '1')->get();
 		
+		//if no GET find all articles with pagination
+	    if (!isset($_GET['category'])){ $articles = wpress_blog_post::where('wpBlog_status', '1')->paginate(4);} //object(Illuminate\Database\Eloquent\Collection
 		
-	    if (!isset($_GET['category'])){ $articles = wpress_blog_post::where('wpBlog_status', '1')->get();} //object(Illuminate\Database\Eloquent\Collection
-		
+		//if isset GET, found by category, no pagination
 		if(isset($_GET['category'])){
 			$articles = wpress_blog_post::where('wpBlog_status', '1')->where('wpBlog_category', $_GET['category'] )->get();
 		}
 		
 	
 		
-        return view('wpBlog.wpblog',  compact('articles', 'categories'));
+        return view('wpBlog.wpblog',  compact('articles', 'categories', 'countArticles'));
     }
 	
 	
@@ -129,16 +131,19 @@ class WpBlog extends Controller
 	
 	
 	/**
-     * Delete a selected record.
+     * Delete a selected record. Used to work via $_GET,  but changed to S_POST due security reason-
      *
      * @param  integer $id
      * @return 
      */
-	public function destroy($id) {
+	public function destroy(/*$id*/) {
        /*DB::delete('delete from wpress_blog_post where wpBlog_id = ?',[$id]);
        echo "Record deleted successfully.";
        echo 'Click Here to go back.';
 	   */
+	   
+	   $id = $_POST['id'];
+	  
 	   
 	   //additional check in case user directly intentionally navigates to  ../blog_Laravel/public/delete/12 to not his record
 	   try{
@@ -203,6 +208,20 @@ class WpBlog extends Controller
      */
 	public function update(Request $request, $id) {
       
+	   //additional check in case user directly intentionally navigates to  ../blog_Laravel/public/delete/12 to not his record
+	   try{
+	       $articleOne = wpress_blog_post::where('wpBlog_id',$id)->firstOrFail(); //find the article by id  ->firstOrFail();
+	   } catch (\Exception $e) {
+	   //if(!$articleOne){
+	      throw new \App\Exceptions\myException('Article does not exist');
+	   }
+	   
+	   if( !Auth::check() || $articleOne->wpBlog_author!= auth()->user()->id){
+		   throw new \App\Exceptions\myException('It is not your article to edit');
+	   }
+	   	//additional check in case user directly intentionally navigates to  ../blog_Laravel/public/delete/12 to not his record
+		
+		
 	   
 	   //validation rules
         $rules = [

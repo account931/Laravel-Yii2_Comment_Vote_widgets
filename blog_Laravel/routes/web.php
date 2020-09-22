@@ -35,9 +35,21 @@ Route::post('/formSubmit', 'FormSubmit@index')->name('formsubmit');  //form subm
 Route::get('/wpBlogg', 'WpBlog@index')->name('wpblog');  //WpPress Blog route
 Route::get('createNewWpress', 'WpBlog@create')->name('createNewWpress');  //WpPress route for displaying form to create new entry
 Route::post('/storeNewWpress','WpBlog@store'); //Saving form fields via POST
-Route::get('delete/{id}','WpBlog@destroy');
+Route::post('delete/{id}','WpBlog@destroy');
 Route::get('edit/{id}','WpBlog@edit');
 Route::post('update/{id}','WpBlog@update');
 
+
+
+//Rest Api
+Route::get('/articles', 'Rest@index');       http://localhost/laravel+Yii2_widgets/blog_Laravel/public/articles
+Route::get('articles/{id}', 'Rest@show');  //http://localhost/laravel+Yii2_widgets/blog_Laravel/public/articles/8
+Route::post('articles', 'Rest@store');
+Route::put('articles/{id}', 'Rest@update');
+Route::delete('articles/{id}', 'Rest@delete');
+
+
+//Test Rest Apitest
+Route::get('/testRest','TestRest@index');
 
 

@@ -16,7 +16,7 @@
 						
 						
 						
-                <div class="panel-heading text-warning">WpBlog <span class="small text-danger">(u can delete/edit only your own posts.Log in to have this option)</span> </div>
+                <div class="panel-heading text-warning">WpBlog <span class="small text-danger">(u can delete/edit only your own posts.Log in to have this option. Pagination is set  if NO $_GET, i.e if it displays all articles)</span> </div>
 
                 <div class="panel-body">
 				    
@@ -50,7 +50,7 @@
 
 					
                     <div class="alert alert-success">
-					    Aricles found: {{ $articles->count() }}
+					    Aricles found: {{ $countArticles->count() }}
 					</div>
 					
 					<!--<img class="img-responsive " src="{{URL::to('/')}}/images/error.png"  alt=""/>--> <!-- image -->
@@ -103,21 +103,39 @@
                         
 						
 						
-						<!-- Oprion Icon to delete record (only if your are the author and logged)-->
+						<!-- Displays Icon to delete/edit record (only if your are the author and logged)-->
+						<!-- Delete used to work via $_GET,  but changed to S_POST due security reason-->
+
 						@if(Auth::check())
 						    @if($a->wpBlog_author == auth()->user()->id)
-							  <p>
-						        <button><a href = 'delete/{{ $a->wpBlog_id }}'><span onclick="return confirm('Are you sure to delete?')"> Delete  <img class="deletee" onclick="return confirm('Are you sure to delete?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></span></a></button>
-							    <button><a href = 'edit/{{ $a->wpBlog_id }}'>  <span onclick="return confirm('Are you sure to edit?')">Edit  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>
+							  
+						        <!-- Form to delete the article (via $_POST)-->
+								<form method="post" action="{{ url('/delete', $a->wpBlog_id )}}">
+								    {!! csrf_field() !!}
+									<input type="hidden" value="{{ $a->wpBlog_id }}" name="id" />
+									<button onclick="return confirm('Are you sure to delete?')" type="submit" class="">Delete Post <img class="deletee"  src="{{URL::to("/")}}/images/delete.png"  alt="del"/></button>
+								    <!-- Link to edit the article (via $_GET)-->
+									<button><a href = 'edit/{{ $a->wpBlog_id }}'>  <span onclick="return confirm('Are you sure to edit?')">Edit GET  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>
+								</form>
+								
+							  <p>	
+						        <!--<button><a href = 'delete/{{ $a->wpBlog_id }}'><span onclick="return confirm('Are you sure to delete?')"> Delete  <img class="deletee" onclick="return confirm('Are you sure to delete?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></span></a></button>-->
 
 							  </p>
 							@endif
 						@endif
-						
+						<!-- End Displays Icon to delete/edit record (only if your are the author and logged)-->
+
 						
 						<hr> 
 
                     @endforeach
+					
+					<!-- Display pagination (only if NO $_GET, i.e display all articles) -->
+					@if(!isset($_GET['category']))
+					    {{ $articles->links() }}
+					@endif
+					
 				    <!-- End Display WP Blogs with Blade (variant 1) -->
 
 					

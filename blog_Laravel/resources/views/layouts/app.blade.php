@@ -62,13 +62,16 @@
 					 <!--<li><a href="{{ route('register') }}">Gii</a></li>-->
 					 <li class="{{ Request::is('showProfile*') ? 'active' : '' }}">     <a href="{{ url('/showProfile') }}">ShowProfile     </a></li>
 					 <li class="{{ Request::is('EloquentExample*') ? 'active' : '' }}"> <a href="{{ url('/EloquentExample') }}">DB Eloquent </a></li>
-					 <li><a href="{{ route('register') }}">RBAC</a></li>
-					 <li><a href="{{ route('register') }}">REST</a></li>
-					 <li><a href="{{ route('register') }}">Ajax</a></li>
+					 <li><a href="{{ route('register') }}">RBAC(N/A)</a></li>
+					 
+					 
+					 <li class="{{ Request::is('testRest*') ? 'active' : '' }}">  <a href="{{ url('/testRest') }}">Test Rest </a></li>
+					 
+					 <li><a href="{{ route('register') }}">Ajax(N/A)</a></li>
 					 
 					 <li class="{{ Request::is('wpBlogg*') ? 'active' : '' }}"> <a href="{{ route('wpblog') }}" > WPress </a> </li> <!-- NOTE: name vs route -->
 					 
-					 <li><a href="{{ route('register') }}">Gii</a></li>
+					 <li><a href="{{ route('register') }}">Gii(N/A)</a></li>
                      <li class="{{ Request::is('formSubmit*') ? 'active' : '' }}">      <a href="{{ url('/formSubmit') }}"> FormSubmit  </a></li>
 
 					
@@ -117,5 +120,13 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('js/wpress_blog.js') }}"></script> <!-- wpress_blog JS -->
+	
+    <!-- In layout template -->
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['testRest', 'register'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
+        <script src="{{ asset('js/test-rest/test-rest.js') }}"></script>
+    @endif	
+
+
+
 </body>
 </html>

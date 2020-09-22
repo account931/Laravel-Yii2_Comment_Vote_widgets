@@ -18,10 +18,11 @@ Table of Content:
 11.DB SQL Eloquent queries
 12.Laravel Crud
 13.REST API
+13.1  Has Many relation in JSON (REST API)
 14. Laravel Flash messages
-15. Js/Css minify Laravel Mix
+15. Js/Css, minify, Laravel Mix
 16. CRUD
-
+17. RBAC 
 
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
@@ -289,6 +290,10 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
    in Controller => 
       $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get();
       $articleOne[0]->wpBlog_author; // $articleOne>wpBlog_author;  DOES NOT WORK (<= NOT TRUE???)
+	  
+	# Pagination => 
+	   Controller =>   $articles = wpress_blog_post::where('wpBlog_status', '1')->paginate(3);
+	   View =>      {{ $articles->links() }}
 //================================================================================================
 
 
@@ -308,8 +313,29 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 
 //================================================================================================
-13.REST API => see docs at  https://habr.com/ru/post/441946/
+13.REST API => see docs at  https://developernotes.ru/laravel-5/rest-restful-api
 //================================================================================================
+
+
+
+
+
+//================================================================================================
+
+13.1  Has Many relation in JSON (REST API)
+
+1. In model (REST model) add relation:
+     public function authorName()
+      {return $this->hasOne('App\users', 'id', 'wpBlog_author');      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
+2. In controller:
+    public function show($id)
+        return WpressRest::with('authorName')->where('wpBlog_id', $id)->get();
+3. Read in JS ajax success (while DB field name is {wpBlog_category}), author_name is model hasOne function, {name} is DB field)
+     data[i].author_name.name 
+	
+//================================================================================================
+
+
 
 
 
@@ -339,7 +365,7 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 
 //================================================================================================
-15. Js/Css minify Laravel Mix
+15. Js/Css, minify, Laravel Mix
    Works so muck like Browserify + Gulp.......
     All Development css/js (js/css u're changing) are located in /resources/assets/. They are not included to index.php (\resources\views\layouts). 
 	Included css/js are in /public. To convert Development assets to Production(to minify, concatenate), run => npm run production
@@ -355,7 +381,30 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
    
    Alternative:
    can make all css/js edits in /public. When it comes to production< copy all css/js from /public to /resources/assets/, run {npm run production} and get in public all concatenated files
-   //================================================================================================
+   
+
+
+------------------------------------------------------
+ #Loading CSS and JS files on specific views in Laravel 5.2
+  Variant 1 =>
+    @extends('layouts.master')
+    @section('styles')
+        <link href="{{asset('assets/css/custom-style.css')}}" />
+    @stop
+  
+  Variant 2 (working) =>
+    <!-- In layout template -->
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['testRest', 'register']))
+        <script src="{{ asset('js/test-rest/test-rest.js') }}"></script>
+    @endif	
+	
+	Variant 3 (working) =>
+	    <script type="text/javascript" src="{{ URL::to('js/test-rest/test-rest.js') }}"></script>	
+
+
+//================================================================================================
+
+
 
 
 
@@ -374,6 +423,22 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
   
   16.2 Update 
 	   wpress_blog_post::where('wpBlog_id', $id)->update([  'wpBlog_text' => $data['description'], 'wpBlog_title' => $data['title'], 'wpBlog_category' => $data['category_sel'] ]);
+
+//================================================================================================
+
+
+
+
+
+
+
+
+
+
+//================================================================================================
+
+17. RBAC 
+https://github.com/Zizaco/entrust
 
 //================================================================================================
 
@@ -413,24 +478,31 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 # Turn on debugger => go to .env => APP_DEBUG=true
 
-# js confirm to delete =>  <button><a href = 'delete/{{ $a->wpBlog_id }}'> Delete  <img class="deletee" onclick="return confirm('Are you sure to delete?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></a></button>
-
+# js confirm to delete =>  
+     <button><a href = 'delete/{{ $a->wpBlog_id }}'> Delete  <img class="deletee" onclick="return confirm('Are you sure to delete?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></a></button>
+     <button onclick="return confirm('Are you sure to delete?')" type="submit" class="btn">
+	 
 #Redirect=>
   return redirect()->back()->with('success',"Update successfully");
   return redirect()->back()->withInput()->withErrors($validator);
   return redirect('/wpBlogg')->with('flashMessage',"Record deleted successfully");
 
 
-
+# Get current route path (returns part after last slash, i.e "testRest")
+  use Illuminate\Support\Facades\Route;
+  $currentPath= Route::getFacadeRoot()->current()->uri();
 
 
 
 //================================================================================================
 36. Known Errors
-# public $timestamps = false; //put in model to override Error "Unknown Column 'updated_at'" that fires when saving new entry
 
+# Error "Unknown Column 'updated_at' => public $timestamps = false; //put in model to override Error "Unknown Column 'updated_at'" that fires when saving new entry
 
+# Error "TokenMismatchException" while form submitting => 
+   change 	<input type="hidden" value="{{ csrf_token() }}" name="_token{{$loop->iteration}} " /> to   {!! csrf_field() !!}
 
+ 
 
 
 
