@@ -1,5 +1,5 @@
 <?php
-//REST API for table
+//REST API for table {wpress_blog_post}
 namespace App\models\Rest;
 
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +18,7 @@ class WpressRest extends Model
   
   protected $fillable = ['wpBlog_author', 'wpBlog_text', 'wpBlog_author', 'wpBlog_category'];
 
-  protected $hidden = ['created_at'];
+  protected $hidden = ['created_at', 'password'];
   
   
   
@@ -29,11 +29,12 @@ class WpressRest extends Model
   public function authorName()
   {
     //return $this->belongsTo('App\users', 'id', 'wpBlog_author'); //return $this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');
-	return $this->hasOne('App\users', 'id', 'wpBlog_author');      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');
+	//to exclude PASSWORD from returning JSON add to XXX->select(array('id', 'name')) otherwise it returns all fields from table {user}
+	return $this->hasOne('App\users', 'id', 'wpBlog_author')->select(array('id', 'name'));      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');
   }
   
   
-  
+ 
   
   /**
    * hasMany => get category name from table {wpress_category} based on column {wpBlog_category} in table {wpress_blog_post} .

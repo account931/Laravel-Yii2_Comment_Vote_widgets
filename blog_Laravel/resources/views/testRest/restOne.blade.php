@@ -39,7 +39,8 @@
 					 
 					 <!---- Rest Api response, html() by ajax -->
 					 <div class="col-sm-12 col-xs-12" id="result">
-					     Response
+					     <h3>Expect Response here </h3>
+						 
 					 </div>
 
                    

@@ -314,6 +314,15 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 //================================================================================================
 13.REST API => see docs at  https://developernotes.ru/laravel-5/rest-restful-api
+   Endpoints:
+    #routes for REST must be specifies in {routes/api.php} not {routes/web.php}
+      get all articles from Db table {wpress_blog_post}  => /GET http://localhost/laravel+Yii2_widgets/blog_Laravel/public/api/articles
+      get one article  from Db table {wpress_blog_post}  => /GET http://localhost/laravel+Yii2_widgets/blog_Laravel/public/api/articles/8
+	  
+	#If u mistakenly put routes in {routes/web.php}, REST Api endpoints will be => 
+            http://localhost/laravel+Yii2_widgets/blog_Laravel/public/articles     http://localhost/laravel+Yii2_widgets/blog_Laravel/public/articles/8
+	  
+	
 //================================================================================================
 
 
@@ -325,13 +334,23 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 13.1  Has Many relation in JSON (REST API)
 
 1. In model (REST model) add relation:
-     public function authorName()
-      {return $this->hasOne('App\users', 'id', 'wpBlog_author');      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
+
+     public function authorName() //hasOne
+       {return $this->hasOne('App\users', 'id', 'wpBlog_author');      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
+    
+	public function categoryNames(){ //hasMany
+    return $this->belongsTo('App\models\wpress_category', 'wpBlog_category','wpCategory_id');  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');}
+	  
 2. In controller:
     public function show($id)
-        return WpressRest::with('authorName')->where('wpBlog_id', $id)->get();
-3. Read in JS ajax success (while DB field name is {wpBlog_category}), author_name is model hasOne function, {name} is DB field)
+        return WpressRest::with('authorName', 'categoryNames')->where('wpBlog_id', $id)->get(); //return WpressRest::with('authorName')->where('wpBlog_id', $id)->get();
+
+3. Read in JS ajax success (while DB field name is {wpBlog_author}), author_name is model hasOne function, {name} is DB field)
      data[i].author_name.name 
+	 
+	 
+#to exclude PASSWORD from returning JSON add to XXX->select(array('id', 'name')) otherwise it returns all fields from table {user}. protected $hidden = ['created_at', 'password']; works for non-relational fields
+    return $this->hasOne('App\users', 'id', 'wpBlog_author')->select(array('id', 'name')); 
 	
 //================================================================================================
 

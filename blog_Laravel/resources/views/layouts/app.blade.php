@@ -64,7 +64,7 @@
 					 <li class="{{ Request::is('EloquentExample*') ? 'active' : '' }}"> <a href="{{ url('/EloquentExample') }}">DB Eloquent </a></li>
 					 <li><a href="{{ route('register') }}">RBAC(N/A)</a></li>
 					 
-					 
+					 <li><a href="api/articles {{--$_SERVER['SERVER_NAME']. '/api/articles' --}}">Rest</a></li><!-- Corrupted way for link-->
 					 <li class="{{ Request::is('testRest*') ? 'active' : '' }}">  <a href="{{ url('/testRest') }}">Test Rest </a></li>
 					 
 					 <li><a href="{{ route('register') }}">Ajax(N/A)</a></li>

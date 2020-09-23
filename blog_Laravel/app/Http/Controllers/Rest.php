@@ -7,23 +7,32 @@ use App\models\Rest\WpressRest; //Rest model for all posts
 
 class Rest extends Controller
 {
-    //
-	
+    
+  /**
+   * returns all blogs/articles
+   * @return 
+   */
 	public function index()
     {
         return WpressRest::all();
     }
  
- 
+   /**
+   * returns One blogs/articles using hasOne/hasMany relations
+   * @return 
+   */
     public function show($id)
     {
         //return WpressRest::find($id);
-		return WpressRest::with('authorName')->where('wpBlog_id', $id)->get();
+		return WpressRest::with('authorName', 'categoryNames')->where('wpBlog_id', $id)->get();
 		  
     }
 
 	
-	
+  /**
+   * stores/save new entry (Insert)
+   * @return 
+   */
     public function store(Request $request)
     {
         return WpressRest::create($request->all());

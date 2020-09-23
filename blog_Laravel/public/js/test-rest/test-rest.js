@@ -26,8 +26,9 @@ $(document).ready(function(){
        
 	  //getting the path to current folder with JS to form url for ajax, i.e /yii2_REST_and_Rbac_2019/yii-basic-app-2.0.15/basic/web/booking-cph/ajax_get_6_month
 		var loc = window.location.pathname;
-        var dir = loc.substring(0, loc.lastIndexOf('/'));  ///yii2_REST_and_Rbac_2019/yii-basic-app-2.0.15/basic/web/manual-auto-quiz
-		var urlX = dir + '/articles/'+id;
+        var dir = loc.substring(0, loc.lastIndexOf('/'));  ///laravel+Yii2_widgets/blog_Laravel/public    //yii2_REST_and_Rbac_2019/yii-basic-app-2.0.15/basic/web/manual-auto-quiz
+		alert(dir);
+		var urlX = dir + '/api/articles/'+id;
       
 	  // send ajax onLoad to PHP handler action to get list of questions  ************ 
         $.ajax({
@@ -56,8 +57,8 @@ $(document).ready(function(){
 					 finalText+= "<p> ID: "    + data[i].wpBlog_id    + "</p>";
 					 finalText+= "<p> Title: " + data[i].wpBlog_title + "</p>";
 					 finalText+= "<p> Text: " +  data[i].wpBlog_text  + "</p>";
-					 finalText+= "<p> Author: "   +  data[i].author_name.name + "</p>";
-					 finalText+= "<p> Category: " +  data[i].wpBlog_category  + "</p>";
+					 finalText+= "<p> Author <span class='small'>(hasOne)</span>: "   +  data[i].author_name.name + "</p>";   //(while DB field name is {wpBlog_author}), author_name is model hasOne function, {name} is DB field)   //data[i].wpBlog_author is an foreign key ID
+					 finalText+= "<p> Category <span class='small'>(hasMany)</span>: " + data[i].category_names.wpCategory_name  + "</p>";  //data[i].wpBlog_category is an foreign key ID
 
 				 }
 			   

@@ -16,3 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+//Rest Api
+Route::get('/articles', 'Rest@index');       http://localhost/laravel+Yii2_widgets/blog_Laravel/public/articles
+Route::get('articles/{id}', 'Rest@show');  //http://localhost/laravel+Yii2_widgets/blog_Laravel/public/articles/8
+Route::post('articles', 'Rest@store');
+Route::put('articles/{id}', 'Rest@update');
+Route::delete('articles/{id}', 'Rest@delete');
