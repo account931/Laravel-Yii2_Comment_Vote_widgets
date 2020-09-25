@@ -385,6 +385,7 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 //================================================================================================
 15. Js/Css, minify, Laravel Mix
+   File => /webpack.mix.js
    Works so muck like Browserify + Gulp.......
     All Development css/js (js/css u're changing) are located in /resources/assets/. They are not included to index.php (\resources\views\layouts). 
 	Included css/js are in /public. To convert Development assets to Production(to minify, concatenate), run => npm run production
