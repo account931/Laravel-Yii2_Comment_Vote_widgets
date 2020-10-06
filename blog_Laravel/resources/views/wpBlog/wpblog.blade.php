@@ -118,16 +118,22 @@
 						    @if($a->wpBlog_author == auth()->user()->id)
 							  
 						        <!-- Form to delete the article (via $_POST)-->
-								<form method="post" action="{{ url('/delete', $a->wpBlog_id )}}">
-								    {!! csrf_field() !!}
-									<input type="hidden" value="{{ $a->wpBlog_id }}" name="id" />
-									<button onclick="return confirm('Are you sure to delete?')" type="submit" class="">Delete /POST <img class="deletee"  src="{{URL::to("/")}}/images/delete.png"  alt="del"/></button>
-								    
-								</form>
+								<div class="row"> <!-- row-no-gutters remove the gutters from a row and its columns -->
+								<div class="col-sm-4 col-xs-6" style="text-align:right;">
+								    <form method="post" action="{{ url('/delete', $a->wpBlog_id )}}">
+								        {!! csrf_field() !!}
+									    <input type="hidden" value="{{ $a->wpBlog_id }}" name="id" />
+									    <button onclick="return confirm('Are you sure to delete?')" type="submit" class="">Delete via /POST <img class="deletee"  src="{{URL::to("/")}}/images/delete.png"  alt="del"/></button>
+								    </form>
+								</div>
                                 
 								<!-- Link to edit the article (via $_GET)-->
-								<button><a href = 'edit/{{ $a->wpBlog_id }}'>  <span onclick="return confirm('Are you sure to edit?')">Edit it__ /GET  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>
+								<div class="col-sm-4 col-xs-6">
+								    <button><a href = 'edit/{{ $a->wpBlog_id }}'>  <span onclick="return confirm('Are you sure to edit?')">Edit via/GET  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>
+								</div>
 								
+							
+								</div><!-- end .row-->
 							  <p>	
 						        <!--<button><a href = 'delete/{{ $a->wpBlog_id }}'><span onclick="return confirm('Are you sure to delete?')"> Delete  <img class="deletee" onclick="return confirm('Are you sure to delete?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></span></a></button>-->
 

@@ -4,7 +4,7 @@ Credentials: dimmm931@gmail.com =>  dimax2
 Composer -> via Windows cmd, artisan -> via OpenServer, git -> via Windows cmd
 NPM -> composer
 
-On T42: 
+On T42: so far the same
 
 Table of Content:
 1.How to install Laravel
@@ -222,6 +222,8 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 //================================================================================================
 9.9.Migrations/Seeders    => see docs at => https://laravel.ru/docs/v5/migrations
+  see examples at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/tree/master/blog_Laravel/database/migrations
+  
   #create migration   =>   php artisan make:migration create_users_table
   #run all migrations =>   php artisan migrate
   
@@ -234,9 +236,14 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
   
   php artisan migrate:refresh
   
+  //----------------------------
+  
   #SEEDER
+  see examples at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/seeds/DatabaseSeeder.php
+  
   //Загрузка начальных данных в БД
   Для добавления данных в БД используйте Artisan-команду => php artisan db:seed
+  # if u run seeder command and Seeder Class contain {DB::table('users')->delete()}, it will overwrite all data
 
 //================================================================================================
 
@@ -482,6 +489,14 @@ https://github.com/Zizaco/entrust
 	 
 //================================================================================================ 
 35.Miscellaneous VA Laravel
+# bootstrap => <div class="col-lg-3 col-md-3 col-sm-4">  <div class="col-sm-4 col-xs-4"> => Pc/mobile
+    .xs (phones), .sm (tablets), .md (desktops), and .lg (larger desktops) 
+    .col- (extra small devices - screen width less than 576px)
+	.col-sm- (small devices - screen width equal to or greater than 576px)
+    .col-md- (medium devices - screen width equal to or greater than 768px)
+    .col-lg- (large devices - screen width equal to or greater than 992px)
+    .col-xl- (xlarge devices - screen width equal to or greater than 1200px)
+	
 #image =>           <img class="img-responsive my-cph" src="{{URL::to("/")}}/images/cph.jpg"  alt="a"/>
 #link a href => 	<li><a href="{{ route('register') }}">Gii</a></li>
 
