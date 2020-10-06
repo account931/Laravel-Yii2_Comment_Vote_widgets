@@ -1,7 +1,10 @@
 Laravel Framework 5.4.36
 Credentials: dimmm931@gmail.com =>  dimax2
+
 Composer -> via Windows cmd, artisan -> via OpenServer, git -> via Windows cmd
 NPM -> composer
+
+On T42: 
 
 Table of Content:
 1.How to install Laravel
@@ -250,7 +253,9 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 10.1 hasOne relation
   1.Specify hasOne method in parent model  => 
-      public function authorName(){return $this->hasOne('App\users', 'id', 'wpBlog_author');      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
+      public function authorName(){return $this->hasOne('App\users', 'id', 'wpBlog_author')->withDefault(['name' => 'Unknown']);      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
+      //->withDefault(['name' => 'Unknown']) this prevents the crash if this author id does not exist in table User (for example after fresh install and u forget to add users to user table)
+
   2.Use in view =>
       @foreach ($articles as $a){ 	p>Author:   {{ $a->authorName->name   }}</p> <!--   --> 
 
@@ -519,12 +524,16 @@ https://github.com/Zizaco/entrust
 
 # Error "Unknown Column 'updated_at' => public $timestamps = false; //put in model to override Error "Unknown Column 'updated_at'" that fires when saving new entry
 
+# Error "Specified key was too long; max key length is 767 bytes" => see 9.Migrations/Seeders
+
 # Error "TokenMismatchException" while form submitting => 
    change 	<input type="hidden" value="{{ csrf_token() }}" name="_token{{$loop->iteration}} " /> to   {!! csrf_field() !!}
 
- 
+# Error after install & migrate new Laravel 
+"The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths. laravel 5.3
 
+You need to have .env on your appication folder then run: => $ php artisan key:generate
+If you don't have .env copy from .env.example: =>   $ cp .env.example .env
 
-
-
+#
 

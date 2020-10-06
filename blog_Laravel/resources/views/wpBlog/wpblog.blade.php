@@ -68,19 +68,27 @@
 					
 					<div class="col-sm-12 col-xs-12">
 
-					
+					@php
+					//getting correct article number (i.e if it on page=2, must not start with 1, but 5 ,etc )
+					if (isset($_GET['page'])){
+					$itemNumber = ($_GET['page'] -1 ) * 4 + 1;
+					} else {
+						$itemNumber = 1;
+					}
+					@endphp
 					
 		            <!-- Display WP Blogs with Blade (variant 1) -->
 		            @foreach ($articles as $a)
 						<p> <img class="img-wpblog" src="{{URL::to('/')}}/images/item.png"  alt=""/> </p>
-					    <p> Article number {{ $loop->iteration }}  </p> <!-- {{ $loop->iteration }} is Blade equivalentof $i++ -->						
-                        <p>Title: <b>  {{ $a->wpBlog_title     }}</b></p>
+					    <p> Article number :{{ $loop->iteration }}  </p> <!-- {{ $loop->iteration }} is Blade equivalentof $i++ -->						
+                        <p> Article number true: {{ $itemNumber++ }}  </p>
+						<p>Title: <b>  {{ $a->wpBlog_title     }}</b></p>
 						
 						<p class="text-truncated" title="click to expand">  {{ $a->truncateTextProcessor($a->wpBlog_text, 46)    }} </p>  <!-- truncated article text -->
 						<p class="text-hidden">     {{ $a->wpBlog_text    }} </p>  <!-- hidden article text -->
 
 						
-						<p class='small font-italic'> Author:   {{ $a->authorName->name  }}   {{-- $a->authorName['name']   --}}</p> <!-- hasOne relations to show author name --> <!--  " $a->wpBlog_author" returns id, "authorName()" is a model hasOne function    }}</p> --> 
+						<p class='small font-italic'>  {{ $a->authorName->name  }}   {{-- $a->authorName['name']   --}}</p> <!-- hasOne relations to show author name --> <!--  " $a->wpBlog_author" returns id, "authorName()" is a model hasOne function    }}</p> --> 
 						
 						<!-- END NOT WORKING -->
 						
@@ -113,10 +121,12 @@
 								<form method="post" action="{{ url('/delete', $a->wpBlog_id )}}">
 								    {!! csrf_field() !!}
 									<input type="hidden" value="{{ $a->wpBlog_id }}" name="id" />
-									<button onclick="return confirm('Are you sure to delete?')" type="submit" class="">Delete Post <img class="deletee"  src="{{URL::to("/")}}/images/delete.png"  alt="del"/></button>
-								    <!-- Link to edit the article (via $_GET)-->
-									<button><a href = 'edit/{{ $a->wpBlog_id }}'>  <span onclick="return confirm('Are you sure to edit?')">Edit GET  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>
+									<button onclick="return confirm('Are you sure to delete?')" type="submit" class="">Delete /POST <img class="deletee"  src="{{URL::to("/")}}/images/delete.png"  alt="del"/></button>
+								    
 								</form>
+                                
+								<!-- Link to edit the article (via $_GET)-->
+								<button><a href = 'edit/{{ $a->wpBlog_id }}'>  <span onclick="return confirm('Are you sure to edit?')">Edit it__ /GET  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>
 								
 							  <p>	
 						        <!--<button><a href = 'delete/{{ $a->wpBlog_id }}'><span onclick="return confirm('Are you sure to delete?')"> Delete  <img class="deletee" onclick="return confirm('Are you sure to delete?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></span></a></button>-->
