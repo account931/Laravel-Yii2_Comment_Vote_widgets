@@ -1,0 +1,1 @@
+Though, we have migration and seeders, SQL Dump won't hurt
