@@ -24,6 +24,8 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>   
 	<!-- Bootsrap -->
 	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
 	<!-- Fa Library -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	
@@ -72,7 +74,32 @@
 					 <li class="{{ Request::is('wpBlogg*') ? 'active' : '' }}"> <a href="{{ route('wpblog') }}" > WPress </a> </li> <!-- NOTE: name vs route -->
 					 
 					 <li><a href="{{ route('register') }}">Gii(N/A)</a></li>
-                     <li class="{{ Request::is('formSubmit*') ? 'active' : '' }}">      <a href="{{ url('/formSubmit') }}"> FormSubmit  </a></li>
+					 <li><a href="{{ route('register') }}">T()(N/A)</a></li>
+					 
+					 <!-- Drop Down submenu -->
+					 <!--<span class="dropdown">
+					 <li class=""  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                         Drop <span class="caret"></span>
+                    </li>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Действие 1</a></li>
+                        <li><a href="#">Действие 2</a></li>
+                        <li><a href="#">Действие 3</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Действие 4</a></li>
+                    </ul>
+                    </span>-->
+					 
+					 
+					 <li><a class="navbar-nav1" href="#">Drop <span class="caret"></span></a>
+					     <ul class="dropdown-submenu">
+						     <li><a href="#">Drop 1</span></a>
+							 <li><a href="#">Drop 2</span></a>
+						 </ul>
+					 </li>
+					 
+					 
+					 <li class="{{ Request::is('formSubmit*') ? 'active' : '' }}">      <a href="{{ url('/formSubmit') }}"> FormSubmit  </a></li> <!-- test for form submit-->
 
 					
                         <!-- Authentication Links -->
@@ -119,6 +146,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+	<script src="{{ asset('js/my-js.js') }}"></script>
 	<script src="{{ asset('js/wpress_blog.js') }}"></script> <!-- wpress_blog JS -->
 	
     <!-- In layout template -->

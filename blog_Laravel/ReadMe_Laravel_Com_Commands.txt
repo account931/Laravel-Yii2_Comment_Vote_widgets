@@ -1,4 +1,5 @@
 Laravel Framework 5.4.36
+OpenServer 5.2.2 Php 7.2
 Credentials: dimmm931@gmail.com =>  dimax2
 
 Composer -> via Windows cmd, artisan -> via OpenServer, git -> via Windows cmd
@@ -8,6 +9,7 @@ On T42: so far the same
 
 Table of Content:
 1.How to install Laravel
+1.1 How to copy/clone existing Laravel project and run
 2.
 3. Blade
 4.Error handling, throw custom exceptions 
@@ -56,10 +58,30 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 //================================= 
 
-#check if user is not guest =>  use Illuminate\Support\Facades\Auth; if (Auth::check()) {} => if (Auth::guest()
 
+//============================================	
 
-#ACF Yii2 equivalent, let only logged users, use in Controller =>   public function __construct(){$this->middleware('auth');}
+1.1 How to copy/clone existing Laravel project and run
+credits => https://si-dev.com/ru/portfolio/larablog
+
+Клонировать или загрузить репозиторий (ссылка на гитхаб ниже)
+Перейти в директорию проекта и выполнить composer install
+В корне проекта на основе .env.example создать файл .env с Вашими настройками (параметры подключения к БД и т.д.)
+Выполнить php artisan key:generate
+Выполнить php artisan migrate
+Если есть необходимость заполнения базы данных фейковыми данными, выполнить php artisan db:seed 
+Выполнить php artisan passport:install
+-------------------------
+Bonus => set-up for React
+После сборки проекта в корне появится директория public с файлом index.html и поддиректориями js, css и images с соответствующими файлами
+USAGE
+Клонируйте или загрузите репозиторий (ниже ссылка на гитхаб)
+Зайдите в директорию проекта и устновите зависимости выполнив команду npm install
+Запустить проекта в режиме разработки: npm run start
+Собрать проект: npm run build
+
+//============================================	
+
 
 
 
@@ -418,7 +440,7 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 
 ------------------------------------------------------
  #Loading CSS and JS files on specific views in Laravel 5.2
-  Variant 1 =>
+  Variant 1 (not working????) =>
     @extends('layouts.master')
     @section('styles')
         <link href="{{asset('assets/css/custom-style.css')}}" />
@@ -513,6 +535,10 @@ https://github.com/Zizaco/entrust
 #isGuest var 1 => use Illuminate\Support\Facades\Auth; if(!Auth::check()){)
 #isGuest var 2  =>   public function __construct(){$this->middleware('auth');}
 
+#check if user is not guest =>  use Illuminate\Support\Facades\Auth; if (Auth::check()) {} => if (Auth::guest()
+#ACF Yii2 equivalent, let only logged users, use in Controller =>   public function __construct(){$this->middleware('auth');}
+
+
 #current user => use Illuminate\Support\Facades\Auth;  $id = auth()->user()->id; 
 
 
@@ -531,6 +557,8 @@ https://github.com/Zizaco/entrust
 # Get current route path (returns part after last slash, i.e "testRest")
   use Illuminate\Support\Facades\Route;
   $currentPath= Route::getFacadeRoot()->current()->uri();
+
+
 
 
 
