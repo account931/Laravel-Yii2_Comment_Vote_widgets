@@ -64,7 +64,6 @@
 					 <!--<li><a href="{{ route('register') }}">Gii</a></li>-->
 					 <li class="{{ Request::is('showProfile*') ? 'active' : '' }}">     <a href="{{ url('/showProfile') }}">ShowProfile     </a></li>
 					 <li class="{{ Request::is('EloquentExample*') ? 'active' : '' }}"> <a href="{{ url('/EloquentExample') }}">DB Eloquent </a></li>
-					 <li><a href="{{ route('register') }}">RBAC(N/A)</a></li>
 					 
 					 <li><a href="api/articles {{--$_SERVER['SERVER_NAME']. '/api/articles' --}}">Rest</a></li><!-- Corrupted way for link-->
 					 <li class="{{ Request::is('testRest*') ? 'active' : '' }}">  <a href="{{ url('/testRest') }}">Test Rest </a></li>
@@ -74,29 +73,34 @@
 					 <li class="{{ Request::is('wpBlogg*') ? 'active' : '' }}"> <a href="{{ route('wpblog') }}" > WPress </a> </li> <!-- NOTE: name vs route -->
 					 
 					 <li><a href="{{ route('register') }}">Gii(N/A)</a></li>
-					 <li><a href="{{ route('register') }}">T()(N/A)</a></li>
-					 
-					 <!-- Drop Down submenu -->
-					 <!--<span class="dropdown">
-					 <li class=""  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                         Drop <span class="caret"></span>
-                    </li>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">Действие 1</a></li>
-                        <li><a href="#">Действие 2</a></li>
-                        <li><a href="#">Действие 3</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Действие 4</a></li>
-                    </ul>
-                    </span>-->
 					 
 					 
+					 
+					 
+					 <!-- DropDown manual -->
 					 <li><a class="navbar-nav1" href="#">Drop <span class="caret"></span></a>
 					     <ul class="dropdown-submenu">
 						     <li><a href="#">Drop 1</span></a>
 							 <li><a href="#">Drop 2</span></a>
 						 </ul>
 					 </li>
+					 <!-- END DropDown manual -->
+					 
+					 
+					 
+					 <!---------- Submenu DropDown!!!! (Bootsrap) ------------------>
+					 <li class="dropdown">
+                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                             Drop2<span class="caret"></span>
+                         </a>
+						
+                         <ul class="dropdown-menu" role="menu">
+                             <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
+							 <li><a href="#">RBAC(N/A)</span></a>    
+                         </ul>
+                       </li>
+					 <!-- END Submenu DropDown!!!! (Bootsrap) -->
+					 
 					 
 					 
 					 <li class="{{ Request::is('formSubmit*') ? 'active' : '' }}">      <a href="{{ url('/formSubmit') }}"> FormSubmit  </a></li> <!-- test for form submit-->

@@ -24,7 +24,7 @@
  
  
  
-  /*--------------------------- WPRESS Blog */
+ /*--------------------------- WPRESS Blog */
   .text-hidden{display:none;}
  
   .text-truncated, .text-hidden{cursor:pointer;}
@@ -58,3 +58,16 @@
  @media screen and (max-width: 480px) { 
      .dropdown-submenu{width:60%; left:35%;}
  }
+
+/*--------------------------- END  WPRESS Blog */
+
+
+
+
+/*--------------------------- Multilanguage -- */
+ 
+ /*small flags in dropdown in multilanguage/index */
+.small-flag img {
+	width: 6%;
+}
+/*--------------------------- Multilanguage -- */

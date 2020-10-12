@@ -28,14 +28,23 @@ class WpBlog extends Controller
 		//$articles = wpress_blog_post::all(); //Eloquent ORM
 		//$articles = wpress_blog_post::where('wpBlog_status', '1')->all(); //NOT ORM ELOQUENT, QueryBuilder, wont work with $articles->count()
 		$categories = wpress_category::all();//for dropdown select
-		$countArticles = wpress_blog_post::where('wpBlog_status', '1')->get();
+		//$countArticles = wpress_blog_post::where('wpBlog_status', '1')->get();
 		
 		//if no GET find all articles with pagination
-	    if (!isset($_GET['category'])){ $articles = wpress_blog_post::where('wpBlog_status', '1')->paginate(4);} //object(Illuminate\Database\Eloquent\Collection
+	    if (!isset($_GET['category'])){ 
+		    //found articles with pagination
+		    $articles = wpress_blog_post::where('wpBlog_status', '1')->paginate(4); //object(Illuminate\Database\Eloquent\Collection
+		    //count found articles
+			$countArticles = wpress_blog_post::where('wpBlog_status', '1')->get();
+		}
 		
 		//if isset GET, found by category, no pagination
 		if(isset($_GET['category'])){
+			//found articles without pagination
 			$articles = wpress_blog_post::where('wpBlog_status', '1')->where('wpBlog_category', $_GET['category'] )->get();
+		    //count found articles
+			$countArticles = wpress_blog_post::where('wpBlog_status', '1')->where('wpBlog_category', $_GET['category'] )->get();
+
 		}
 		
 	

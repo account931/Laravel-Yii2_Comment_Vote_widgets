@@ -47,3 +47,5 @@ Route::post('update/{id}','WpBlog@update');
 Route::get('/testRest','TestRest@index');
 
 
+//multilanguage
+Route::get('/multilanguage', 'MultiLanguage@index')->name('multilanguage'); 

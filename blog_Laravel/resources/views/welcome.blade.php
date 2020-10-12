@@ -10,18 +10,20 @@
 
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <!-- <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css"> -->
 
         <!-- Styles -->
         <style>
-            html, body {
+		     /* Below part CAUSES COLOR CRASH */
+            /*
+			html, body {
                 background-color: #fff;
-                color: #636b6f;
+                color: black; #636b6f;
                 font-family: 'Raleway', sans-serif;
                 font-weight: 100;
                 height: 100vh;
                 margin: 0;
-            }
+            } */
 
             .full-height {
                 height: 100vh;
@@ -52,7 +54,7 @@
             }
 
             .links > a {
-                color: #636b6f;
+                /*color: #636b6f;*/
                 padding: 0 25px;
                 font-size: 12px;
                 font-weight: 600;
@@ -64,11 +66,11 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
-			.my-main {background:lavender;}
-        </style>
-    <!--</head>
-    <body>
-	-->
+			/*.my-main {background:lavender;}*/
+        </style> 
+    <!-- </head> -->
+    <!-- <body> -->
+	
 	
 	@extends('layouts.app')
 
@@ -95,8 +97,10 @@
 			    
 				
                 <div class="title m-b-md my-title">
-                    Laravel CPH 2019
+                   <center> <h1>Laravel CPH 2019</h1> </center> 
                 </div>
+				
+				
 
                 <div class="links">
 				    <div class="col-sm-4 col-xs-6">

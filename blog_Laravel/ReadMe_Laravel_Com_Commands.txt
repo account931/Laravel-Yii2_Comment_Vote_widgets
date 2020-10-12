@@ -28,6 +28,9 @@ Table of Content:
 15. Js/Css, minify, Laravel Mix
 16. CRUD
 17. RBAC 
+18. Multilanguges (Localization)
+19. Cookie.
+
 
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
@@ -498,6 +501,43 @@ https://github.com/Zizaco/entrust
 
 
 
+
+
+
+//================================================================================================
+18. Multilanguges (Localization). See example at => 
+use Illuminate\Support\Facades\App;
+
+#Store language translations in  folder /resources/lang => en/ru/dk....
+
+#Change language with => App::setLocale('ua');
+
+#Use In view =>
+{{ trans('message.welcome') }} OR @lang('message.welcome')
+//================================================================================================
+
+
+
+
+
+
+
+//================================================================================================
+19. Cookie. See example at => 
+#Set cookie =>
+   use Cookie; Cookie::queue('language', $lang, 9999); //working!!!!
+
+#Get cookie =>   
+   $lang = Cookie::get('language');
+
+//================================================================================================
+
+
+
+
+
+
+
 //================================================================================================ 
 34.Highlight active menu item
  #Highlight active menu item =>  (OR https://medium.com/@rizkhallamaau/create-a-helper-for-active-link-in-laravel-5-6-30827a760593)
@@ -521,6 +561,8 @@ https://github.com/Zizaco/entrust
 	
 #image =>           <img class="img-responsive my-cph" src="{{URL::to("/")}}/images/cph.jpg"  alt="a"/>
 #link a href => 	<li><a href="{{ route('register') }}">Gii</a></li>
+#link a href with $_GET => <a href="{{route('profile', ['id' => 1])}}">login here</a>
+
 
 #Active Record / Eloquent => 
    in Controller=>     use App\users; $f = users::all(); return view('home2', compact('f')); 
@@ -559,7 +601,9 @@ https://github.com/Zizaco/entrust
   $currentPath= Route::getFacadeRoot()->current()->uri();
 
 
-
+#routing =>
+In route/web => Route::get('/multilanguage', 'MultiLanguage@index')->name('multilanguage'); 
+In View => <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
 
 
 //================================================================================================

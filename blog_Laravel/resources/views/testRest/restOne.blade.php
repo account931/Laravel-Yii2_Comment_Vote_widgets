@@ -29,8 +29,10 @@
 									      <option value={{ $a->wpBlog_id }} >  {{ $loop->iteration }} => {{ $a->wpBlog_id}} {{ $a->truncateTextProcessor($a->wpBlog_text, 12)    }} </option>
 					                  @endforeach
 						            </select>
+									
+									 
 									 <button type="submit" id="showOne" class="btn btn-primary">Show</button>
-									 <button type="button" id="createOne" class="btn btn-primary">Create new</button>
+									 <button type="button" id="createOne" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Create new</button>
 									 <button type="button" id="deleteOne" class="btn btn-danger" onclick="return confirm('Are you sure to delete?')">Delete</button>
 								
                              </form>	
@@ -39,11 +41,19 @@
 					 
 					 
 					 
-					 <!---- Rest Api response, html() by ajax -->
+					 <!---- Rest Api response goes here, html()-ed by ajax -->
 					 <div class="col-sm-12 col-xs-12" id="result">
-					     <h3>Expect Rest API Response here... </h3>
-						 
+					     <h3>Expect Rest API Response here... </h3> 
 					 </div>
+					 <!---- END Rest Api response goes here, html()-ed by ajax -->
+					 
+					 <!---- Hidde/collapsed Div with Form (by Bootstrap) -->
+					 <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                        </div>
+                    </div>
+					<!---- End Hide/collapsed Div with Form (by Bootstrap) -->
 
                    
                 </div>
