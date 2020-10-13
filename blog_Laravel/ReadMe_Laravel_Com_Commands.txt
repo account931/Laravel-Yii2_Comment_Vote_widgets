@@ -606,6 +606,29 @@ In route/web => Route::get('/multilanguage', 'MultiLanguage@index')->name('multi
 In View => <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
 
 
+----------------------
+# Array search examples (move it to Yii)
+$listOfLanguages = array(
+	"English" => array("langName" => "en", "langFlagImg" => "en-US.svg"),
+	"Dansk"   => array("langName" => "dk", "langFlagImg" => "dk-DK.svg") );
+	
+# To find "English" in for{} loop ???
+   $key = array_search ($a, $listOfLanguages); //e.g returns "English"
+   {array_search} returns the index of value, e.g => $array = array(0 => 'blue', 1 => 'red'); $key = array_search('red', $array);    // $key = 1;
+   
+# To find "langFlagImg" value in array $listOfLanguages if you know that "langName" value is "dk" 
+  $found = array_search($lang, array_column($listOfLanguages, 'langName')); //returns 3
+  $keys = array_keys($listOfLanguages);
+  $imageX = $listOfLanguages[$keys[$found]]['langFlagImg'];
+
+# END  Array search (Move it to Yii)
+--------------------------------
+
+
+
+
+
+
 //================================================================================================
 36. Known Errors
 

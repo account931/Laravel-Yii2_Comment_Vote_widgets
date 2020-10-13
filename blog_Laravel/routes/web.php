@@ -49,3 +49,7 @@ Route::get('/testRest','TestRest@index');
 
 //multilanguage
 Route::get('/multilanguage', 'MultiLanguage@index')->name('multilanguage'); 
+
+
+//RBAC
+Route::get('/rbac', 'RbacController@index')->name('rbac'); 
