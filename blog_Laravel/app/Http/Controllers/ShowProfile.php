@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
+use App\models\wpress_blog_post; //model for all posts
 use App\users;
 
 class ShowProfile extends Controller
@@ -48,10 +48,13 @@ class ShowProfile extends Controller
 				$name = "Not logged, No Name";
 				$email = "No email";
 			}				
-					
+		
+		//get all your articles
+		$yourArticles = wpress_blog_post::where('wpBlog_author', auth()->user()->id)->get();
+		
         //return view('showprofile'); //just return
 		//return view('showprofile', compact('$user'));
-		return view('showprofile')->with(compact('id', 'name', 'email'));
+		return view('showprofile')->with(compact('id', 'name', 'email', 'yourArticles'));
 
     }
 }

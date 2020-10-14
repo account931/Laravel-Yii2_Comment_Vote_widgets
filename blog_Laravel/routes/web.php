@@ -20,8 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home'); 
-Route::get('/home', 'ShowProfile@index')->name('home'); 
-Route::get('/EloquentExample', 'HomeController2@eloquentt')->name('EloquentExample2');  //Active Record Eloquent example Route
+Route::get('/home', 'ShowProfile@index')->name('home');
+
+//All users list  
+Route::get('/EloquentExample', 'AllUsersEloquent@eloquentt')->name('EloquentExample2');  //Active Record Eloquent example Route
+Route::get('/showOneUser/{id}', 'AllUsersEloquent@showOne')->name('showOneUser');
+
 
 Route::get('/showProfile', 'ShowProfile@index')->name('showprofile');  //my profile Route
 

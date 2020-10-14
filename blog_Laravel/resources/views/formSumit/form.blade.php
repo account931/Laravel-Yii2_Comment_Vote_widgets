@@ -5,7 +5,11 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Form Example</div>
+                <div class="panel-heading">
+				   Form Example. Very minor exmaple. 
+				   For real major one, look at <a href="https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php"> look here => </a>
+				   /app/Http/Controllers/WpBlog.php => function create() + function store(Request $request) || function edit($id) 
+                </div>
 
                 <div class="panel-body">
 				

@@ -13,8 +13,9 @@
                         Details: <b>{{ $exception->getMessage() }}</b>
 					</div>
 					
-					<img class="img-responsive " src="{{URL::to('/')}}/images/error.png"  alt=""/> <!-- image -->
-
+					<center>
+					<img class="img-exception" src="{{URL::to('/')}}/images/error.png"  alt=""/> <!-- image -->
+                    </center>
 					
                 </div>
             </div>

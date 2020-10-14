@@ -1,39 +1,60 @@
+
 @extends('layouts.app')
 
 @section('content')
+
+
 <div class="container">
     <div class="row">
+	
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Your profile</div>
-
-                <div class="panel-body">
-                  
-                    @if (session('error'))
-                        <div class="alert alert-danger">{{ session('error') }}</div>
-                    @endif
-					
-					<i class="fa fa-address-card-o" style="font-size:48px; padding:0.1em; margin:0.1em 0em;"></i>
-
-
-                   <div class="panel panel-default">
-			          <div class="panel-heading">ID:   {{ $id}}</div>
-                      <div class="panel-heading">Name: {{ $name}}</div>
-				      <div class="panel-heading">Email: {{ $email}}</div>
-				      <div class="panel-heading"> You have <b> {{$yourArticles->count()}} </b>  {{($yourArticles->count() > 1 || $yourArticles->count() == 0 ) ? 'articles' : 'article'}} </div>
-			       </div>
-					{{-- Auth::user()->name --}} <!-- works, return user's name -->
-					
+                <div class="panel-heading"> 
+				    <p>One user profile</p>
+				</div>
+				
+				<!-- Link to go back -->
+				<div>
+				    &nbsp;<i class="fa fa-hand-o-left" style="font-size:24px"></i>
+				    <a href="{{ url('/EloquentExample') }}">back to users </a>
                 </div>
-				
-				
-				
-				<!-- Display all your articles in Botstrap collapsible accordition -->
+				 
+                <div class="panel-body">
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                
+                </div>
+            </div>
+        </div>
+		
+		
+		
+	
+		
+		<div class="panel panel-default">
+		  <div class="panel-body ">
+	
+			
+		    <div class="panel panel-default">
+			    <div class="panel-heading">{{ $userOne[0]->id}}</div>
+                <div class="panel-heading">{{ $userOne[0]->name}}</div>
+				<div class="panel-heading">{{ $userOne[0]->email}}</div>
+				<div class="panel-heading">User <b>{{ $userOne[0]->name}}</b> has <b> {{$userOneArticles->count()}} </b>  {{($userOneArticles->count() > 1 || $yuserOneArticles->count() == 0 ) ? 'articles' : 'article'}} </div>
+			</div>
+		   
+			
+		  
+		  
+		  <!-- Display all your articles in Botstrap collapsible accordition -->
 				<div class="col-sm-12 col-xs-12 all-your-articles">
 				    <div class="panel-group" id="accordion">
-				    @if ($yourArticles->count() > 0 )
-						<h4></br> List of your articles <i class="fa fa-cogs" style="font-size:24px"></i> <h4>
-			            @foreach ($yourArticles as $a)
+				    @if ($userOneArticles->count() > 0 )
+						<h4></br> List of <b>{{ $userOne[0]->name}}</b> articles <i class="fa fa-cogs" style="font-size:24px"></i> <h4>
+			            @foreach ($userOneArticles as $a)
 				            <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h6 class="">
@@ -59,9 +80,10 @@
 				</div><!-- .all-your-articles -->
 				<!-- End Display all your articles in Botstrap collapsible accordition  -->
 				
-				
-            </div>
-        </div>
+		  
+		  </div>
+		</div>
+		
     </div>
 </div>
 @endsection

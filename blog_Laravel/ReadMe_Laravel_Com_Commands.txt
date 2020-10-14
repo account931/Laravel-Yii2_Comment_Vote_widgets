@@ -450,7 +450,7 @@ USAGE
     @stop
   
   Variant 2 (working) =>
-    <!-- In layout template -->
+    <!-- To register JS/CSS file for specific view only (In layout template) -->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['testRest', 'register']))
         <script src="{{ asset('js/test-rest/test-rest.js') }}"></script>
     @endif	
@@ -605,7 +605,24 @@ use Illuminate\Support\Facades\App;
 In route/web => Route::get('/multilanguage', 'MultiLanguage@index')->name('multilanguage'); 
 In View => <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
 
+#routing with $_GET['id']=>
+When u use url like  => /showOneUser/3
+In route/web => Route::get('/showOneUser/{id}', 'AllUsersEloquent@showOne')->name('showOneUser');
+In controller => function showOne($id){}
 
+
+# ternary =>
+$articles = ($yourArticles->count() > 1) ? 'articles' : 'article';
+In Blade (in-line) => <p> You have <b> {{$yourArticles->count()}} </b>  {{($yourArticles->count() > 1) ? 'articles' : 'article'}} </p>
+                      <p> You have <b> {{$yourArticles->count()}} </b>  {{($yourArticles->count() > 1 || $yourArticles->count() == 0 ) ? 'articles' : 'article'}} </p>
+
+# pass php var to js =>
+Pass var from controller to view =>  return view('home2', compact('user')); 
+  <script>
+    var user = {!! $user->toJson() !!};
+  </script>
+  
+  
 ----------------------
 # Array search examples (move it to Yii)
 $listOfLanguages = array(
@@ -622,6 +639,13 @@ $listOfLanguages = array(
   $imageX = $listOfLanguages[$keys[$found]]['langFlagImg'];
 
 # END  Array search (Move it to Yii)
+
+
+#Panel Styling =>
+<div class="panel panel-default">
+    <div class="panel-heading">text</div>
+	<div class="panel-heading">text</div>
+</div>
 --------------------------------
 
 

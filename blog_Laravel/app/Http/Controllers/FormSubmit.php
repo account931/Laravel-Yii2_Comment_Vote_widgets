@@ -1,11 +1,12 @@
 <?php
+//Form Example. Very minor exmaple. 
+//For real major one, look /app/Http/Controllers/WpBlog.php => function create() + function store(Request $request) || function edit($id)
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreForm;
 use Validator;
-
 
 class FormSubmit extends Controller
 {

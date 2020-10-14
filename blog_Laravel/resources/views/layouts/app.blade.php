@@ -63,7 +63,7 @@
 					 <!-- Common links (make link highlighted )-->
 					 <!--<li><a href="{{ route('register') }}">Gii</a></li>-->
 					 <li class="{{ Request::is('showProfile*') ? 'active' : '' }}">     <a href="{{ url('/showProfile') }}">ShowProfile     </a></li>
-					 <li class="{{ Request::is('EloquentExample*') ? 'active' : '' }}"> <a href="{{ url('/EloquentExample') }}">DB Eloquent </a></li>
+					 <li class="{{ Request::is('EloquentExample*') ? 'active' : '' }}"> <a href="{{ url('/EloquentExample') }}">All users ORM </a></li>
 					 
 					 <li><a href="api/articles {{--$_SERVER['SERVER_NAME']. '/api/articles' --}}">Rest</a></li><!-- Corrupted way for link-->
 					 <li class="{{ Request::is('testRest*') ? 'active' : '' }}">  <a href="{{ url('/testRest') }}">Test Rest </a></li>
@@ -97,7 +97,9 @@
                          <ul class="dropdown-menu" role="menu">
                              <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
                              <li class="{{ Request::is('rbac*') ? 'active' : '' }}"> <a href="{{ route('rbac') }}"> RBAC </a></li>
-                         </ul>
+                             <li><a href="{{ route('register') }}">E-shop(N/A)</a></li>
+							 <li><a href="{{ route('register') }}">booking(N/A)</a></li>
+						 </ul>
                        </li>
 					 <!-- END Submenu DropDown!!!! (Bootsrap) -->
 					 
@@ -153,12 +155,18 @@
 	<script src="{{ asset('js/my-js.js') }}"></script>
 	<script src="{{ asset('js/wpress_blog.js') }}"></script> <!-- wpress_blog JS -->
 	
-    <!-- In layout template -->
+    <!-- To register JS file for specific view only (In layout template) -->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['testRest', 'register'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
         <script src="{{ asset('js/test-rest/test-rest.js') }}"></script>
     @endif	
 
 
+    <!-- To register JS file for specific view only (In layout template) -->
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['EloquentExample'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
+        <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script> <!--autocomplete JS-->
+		<link rel="stylesheet" href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'> <!--autocomplete CSS -->
+		<script src="{{ asset('js/all-users-eloquent/autocomplete.js') }}"></script>
+    @endif
 
 </body>
 </html>

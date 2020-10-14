@@ -24,14 +24,14 @@
  
  
  
+ 
+ 
  /*--------------------------- WPRESS Blog */
   .text-hidden{display:none;}
  
   .text-truncated, .text-hidden{cursor:pointer;}
   .text-truncated:hover{color:red;}
   .deletee {width:2em;} /* delete icon */
-  
-  
   
   
  .navbar-nav1:hover < .testt { 
@@ -74,4 +74,14 @@
 .flag  {
 	width: 6%;
 }
-/*--------------------------- Multilanguage -- */
+/*--------------------------- End Multilanguage -- */
+
+
+
+/*--------------------------- My custom exception -- */
+.img-exception {width:30%; margin: 0 auto;}
+ /* Mobile */
+ @media screen and (max-width: 480px) { 
+     .img-exception {width:50%; margin: 0 auto;}
+ }
+/*--------------------------- End My custom exception -- */
