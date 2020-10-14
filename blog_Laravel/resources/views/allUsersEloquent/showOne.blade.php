@@ -43,7 +43,7 @@
 			    <div class="panel-heading">{{ $userOne[0]->id}}</div>
                 <div class="panel-heading">{{ $userOne[0]->name}}</div>
 				<div class="panel-heading">{{ $userOne[0]->email}}</div>
-				<div class="panel-heading">User <b>{{ $userOne[0]->name}}</b> has <b> {{$userOneArticles->count()}} </b>  {{($userOneArticles->count() > 1 || $yuserOneArticles->count() == 0 ) ? 'articles' : 'article'}} </div>
+				<div class="panel-heading">User <b>{{ $userOne[0]->name}}</b> has <b> {{$userOneArticles->count()}} </b>  {{($userOneArticles->count() > 1 || $userOneArticles->count() == 0 ) ? 'articles' : 'article'}} </div>
 			</div>
 		   
 			

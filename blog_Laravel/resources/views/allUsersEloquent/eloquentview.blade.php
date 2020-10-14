@@ -52,9 +52,12 @@
 		   $i =0;
 		    foreach ($f as $a){
 				$i++;
-			   echo "<div class='list-group-item'>" . 
-			          $i . " <span class='	fa fa-check-square-o' ></span> " .
-				      $a->name . ", " . $a->email .
+			   echo "<div class='list-group-item'>"; ?>
+			            <a href='{{ url("/showOneUser/$a->id") }}'>
+			            <?php
+						echo  $i . " <span class='	fa fa-check-square-o' ></span> " .
+				            $a->name . ", " . $a->email .
+						"</a>" .
 				    "</div>";
 		   }
 		   ?>
