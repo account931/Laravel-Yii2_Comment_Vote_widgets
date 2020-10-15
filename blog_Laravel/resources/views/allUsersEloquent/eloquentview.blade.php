@@ -27,16 +27,17 @@
 		
 		
 		
-		<!------------ Search -->
-	    <div class="col-sm-12 col-xs-12">
+		<!------------ Search bar --------->
+		<!-- serach bar to search Users, uses autocomplete.js, Each user is wrapped to <a href="/showOneUser/$id"> Name</a> --------->
+	    <div class="col-sm-12 col-xs-12" style="z-index:9999;"> <!-- z-index is a Fix, as prev was not able to type in input-->
 	        <div class="search-container">
                 <form action="#">
-                <input type="text"  placeholder="Search by name.." name="search" id="searchUser" autofocus>
-                <button type="button"><i class="fa fa-search"></i></button>
+                    <input type="text"  placeholder="Search by name.." name="search" id="searchUser">
+                    <button type="button"><i class="fa fa-search"></i></button>
                 </form>
             </div>
 	   </div>
-	   <!-------- END Search -->
+	   <!-------- END Search bar  --------->
 		
 		
 		<div class="col-md-12">
@@ -49,6 +50,7 @@
 
 		   
 		   <?php
+		   //display all users list with pure php. Each user is wrapped to <a href="/showOneUser/$id"> Name</a>
 		   $i =0;
 		    foreach ($f as $a){
 				$i++;

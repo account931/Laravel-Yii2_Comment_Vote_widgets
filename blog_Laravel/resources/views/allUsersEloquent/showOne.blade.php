@@ -51,20 +51,23 @@
 		  
 		  <!-- Display all your articles in Botstrap collapsible accordition -->
 				<div class="col-sm-12 col-xs-12 all-your-articles">
-				    <div class="panel-group" id="accordion">
-				    @if ($userOneArticles->count() > 0 )
+				    
+				    @if ($userOneArticles->count() > 0 ) {{-- if user has articles count < 0 --}}
 						<h4></br> List of <b>{{ $userOne[0]->name}}</b> articles <i class="fa fa-cogs" style="font-size:24px"></i> <h4>
-			            @foreach ($userOneArticles as $a)
+			            
+						<!-- here goes Botstrap collapsible accordition itself -->
+						<div class="panel-group" id="accordionUserOne">
+						@foreach ($userOneArticles as $a)
 				            <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h6 class="">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                        <a data-toggle="collapse" data-parent="#accordionUserOne" href="#collArticle{{$loop->iteration}}"> <!-- generetes unique id, i.e id="collArticle + $i". If same id, accordition crashes -->
                                            <p> Article number {{ $loop->iteration }} : {{ $a->wpBlog_title  }} </p>
 										</a>
                                     </h6>
                                 </div>
 								<!-- hidden/collapsed content -->
-                                <div id="collapse1" class="panel-collapse collapse">
+                                <div id="collArticle{{$loop->iteration}}" class="panel-collapse collapse"> <!-- generetes unique id, i.e id="collArticle + $i" -->
                                     <div class="panel-body">
 									<p class='small'> {{ $a->wpBlog_text   }} <p>
 									<p class='small font-italic'>Author:   {{ $a->authorName->name  }}   {{-- $a->authorName['name']   --}}</p> <!-- hasOne relations to show author name --> <!--  " $a->wpBlog_author" returns id, "authorName()" is a model hasOne function    }}</p> -->
@@ -76,7 +79,7 @@
                             </div>
                         @endforeach
                     @endif
-				    </div>
+				    </div> <!-- END here goes Botstrap collapsible accordition itself -->
 				</div><!-- .all-your-articles -->
 				<!-- End Display all your articles in Botstrap collapsible accordition  -->
 				

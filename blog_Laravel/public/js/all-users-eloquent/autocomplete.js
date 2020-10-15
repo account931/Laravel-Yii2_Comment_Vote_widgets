@@ -36,7 +36,7 @@ $(document).ready(function(){
 	     function displaySelectedCategoryLabel(event, ui) {
             $("#searchUser").val(ui.item.label);
             //$("#userID").val(ui.item.value); //hidden <input id="userID"> to contain user (get from autocomplete array)
-            event.preventDefault();
+            //event.preventDefault();
         };
 		
 		
@@ -53,10 +53,14 @@ $(document).ready(function(){
         });
 		*/
 		
-		//Autocomplete wrap hints in URL <a href>
+		//Autocomplete, wrap hints in URL <a href>
 		$("#searchUser").autocomplete({
            minLength: 1,
            source: arrayAutocomplete, //array from where take autocomplete
+		   
+		   select: function (event, ui) {
+                displaySelectedCategoryLabel(event, ui);
+            },
         }).data("ui-autocomplete")._renderItem = function (a, b) {
             return $("<li></li>")
             .data("item.autocomplete", b)

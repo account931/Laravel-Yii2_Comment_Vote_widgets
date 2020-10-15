@@ -14,7 +14,9 @@
 					</div>
 					
 					<center>
-					<img class="img-exception" src="{{URL::to('/')}}/images/error.png"  alt=""/> <!-- image -->
+					<!--<img class="img-exception" src="{{URL::to('/')}}/images/error.png"  alt=""/>--> <!-- image -->
+					<img class="img-exception" src="{{URL::to('/')}}/images/error2.jpg"  alt=""/> <!-- image -->
+					<img class="img-exception" src="{{URL::to('/')}}/images/error3.jpg"  alt=""/> <!-- image -->
                     </center>
 					
                 </div>

@@ -62,7 +62,7 @@
 					
 					 <!-- Common links (make link highlighted )-->
 					 <!--<li><a href="{{ route('register') }}">Gii</a></li>-->
-					 <li class="{{ Request::is('showProfile*') ? 'active' : '' }}">     <a href="{{ url('/showProfile') }}">ShowProfile     </a></li>
+					 <li class="{{ Request::is('showProfile*') ? 'active' : '' }}">     <a href="{{ url('/showProfile') }}"> MyProfile </a></li>
 					 <li class="{{ Request::is('EloquentExample*') ? 'active' : '' }}"> <a href="{{ url('/EloquentExample') }}">All users ORM </a></li>
 					 
 					 <li><a href="api/articles {{--$_SERVER['SERVER_NAME']. '/api/articles' --}}">Rest</a></li><!-- Corrupted way for link-->
@@ -77,7 +77,7 @@
 					 
 					 
 					 
-					 <!-- DropDown manual -->
+					 <!-- DropDown manual. NOT USED FOR LINKS -->
 					 <li><a class="navbar-nav1" href="#">Drop <span class="caret"></span></a>
 					     <ul class="dropdown-submenu">
 						     <li><a href="#">Drop 1</span></a>
@@ -98,7 +98,8 @@
                              <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
                              <li class="{{ Request::is('rbac*') ? 'active' : '' }}"> <a href="{{ route('rbac') }}"> RBAC </a></li>
                              <li><a href="{{ route('register') }}">E-shop(N/A)</a></li>
-							 <li><a href="{{ route('register') }}">booking(N/A)</a></li>
+							 <li><a href="{{ route('register') }}">Booking(N/A)</a></li>
+							 <li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>
 						 </ul>
                        </li>
 					 <!-- END Submenu DropDown!!!! (Bootsrap) -->

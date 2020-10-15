@@ -497,6 +497,7 @@ USAGE
 17. RBAC 
 https://github.com/Zizaco/entrust
 
+
 //================================================================================================
 
 
@@ -669,5 +670,5 @@ $listOfLanguages = array(
 You need to have .env on your appication folder then run: => $ php artisan key:generate
 If you don't have .env copy from .env.example: =>   $ cp .env.example .env
 
-#
+# If can not type in form input => add to form CSS rule {z-index: 9999;}
 
