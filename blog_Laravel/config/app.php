@@ -163,6 +163,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 		//Collective\Html\HtmlServiceProvider::class,//my
+		Zizaco\Entrust\EntrustServiceProvider::class, // Entrust RBAC package
 
         /*
          * Package Service Providers...
@@ -228,6 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 		//'Form' => Collective\Html\FormFacade::class, //my
         //'Html' => Collective\Html\HtmlFacade::class, //my
+		'Entrust'   => Zizaco\Entrust\EntrustFacade::class,  // Entrust RBAC package
 
     ],
 

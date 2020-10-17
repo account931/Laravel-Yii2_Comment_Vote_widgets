@@ -57,3 +57,4 @@ Route::get('/multilanguage', 'MultiLanguage@index')->name('multilanguage');
 
 //RBAC
 Route::get('/rbac', 'RbacController@index')->name('rbac'); 
+Route::get('/createtwoRoles', 'RbacController@createRoles')->name('createtwoRoles');  //route to method to create 2 roles

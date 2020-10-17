@@ -5,7 +5,7 @@ Credentials: dimmm931@gmail.com =>  dimax2
 Composer -> via Windows cmd, artisan -> via OpenServer, git -> via Windows cmd
 NPM -> composer
 
-On T42: so far the same
+On T42: so far the same, but Composer -> via Openserver
 
 Table of Content:
 1.How to install Laravel
@@ -309,7 +309,9 @@ USAGE
     $articles = wpress_blog_post::all();
     $articles =  wpress_blog_post::where('wpBlog_status', '1')->get();
 	$articles = wpress_blog_post::where('wpBlog_status', '1')->where('wpBlog_category', 1)->get();
-
+    
+	$user = User::where('username', '=', 'michele')->first();
+	
 	$articles->count()
   
   #ћетод get() возвращает объект Illuminate\Support\Collection (дл€ версии 5.2 и ранее Ч массив) c результатами, в котором каждый результат Ч это экземпл€р PHP-объекта StdClass.
@@ -322,6 +324,9 @@ USAGE
 	   } catch (\Exception $e) {
 	      throw new \App\Exceptions\myException('Article does not exist');
 	   }
+	//check if record exists-2    
+	$roleAdmin =  self::where('name', 'admin')->get();
+    if (!$roleAdmin){ }
 	   
    #find one user 
    in Controller => 
@@ -497,8 +502,14 @@ USAGE
 17. RBAC 
 https://github.com/Zizaco/entrust
 
+#Entrust creates 4 tables in DB: permission_role, permissions, role_user, roles
+Mega Error "Cannot declare class App\Role, because the name is already in use" was caused by wrong namespace in /config/entrust.php
+By documantion, they suggest using {namespace App\models;} for models/Role.php but in /config/entrust.php they specified as App\Roles.php
 
+
+@if(\Auth::user()->hasRole('admin'))
 //================================================================================================
+
 
 
 
@@ -565,7 +576,7 @@ use Illuminate\Support\Facades\App;
 #link a href with $_GET => <a href="{{route('profile', ['id' => 1])}}">login here</a>
 
 
-#Active Record / Eloquent => 
+# Render Controller/View (Active Record / Eloquent) => 
    in Controller=>     use App\users; $f = users::all(); return view('home2', compact('f')); 
    in View =>          foreach ($f as $a){
    
@@ -582,7 +593,7 @@ use Illuminate\Support\Facades\App;
 #ACF Yii2 equivalent, let only logged users, use in Controller =>   public function __construct(){$this->middleware('auth');}
 
 
-#current user => use Illuminate\Support\Facades\Auth;  $id = auth()->user()->id; 
+#current user => use Illuminate\Support\Facades\Auth; $user = auth()->user();  $id = auth()->user()->id; 
 
 
 # Turn on debugger => go to .env => APP_DEBUG=true
@@ -672,3 +683,8 @@ If you don't have .env copy from .env.example: =>   $ cp .env.example .env
 
 # If can not type in form input => add to form CSS rule {z-index: 9999;}
 
+# Error "Can't redeclare class" => check namespace (like it was with Enrtrust Role model), see details at => 17. RBAC 
+
+# Error "Call to a member function hasRole() on null" => in my case happened, when being unlogged refered to {$user = auth()->user();}  and tried to use {if ($user->hasRole('admin'))}
+
+# Error  "This cache store does not support tagging" => happens due Entrusr Rbac,  in .env file change {CACHE_DRIVER=file} to {CACHE_DRIVER=array}

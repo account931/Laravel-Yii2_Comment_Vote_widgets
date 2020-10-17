@@ -25,6 +25,18 @@
 				
 				    <!--  -->
 					<div class="col-sm-12 col-xs-12"></br>
+					    <div>
+						   <a href="{{ url('/createtwoRoles') }}"> Create 2 roles </a>
+						</div></hr>
+						
+						@php
+						$st = ($status == false) ? "panel-danger" : "panel-success" ;
+						@endphp
+						<div class="panel {{$st}}">
+                            <div class="panel-heading">Your Rbac status =></div>
+	                        <div class="panel-heading">{{$rbacStatus}}</div>
+                        </div>
+						
 					</div>    
 					
 					
