@@ -43,7 +43,8 @@ return [
     |
     */
     //'permission' => 'App\Permission',
-	'role' => 'App\models\Permission', //my fix
+	//'role' => 'App\models\Permission', //my fix
+	'permission'  => 'App\models\Permission', //my MEGA Fix 2
 
     /*
     |--------------------------------------------------------------------------

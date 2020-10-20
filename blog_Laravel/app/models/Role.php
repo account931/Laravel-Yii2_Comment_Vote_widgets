@@ -67,7 +67,8 @@ class Role extends EntrustRole
 	
 	public function assign() 
     {
-	   $user = User::where('id', '=', auth()->user()->id)->first();
+	   //$user = User::where('id', '=', auth()->user()->id)->first();
+	   $user = User::find(\Auth::user()->id );
        //dd($user);
        // role attach alias
        //$user->attachRole('admin'); // parameter can be an Role object, array, or id

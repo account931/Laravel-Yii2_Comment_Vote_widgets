@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\models\Role; //model for all wpress_category
 use App\User;
+//use Zizaco\Entrust\Traits\EntrustUserTrait; // not used???
+//use Zizaco\Entrust\EntrustRole; // not used???
 
 class RbacController extends Controller
 {
@@ -19,8 +21,10 @@ class RbacController extends Controller
 	
 	     //check if logged
 		 if (!Auth::check()){
-			 $text = "Login first <a href='" .  route('login')  . "'> Login </a>";
-			 throw new \App\Exceptions\myException( $text  );
+			 //$link = <a href="{{ route('login') }}">Login </a>;
+			 //$text = "Login first" . "<a href='#'> Login </a>";
+			 $text = url("/some");
+			 throw new \App\Exceptions\myException( htmlspecialchars_decode($text) );
 		 }
 		
 		
@@ -31,31 +35,30 @@ class RbacController extends Controller
        $user->attachRole($admin); // parameter can be an Role object, array, or id
 	   */
 	   
-	   
+	    $userX = User::find( \Auth::user()->id ); //to pass to view, for checking with Blade
+	  
 	    //$user = auth()->user(); //gets current user
 		//dd(auth()->user()->id);
-		$user = User::find(auth()->user()->id);
-		//$user = User::where('id', auth()->user()->id)->get()->first();
-		$admin_role= Role::where('name', 'admin')->get()->first();
+		$user = \App\User::find( \Auth::user()->id );
+
+		//$admin_role = Role::where('name', 'admin')->get()->first();
+	
+		//dd(Auth::user()->hasRole('admin'));
 		
-		
-		//dd($user->hasRole('admin'));
-		
-		
-		
-		//if(!Auth::user()->hasRole('admin')){
-		if (!$user->hasRole('admin')) {
+		if(Auth::user()->hasRole('admin')){ //arg $admin_role does not work
+		//if ($user->hasRole('admin')) { //works either, but need to get {$user} first =>  $user = \App\User::find( \Auth::user()->id );
+			$rbacStatus = "You have RBAC Role Admin to view this page";
+			$status = true;
+			
+        } else {
 			$rbacStatus = "You have NO RBAC Role Admin to view this page";
 			$status = false;
             //throw new \App\Exceptions\myException('You have No rbac rights');
-        } else {
-			$rbacStatus = "You have RBAC Role Admin to view this page";
-			$status = true;
 		}
 		
 
 						 
-        return view('rbac.rbacView', compact('rbacStatus', 'status')); 		
+        return view('rbac.rbacView', compact('rbacStatus', 'status', 'userX')); 		
 	}
 	
 	
