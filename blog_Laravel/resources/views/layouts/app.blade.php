@@ -168,6 +168,11 @@
 		<link rel="stylesheet" href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'> <!--autocomplete CSS -->
 		<script src="{{ asset('js/all-users-eloquent/autocomplete.js') }}"></script>
     @endif
+	
+	<!-- To register JS/CSS for specific view only (for RBAC) -->
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['rbac'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
+        <link href="{{ asset('css/rbac/rbac.css') }}" rel="stylesheet">
+    @endif
 
 </body>
 </html>

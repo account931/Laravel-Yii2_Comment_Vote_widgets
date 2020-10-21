@@ -26,7 +26,7 @@
 				    <!--  -->
 					<div class="col-sm-12 col-xs-12"></br>
 					    <div>
-						   <a href="{{ url('/createtwoRoles') }}"> Create 2 roles </a>
+						   <a href="{{ url('/createtwoRoles') }}" title="to create roles manually, must be run by admin one time only"> Create 2 roles </a>
 						</div><hr>
 						
 						@php
@@ -64,16 +64,52 @@
 						<!----- Blade Rbac check Var 2, $userX is passed from Controller ------>
 						@if ($userX->hasRole('admin'))
                            <div class="bg-success">You have Admin Rights</div>
+					       {{$userX->roles[0]['name']}}
                         @endif
 						<!----- Blade Rbac check Var 2 ------>
 						
-					</div>    
+					</div><hr>    
 					
 					
 					 
-					
-					
-					
+					<!-- Table with Users for RBAC Admin Control Panel-->
+					<div class="col-sm-12 col-xs-12">
+					    <center><h3>RBAC Admin Control Panel</h3></center>
+						@if(!\Auth::user()->hasRole('admin'))
+							<p class="bg-danger"> Sorry, you can not see the Control panel</p>
+						
+						@else
+							<table class="table table-hover table-striped">
+                                <thead>
+                                   <tr>
+                                       <th>User</th>
+                                       <th>Role</th>
+									   <th>Descr</th>
+                                       <th>Task </th>
+                                    </tr>
+                                </thead>
+								
+                                <tbody>
+								@foreach ($allUsers as $a)
+								
+                                    <tr>
+                                        <td>{{  $a->name }}</td>  <!-- User name, from table users -->
+                                        
+										
+										  @php
+										  if (isset($a->roles[0]['name'])) { $r = "<span class='text-danger'>" .$a->roles[0]['name'] . "</span>"; } else { $r = 'no role';} 
+										  @endphp 
+										<td> {!! $r !!}</td>
+                                        <td>some text</td>
+										<td>some form</td>
+                                    </tr>
+                                 @endforeach
+                                </tbody>
+                            </table>
+						@endif
+					</div>
+					<!-- End Table with Users for RBAC Admin Control Panel-->
+
 					
 					
 					

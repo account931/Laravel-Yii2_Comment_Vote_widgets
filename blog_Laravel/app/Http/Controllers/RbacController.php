@@ -1,10 +1,10 @@
 <?php
-
+//RBAC uses Entrust package
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\models\Role; //model for all wpress_category
+use App\models\Role; //model for Entrust Role model
 use App\User;
 //use Zizaco\Entrust\Traits\EntrustUserTrait; // not used???
 //use Zizaco\Entrust\EntrustRole; // not used???
@@ -23,7 +23,7 @@ class RbacController extends Controller
 		 if (!Auth::check()){
 			 //$link = <a href="{{ route('login') }}">Login </a>;
 			 //$text = "Login first" . "<a href='#'> Login </a>";
-			 $text = url("/some");
+			 $text = "Login firstly " . url("/some");
 			 throw new \App\Exceptions\myException( htmlspecialchars_decode($text) );
 		 }
 		
@@ -56,9 +56,9 @@ class RbacController extends Controller
             //throw new \App\Exceptions\myException('You have No rbac rights');
 		}
 		
-
+        $allUsers = User::all(); //find all users
 						 
-        return view('rbac.rbacView', compact('rbacStatus', 'status', 'userX')); 		
+        return view('rbac.rbacView', compact('rbacStatus', 'status', 'userX', 'allUsers')); 		
 	}
 	
 	

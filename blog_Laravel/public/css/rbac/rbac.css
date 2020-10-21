@@ -1,0 +1,12 @@
+/* change/override the color of odd rows in Bootstrap table .table-striped  */
+/*
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: red; 
+ }
+ */
+ 
+/* change/override the hover color of Bootstrap table .table-hover */
+.table-hover> tbody> tr:hover{
+    background-color:yellow !important;
+}

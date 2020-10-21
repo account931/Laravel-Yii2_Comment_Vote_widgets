@@ -656,6 +656,8 @@ Pass var from controller to view =>  return view('home2', compact('user'));
   </script>
   
 # clear cache/reconfig =>  php artisan config:cache <==> php artisan cache:clear 
+
+composer dump-autoload
 ----------------------
 # Array search examples (move it to Yii)
 $listOfLanguages = array(

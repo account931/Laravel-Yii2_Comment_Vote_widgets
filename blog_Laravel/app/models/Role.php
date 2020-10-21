@@ -1,4 +1,6 @@
 <?php 
+//it is Entrust RBAC model
+
 namespace App\models;
 
 use Zizaco\Entrust\EntrustRole;
@@ -7,7 +9,7 @@ use App\User;
 
 class Role extends EntrustRole
 {
-	//creates roles in DB
+	//creates roles in DB (to create roles manually, must be run by admin one time only)
 	public function setup() 
     {
 		$roleOwner =  self::where('name', 'owner')->get();
