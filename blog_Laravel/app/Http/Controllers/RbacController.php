@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\models\Role; //model for Entrust Role model
+use App\models\EntrustRbac\Role; //model for Entrust Role model
 use App\User;
 //use Zizaco\Entrust\Traits\EntrustUserTrait; // not used???
 //use Zizaco\Entrust\EntrustRole; // not used???
@@ -56,9 +56,10 @@ class RbacController extends Controller
             //throw new \App\Exceptions\myException('You have No rbac rights');
 		}
 		
-        $allUsers = User::all(); //find all users
-						 
-        return view('rbac.rbacView', compact('rbacStatus', 'status', 'userX', 'allUsers')); 		
+        $allUsers = User::all(); //find all users for table
+		$allRoles = Role::all(); //find all roles for dropdown
+		//dd($allRoles);				 
+        return view('rbac.rbacView', compact('rbacStatus', 'status', 'userX', 'allUsers', 'allRoles')); 		
 	}
 	
 	
@@ -97,4 +98,16 @@ class RbacController extends Controller
 	   
 	   
     }
+	
+	
+	
+    /**
+     * method to assign role (from RBAC Table Control Panel )
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function assignRole(Request $request)
+    {
+		return redirect('/rbac')->with('sflashMessageX',"Assigned successfully");
+	}
 }

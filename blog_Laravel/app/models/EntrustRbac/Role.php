@@ -1,7 +1,7 @@
 <?php 
 //it is Entrust RBAC model
 
-namespace App\models;
+namespace App\models\EntrustRbac;
 
 use Zizaco\Entrust\EntrustRole;
 use App\User;

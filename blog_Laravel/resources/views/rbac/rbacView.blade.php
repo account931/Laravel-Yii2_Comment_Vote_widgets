@@ -8,9 +8,9 @@
 			
 			
 			    <!-- Flash message -->
-				@if(session()->has('flashMessage'))
+				@if(session()->has('flashMessageX'))
                     <div class="alert alert-danger">
-                        {{ session()->get('flashMessage') }}
+                        {{ session()->get('flashMessageX') }}
                     </div>
                 @endif
 						
@@ -85,7 +85,7 @@
                                        <th>User</th>
                                        <th>Role</th>
 									   <th>Descr</th>
-                                       <th>Task </th>
+                                       <th>Assign </th>
                                     </tr>
                                 </thead>
 								
@@ -96,13 +96,51 @@
                                         <td>{{  $a->name }}</td>  <!-- User name, from table users -->
                                         
 										
-										  @php
-										  if (isset($a->roles[0]['name'])) { $r = "<span class='text-danger'>" .$a->roles[0]['name'] . "</span>"; } else { $r = 'no role';} 
+										 @php
+										 //getting all current loop user's roles 
+										 if (isset($a->roles[0]['name'])) { //if $user->roles (it is hasMany relation) found any role by user
+											  $r = "";
+											  //use for() loop in case user has 2 and more roles. If user could have only 1 role, we would just use {$a->roles[0]['name']}
+											  for($j =0; $j < count($a->roles); $j++){
+												  $r.= "<span class='text-danger'><i class='fa fa-check-circle-o'></i> " . $a->roles[$j]['name'] . "</span></br>"; 
+											  }  
+										 } else { 
+										   $r = 'no role';} 
+										 @endphp 
+										<td> {!! $r !!}</td> <!-- all current loop user's roles. Display without encoding -->
+                                        
+										@php
+										  //getting descriptions of roles current loop user has
+										  if (isset($a->roles[0]['name'])) { //if $user->roles (it is hasMany relation) found any role by user
+											  $descr = "";
+											  //use for() loop in case user has 2 and more roles. If user could have only 1 role, we would just use {$a->roles[0]['name']}
+											  for($j =0; $j < count($a->roles); $j++){
+												  $descr.= "<i class='fa fa-check-circle-o'></i><span class='text-warning small'> " . $a->roles[$j]['description'] . "</span></br>"; 
+											  }  
+										  } else { 
+										   $descr = 'no descr';} 
 										  @endphp 
-										<td> {!! $r !!}</td>
-                                        <td>some text</td>
-										<td>some form</td>
-                                    </tr>
+										<td> {!! $descr !!} </td> <!-- descriptions of roles current loop user has. Display without escaping -->
+										
+										
+										@php
+										//building Form with dropdown select
+										$URL = url('/assignRole');
+										$rolesDropdown = "<form action='$URL '  method='post'>{{ csrf_field() }}<select><option selected disabled>select</option>";
+										foreach($allRoles as $c){	  
+										   //$rolesDropdown.= "<span class='text-danger'> " . $c['attributes']['name']. "</span></br>"; 
+										   $rolesDropdown.= "<option value='" . $c['attributes']['name'] . "'>" . $c['attributes']['name'] . "</option>";
+										}
+										$rolesDropdown.= "</select></p><p><input type='submit' value='assign role'></p></form>";
+										@endphp
+										
+										<td>{!! $rolesDropdown!!}</td> <!-- Form with Roles dropdown select. Display without escaping -->
+   
+   
+  
+  
+  
+									</tr>
                                  @endforeach
                                 </tbody>
                             </table>

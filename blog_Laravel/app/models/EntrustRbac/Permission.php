@@ -1,6 +1,6 @@
 <?php 
 //it is Entrust RBAC model
-namespace App\models\Entrust_Rbac;
+namespace App\models\EntrustRbac;
 
 use Zizaco\Entrust\EntrustPermission;
 

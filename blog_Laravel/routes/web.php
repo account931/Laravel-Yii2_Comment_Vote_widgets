@@ -56,5 +56,7 @@ Route::get('/multilanguage', 'MultiLanguage@index')->name('multilanguage');
 
 
 //RBAC
-Route::get('/rbac', 'RbacController@index')->name('rbac'); 
+Route::get('/rbac', 'RbacController@index')->name('rbac'); //display RBAC table Control Panel
 Route::get('/createtwoRoles', 'RbacController@createRoles')->name('createtwoRoles');  //route to method to create 2 roles
+Route::post('/assignRole', 'RbacController@assignRoles')->name('assignRole');  //route to method to assignRole from RBAC Table Control Panel
+

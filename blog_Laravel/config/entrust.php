@@ -20,7 +20,7 @@ return [
     |
     */
     //'role' => 'App\Role',
-	'role' => 'App\models\Role', //my fix
+	'role' => 'App\models\EntrustRbac\Role', //my fix
 	
 
     /*
@@ -44,7 +44,7 @@ return [
     */
     //'permission' => 'App\Permission',
 	//'role' => 'App\models\Permission', //my fix
-	'permission'  => 'App\models\Permission', //my MEGA Fix 2
+	'permission'  => 'App\models\EntrustRbac\Permission', //my MEGA Fix 2
 
     /*
     |--------------------------------------------------------------------------
