@@ -1,5 +1,5 @@
 <?php
-
+//shows my profile (a profile of currently logged user)
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,7 +54,7 @@ class ShowProfile extends Controller
 		
         //return view('showprofile'); //just return
 		//return view('showprofile', compact('$user'));
-		return view('showprofile')->with(compact('id', 'name', 'email', 'yourArticles'));
+		return view('showprofile')->with(compact('id', 'name', 'email', 'yourArticles', 'user'));
 
     }
 }

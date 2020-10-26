@@ -230,6 +230,7 @@ return [
 		//'Form' => Collective\Html\FormFacade::class, //my
         //'Html' => Collective\Html\HtmlFacade::class, //my
 		'Entrust'   => Zizaco\Entrust\EntrustFacade::class,  // Entrust RBAC package
+		//'MyHelper' => App\Http\Helperss\Rbac\Helper_Rbac::class, //my helper
 
     ],
 

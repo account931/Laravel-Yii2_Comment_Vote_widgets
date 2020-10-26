@@ -7,21 +7,42 @@
             <div class="panel panel-default">
 			
 			
-			    <!-- Flash message -->
+			    <!-- Flash message if Success -->
 				@if(session()->has('flashMessageX'))
-                    <div class="alert alert-danger">
-                        {{ session()->get('flashMessageX') }}
+                    <div class="alert alert-success">
+                        {!! session()->get('flashMessageX') !!} <!--Displays content without html escaping -->
                     </div>
                 @endif
-						
-						
-						
+				<!-- Flash message -->
+				
+
+                <!-- Flash message if Failed -->
+				@if(session()->has('flashMessageFailX'))
+                    <div class="alert alert-danger">
+                        {{ session()->get('flashMessageFailX') }}
+                    </div>
+                @endif
+				<!-- Flash message if Failed -->				
+				
+
+                <!-- Display form validation errors var 2 -->
+				@if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                      <ul>
+                      @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                      @endforeach
+                      </ul>
+                    </div>
+                @endif
+                <!-- End Display form validation errors var 2 -->				
+					
+					
                 <div class="panel-heading text-warning">RBAC <span class="small text-danger">*</span> </div>
 
                   <div class="panel-body">
 				    
 					
-				
 				
 				    <!--  -->
 					<div class="col-sm-12 col-xs-12"></br>
@@ -93,24 +114,14 @@
 								@foreach ($allUsers as $a)
 								
                                     <tr>
-                                        <td>{{  $a->name }}</td>  <!-- User name, from table users -->
-                                        
-										
-										 @php
-										 //getting all current loop user's roles 
-										 if (isset($a->roles[0]['name'])) { //if $user->roles (it is hasMany relation) found any role by user
-											  $r = "";
-											  //use for() loop in case user has 2 and more roles. If user could have only 1 role, we would just use {$a->roles[0]['name']}
-											  for($j =0; $j < count($a->roles); $j++){
-												  $r.= "<span class='text-danger'><i class='fa fa-check-circle-o'></i> " . $a->roles[$j]['name'] . "</span></br>"; 
-											  }  
-										 } else { 
-										   $r = 'no role';} 
-										 @endphp 
-										<td> {!! $r !!}</td> <!-- all current loop user's roles. Display without encoding -->
+									    <!-- User name, from table users -->
+                                        <td>{{  $a->name }}</td>  
+                                       
+										<!-- Displays List of user's rbac roles. Uses Helper method displayUserRoles($a)  --> 
+										<td> {!! \App\Http\MyHelpers\Rbac\Helper_Rbac::displayUserRoles($a) !!}</td> <!-- all current loop user's roles. Displays content without escaping -->
                                         
 										@php
-										  //getting descriptions of roles current loop user has
+										  //getting descriptions of roles current loop user has. Can be carved to Helper method
 										  if (isset($a->roles[0]['name'])) { //if $user->roles (it is hasMany relation) found any role by user
 											  $descr = "";
 											  //use for() loop in case user has 2 and more roles. If user could have only 1 role, we would just use {$a->roles[0]['name']}
@@ -120,21 +131,28 @@
 										  } else { 
 										   $descr = 'no descr';} 
 										  @endphp 
-										<td> {!! $descr !!} </td> <!-- descriptions of roles current loop user has. Display without escaping -->
+										  
+										<!-- descriptions of roles current loop user has. Displays content without escaping -->
+										<td> {!! $descr !!} </td> 
 										
+								
 										
-										@php
-										//building Form with dropdown select
-										$URL = url('/assignRole');
-										$rolesDropdown = "<form action='$URL '  method='post'>{{ csrf_field() }}<select><option selected disabled>select</option>";
-										foreach($allRoles as $c){	  
-										   //$rolesDropdown.= "<span class='text-danger'> " . $c['attributes']['name']. "</span></br>"; 
-										   $rolesDropdown.= "<option value='" . $c['attributes']['name'] . "'>" . $c['attributes']['name'] . "</option>";
-										}
-										$rolesDropdown.= "</select></p><p><input type='submit' value='assign role'></p></form>";
-										@endphp
-										
-										<td>{!! $rolesDropdown!!}</td> <!-- Form with Roles dropdown select. Display without escaping -->
+										<!-- Form with Roles dropdown select. Displays content without html escaping -->
+										<td>
+										    <form method="post" action="{{url('/assignRole')}}">
+				
+                                              <div class="form-group">
+                                                <input type="hidden" value="{{csrf_token()}}" name="_token" />
+                                                  <select name="role_sel">
+												    <option selected disabled>select</option>
+													@foreach ($allRoles as $c)
+													  <option value="{{ $c['attributes']['name']}}"> {{$c['attributes']['name'] }}</option>
+													@endforeach
+                                                    </select>
+                                              </div>
+								              <button type="submit" >assign role</button>
+                                            </form>
+										</td>
    
    
   

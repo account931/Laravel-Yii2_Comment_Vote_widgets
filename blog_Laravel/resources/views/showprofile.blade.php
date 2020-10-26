@@ -1,3 +1,6 @@
+<?php
+//shows my profile (a profile of currently logged user)
+?>
 @extends('layouts.app')
 
 @section('content')
@@ -62,7 +65,20 @@
 				</div><!-- .all-your-articles -->
 				<!-- End Display all your articles in Botstrap collapsible accordition  -->
 				
-				<div style="height:40px;"></div>
+				
+				
+				
+				<!-- Displays List of current logged user's rbac roles. Uses Helper method displayUserRoles($a)  -->
+				<div class="col-sm-12 col-xs-12 all-your-roles">
+				  <div class="panel panel-default">
+                    <div class="panel-heading">Your RBAC roles:</div>
+	                <div class="panel-heading">{!! \App\Http\MyHelpers\Rbac\Helper_Rbac::displayUserRoles($user) !!}</div>
+                  </div>
+				</div> <!-- . all-your-roles -->
+				
+				
+				
+				<!--<div style="height:40px;"></div>-->
             </div>
         </div>
     </div>

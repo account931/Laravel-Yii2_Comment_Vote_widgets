@@ -5,13 +5,13 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Model; //???? Added by me
+//use Illuminate\Database\Eloquent\Model; //???? Added by me
 
 use Zizaco\Entrust\Traits\EntrustUserTrait; //my
 
 class User extends Authenticatable
 {
-    use EntrustUserTrait; //my
+    use EntrustUserTrait; //use Zizaco Entrust
 	use Notifiable;
 	
 

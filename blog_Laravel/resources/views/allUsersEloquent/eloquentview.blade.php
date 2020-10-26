@@ -3,6 +3,7 @@
 
 @section('content')
 <script>
+    //passing php var to JS (for autocomplete.js)
     var usersX = {!! $f->toJson() !!};
 </script>
 

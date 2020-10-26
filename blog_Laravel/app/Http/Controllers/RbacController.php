@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View; //for return View::make
 use App\models\EntrustRbac\Role; //model for Entrust Role model
 use App\User;
+use MyHelper; //my helper
+use Illuminate\Validation\Rule; //for in: validation
+use Illuminate\Support\Facades\Validator; //for form validation
 //use Zizaco\Entrust\Traits\EntrustUserTrait; // not used???
 //use Zizaco\Entrust\EntrustRole; // not used???
 
 class RbacController extends Controller
 {
     /**
-     * Show .....
+     * display Users Table with Control Panel wo change RBAC roles
      *
      * @return \Illuminate\Http\Response
      */
@@ -21,10 +25,8 @@ class RbacController extends Controller
 	
 	     //check if logged
 		 if (!Auth::check()){
-			 //$link = <a href="{{ route('login') }}">Login </a>;
-			 //$text = "Login first" . "<a href='#'> Login </a>";
-			 $text = "Login firstly " . url("/some");
-			 throw new \App\Exceptions\myException( htmlspecialchars_decode($text) );
+			 $text = 'You are not logged, <a href="'. route('login') . '"> click here  </a>  to login';
+			 throw new \App\Exceptions\myException( $text );
 		 }
 		
 		
@@ -59,7 +61,8 @@ class RbacController extends Controller
         $allUsers = User::all(); //find all users for table
 		$allRoles = Role::all(); //find all roles for dropdown
 		//dd($allRoles);				 
-        return view('rbac.rbacView', compact('rbacStatus', 'status', 'userX', 'allUsers', 'allRoles')); 		
+        //return view('rbac.rbacView', compact('rbacStatus', 'status', 'userX', 'allUsers', 'allRoles')); 		
+	    return View::make('rbac.rbacView')->with(compact('rbacStatus', 'status', 'userX', 'allUsers', 'allRoles'));
 	}
 	
 	
@@ -108,6 +111,29 @@ class RbacController extends Controller
      */
     public function assignRole(Request $request)
     {
-		return redirect('/rbac')->with('sflashMessageX',"Assigned successfully");
+		//dd ($request->input('role_sel'));
+		//dd($request);
+		//dd($request->attributes);
+		//validation rules
+        $rules = [
+			'role_sel' => ['required', 'string', Rule::in(['admin', 'owner']) ] , //integer
+		];
+		
+		//creating custom error messages. Should pass it as 3rd param in Validator::make()
+		$mess = [
+			'role_sel.required' => 'We need the role to be specified',
+		];
+		
+		$validator = Validator::make($request->all(),$rules, $mess);
+		if ($validator->fails()) {
+			return redirect('/rbac')
+			->withInput()
+			->with('flashMessageFailX',"Validation Failed")
+			->withErrors($validator);
+		} else {
+		
+		   return redirect('/rbac')->with('flashMessageX', "Assigned successfully with <b> " . $request->input('role_sel') . "</b>" );
+	    }   
 	}
+	
 }

@@ -10,7 +10,7 @@
                 <div class="panel-body">
 				
                     <div class="alert alert-danger">
-                        Details: <b>{{ $exception->getMessage() }}</b>
+                        Details: <b>{!! $exception->getMessage() !!}</b>
 					</div>
 					
 					<center>

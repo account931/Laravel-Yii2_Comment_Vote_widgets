@@ -83,7 +83,22 @@
 				</div><!-- .all-your-articles -->
 				<!-- End Display all your articles in Botstrap collapsible accordition  -->
 				
-		  
+		        
+				
+				
+				<!-- Displays List of selected user's rbac roles. Uses Helper method displayUserRoles($a)  -->
+				<div class="col-sm-12 col-xs-12 all-your-roles">
+				  <div class="panel panel-default">
+                    <div class="panel-heading">User has RBAC roles:</div>
+	                <div class="panel-heading">
+					
+					    {!! \App\Http\MyHelpers\Rbac\Helper_Rbac::displayUserRoles($userOne[0]) !!}
+					</div>
+                  </div>
+				</div> <!-- . all-your-roles -->
+				
+				
+				
 		  </div>
 		</div>
 		

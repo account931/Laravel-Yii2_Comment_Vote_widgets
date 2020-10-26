@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\users; //model
+//use App\users; //model for table users, but this model does not contain use Zizaco\Entrust\Traits\EntrustUserTrait; so have no $user->roles() hasMany relations (used in view/showOne)
+use App\User; //model for table users. Contains use Zizaco\Entrust\Traits\EntrustUserTrait, so have no $user->roles() hasMany relations (used in view/showOne)
 //use Illuminate\Database\Eloquent\Model;
 use App\models\wpress_blog_post; //model for all posts
 
@@ -39,7 +40,7 @@ class AllUsersEloquent extends Controller
      */
     public function eloquentt()
     {
-		$f = users::all();
+		$f = User::all();
 		
         return view('allUsersEloquent.eloquentview', compact('f'));
         //return view('home2');
@@ -54,7 +55,7 @@ class AllUsersEloquent extends Controller
     public function showOne($id)
     {
 		//find the user by id
-		$userOne = users::where('id', $id)->get();
+		$userOne = User::where('id', $id)->get();
 		
 		//find One users article
 		$userOneArticles = wpress_blog_post::where('wpBlog_author', $id)->get();

@@ -30,6 +30,7 @@ Table of Content:
 17. RBAC 
 18. Multilanguges (Localization)
 19. Cookie.
+20. How to create Helper
 
 
 34.Highlight active menu item
@@ -130,6 +131,8 @@ USAGE
   @endforeach
 
   {{$count}}
+  
+# Displays content without html escaping => {!! session()->get('flashMessageX') !!} 
 ===========================================
 
 
@@ -183,11 +186,34 @@ USAGE
 
 7.Forms
   to be proccessed
+  # get one input => $request->input('role_sel');
   
   #get form input => 
          use Illuminate\Support\Facades\Input;
 		   var_dump(Input::get('description'));
 		   dd(Input::all());
+		   
+ #creating custom error messages, if use {Validator::make()} in controller => 
+  
+  public function assignRole(Request $request){
+		
+    $rules = ['role_sel' => 'required|integer',];
+		
+	//creating custom error messages. Should pass it as 3rd param in Validator::make()
+	$mess = [ 'role_sel.required' => 'We need this field',];
+		
+	$validator = Validator::make($request->all(),$rules, $mess);
+	if ($validator->fails()) {
+			return redirect('/rbac')
+			->withInput()
+			->with('flashMessageX',"Validation Failed")
+			->withErrors($validator);
+	} else { return redirect('/rbac')->with('flashMessageX',"Assigned successfully " . $request->input('role_sel')); }   
+
+# validate in range => $rules = ['role_sel' => ['required', 'string', Rule::in(['admin', 'second-zone']) ] , //integer];
+
+//-------------------------------		   
+#WHAT IS BELOW????
 # Install require laravelcollective/html to be able to use {{ Form::open(array('url' => 'storeNewWpress')) }}
 
     composer require laravelcollective/html
@@ -572,6 +598,20 @@ use Illuminate\Support\Facades\App;
 
 
 
+//================================================================================================
+20. How to create Helper
+To create Hepler function you can reuse in many places:
+1. create helper class in folders path {App\Http\MyHelpers\Rbac\Helper_Rbac.php} according to namespace
+    namespace App\Http\MyHelpers\Rbac;
+        class Helper_Rbac
+     {
+      public static function stringMakeUpperCase(string $string){} }
+	  
+2. Call in view => {!! \App\Http\MyHelpers\Rbac\Helper_Rbac::stringMakeUpperCase('this is how to use autoloading correctly!!') !!}
+
+//================================================================================================
+
+
 
 //================================================================================================ 
 34.Highlight active menu item
@@ -600,12 +640,14 @@ use Illuminate\Support\Facades\App;
 #link with helper => $post = App\Models\Post::find(1);  echo url("/posts/{$post->id}");
 
 # Render Controller/View (Active Record / Eloquent) => 
-   in Controller=>     use App\users; $f = users::all(); return view('home2', compact('f')); 
+   in Controller=>     
+       var 1: use App\users; $f = users::all();        return view('home2', compact('f'));  
+	   var 2: use Illuminate\Support\Facades\View;     return View::make('rbac.rbacView')->with(compact('rbacStatus', 'status', 'userX'));
+       var 3:                                          return View::make('page')->with('userInfo',$userInfo);
+   
    in View =>          foreach ($f as $a){
    
    
- #render =>  
-      return view('home2', compact('f'));  === return View::make('page')->with('userInfo',$userInfo);
 	  
 #pass several vars => return view('showprofile')->with(compact('id', 'name'));
 	  
@@ -660,6 +702,10 @@ Pass var from controller to view =>  return view('home2', compact('user'));
 # clear cache/reconfig =>  php artisan config:cache <==> php artisan cache:clear 
 
 composer dump-autoload
+
+# Exception with html unescapped tags=>
+  In controller=> $text = 'You are not logged, <a href="'. route('login') . '"> click here  </a>  to login'; throw new \App\Exceptions\myException( $text );
+  In View =>  Details: <b>{!! $exception->getMessage() !!}</b>
 ----------------------
 # Array search examples (move it to Yii)
 $listOfLanguages = array(
