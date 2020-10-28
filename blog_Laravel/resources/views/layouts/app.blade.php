@@ -98,6 +98,7 @@
                              <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
                              <li class="{{ Request::is('rbac*') ? 'active' : '' }}"> <a href="{{ route('rbac') }}"> RBAC </a></li>
                              <li><a href="{{ route('register') }}">E-shop(N/A)</a></li>
+							 <li><a href="{{ route('register') }}">E-shop AdminP(N/A)</a></li>
 							 <li><a href="{{ route('register') }}">Booking(N/A)</a></li>
 							 <li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>
 						 </ul>
@@ -169,9 +170,10 @@
 		<script src="{{ asset('js/all-users-eloquent/autocomplete.js') }}"></script>
     @endif
 	
-	<!-- To register JS/CSS for specific view only (for RBAC) -->
+	<!-- To register JS/CSS for specific view only (for RBAC only) -->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['rbac'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
         <link href="{{ asset('css/rbac/rbac.css') }}" rel="stylesheet">
+		<script src="{{ asset('js/rbac/my-rbac.js') }}"></script>
     @endif
 
 </body>

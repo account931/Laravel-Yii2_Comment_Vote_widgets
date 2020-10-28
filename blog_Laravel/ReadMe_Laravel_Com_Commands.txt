@@ -243,6 +243,7 @@ USAGE
 //================================================================================================
 
 8.Form Validation => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   at =>  public function store(Request $request)
+  # 4 ways of validation => https://laravel.demiart.ru/ways-of-laravel-validation/
   #Docs => https://laravel.ru/docs/v5/validation
   
   use Illuminate\Support\Facades\Validator;
@@ -340,6 +341,7 @@ USAGE
 	$articles = wpress_blog_post::where('wpBlog_status', '1')->where('wpBlog_category', 1)->get();
     
 	$user = User::where('username', '=', 'michele')->first();
+	$roles = Role::select('role','surname')->where('id', 1)->get(); //select columns
 	
 	$articles->count()
   
@@ -356,6 +358,10 @@ USAGE
 	//check if record exists-2    
 	$roleAdmin =  self::where('name', 'admin')->get();
     if (!$roleAdmin){ }
+	
+	//check if record exists-3. The best 
+	if( Role_User::where('user_id', intval($request->input('user_id')))->where('role_id', intval($request->input('role_sel')) )->exists()) { 
+
 	   
    #find one user 
    in Controller => 

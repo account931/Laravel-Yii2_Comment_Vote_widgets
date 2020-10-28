@@ -19,7 +19,7 @@
                 <!-- Flash message if Failed -->
 				@if(session()->has('flashMessageFailX'))
                     <div class="alert alert-danger">
-                        {{ session()->get('flashMessageFailX') }}
+                        {!! session()->get('flashMessageFailX') !!} <!--Displays content without html escaping -->
                     </div>
                 @endif
 				<!-- Flash message if Failed -->				
@@ -143,14 +143,15 @@
 				
                                               <div class="form-group">
                                                 <input type="hidden" value="{{csrf_token()}}" name="_token" />
-                                                  <select name="role_sel">
+												<input type="hidden" value="{{$a->id}}" name="user_id" />
+                                                  <select name="role_sel" id="select_1">
 												    <option selected disabled>select</option>
 													@foreach ($allRoles as $c)
-													  <option value="{{ $c['attributes']['name']}}"> {{$c['attributes']['name'] }}</option>
+													  <option value="{{ $c['attributes']['id']}}"> {{ $c->name }}</option>
 													@endforeach
                                                     </select>
                                               </div>
-								              <button type="submit" >assign role</button>
+								              <button type="submit" id="sbmBtn" >assign role</button>
                                             </form>
 										</td>
    

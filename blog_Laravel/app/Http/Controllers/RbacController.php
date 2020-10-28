@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule; //for in: validation
 use Illuminate\Support\Facades\Validator; //for form validation
 //use Zizaco\Entrust\Traits\EntrustUserTrait; // not used???
 //use Zizaco\Entrust\EntrustRole; // not used???
+use App\models\EntrustRbac\My_rbac\Role_User; //model for DB table Role_User
 
 class RbacController extends Controller
 {
@@ -111,19 +112,35 @@ class RbacController extends Controller
      */
     public function assignRole(Request $request)
     {
+		
+		//getting all existing roles from DB, get from DB only column "id". Used for validation in range {Rule::in(['admin', 'owner']) ]}, ['13', '17']
+		$existingRoles = Role::select('id')->get(); 
+		$rolesList  = array(); // array to contain all roles id  from DB in format ['13', '17']
+		foreach($existingRoles as $n){
+			array_push($rolesList, $n->id);	
+		}
+		//dd($rolesList);
+		
+		
+		
+
 		//dd ($request->input('role_sel'));
 		//dd($request);
 		//dd($request->attributes);
+		
 		//validation rules
         $rules = [
-			'role_sel' => ['required', 'string', Rule::in(['admin', 'owner']) ] , //integer
+			//'role_sel' => ['required', 'string', Rule::in(['admin', 'owner']) ] , //validation in range 
+			  'role_sel' => [ 'required', 'string', Rule::in( $rolesList ) ] , //validation in range, i.e Rule::in(['admin', 'owner']) ] =['13', '17']
+			
 		];
 		
 		//creating custom error messages. Should pass it as 3rd param in Validator::make()
 		$mess = [
-			'role_sel.required' => 'We need the role to be specified',
+			'role_sel.required' => 'Required.We need the role to be specified',
 		];
 		
+		//validate the input
 		$validator = Validator::make($request->all(),$rules, $mess);
 		if ($validator->fails()) {
 			return redirect('/rbac')
@@ -131,8 +148,18 @@ class RbacController extends Controller
 			->with('flashMessageFailX',"Validation Failed")
 			->withErrors($validator);
 		} else {
+			
+		    //apart from {required} validation rule, check if {$request->input('role_sel')}, i.e $_POST['role_sel'] in not null (if user clicked "assigned" while did not select a role in dropdown). Actually, it should never fire, as validation "required" works first
+		    if($request->input('role_sel') == null){
+		      return redirect('/rbac')->with('flashMessageFailX', "Stopped. No role was selected" );
+		    }
 		
-		   return redirect('/rbac')->with('flashMessageX', "Assigned successfully with <b> " . $request->input('role_sel') . "</b>" );
+		    //check if a selected user has already the role u want to assign to him. intval() is a must as $_POST is string
+			if( Role_User::where('user_id', intval($request->input('user_id')))->where('role_id', intval($request->input('role_sel')) )->exists()) { 
+		       return redirect('/rbac')->with('flashMessageFailX', "Stopped. User <b> " . User::where('id', intval($request->input('user_id')))->get()[0]->name . " </b>has already role " . $request->input('role_sel') .  " u want to assign" );
+		    }
+			
+		    return redirect('/rbac')->with('flashMessageX', "Assigned successfully with <b> " . $request->input('role_sel'). "</b>" );
 	    }   
 	}
 	
