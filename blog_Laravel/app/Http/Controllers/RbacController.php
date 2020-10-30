@@ -142,6 +142,8 @@ class RbacController extends Controller
 		
 		//validate the input
 		$validator = Validator::make($request->all(),$rules, $mess);
+		
+		//if validation fails
 		if ($validator->fails()) {
 			return redirect('/rbac')
 			->withInput()
@@ -154,13 +156,31 @@ class RbacController extends Controller
 		      return redirect('/rbac')->with('flashMessageFailX', "Stopped. No role was selected" );
 		    }
 		
-		    //check if a selected user has already the role u want to assign to him. intval() is a must as $_POST is string
+		    //if a selected user has already the role u want to assign to him. intval() is a must as $_POST is string
 			if( Role_User::where('user_id', intval($request->input('user_id')))->where('role_id', intval($request->input('role_sel')) )->exists()) { 
-		       return redirect('/rbac')->with('flashMessageFailX', "Stopped. User <b> " . User::where('id', intval($request->input('user_id')))->get()[0]->name . " </b>has already role " . $request->input('role_sel') .  " u want to assign" );
+		       //gets the role name by id from DB table Roles
+				$roleAssigned = Role::where('id', intval($request->input('role_sel')))->get()[0]->name;
+				
+			   return redirect('/rbac')->with('flashMessageFailX', "Stopped. User <b> " . User::where('id', intval($request->input('user_id')))->get()[0]->name . " </b>has already role <b>" . $roleAssigned .  "</b> u want to assign" );
 		    }
 			
-		    return redirect('/rbac')->with('flashMessageX', "Assigned successfully with <b> " . $request->input('role_sel'). "</b>" );
-	    }   
+			//assign a selected user with a selected role
+			$model = new Role(); 
+	        if($model->assignSelectedRoleToSelectedUser(intval($request->input('user_id')), intval($request->input('role_sel')) )){
+		        
+				//gets the role name by id from DB table Roles
+				$roleAssigned = Role::where('id', intval($request->input('role_sel')))->get()[0]->name;
+				
+				//gets the user name by id from DB table Users
+				$userAssigned = User::where('id', intval($request->input('user_id')))->get()[0]->name;
+				
+				return redirect('/rbac')->with('flashMessageX', "Assigned user <b>" . $userAssigned . " </b> successfully with role <b> " . $roleAssigned. "</b>" );
+	        
+			} else {
+				//something failed
+				return redirect('/rbac')->with('flashMessageFailX', "Something went wrong" );
+			}				
+		}
 	}
 	
 }

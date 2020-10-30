@@ -78,4 +78,21 @@ class Role extends EntrustRole
 	   $user->roles()->attach($admin_role);
 	   dd("Great");
 	}
+	
+	
+	
+	
+	/**
+     * method to assign a selected user with selected role (assigned from Entrusr Rbac Admin Panel table)
+     * @param int $user
+	 * @param int $role
+     * @return boolean
+     */
+	public function assignSelectedRoleToSelectedUser($userID, $roleId){
+		$selectedUser = User::find($userID );
+		$selectedRole = self::where('id', $roleId)->get()->first();
+		$selectedUser->roles()->attach($selectedRole );
+		return true;
+		
+	}
 }

@@ -47,7 +47,7 @@
 				    <!--  -->
 					<div class="col-sm-12 col-xs-12"></br>
 					    <div>
-						   <a href="{{ url('/createtwoRoles') }}" title="to create roles manually, must be run by admin one time only"> Create 2 roles </a>
+						   <a href="{{ url('/createtwoRoles') }}" title="to create roles manually, must be run by admin one time only"> Create 2 roles manually (test) </a>
 						</div><hr>
 						
 						@php
@@ -118,7 +118,7 @@
                                         <td>{{  $a->name }}</td>  
                                        
 										<!-- Displays List of user's rbac roles. Uses Helper method displayUserRoles($a)  --> 
-										<td> {!! \App\Http\MyHelpers\Rbac\Helper_Rbac::displayUserRoles($a) !!}</td> <!-- all current loop user's roles. Displays content without escaping -->
+										<td class="user-roles-list"> {!! \App\Http\MyHelpers\Rbac\Helper_Rbac::displayUserRoles($a) !!}</td> <!-- all current loop user's roles. Displays content without escaping -->
                                         
 										@php
 										  //getting descriptions of roles current loop user has. Can be carved to Helper method
@@ -144,14 +144,14 @@
                                               <div class="form-group">
                                                 <input type="hidden" value="{{csrf_token()}}" name="_token" />
 												<input type="hidden" value="{{$a->id}}" name="user_id" />
-                                                  <select name="role_sel" id="select_1">
+                                                  <select name="role_sel">
 												    <option selected disabled>select</option>
 													@foreach ($allRoles as $c)
 													  <option value="{{ $c['attributes']['id']}}"> {{ $c->name }}</option>
 													@endforeach
                                                     </select>
                                               </div>
-								              <button type="submit" id="sbmBtn" >assign role</button>
+								              <button type="submit" class="sbmBtn" >assign role</button>
                                             </form>
 										</td>
    

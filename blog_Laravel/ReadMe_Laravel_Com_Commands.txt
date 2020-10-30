@@ -562,6 +562,10 @@ https://github.com/Zizaco/entrust
 
 --------
 
+# How to extend roles => there's no built-in Entrust Rbac solution, so a hand-mande one =>
+ if u want role 'admin' to be able to reach content of role 'manager' or any other, do always include 'admin' in hasRole() funcntion, when u check 'manager' role  =>
+    $user->hasRole(['manager', 'admin']);   
+
 # How make Self-made Rbac  => https://laravel.demiart.ru/guide-to-roles-and-permissions/
 //================================================================================================
 
@@ -712,7 +716,14 @@ composer dump-autoload
 # Exception with html unescapped tags=>
   In controller=> $text = 'You are not logged, <a href="'. route('login') . '"> click here  </a>  to login'; throw new \App\Exceptions\myException( $text );
   In View =>  Details: <b>{!! $exception->getMessage() !!}</b>
-----------------------
+  
+  
+  
+  
+  
+  
+//================================Move to Yii2 ReadMe =============================
+
 # Array search examples (move it to Yii)
 $listOfLanguages = array(
 	"English" => array("langName" => "en", "langFlagImg" => "en-US.svg"),
@@ -731,7 +742,31 @@ $listOfLanguages = array(
 
 
 
---------------------------------
+---------------------- JS ----------
+
+//Check if <select> is selected (not empty) (when multiple forms are generated in loop )=> 
+$(document).on("click", '.sbmBtn', function() {   // this  click  is  used  to   react  to  newly generated cicles;
+    if($(this).closest("form").find(":selected").val() == "select"){
+
+# JS JQ selectors, use .parent() to go 1 level up:
+	var selectedText = $(this).closest("form").find(":selected").text();  //gets text of selected <select>, i.e 'manager'. If u use .val() instead of text(), u'll ger value, i.e 14
+	var userRolesText = $(this).parent().parent().parent().find( $(".user-roles-list" )).html();  //gets the <td> text with user roles, i.e "owner, manager"
+		   
+
+# get value of <select> => $( "#myselect" ).val(); // i.e 13
+# get text  of <select> => $( "#myselect option:selected" ).text(); // i.e 'manager'
+
+# remove html tags from var userRolesText
+    var regexHTMLTags = /(<([^>]+)>)/ig; //regExp for html tags
+    var result = userRolesText.replace(regexHTMLTags, "");
+
+# test/check if someString contains word 'e'
+ if( new RegExp('text').test(someString) ){ 
+
+//================================ End Move to Yii2 ReadMe =============================
+
+
+
 
 
 

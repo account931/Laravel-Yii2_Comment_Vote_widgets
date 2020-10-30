@@ -170,11 +170,13 @@
 		<script src="{{ asset('js/all-users-eloquent/autocomplete.js') }}"></script>
     @endif
 	
-	<!-- To register JS/CSS for specific view only (for RBAC only) -->
+	<!-- To register JS/CSS for specific view only (for RBAC asset only) -->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['rbac'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
         <link href="{{ asset('css/rbac/rbac.css') }}" rel="stylesheet">
 		<script src="{{ asset('js/rbac/my-rbac.js') }}"></script>
-    @endif
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> <!-- Sweet Alert CSS -->
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script> <!--Sweet Alert JS-->
+	@endif
 
 </body>
 </html>
