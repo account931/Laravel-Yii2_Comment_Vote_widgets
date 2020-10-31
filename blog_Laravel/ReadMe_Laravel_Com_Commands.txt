@@ -36,6 +36,7 @@ Table of Content:
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
 35.2.Miscellaneous VA HTML/CSS
+35.3 Miscellaneous to move to Yii2 ReadMe
 36. Known Errors
 
 //================================================
@@ -566,6 +567,8 @@ https://github.com/Zizaco/entrust
  if u want role 'admin' to be able to reach content of role 'manager' or any other, do always include 'admin' in hasRole() funcntion, when u check 'manager' role  =>
     $user->hasRole(['manager', 'admin']);   
 
+# Detach/remove role from user (not in Entrusr readme) => $userModel = User::find(1); $userModel->detachRoles($role);
+
 # How make Self-made Rbac  => https://laravel.demiart.ru/guide-to-roles-and-permissions/
 //================================================================================================
 
@@ -722,6 +725,36 @@ composer dump-autoload
   
   
   
+
+
+
+
+
+
+
+
+
+//================================================================================================
+35.2.Miscellaneous VA HTML/CSS
+# Line => <hr>
+
+#Panel Styling =>
+<div class="panel panel-default">
+    <div class="panel-heading">text</div>
+	<div class="panel-heading">text</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+//================================================================================================
+35.3 Miscellaneous to move to Yii2 ReadMe
 //================================Move to Yii2 ReadMe =============================
 
 # Array search examples (move it to Yii)
@@ -748,7 +781,7 @@ $listOfLanguages = array(
 $(document).on("click", '.sbmBtn', function() {   // this  click  is  used  to   react  to  newly generated cicles;
     if($(this).closest("form").find(":selected").val() == "select"){
 
-# JS JQ selectors, use .parent() to go 1 level up:
+# JS JQ selectors, use .parent() to go 1 level up, see example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/rbac/my-rbac.js or at /resources/assets/
 	var selectedText = $(this).closest("form").find(":selected").text();  //gets text of selected <select>, i.e 'manager'. If u use .val() instead of text(), u'll ger value, i.e 14
 	var userRolesText = $(this).parent().parent().parent().find( $(".user-roles-list" )).html();  //gets the <td> text with user roles, i.e "owner, manager"
 		   
@@ -762,25 +795,20 @@ $(document).on("click", '.sbmBtn', function() {   // this  click  is  used  to  
 
 # test/check if someString contains word 'e'
  if( new RegExp('text').test(someString) ){ 
+ 
+# Sweet alerts with html tags => see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/rbac/my-rbac.js or at /resources/assets/		       
+swal({html:true, title:'Attention!', text:'User has already selected role <b> ' + selectedRoleText + ' </b>.</br>  Back-end validation is also available.', type: 'error'});
+
+# Prevent and send form with Sweet alerts confirm dialogue => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/rbac/my-rbac.js  or if it was Gulp Webpacked =>  at /resources/assets/
 
 //================================ End Move to Yii2 ReadMe =============================
 
-
-
-
-
-
-
-
 //================================================================================================
-35.2.Miscellaneous VA HTML/CSS
-# Line => <hr>
 
-#Panel Styling =>
-<div class="panel panel-default">
-    <div class="panel-heading">text</div>
-	<div class="panel-heading">text</div>
-</div>
+
+
+
+
 
 
 

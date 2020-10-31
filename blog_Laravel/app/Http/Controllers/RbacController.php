@@ -183,4 +183,31 @@ class RbacController extends Controller
 		}
 	}
 	
+	
+	
+	
+	/**
+     * method to detach a certain role from certain user (from RBAC Table Control Panel), send via POST form
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function detachRole(Request $request)
+    {
+		//gets the role name by id from DB table Roles
+		$roleDetached = Role::where('id', intval($request->input('role_id')))->get()[0]->name;
+		
+		//gets the user name by id from DB table Users
+		$userDetached = User::where('id', intval($request->input('user_id')))->get()[0]->name;
+		
+		//assign a selected user with a selected role
+		$model = new Role();
+		if($model->detachSelectedRoleFromSelectedUser(intval($request->input('user_id')), intval($request->input('role_id')) )){
+		    return redirect('/rbac')->with('flashMessageX', "Detached successfully role <b> " . $roleDetached  . "</b> from user <b> " . $userDetached . "</b>" );
+        } else {
+			return redirect('/rbac')->with('flashMessageFailX', "Failed Detaching role <b> " . $roleDetached  . "</b> from user <b> " . $userDetached . "</b>" );
+
+		}
+	
+	}
+	
 }

@@ -10,3 +10,14 @@
 .table-hover> tbody> tr:hover{
     background-color:yellow !important;
 }
+
+/* class for delete icon, used in \App\Http\MyHelpers\Rbac\Helper_Rbac::displayUserRoles($a, true)  */
+.text-delete{
+	color:red;
+	cursor:pointer;
+	border:1px solid white;
+}
+
+.text-delete:hover{
+	color: white;
+}

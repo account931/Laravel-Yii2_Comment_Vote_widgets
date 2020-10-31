@@ -118,7 +118,7 @@
                                         <td>{{  $a->name }}</td>  
                                        
 										<!-- Displays List of user's rbac roles. Uses Helper method displayUserRoles($a)  --> 
-										<td class="user-roles-list"> {!! \App\Http\MyHelpers\Rbac\Helper_Rbac::displayUserRoles($a) !!}</td> <!-- all current loop user's roles. Displays content without escaping -->
+										<td class="user-roles-list"> {!! \App\Http\MyHelpers\Rbac\Helper_Rbac::displayUserRoles($a, true) !!}</td> <!-- all current loop user's roles. Displays content without escaping -->
                                         
 										@php
 										  //getting descriptions of roles current loop user has. Can be carved to Helper method
@@ -151,7 +151,7 @@
 													@endforeach
                                                     </select>
                                               </div>
-								              <button type="submit" class="sbmBtn" >assign role</button>
+								              <button type="submit" class="sbmBtn" data-uName="{{$a->name}}">assign role</button> <!-- data-uName to e used in JS swal -->
                                             </form>
 										</td>
    

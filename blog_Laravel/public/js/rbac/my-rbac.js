@@ -13,10 +13,14 @@ $(document).ready(function(){
     //                                                                                     ** 
 	  $(document).on("click", '.sbmBtn', function() {   // this  click  is  used  to   react  to  newly generated cicles;
 		   
+		   var userName = this.getAttribute("data-uName"); //gets user name u want to assign any role. Set in hml by adding to button data-uName="{{$a->name}}" 
+		   
+		   
 		   //check if user selected any role. Just for front-end check, relevant back-end validation rule is also available
 		   if($(this).closest("form").find(":selected").val() == "select"){
 			  //alert("Please select user role to assign. Back-end validation is also available");
-			  swal("Attention!", "Please select user role to assign. Back-end validation is also available.", "error");
+			  swal({html:true, title:'Attention!', text:'Please select rbac role for <b>' + userName + '</b> to assign.</br>  NB:Back-end validation is also available.', type: 'error'});
+
 			  return false;
 		   }
 		   
@@ -32,10 +36,11 @@ $(document).ready(function(){
 		   //alert(selectedRoleText); // a role selected by admin
 		   //check if <td> text with user's roles contains the role selected from dropdown
 		   if( new RegExp(selectedRoleText).test(result) ){ 
-		       swal("Attention!", "User has already selected role <b> " + selectedRoleText + " </b>  Back-end validation is also available.", "error");
+		      
+		       swal({html:true, title:'Attention!', text:'User <b>' + userName + '</b> has already selected role <b> ' + selectedRoleText + ' </b>.</br>  NB:Back-end validation is also available.', type: 'error'});
 			   return false;
 		   }
-		   return false;
+		   //return false;
 		   
 		   
 		   
@@ -46,9 +51,60 @@ $(document).ready(function(){
     // **************************************************************************************
 	
 
+	
+	//When Click "delete' icon to detach/delete a certain role from certain role user. Uses SWAL confirm dialogue
+	// **************************************************************************************
+    // **************************************************************************************
+    //                                                                                     ** 
+	  $(document).on("click", '.detach-role', function(e) {   // this  click  is  used  to   react  to  newly generated cicles;
+		e.preventDefault(); //prevent submit form
+		
+		
+		var classNumber = $('.detach-role').index(this); //index of clicked class .detach-role
+		
+		var userName = this.getAttribute("data-uName"); //gets user name u want detach a role. Set in html by adding to button data-uName="{{$a->name}}". Set in \App\Http\MyHelpers\Rbac\Helper_Rbac::displayUserRoles($a, true)
+        var roleName = this.getAttribute("data-uRole"); //gets role name u want to detach. Set in html by adding to button data-uRole="{{$a->name}}" 
+
+        swal({html:true, title:'Attention!', text:'User </br>  NB:Back-end validation is also available.', type: 'error'});
+
+
+		swal({
+			    html:true,
+                title: "Are you sure to detach role <i>{" + roleName + "}</i> from user <i> " + userName + " </i>?",
+                text: "Role will be detached from this user!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Yes, go ahead!',
+                cancelButtonText: "No, cancel it!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+           },
+           function(isConfirm){
+               if (isConfirm){
+			       	swal({ html:true, title:'Attention!', text:'Deleting <b>here</b>....</br>  ', type: 'error'});
+                    //$(this).unbind('submit').submit();
+					//$(".detach-role").get(0).allowDefault = true;
+					//e.trigger('click');
+					 //$("form:not('#press')").submit()
+					 $(".detach").eq(classNumber).submit();
+					 return true; 
+	
+                
+				
+               } else {
+                   swal("Cancelled", "You cancelled deleting.", "error");
+                   //e.preventDefault();
+				   return false;
+               }
+            });	     
 	 
-	 
-	 
+	 	   
+	  });
+	
+    // **                                                                                  **
+    // **************************************************************************************
+    // **************************************************************************************
 	 
 	 
 	

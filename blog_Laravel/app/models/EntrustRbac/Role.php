@@ -9,6 +9,7 @@ use App\User;
 
 class Role extends EntrustRole
 {
+	//for test only!!!!!!!!!!!!!!!
 	//creates roles in DB (to create roles manually, must be run by admin one time only)
 	public function setup() 
     {
@@ -66,7 +67,7 @@ class Role extends EntrustRole
 	} 
 	*/
 	
-	
+	//for test only!!!!!!!!!!!!!!!!!!!!!!
 	public function assign() 
     {
 	   //$user = User::where('id', '=', auth()->user()->id)->first();
@@ -82,8 +83,10 @@ class Role extends EntrustRole
 	
 	
 	
+	
+	
 	/**
-     * method to assign a selected user with selected role (assigned from Entrusr Rbac Admin Panel table)
+     * method to assign a selected user with selected role (assigned from Entrust Rbac Admin Panel table)
      * @param int $user
 	 * @param int $role
      * @return boolean
@@ -95,4 +98,24 @@ class Role extends EntrustRole
 		return true;
 		
 	}
+	
+	
+	/**
+     * method to detach/delete a selected role from selected used (triggered from Entrust Rbac Admin Panel table)
+     * @param int $user
+	 * @param int $role
+     * @return boolean
+     */
+	public function detachSelectedRoleFromSelectedUser($userID, $roleId){
+		$selectedUser = User::find($userID );
+		//$selectedRole = self::where('id', $roleId)->get()->first();
+		$selectedRole = self::select('name')->where('id', $roleId)->get()->first(); 
+		//dd($selectedRole->name);
+		$selectedUser->detachRoles([$selectedRole->name]);
+
+		return true;
+		
+	}
+	
+	
 }
