@@ -5,6 +5,7 @@ namespace App\models\EntrustRbac;
 
 use Zizaco\Entrust\EntrustRole;
 use App\User;
+use App\models\EntrustRbac\My_rbac\Role_User; //model for DB table Role_User. used for manual detaching/removing a selected role from selected user as {$selectedUser->detachRoles($selectedRole) does not work} 
 
 
 class Role extends EntrustRole
@@ -101,19 +102,34 @@ class Role extends EntrustRole
 	
 	
 	/**
-     * method to detach/delete a selected role from selected used (triggered from Entrust Rbac Admin Panel table)
+     * method to detach/delete/remove a selected role from selected used (triggered from Entrust Rbac Admin Panel table)
      * @param int $user
 	 * @param int $role
      * @return boolean
      */
 	public function detachSelectedRoleFromSelectedUser($userID, $roleId){
-		$selectedUser = User::find($userID );
+		
+		//DON"T NEED IF USE manual delete
+		$selectedUser = User::find($userID ); //$selectedUser = User::firstOrFail($userID );  //
+		
+		//DON"T NEED IF USE manual delete
 		//$selectedRole = self::where('id', $roleId)->get()->first();
-		$selectedRole = self::select('name')->where('id', $roleId)->get()->first(); 
-		//dd($selectedRole->name);
-		$selectedUser->detachRoles([$selectedRole->name]);
+		$selectedRole = self::where('id', $roleId)->get()->first();  //$selectedRole = self::where('id', $roleId)->get()->first(); 
+		
 
-		return true;
+		
+		
+		//dd($selectedRole->name);
+		//$selectedUser->detachRoles($selectedRole);
+		
+		//manual detaching/removing a selected role from selected user as {$selectedUser->detachRoles($selectedRole) does not work} 
+		if(Role_User::where('user_id', $userID)->where('role_id', $roleId)->exists()) { 
+		   //$d = Role_User::where('user_id', $userID)->where('role_id', $roleId)/*->findOrFail()*/->delete();
+		   Role_User::where('user_id', $userID)->where('role_id', $roleId)->delete();
+           return true;
+		} else {
+			return false;
+		}
 		
 	}
 	

@@ -17,7 +17,8 @@ Table of Content:
 6.How to create new Controller/action, view and add to menu
 7.Forms
 8.Form Validation
-8.1 Form fields Insert to DB
+8.1 Form input with errors <span>
+8.2 Form fields Insert to DB
 9.Migrations/Seeders
 10.hasOne/hasMany relation
 11.DB SQL Eloquent queries
@@ -31,7 +32,7 @@ Table of Content:
 18. Multilanguges (Localization)
 19. Cookie.
 20. How to create Helper
-
+21. Login with username instead of email
 
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
@@ -251,10 +252,16 @@ USAGE
 //================================================================================================
 
 
+//================================================================================================
+8.1 Form input with errors <span>
+<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
-
-
-
+@if ($errors->has('email'))
+    <span class="help-block">
+        <strong>{{ $errors->first('email') }}</strong>
+    </span>
+@endif
+//================================================================================================
 
 
 
@@ -262,7 +269,7 @@ USAGE
 
 //================================================================================================
 
-8.1 Form fields Insert to DB  => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   at =>  public function store(Request $request)
+8.2 Form fields Insert to DB  => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   at =>  public function store(Request $request)
   Docs => https://www.studentstutorial.com/laravel/insert-data-laravel
 
 //================================================================================================
@@ -344,6 +351,8 @@ USAGE
 	$user = User::where('username', '=', 'michele')->first();
 	$roles = Role::select('role','surname')->where('id', 1)->get(); //select columns
 	
+	wpress_blog_post::where('wpBlog_id',$id)->delete();
+	
 	$articles->count()
   
   #ћетод get() возвращает объект Illuminate\Support\Collection (дл€ версии 5.2 и ранее Ч массив) c результатами, в котором каждый результат Ч это экземпл€р PHP-объекта StdClass.
@@ -360,7 +369,7 @@ USAGE
 	$roleAdmin =  self::where('name', 'admin')->get();
     if (!$roleAdmin){ }
 	
-	//check if record exists-3. The best 
+	//check if record exists-3. The best!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if( Role_User::where('user_id', intval($request->input('user_id')))->where('role_id', intval($request->input('role_sel')) )->exists()) { 
 
 	   
@@ -484,20 +493,16 @@ USAGE
 
 ------------------------------------------------------
  #Loading CSS and JS files on specific views in Laravel 5.2
-  Variant 1 (not working????) =>
-    @extends('layouts.master')
-    @section('styles')
-        <link href="{{asset('assets/css/custom-style.css')}}" />
-    @stop
-  
-  Variant 2 (working) =>
+
+  Variant 1 (most working)(use/include in main layout, i.e /views/layout/blade.php)!!! =>
     <!-- To register JS/CSS file for specific view only (In layout template) -->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['testRest', 'register']))
         <script src="{{ asset('js/test-rest/test-rest.js') }}"></script>
     @endif	
 	
-	Variant 3 (working) =>
-	    <script type="text/javascript" src="{{ URL::to('js/test-rest/test-rest.js') }}"></script>	
+	Variant 2 (working) (use/include in any child view, i.e /views/auth/login) =>
+	    <script type="text/javascript" src="{{ URL::to('js/test-rest/test-rest.js') }}"></script>
+        <script src="{{ asset('js/login/login.js')}}"></script>		
 
 
 //================================================================================================
@@ -623,6 +628,28 @@ To create Hepler function you can reuse in many places:
 2. Call in view => {!! \App\Http\MyHelpers\Rbac\Helper_Rbac::stringMakeUpperCase('this is how to use autoloading correctly!!') !!}
 
 //================================================================================================
+
+
+
+
+
+
+
+//================================================================================================
+21. Login with username instead of email => see docs => https://www.tutsplanet.com/laravel-auth-login-with-username-instead-of-email/
+
+//================================================================================================
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -801,6 +828,7 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 
 # Prevent and send form with Sweet alerts confirm dialogue => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/rbac/my-rbac.js  or if it was Gulp Webpacked =>  at /resources/assets/
 
+#//How to Toggle Password Visibility =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/login/login.js  or if it was Gulp Webpacked =>  at /resources/assets/
 //================================ End Move to Yii2 ReadMe =============================
 
 //================================================================================================

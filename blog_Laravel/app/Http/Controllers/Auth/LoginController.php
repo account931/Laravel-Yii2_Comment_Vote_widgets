@@ -36,4 +36,20 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+	
+	
+	
+	//if u want to Login with username instead of email. Don't change the function name, regadless what u want to return, i.e "email, name, username" 
+	/**
+     * Get username property.
+     *
+     * @return string
+     */
+	 /*
+    public function username()
+    {
+        return 'name'; //or return the DB  field which you want to use, i.e "email, name, username"
+    }
+	*/
+
 }

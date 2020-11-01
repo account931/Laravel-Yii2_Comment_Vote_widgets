@@ -1,4 +1,7 @@
+
+
 @extends('layouts.app')
+
 
 @section('content')
 <div class="container">
@@ -12,25 +15,48 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                           <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
+                                
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
+                                @endif 
+							</div>
+                        </div>	
+								
+								
+								
+						<!-- If u want to Login with username instead of Email -->
+						<!--
+						<div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+						    <label for="name" class="col-md-4 control-label">name</label>
+						    <div class="col-md-6">
+								<input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required >
+                                @if ($errors->has('name'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
                                 @endif
-                            </div>
-                        </div>
+							</div>
+						</div>
+						-->
+						<!-- End If u want to Login with username instead of Email -->
+								
+								
+                            
+                        
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" required>
-
+                                <i class="fa fa-eye" id="togglePassword" style="cursor:pointer;"></i>
+								
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -66,4 +92,14 @@
         </div>
     </div>
 </div>
+
+<!-- Include js file for thisview only -->
+<script src="{{ asset('js/login/login.js')}}"></script>
+<!-- Include js file for thisview only -->
+
 @endsection
+
+
+
+
+
