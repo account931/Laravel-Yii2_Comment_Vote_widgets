@@ -17,7 +17,7 @@ Table of Content:
 6.How to create new Controller/action, view and add to menu
 7.Forms
 8.Form Validation
-8.1 Form input with errors <span>
+8.1 Form input with in-line errors <span>
 8.2 Form fields Insert to DB
 9.Migrations/Seeders
 10.hasOne/hasMany relation
@@ -199,7 +199,11 @@ USAGE
   
   public function assignRole(Request $request){
 		
-    $rules = ['role_sel' => 'required|integer',];
+    $rules = [
+			'role_sel' => ['required', 'string', 'min:3', Rule::in( ['admin', 'owner'] ) ] , 
+			'rDescr' => [ 'required', 'string' ] , 
+			
+		];
 		
 	//creating custom error messages. Should pass it as 3rd param in Validator::make()
 	$mess = [ 'role_sel.required' => 'We need this field',];
@@ -253,7 +257,7 @@ USAGE
 
 
 //================================================================================================
-8.1 Form input with errors <span>
+8.1 Form input with in-line errors <span>
 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
 @if ($errors->has('email'))
@@ -351,7 +355,10 @@ USAGE
 	$user = User::where('username', '=', 'michele')->first();
 	$roles = Role::select('role','surname')->where('id', 1)->get(); //select columns
 	
-	wpress_blog_post::where('wpBlog_id',$id)->delete();
+	wpress_blog_post::where('wpBlog_id',$id)->delete(); //Delete
+	
+	$model = App\Flight::findOrFail(1); $model = App\Flight::where('legs', '>', 100)->firstOrFail();
+       findOrFail() is alike of find() function with one extra ability - to throws the Not Found Exceptions. So use it instead of checking if record exists (as u like it to do )
 	
 	$articles->count()
   
@@ -369,7 +376,7 @@ USAGE
 	$roleAdmin =  self::where('name', 'admin')->get();
     if (!$roleAdmin){ }
 	
-	//check if record exists-3. The best!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//check if record exists-3. Returns boolean. The best!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if( Role_User::where('user_id', intval($request->input('user_id')))->where('role_id', intval($request->input('role_sel')) )->exists()) { 
 
 	   
@@ -638,6 +645,11 @@ To create Hepler function you can reuse in many places:
 //================================================================================================
 21. Login with username instead of email => see docs => https://www.tutsplanet.com/laravel-auth-login-with-username-instead-of-email/
 
+1. In View (\resources\views\auth\login.blade.php) change email input to name input (or username etc) => see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/auth/login.blade.php
+2. In Controller (\app\Http\Controllers\Auth\LoginController) add function username() to overrude parrent method. Don't change the function name, regadless what u want to return, i.e "email, name, username" 
+    public function username(){
+	   return 'name'; //or return the DB  field which you want to use, i.e "email, name, username"
+    }
 //================================================================================================
 
 

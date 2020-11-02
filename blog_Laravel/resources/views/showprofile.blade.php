@@ -71,8 +71,8 @@
 				<!-- Displays List of current logged user's rbac roles. Uses Helper method displayUserRoles($a)  -->
 				<div class="col-sm-12 col-xs-12 all-your-roles">
 				  <div class="panel panel-default">
-                    <div class="panel-heading">Your RBAC roles:</div>
-	                <div class="panel-heading">{!! \App\Http\MyHelpers\Rbac\Helper_Rbac::displayUserRoles($user) !!}</div>
+                    <div class="panel-heading"> Your RBAC roles: </div>
+	                <div class="panel-heading">{!! \App\Http\MyHelpers\Rbac\Helper_Rbac::displayUserRoles($user, false) !!}<hr><!-- hr is a fix --></div>
                   </div>
 				</div> <!-- . all-your-roles -->
 				

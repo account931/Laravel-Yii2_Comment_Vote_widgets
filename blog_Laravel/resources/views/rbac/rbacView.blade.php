@@ -100,6 +100,88 @@
 							<p class="bg-danger"> Sorry, you can not see the Control panel</p>
 						
 						@else
+							
+						 
+	                        <!-- START c to add new RBAC role to auth_items-->
+                            <hr>
+					        <div class="col-sm-12 col-xs-12 ">
+	   
+	                          <button data-toggle="collapse" data-target="#rbacAdd">Add a new RBAC role to auth_items</button><p></p>
+	                          
+							  <div id="rbacAdd" class="collapse"><br> <!--collapsed content goes here -->
+	   
+	                            <!----------------- Right Block. All roles list------------->
+                                <div class="col-sm-4 col-xs-12 ">
+                                  <p>Currently existing roles</p>
+							      @foreach($allRoles as $rr)
+							        <p> {{ $loop->iteration }} <i class='fa fa-check-circle-o'></i> {{ $rr->name }} </p>
+							      @endforeach
+							    </div>
+								<!----------------- End Right Block. All roles list------------->
+							
+							
+							
+							    <!----------------- FORM to add RBAC role to table {roles, auth_items(Yii2)} Left Block------------->
+							    <div class="col-sm-8 col-xs-12">
+							      
+								  <form class="form-horizontal" method="POST" action="{{ route('/addNewRole') }}">
+                                  {{ csrf_field() }}
+
+                                  <!---- Role name field -->
+                                  <div class="form-group{{ $errors->has('rname') ? ' has-error' : '' }}">
+                                    <label for="rname" class="col-md-4 control-label">Role name</label>
+                                    <div class="col-md-6">
+                                      <input id="rname" type="text" class="form-control" name="rname" value="{{ old('rname') }}" required autofocus>
+                                
+                                      @if ($errors->has('rname'))
+                                        <span class="help-block">
+                                          <strong>{{ $errors->first('rname') }}</strong>
+                                        </span>
+                                      @endif 
+							        </div>
+                                  </div>
+                                  <!---- End Role name field -->
+								  
+								 
+								  <!---- Role description field -->
+                                  <div class="form-group{{ $errors->has('rDescr') ? ' has-error' : '' }}">
+                                    <label for="rDescr" class="col-md-4 control-label">Descr</label>
+                                    <div class="col-md-6">
+                                      <input id="rDescr" type="text" class="form-control" name="rDescr" value="{{ old('rDescr') }}" required>
+                                
+                                      @if ($errors->has('rDescr'))
+                                        <span class="help-block">
+                                          <strong>{{ $errors->first('rDescr') }}</strong>
+                                        </span>
+                                      @endif 
+							        </div>
+                                  </div>
+                                  <!---- End Role Role description field -->
+								
+								  
+								  <!---- Form submit button -->
+                                  <div class="form-group">
+                                    <div class="col-md-8 col-md-offset-4">
+                                      <button type="submit" class="btn btn-primary">Add</button>								
+								    </div>
+                                  </div>
+								  <!---- Form submit button -->
+								  
+							    </div>
+							    <!----------------- END FORM to add RBAC role to table {auth_items} ---------------------->
+	                        
+		                      </div><hr>
+						    </div>
+						    
+						    <!--- End  of Collapsed Block, SECTION to add new RBAC role to auth_items -->
+						
+						
+						    <div class="col-sm-12 col-xs-12 bg-success" style="height:1em;"> </div><hr> <!-- just empty div for UI/IX -->
+							<div class="col-sm-12 col-xs-12 " style="height:1em;"> </div><hr> <!-- just empty div for UI/IX -->
+						 
+						 
+						 
+		                    <!---------------- RBAC Table with Users for RBAC Admin Control Panel -------------------->
 							<table class="table table-hover table-striped">
                                 <thead>
                                    <tr>
@@ -154,18 +236,15 @@
 								              <button type="submit" class="sbmBtn" data-uName="{{$a->name}}">assign role</button> <!-- data-uName to e used in JS swal -->
                                             </form>
 										</td>
-   
-   
-  
   
   
 									</tr>
-                                 @endforeach
+                                @endforeach
                                 </tbody>
                             </table>
 						@endif
 					</div>
-					<!-- End Table with Users for RBAC Admin Control Panel-->
+					<!-- End RBAC Table with Users for RBAC Admin Control Panel -->
 
 					
 					

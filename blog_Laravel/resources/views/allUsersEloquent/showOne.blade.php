@@ -8,6 +8,7 @@
     <div class="row">
 	
         <div class="col-md-8 col-md-offset-2">
+		
             <div class="panel panel-default">
                 <div class="panel-heading"> 
 				    <p>One user profile</p>
@@ -25,12 +26,11 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                
                 </div>
+				
             </div>
         </div>
-		
+     </div><!-- row -->   	
 		
 		
 	
@@ -92,7 +92,7 @@
                     <div class="panel-heading">User has RBAC roles:</div>
 	                <div class="panel-heading">
 					
-					    {!! \App\Http\MyHelpers\Rbac\Helper_Rbac::displayUserRoles($userOne[0]) !!}
+					    {!! \App\Http\MyHelpers\Rbac\Helper_Rbac::displayUserRoles($userOne[0]) !!} <hr> <!-- hr is a fix -->
 					</div>
                   </div>
 				</div> <!-- . all-your-roles -->

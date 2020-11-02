@@ -199,6 +199,14 @@ class RbacController extends Controller
 		//gets the user name by id from DB table Users
 		$userDetached = User::where('id', intval($request->input('user_id')))->get()[0]->name;
 		
+		//MANUAL INPUT OF ADMIN ID!!!!!!
+		//check if current user tries to detach/remove "admin" right from himself, i.e he will loose access to this RBAC panel
+		if(intval($request->input('user_id')) == auth()->user()->id && intval($request->input('role_id')) == 13 ){
+			//throw new \App\Exceptions\myException("You attempeted to detach your own Admin roles that would result in loosing access to this RBAC Panel");
+		    return redirect('/rbac')->with('flashMessageFailX', "Danger!!! You attempeted to detach your own Admin roles that would result in loosing access to this RBAC Panel" );
+		}
+		
+		
 		//assign a selected user with a selected role
 		$model = new Role();
 		if($model->detachSelectedRoleFromSelectedUser(intval($request->input('user_id')), intval($request->input('role_id')) )){
@@ -209,5 +217,61 @@ class RbacController extends Controller
 		}
 	
 	}
+	
+	
+	
+	/**
+     * method to add a new role to Db table Role, send via POST
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeNewRole(Request $request)
+    {
+		
+		//validation rules
+        $rules = [
+			'rname' => ['required', 'string', 'min:4' ] , 
+			'rDescr' => [ 'required', 'string', 'min:8' ] , 
+			
+		];
+		
+		//creating custom error messages. Should pass it as 3rd param in Validator::make()
+		$messages = [
+			'rname.required' => 'Required.We need the name to be specified',
+			'rDescr.min' => 'Description must be at least 8 letters'
+		];
+		
+		//validate the input
+		$validator = Validator::make($request->all(),$rules, $messages);
+		
+		//if validation fails
+		if ($validator->fails()) {
+			return redirect('/rbac')
+			->withInput()
+			->with('flashMessageFailX',"Validation Failed")
+			->withErrors($validator);
+		
+		//if validation is OK
+		} else {  
+		    //create/insert a new role
+			
+			if (Role::where('name', $request->input('rname'))->exists()){ 	
+			    return redirect('/rbac')->with('flashMessageFailX', "Stopped. Role role <b> " . $request->input('rname')  . "</b> already exists" );
+			}
+			
+ 		    $model = new Role();
+			
+		    if($model->createNewRole($request->input('rname'), $request->input('rDescr'))){
+		        return redirect('/rbac')->with('flashMessageX', "Successfully created a new role <b> " . $request->input('rname')  . "</b>" );
+            } else {
+			   return redirect('/rbac')->with('flashMessageFailX', "Failed to create a new role <b> " . $request->input('rname')  . "</b>" );
+		    }
+		   
+		}
+	}
+	
+
+	
+	
 	
 }

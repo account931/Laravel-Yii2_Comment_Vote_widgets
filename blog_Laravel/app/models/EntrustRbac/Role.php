@@ -34,7 +34,7 @@ class Role extends EntrustRole
 		}
 
         $roleManager =  self::where('name', 'manager')->get();
-		if (!$roleAdmin){ //if doesnot exist
+		if (!$roleManager){ //if doesnot exist
            $manager = new Role();
            $manager->name         = 'manager';
            $manager->display_name = 'Company Manager'; // optional
@@ -120,18 +120,54 @@ class Role extends EntrustRole
 		
 		
 		//dd($selectedRole->name);
-		//$selectedUser->detachRoles($selectedRole);
+		//$selectedUser->detachRoles($selectedRole); //Entrust detach method, won't work, use manual delete
+		 
+	
 		
 		//manual detaching/removing a selected role from selected user as {$selectedUser->detachRoles($selectedRole) does not work} 
 		if(Role_User::where('user_id', $userID)->where('role_id', $roleId)->exists()) { 
 		   //$d = Role_User::where('user_id', $userID)->where('role_id', $roleId)/*->findOrFail()*/->delete();
-		   Role_User::where('user_id', $userID)->where('role_id', $roleId)->delete();
+		   Role_User::where('user_id', $userID)->where('role_id', $roleId)->delete(); //Manual delete
            return true;
 		} else {
 			return false;
 		}
 		
 	}
+	
+	
+	
+	
+	
+	
+	/**
+     * method to create/insert a new role (triggered from Entrust Rbac Admin Panel table)
+     * @param string $roleName
+	 * @param string $roleDescr
+     * @return boolean
+     */
+	public function createNewRole($roleName, $roleDescr){
+		
+		//$role = self::where('name', $roleName)->get();
+		
+		
+		if (!self::where('name', $roleName)->exists()){ //if doesnot exist
+           $managerC = new Role();
+           $managerC->name = $roleName;
+           $managerC->display_name = 'custom role'; // optional
+           $managerC->description = $roleDescr; // optional
+           $managerC->save();
+		   return true;
+		} else {
+			return false;
+		}
+
+	}
+	
+	
+	
+	
+	
 	
 	
 }

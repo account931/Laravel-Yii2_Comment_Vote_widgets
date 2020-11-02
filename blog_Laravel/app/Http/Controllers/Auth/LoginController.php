@@ -39,8 +39,10 @@ class LoginController extends Controller
 	
 	
 	
-	//if u want to Login with username instead of email. Don't change the function name, regadless what u want to return, i.e "email, name, username" 
+	
+	
 	/**
+	 * Method if u want to Login with username instead of email. Don't change the function name, regadless what u want to return, i.e "email, name, username" 
      * Get username property.
      *
      * @return string
