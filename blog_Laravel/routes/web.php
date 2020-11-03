@@ -63,3 +63,6 @@ Route::post('/detachRole', 'RbacController@detachRole')->name('/detachRole');  /
 Route::post('/addNewRole', 'RbacController@storeNewRole')->name('/addNewRole');  //route to method to add a new role to Db table Role, send via POST form
 
 
+
+//ShopSimple
+Route::get('/shopSimple', 'ShopPayPalSimpleController@index')->name('shopSimple'); //display shopSimple

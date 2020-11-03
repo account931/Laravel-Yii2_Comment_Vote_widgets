@@ -97,7 +97,7 @@
                          <ul class="dropdown-menu" role="menu">
                              <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
                              <li class="{{ Request::is('rbac*') ? 'active' : '' }}"> <a href="{{ route('rbac') }}"> RBAC </a></li>
-                             <li><a href="{{ route('register') }}">E-shop(N/A)</a></li>
+                             <li class="{{ Request::is('shopSimple*') ? 'active' : '' }}"> <a href="{{ route('shopSimple') }}">E-shop</a></li>
 							 <li><a href="{{ route('register') }}">E-shop AdminP(N/A)</a></li>
 							 <li><a href="{{ route('register') }}">Booking(N/A)</a></li>
 							 <li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>

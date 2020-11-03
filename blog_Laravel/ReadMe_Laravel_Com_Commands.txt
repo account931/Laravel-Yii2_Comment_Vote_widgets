@@ -17,7 +17,7 @@ Table of Content:
 6.How to create new Controller/action, view and add to menu
 7.Forms
 8.Form Validation
-8.1 Form input with in-line errors <span>
+8.1 Form input with in-line validation errors <span>, like in Yii2 
 8.2 Form fields Insert to DB
 9.Migrations/Seeders
 10.hasOne/hasMany relation
@@ -257,7 +257,7 @@ USAGE
 
 
 //================================================================================================
-8.1 Form input with in-line errors <span>
+8.1 Form input with in-line validation errors <span>, like in Yii2  => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/auth/login.blade.php
 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
 @if ($errors->has('email'))
@@ -505,11 +505,14 @@ USAGE
     <!-- To register JS/CSS file for specific view only (In layout template) -->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['testRest', 'register']))
         <script src="{{ asset('js/test-rest/test-rest.js') }}"></script>
+		<link href="{{ asset('css/rbac/rbac.css') }}" rel="stylesheet">
     @endif	
 	
-	Variant 2 (working) (use/include in any child view, i.e /views/auth/login) =>
-	    <script type="text/javascript" src="{{ URL::to('js/test-rest/test-rest.js') }}"></script>
-        <script src="{{ asset('js/login/login.js')}}"></script>		
+	Variant 2 (working) (use/include in any child view before {@endsection}, i.e /views/auth/login) =>
+	    <!-- Include js/css file for this view only -->
+        <script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>
+        <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
+        @endsection	
 
 
 //================================================================================================

@@ -199,7 +199,7 @@
 									    <!-- User name, from table users -->
                                         <td>{{  $a->name }}</td>  
                                        
-										<!-- Displays List of user's rbac roles. Uses Helper method displayUserRoles($a)  --> 
+										<!-- Displays List of user's rbac roles with Delete option (uses <form>. Form submitted via Swal (my-rbac.js)). Uses Helper method displayUserRoles($a)  --> 
 										<td class="user-roles-list"> {!! \App\Http\MyHelpers\Rbac\Helper_Rbac::displayUserRoles($a, true) !!}</td> <!-- all current loop user's roles. Displays content without escaping -->
                                         
 										@php
@@ -221,7 +221,7 @@
 										
 										<!-- Form with Roles dropdown select. Displays content without html escaping -->
 										<td>
-										    <form method="post" action="{{url('/assignRole')}}">
+										    <form method="post" class="form-assign" action="{{url('/assignRole')}}">
 				
                                               <div class="form-group">
                                                 <input type="hidden" value="{{csrf_token()}}" name="_token" />

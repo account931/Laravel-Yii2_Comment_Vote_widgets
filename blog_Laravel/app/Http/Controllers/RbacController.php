@@ -199,13 +199,15 @@ class RbacController extends Controller
 		//gets the user name by id from DB table Users
 		$userDetached = User::where('id', intval($request->input('user_id')))->get()[0]->name;
 		
-		//MANUAL INPUT OF ADMIN ID!!!!!!
+		//Works ONLY if u have 'admin' Rbac role in your web application!!!!!!
 		//check if current user tries to detach/remove "admin" right from himself, i.e he will loose access to this RBAC panel
-		if(intval($request->input('user_id')) == auth()->user()->id && intval($request->input('role_id')) == 13 ){
-			//throw new \App\Exceptions\myException("You attempeted to detach your own Admin roles that would result in loosing access to this RBAC Panel");
-		    return redirect('/rbac')->with('flashMessageFailX', "Danger!!! You attempeted to detach your own Admin roles that would result in loosing access to this RBAC Panel" );
+		$RoleAdmin = Role::where('name', 'admin')->get()->first(); //gets Object role 'admin' from Db
+		if($RoleAdmin){
+		    if(intval($request->input('user_id')) == auth()->user()->id && intval($request->input('role_id')) == $RoleAdmin->id ){
+			    //throw new \App\Exceptions\myException("You attempeted to detach your own Admin roles that would result in loosing access to this RBAC Panel");
+		        return redirect('/rbac')->with('flashMessageFailX', "<b>Danger!!! <i class='fa fa-thumbs-o-down'></i></b></br><i>You attempeted to detach your own Admin roles that would result in loosing access to this RBAC Panel</i>" );
+		    }
 		}
-		
 		
 		//assign a selected user with a selected role
 		$model = new Role();
@@ -221,7 +223,7 @@ class RbacController extends Controller
 	
 	
 	/**
-     * method to add a new role to Db table Role, send via POST
+     * method to add/create a new role to Db table Role, send via POST
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */

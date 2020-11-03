@@ -19,7 +19,7 @@ class Helper_Rbac
 	
 	
 	/**
-     * methods to display list of user's Rbac roles
+     * methods to display list of user's Rbac roles + Delete option, If 2nd param is TRUE. (Deletion uses <form>. Form submitted via Swal (my-rbac.js))
      * @param User $userModel to pass in loop or standalong
 	 * @param boolean $buildDeleteButton (if true, additionally creates a POST form with button to detaching/deleting the role from user), if u pass no 2nd arg it is false by default 
      * @return string
@@ -37,7 +37,7 @@ class Helper_Rbac
 				//build/create a POST form with button to detaching/deleting a certain role from certain user (if 2nd arg is true)
 				if($buildDeleteButton == true){
 					 $r.= "<div class='col-sm-1 col-xs-1 text-delete'>"; 
-					 $r.= '<form class="detach" method="post" action="' . url("/detachRole") . '">' .
+					 $r.= '<form class="detach" method="post" action="' . url("/detachRole") . '" >' .
                           '<input type="hidden" value="' . csrf_token() . '" name="_token" />' .
 						  '<input type="hidden" value="' . $userModel->id . '" name="user_id" />' .
 						  '<input type="hidden" value="' . $userModel->roles[$j]['id'] . '" name="role_id" />' .
