@@ -11,7 +11,7 @@ $(document).ready(function(){
 	// **************************************************************************************
     // **************************************************************************************
     //                                                                                     ** 
-	  $(document).on("click", '.sbmBtnPREV', function() {   // this  click  is  used  to   react  to  newly generated cicles;
+	  $(document).on("click", '.sbmBtn', function() {   // this  click  is  used  to   react  to  newly generated cicles;
 		   
 		   var userName = this.getAttribute("data-uName"); //gets user name u want to assign any role. Set in hml by adding to button data-uName="{{$a->name}}" 
 		   
@@ -63,6 +63,9 @@ $(document).ready(function(){
 	  $(document).on("click", '.detach-role', function(e) {   // this  click  is  used  to   react  to  newly generated cicles;
 		e.preventDefault(); //prevent submit form
 		var form = $(this).parents('form'); //gets this current form //FIX
+		
+		console.log($(this).parents('form').html());
+		console.log($(this).parent().html()); //new variant 
 		
 		var classNumber = $('.detach-role').index(this); //index of clicked class .detach-role, e.g 0
 		

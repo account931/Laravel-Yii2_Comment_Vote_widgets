@@ -221,10 +221,13 @@
 										
 										<!-- Form with Roles dropdown select. Displays content without html escaping -->
 										<td>
+										    
+											    <form></form>
+											
 										    <form method="post" class="form-assign" action="{{url('/assignRole')}}">
 				
                                               <div class="form-group">
-                                                <input type="hidden" value="{{csrf_token()}}" name="_token" />
+                                                <input type="hidden" value="{{csrf_token()}}" name="_token"/>
 												<input type="hidden" value="{{$a->id}}" name="user_id" />
                                                   <select name="role_sel">
 												    <option selected disabled>select</option>

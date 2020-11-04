@@ -96,9 +96,9 @@
 						
                          <ul class="dropdown-menu" role="menu">
                              <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
-                             <li class="{{ Request::is('rbac*') ? 'active' : '' }}"> <a href="{{ route('rbac') }}"> RBAC </a></li>
+                             <li class="{{ Request::is('rbac*') ? 'active' : '' }}">      <a href="{{ route('rbac') }}"> RBAC </a></li>
                              <li class="{{ Request::is('shopSimple*') ? 'active' : '' }}"> <a href="{{ route('shopSimple') }}">E-shop</a></li>
-							 <li><a href="{{ route('register') }}">E-shop AdminP(N/A)</a></li>
+							 <li class="{{ Request::is('shopAdminPanel*') ? 'active' : '' }}"><a href="{{ route('shopAdminPanel') }}">E-shop AdminP</a></li>
 							 <li><a href="{{ route('register') }}">Booking(N/A)</a></li>
 							 <li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>
 						 </ul>
@@ -177,6 +177,8 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> <!-- Sweet Alert CSS -->
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script> <!--Sweet Alert JS-->
 	@endif
+	
+	<!-- ALL OTHER CSS/JS SCRIPT ARE LOADED IN EVERY SPECIFIC VIEW (before {endsection}) -->
 
 </body>
 </html>

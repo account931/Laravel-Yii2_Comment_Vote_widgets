@@ -39,13 +39,15 @@
 					
 					
                 <div class="panel-heading text-warning">
-				    Shop PayPal <span class="small text-danger">*</span> 
+				    Shop PayPal Admin Panel <span class="small text-danger">*</span> 
 				</div>
+
+
 
                 <div class="panel-body shop">
 				
 				    <div class="col-sm-10 col-xs-10">
-                    <h1>Shop PayPal</h1>
+                    <h1>Shop PayPal Admin Panel</h1>
 		            </div>	
 				
 				    <!-------- Cart icon with badge ----------->
@@ -65,13 +67,62 @@
 		
 		
 		
-				    <!-------------------- Progress Status Icons by component ----------------->
-	                <!--display shop timeline progress via Helper => Progress Status Icons-->
-					<div class="col-sm-12 col-xs-12">
-	                {!! \App\Http\MyHelpers\ShopSimple\ShopTimelineProgress2::showProgress2("Shop") !!}
-					</div>
-	                <!--------------  END  Progress Status Icons by component ----------------->
+				    <!-------------------- Admin Panel Icons ----------------->
+	                <!-- Admin account menu items -->
+                    <div class="col-sm-12 col-xs-12 adm-icons"> <hr>
+                      <center>
+	   
+	                  <div class="col-sm-2 col-xs-6 mobile-padding badge1 bb " data-badge=""> <!-- badge -->
+                        <div class='subfolder border shadowX'>
+					       <a href="{{ route('cart') }}">  
+						     <i class="fa fa-address-card-o" style="font-size:96px"></i> 
+							 <p>Products</p><br>  
+						   </a>
+		                 </div> 
+                      </div>
 					  
+					  
+					  <div class="col-sm-2 col-xs-6 mobile-padding badge1 bb " data-badge=""> <!-- badge -->
+                        <div class='subfolder border shadowX'>
+					       <a href="{{ route('cart') }}">  
+						     <i class="fa fa-truck" style="font-size:96px"></i> 
+							 <p>Orders</p><br>  
+						   </a>
+		                 </div> 
+                      </div>
+					  
+					   <div class="col-sm-2 col-xs-6 mobile-padding badge1 bb " data-badge=""> <!-- badge -->
+                        <div class='subfolder border shadowX'>
+					       <a href="{{ route('cart') }}">  
+						     <i class="fa fa-automobile" style="font-size:96px"></i> 
+							 <p>Some text</p><br>  
+						   </a>
+		                 </div> 
+                      </div>
+	   
+	   
+	                  <div class="col-sm-2 col-xs-6 mobile-padding badge1 bb " data-badge=""> <!-- badge -->
+                        <div class='subfolder border shadowX'>
+					       <a href="{{ route('cart') }}">  
+						     <i class="fa fa-book" style="font-size:96px"></i> 
+							 <p>Some text</p><br>  
+						   </a>
+		                 </div> 
+                      </div>
+	         
+			
+			
+                    </div><!-- class='adm-icons' -->
+                    <!-- End Personal account menu items -->
+	                <!--------------  END  Admin Panel Icons ----------------->
+				
+
+
+
+
+
+
+				
 					  
 				</div> <!-- end .shop -->
 				    
@@ -85,9 +136,8 @@
 </div> <!-- end . animate-bottom -->
 
 <!-- Include js/css file for this view only -->
-<script src="{{ asset('js/ShopPaypalSimple/shopSimple_Loader.js')}}"></script> <!-- CSS Loader -->
-<script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script> 
-<link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
+<script src="{{ asset('js/ShopPaypalSimple/shopSimple_Loader.js')}}"></script><!-- CSS Loader -->
+<link href="{{ asset('css/ShopPaypalSimple_AdminPanel/shopSimpleAdminPanel.css') }}" rel="stylesheet">
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple_Loader.css') }}" rel="stylesheet">
 <!-- Include js file for thisview only -->
 

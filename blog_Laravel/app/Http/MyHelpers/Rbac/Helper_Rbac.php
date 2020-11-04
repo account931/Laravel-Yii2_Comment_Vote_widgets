@@ -30,13 +30,14 @@ class Helper_Rbac
 		if (isset($userModel->roles[0]['name'])) { //if $user->roles (it is hasMany relation) found any role by user
 		    $r = "";
 		    //use for() loop in case user has 2 and more roles. If user could have only 1 role, we would just use {$userModel->roles[0]['name']}
-			for($j =0; $j < count($userModel->roles); $j++){
+			for($j = 0; $j < count($userModel->roles); $j++){
 				$r.= "<div class='row'></div>";
 			    $r.= "<div class='col-sm-9 col-xs-9 text-danger'><i class='fa fa-check-circle-o'></i> " . $userModel->roles[$j]['name'] . "</div> "; 
 				
 				//build/create a POST form with button to detaching/deleting a certain role from certain user (if 2nd arg is true)
 				if($buildDeleteButton == true){
-					 $r.= "<div class='col-sm-1 col-xs-1 text-delete'>"; 
+					 $r.= '<div class="col-sm-1 col-xs-1 text-delete">';
+                     if($j == 0){ $r.= '<form></form>';} //MEGA FIX					 
 					 $r.= '<form class="detach" method="post" action="' . url("/detachRole") . '" >' .
                           '<input type="hidden" value="' . csrf_token() . '" name="_token" />' .
 						  '<input type="hidden" value="' . $userModel->id . '" name="user_id" />' .
@@ -50,7 +51,7 @@ class Helper_Rbac
 				}
 			}  
 		} else { 
-		    $r = 'no role';
+		    $r = "<div class='col-sm-9 col-xs-9 text-danger'>no role</div>";
 		} 
 		return $r;
 										

@@ -9,7 +9,7 @@ class ShopPayPalSimpleController extends Controller
     
 	
 	/**
-     * display 
+     * display shop start page
      *
      * @return \Illuminate\Http\Response
      */
@@ -19,5 +19,19 @@ class ShopPayPalSimpleController extends Controller
 	    
 		return view('ShopPaypalSimple.shopIndex')->with(compact('item')); 
 	}
+	
+	
+	/**
+     * display Cart page
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function cart()
+    {
+		$item = "Good";
+	    
+		return view('ShopPaypalSimple.cart')->with(compact('item')); 
+	}
+	
 	
 }

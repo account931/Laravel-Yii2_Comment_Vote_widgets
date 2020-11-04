@@ -886,6 +886,8 @@ If you don't have .env copy from .env.example: =>   $ cp .env.example .env
 
 # Error  "This cache store does not support tagging" => happens due Entrusr Rbac,  in .env file change {CACHE_DRIVER=file} to {CACHE_DRIVER=array}
 
+# Error, when generating multiple <form> in foreach loop. the first form was never submitted, all the rest form were submitted OK (example in RBAC table Delete Form and Assihn new role Form).
+  The solution => before 1st form add empty <form></form>
 
 
 =============================

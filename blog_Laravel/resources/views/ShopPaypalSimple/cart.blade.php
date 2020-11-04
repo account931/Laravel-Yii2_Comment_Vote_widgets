@@ -39,13 +39,13 @@
 					
 					
                 <div class="panel-heading text-warning">
-				    Shop PayPal <span class="small text-danger">*</span> 
+				    Shop Cart <span class="small text-danger">*</span> 
 				</div>
 
                 <div class="panel-body shop">
 				
 				    <div class="col-sm-10 col-xs-10">
-                    <h1>Shop PayPal</h1>
+                    <h1>Shop PayPal Cart</h1>
 		            </div>	
 				
 				    <!-------- Cart icon with badge ----------->
@@ -68,7 +68,7 @@
 				    <!-------------------- Progress Status Icons by component ----------------->
 	                <!--display shop timeline progress via Helper => Progress Status Icons-->
 					<div class="col-sm-12 col-xs-12">
-	                {!! \App\Http\MyHelpers\ShopSimple\ShopTimelineProgress2::showProgress2("Shop") !!}
+	                {!! \App\Http\MyHelpers\ShopSimple\ShopTimelineProgress2::showProgress2("Cart") !!}
 					</div>
 	                <!--------------  END  Progress Status Icons by component ----------------->
 					  
@@ -85,8 +85,7 @@
 </div> <!-- end . animate-bottom -->
 
 <!-- Include js/css file for this view only -->
-<script src="{{ asset('js/ShopPaypalSimple/shopSimple_Loader.js')}}"></script> <!-- CSS Loader -->
-<script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script> 
+<script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple_Loader.css') }}" rel="stylesheet">
 <!-- Include js file for thisview only -->

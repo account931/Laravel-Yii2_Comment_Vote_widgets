@@ -65,4 +65,10 @@ Route::post('/addNewRole', 'RbacController@storeNewRole')->name('/addNewRole'); 
 
 
 //ShopSimple
-Route::get('/shopSimple', 'ShopPayPalSimpleController@index')->name('shopSimple'); //display shopSimple
+Route::get('/shopSimple', 'ShopPayPalSimpleController@index')->name('shopSimple'); //display shopSimple start page
+Route::get('/cart', 'ShopPayPalSimpleController@cart')->name('cart'); //display shopSimple start page
+
+
+//ShopSimple Admin Panel
+Route::get('/shopAdminPanel', 'ShopPayPalSimple_AdminPanel@index')->name('shopAdminPanel'); //display Admin Panel start page
+
