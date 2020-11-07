@@ -291,6 +291,8 @@ USAGE
 9.9.Migrations/Seeders    => see docs at => https://laravel.ru/docs/v5/migrations
   see examples at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/tree/master/blog_Laravel/database/migrations
   
+  Laravel SQL  equivalents => https://laravel.com/docs/4.2/schema
+  
   #create migration   =>   php artisan make:migration create_users_table
   #run all migrations =>   php artisan migrate
   
@@ -309,9 +311,22 @@ USAGE
   see examples at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/seeds/DatabaseSeeder.php
   
   //Загрузка начальных данных в БД
-  Для добавления данных в БД используйте Artisan-команду => php artisan db:seed
+  To seed =>   php artisan db:seed   //By default, the db:seed command runs the DatabaseSeeder class, which may be used to call other seed classes
   # if u run seeder command and Seeder Class contain {DB::table('users')->delete()}, it will overwrite all data
 
+  #to seed a specific class only => php artisan db:seed --class=UsersTableSeeder
+  
+  # If u want to place some seeder for some table in separate file in subfolder, i.e /SeedersFiles, place them there and then call them in DatabaseSeeder as ususal  (by {php artisan db:seed }) without subfolder prefix
+      public function run(){
+	  //call other seeders u need....
+	  $this->call('ShopSimpleSeeder');  //call your subfolder without subfolder prefix
+	  
+  If u just created this subfolder, run {composer dump-autoload}
+  
+  
+  #
+  
+  
 //================================================================================================
 
 
@@ -763,7 +778,7 @@ composer dump-autoload
   In View =>  Details: <b>{!! $exception->getMessage() !!}</b>
   
   
-  
+ date(2020-11-07 16:21:49) => date('Y-m-d H:i:s')  
   
   
   

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\models\ShopSimple\ShopSimple; //model for DB table 
 
 class ShopPayPalSimpleController extends Controller
 {
@@ -15,9 +16,10 @@ class ShopPayPalSimpleController extends Controller
      */
     public function index()
     {
-		$item = "Good";
+		$allDBProducts = ShopSimple::all();
+		//dd($allDBProducts);
 	    
-		return view('ShopPaypalSimple.shopIndex')->with(compact('item')); 
+		return view('ShopPaypalSimple.shopIndex')->with(compact('allDBProducts')); 
 	}
 	
 	
