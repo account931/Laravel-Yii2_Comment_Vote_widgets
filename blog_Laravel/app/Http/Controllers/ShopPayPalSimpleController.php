@@ -16,10 +16,11 @@ class ShopPayPalSimpleController extends Controller
      */
     public function index()
     {
+		$model = new ShopSimple();
 		$allDBProducts = ShopSimple::all();
 		//dd($allDBProducts);
 	    
-		return view('ShopPaypalSimple.shopIndex')->with(compact('allDBProducts')); 
+		return view('ShopPaypalSimple.shopIndex')->with(compact('allDBProducts', 'model'));  
 	}
 	
 	

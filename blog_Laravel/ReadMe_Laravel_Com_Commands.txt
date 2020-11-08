@@ -121,7 +121,14 @@ USAGE
            @foreach ($articles as $a)
 					    <p> Article {{ $loop->iteration }}  </p>  <!-- {{ $loop->iteration }} is Blade equivalentof $i++ -->
                         <p>Title {{ $a->wpBlog_title }}</p>
-                    @endforeach
+            @endforeach
+					
+					
+#Blade For Loop =>					
+	@for ($i = 0; $i < 10; $i++)
+    The current value is {{ $i }}
+    @endfor
+	
 					
 #Blade iteration 2
   @php($count=0)
@@ -305,14 +312,15 @@ USAGE
   
   php artisan migrate:refresh
   
+  
   //----------------------------
   
   #SEEDER
   see examples at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/seeds/DatabaseSeeder.php
   
   //Загрузка начальных данных в БД
-  To seed =>   php artisan db:seed   //By default, the db:seed command runs the DatabaseSeeder class, which may be used to call other seed classes
-  # if u run seeder command and Seeder Class contain {DB::table('users')->delete()}, it will overwrite all data
+  To seed all =>   php artisan db:seed   //By default, the db:seed command runs the DatabaseSeeder class, which may be used to call other seed classes
+  # if u run seeder command and Seeder Class contain {DB::table('users')->delete()}, it will overwrite all data, if it doesnot, then it will add Seeder column data to existing values in DB 
 
   #to seed a specific class only => php artisan db:seed --class=UsersTableSeeder
   
@@ -904,7 +912,7 @@ If you don't have .env copy from .env.example: =>   $ cp .env.example .env
 # Error, when generating multiple <form> in foreach loop. the first form was never submitted, all the rest form were submitted OK (example in RBAC table Delete Form and Assihn new role Form).
   The solution => before 1st form add empty <form></form>
 
-
+# CSS error if Bootstrap modal appearing under background =>  .modal-backdrop { z-index: -1;}
 =============================
 
 если токен не принимается обработчиком, то варианта существует по сути два – либо он не отправляется в запросе (отсутствует csrf_field() в форме, или нет нужного значения в аякс-запросе – там он может передаваться как в данных так и в заголовках запроса), либо на стороне сервера не загружается сессия – именно в ней сохраняется токен на стороне сервера, чтобы было с чем сравнить то что пришло в запросе.

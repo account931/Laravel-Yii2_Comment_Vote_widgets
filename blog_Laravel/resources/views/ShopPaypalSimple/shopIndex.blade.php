@@ -81,87 +81,78 @@
 
 
 
-                    
-					
-					
-					
-					
-					
+                   
+                    				   
 					
 					<?php
 					
-					 $productsX = array(); // array to store formatted results from DB (from controller)
+					$productsX = array(); // array to store formatted results from DB (from controller)
   
-  //getting results from DB to array in format => [ ['id'=>0, 'name'=> 'canon'], [], ]
-  //We get from DB an array of object {$allDBProducts} and here convert to array of arrays[$productsX]. It is just another variation, we could use direct referring to array of object {$allDBProducts} like {$allDBProducts->l_name}, but in this case we have to rewrite the code below, as it was originally designed for array of arrays[$productsX] (as firstly I created artificial hardcoded array of arrays[$productsX]) 
-  foreach($allDBProducts as $a){ 
-	  $tempo = array();
-	  $tempo['id'] = $a->l_id;
-	  $tempo['name'] = $a->getCustomer($a->l_name);//$a->l_name;//  ShopSimple::getLabel();
-	  $tempo['price'] = $a->l_price;
-	  $tempo['image'] = $a->l_image;
-	  $tempo['description'] = $a->l_descript;
-	 // array_push($tempo['description'], $a->l_descript);
+                    //getting results from DB to array in format => [ ['id'=>0, 'name'=> 'canon'], [], ]
+                    //We get from DB an array of object {$allDBProducts} and here convert to array of arrays[$productsX]. It is just another variation, we could use direct referring to array of object {$allDBProducts} like {$allDBProducts->l_name}, but in this case we have to rewrite the code below, as it was originally designed for array of arrays[$productsX] (as firstly I created artificial hardcoded array of arrays[$productsX]) 
+                    foreach($allDBProducts as $a){ 
+	                  $tempo = array();
+	                  $tempo['id'] = $a->shop_id;
+	                  $tempo['name'] = /*$a->getCustomer(*/ $a->shop_title /*)*/ ;//$a->l_name;//  ShopSimple::getLabel();
+	                  $tempo['price'] = $a->shop_price;
+					  $tempo['currency'] = $a->shop_currency;
+	                  $tempo['image'] = $a->shop_image;
+	                  $tempo['description'] = $a->shop_descr;
 	  
-	  array_push($productsX, $tempo ); //adds to final array
-  }
+	                  array_push($productsX, $tempo ); //adds to final array
+                    }
   
-  //var_dump($productsX);
-  
-  $_SESSION['productCatalogue'] = $productsX; //all products from DB to session
-  
-  ?>
-  
+                    //var_dump($productsX);
+                    $_SESSION['productCatalogue'] = $productsX; //all products from DB to session
+					
+                    ?>
   
   
-      <div class="row shop-items">
-	      <?php
+  
+                    <div class="row shop-items">
+	                
 	
-		  
-		  
-		  //generate shop products, Loop ----------------------------------------------------------
-	      for($i = 0; $i < count($productsX); $i++){
-          
-		       
-			
-		       
+		            <!--generate shop products, Loop ---------------------------------------------------------->
+					@for ($i = 0; $i < count($productsX); $i++)
 			   	
-			echo '<div id="' . $productsX[$i]['id'] . '" class="col-sm-5 col-xs-12  list-group-item bg-success cursorX shadowX modal-trigger" data-toggle="modal" data-target="#myModal' . $i . '">' .  //data-toggle="modal" data-target="#myModal' . $i .   for modal
-			       '<div class="col-sm-4 col-xs-3">' . $productsX[$i]['name'] . '</div>' . 
-				   '<div class="col-sm-2 col-xs-2 word-breakX">' . $productsX[$i]['price']. '₴</div>' .
-				   '<div class="col-sm-2 col-xs-3">' . $myInputModel->truncateTextProcessor($productsX[$i]['description'], 8) .  '</div>' .  	
-				   '<div class="col-sm-4 col-xs-4">' . 
-				       //Html::img(Yii::$app->getUrlManager()->getBaseUrl().'/images/shopLiqPay_Simple/' . $productsX[$i]['image'] , $options = ["id"=>"","margin-left"=>"","class"=>"my-one lazy", "data-original" => '', "width"=>"","title"=>"product"]).
-                       
-					   //LightBox variant, need downloading spec css/js libraries, see https://github.com/account931/portal_v2/blob/master/assets/AppAsset.php
-					   /*"<a href= " . Yii::$app->getUrlManager()->getBaseUrl(). '/images/shopLiqPay_Simple/'. $productsX[$i]['image']  . "  data-lightbox='image-1' data-title='My caption'>" .
+			        <div id="{{$productsX[$i]['id']}}" class="col-sm-5 col-xs-12  list-group-item bg-success cursorX shadowX modal-trigger" data-toggle="modal" data-target="#myModal{{$i}}"> <!--data-toggle="modal" data-target="#myModal' . $i .   for modal -->
+			          <div class="col-sm-4 col-xs-3"> {{$productsX[$i]['name']}} </div>
+				      <div class="col-sm-2 col-xs-2 word-breakX"> {{$productsX[$i]['price']}} ₴ </div>
+				      <div class="col-sm-2 col-xs-3"> {{$model->truncateTextProcessor($productsX[$i]['description'], 8) }}</div>  	
+				      <div class="col-sm-4 col-xs-4">
+                        <!--
+					        //LightBox variant, need downloading spec css/js libraries, see https://github.com/account931/portal_v2/blob/master/assets/AppAsset.php
+					        /*"<a href= " . Yii::$app->getUrlManager()->getBaseUrl(). '/images/shopLiqPay_Simple/'. $productsX[$i]['image']  . "  data-lightbox='image-1' data-title='My caption'>" .
 					       '<img data-src=' .  Yii::$app->getUrlManager()->getBaseUrl(). '/images/shopLiqPay_Simple/'. $productsX[$i]['image']  . ' class="my-one lightboxed">'. //LazyLoad
-						"</a>" .*/
+						    "</a>" .*/
+					    -->
 						
-						//lazyLoad
-						'<img class="lazy my-one" data-original="' . Yii::$app->getUrlManager()->getBaseUrl(). '/images/shopLiqPay_Simple/'. $productsX[$i]['image'] . '" >' .
-						
-				   '</div>' .   
-				 '</div>';
+						   <!--lazyLoad-->
+						<!--<img class="lazy my-one" data-original="' . Yii::$app->getUrlManager()->getBaseUrl(). '/images/shopLiqPay_Simple/'. $productsX[$i]['image'] . '" >-->
+					    <img class="my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$productsX[$i]['image'] }}"  alt="a"/>
+					  </div>   
+				     </div>
 				 
 			
-			//adds vertical space after 2 divs with goods
-			if($i%2 != 0 ){ 
-			    echo '<div class="col-sm-12 col-xs-12">even</div>';
-			} else { //add horizontal space between 2 goods
-				echo '<div class="col-sm-1 col-xs-1">s</div>';
-			}
-		    ?>
+			            <!--adds vertical space after 2 divs with goods-->
+			            @if($i%2 != 0 )
+			               <div class="col-sm-12 col-xs-12">even</div>
+			            @else 
+							<!--add horizontal space between 2 goods-->
+				            <div class="col-sm-1 col-xs-1">s</div>
+			            @endif
+						
+		                
 
 
 		
-		 <!--------- Hidden Modal ---------->
-           <div class="modal fade" id="myModal<?php echo $i;?>" role="dialog">
-               <div class="modal-dialog modal-lg">
-                   <div class="modal-content">
-                       <div class="modal-header">
-                           <button type="button" class="close" data-dismiss="modal">&times;</button>
-                           <h4 class="modal-title"><i class="fa fa-delicious" style="font-size:3em; color: navy;"></i> <b> Product</b> </h4>
+		             <!--------- Hidden Modal ---------->
+                     <div class="modal fade" id="myModal{{$i}}" role="dialog">
+                       <div class="modal-dialog modal-lg">
+                         <div class="modal-content">
+                           <div class="modal-header">
+                             <button type="button" class="close" data-dismiss="modal">&times;</button>
+                             <h4 class="modal-title"><i class="fa fa-delicious" style="font-size:3em; color: navy;"></i> <b> Product</b> </h4>
 						   <?php
 						    //checks if this product already in the cart
 						    if (isset($_SESSION['cart-simple-931t']) && isset($_SESSION['cart-simple-931t'][$productsX[$i]['id']])){
@@ -172,16 +163,16 @@
                        </div>
 					   
                       <div class="modal-body">
-                          <p><b> <?=$productsX[$i]['name'];?></b></p>
+                          <p><b> {{$productsX[$i]['name']}} </b></p>
 						  
 						  <div class="row list-group-item">
 						      <div class="col-sm-1 col-xs-3">Price</div>
-						      <div class="col-sm-4 col-xs-9"><span class="price-x"><?=$productsX[$i]['price'];?></span> ₴</div> 
+						      <div class="col-sm-4 col-xs-9"><span class="price-x"> {{$productsX[$i]['price']}} </span> ₴</div> 
 						  </div>
 						  
 						  <div class="row list-group-item">
 						      <div class="col-sm-1 col-xs-3">Info</div>
-						      <div class="col-sm-4 col-xs-9"><?=$productsX[$i]['description'];?></div> 
+						      <div class="col-sm-4 col-xs-9"> {{$productsX[$i]['description']}} </div> 
 						  </div>
 						  
 						  <!--- Total product sum calculation (2x16.64=N) -->
@@ -193,7 +184,7 @@
 						  
 						  <div class="row list-group-item">
 						      <div class="col-sm-1 col-xs-3">Image</div>
-						      <div class="col-sm-8 col-xs-9"><?=Html::img(Yii::$app->getUrlManager()->getBaseUrl().'/images/shopLiqPay_Simple/' . $productsX[$i]['image'] , $options = ["id"=>"","margin-left"=>"","class"=>"my-one-modal","width"=>"","title"=>"product"]);?></div>
+						      <div class="col-sm-8 col-xs-9"><img class="my-one-modal" src="{{URL::to("/")}}/images/ShopSimple/{{$productsX[$i]['image']}}"  alt="a"/></div>
 						  </div>  
 					 
                      </div>
@@ -219,7 +210,7 @@
 						
 						<!--- Plus button -->
 					     <div class="col-sm-1 col-xs-2"> 
-						     <button type="button" class="btn btn-primary button-plus" data-priceX="<?=$productsX[$i]['price'];?>">+</button>
+						     <button type="button" class="btn btn-primary button-plus" data-priceX=" {{$productsX[$i]['price']}} ">+</button>
 						 </div>
 						 
 						 
@@ -234,18 +225,30 @@
 							 } else {
 								 $quantityX = 1;
 		                     }
-							 
+							
 							 //Form with quantity input
+							 /*
 					         $form = ActiveForm::begin(['action' => ['shop-liqpay-simple/add-to-cart'],'options' => ['method' => 'post', 'id' => 'formX'],]); 
                                  echo $form->field($myInputModel, 'yourInputValue')->textInput(['maxlength' => true,'value' => $quantityX, 'class' => 'item-quantity form-control'])->label(false); //product quantity input
                                  echo $form->field($myInputModel, 'productID')->hiddenInput(['value' => $productsX[$i]['id'],])->label(false); //product ID hidden input
-
+                              */
 							 ?>
-								 
+								
+                               <!--								
  	                             <div class="form-group">
-                                    <?= Html::submitButton(Yii::t('app', 'Add to cart'), ['class' => 'btn btn-primary shadowX submitX rounded' , 'id'=>'']) ?>
+                                    <?php // echo Html::submitButton(Yii::t('app', 'Add to cart'), ['class' => 'btn btn-primary shadowX submitX rounded' , 'id'=>'']) ?>
                                  </div>
-                             <?php ActiveForm::end(); ?>
+								 -->
+                             <?php // ActiveForm::end(); ?>
+							 
+							 
+							 
+							 <!-- New form -->
+							 <form method="post" class="form-assign" action="{{url('/assignRole')}}">
+							   <input type="text" value="{{$quantityX}}" name="yourInputValue" />
+							   <input type="hidden" value="{{$productsX[$i]['id']}}" name="productID" />
+							 </form>
+							 <!-- end new form -->
 						  </div>
 						  
 						  <!-- End form with input -->
@@ -281,10 +284,12 @@
            </div>
           <!------------ End Modal ---------------> 
 		  
-		  <?php
-		  }
-		  ?>
+		  
+		  @endfor
+		  
 	  </div> <!-- row shop-items -->
+					
+			
 	  
 	  
 	  
@@ -375,7 +380,8 @@
 
 <!-- Include js/css file for this view only -->
 <script src="{{ asset('js/ShopPaypalSimple/shopSimple_Loader.js')}}"></script> <!-- CSS Loader -->
-<script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script> 
+<script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>   
+<!--<script src="{{ asset('js/ShopPaypalSimple/LazyLoad/jquery.lazyload.js')}}"></script>--> <!--Lazy Load lib JS-->
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple_Loader.css') }}" rel="stylesheet">
 <!-- Include js file for thisview only -->

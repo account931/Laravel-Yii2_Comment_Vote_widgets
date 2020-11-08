@@ -1,5 +1,8 @@
 <?php
 //seeder for table {shpsimple}
+
+//namespace App\database\seeds\SeedersFiles;
+
 use Illuminate\Database\Seeder;
 
 

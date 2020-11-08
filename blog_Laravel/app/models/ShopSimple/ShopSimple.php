@@ -21,4 +21,15 @@ class ShopSimple extends Model
   
   
   
+  
+  //truncate/crop the text
+	public function truncateTextProcessor($text, $maxLength)
+	{
+        $length = $maxLength; 
+		if(strlen($text) > $length){
+		    $text = substr($text, 0, $length) . "...";
+		} 
+	return $text;		
+	}
+  
 }
