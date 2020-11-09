@@ -20,7 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home'); 
-Route::get('/home', 'ShowProfile@index')->name('home');
+Route::get('/home', 'ShowProfile@index')->name('home'); //shows currently logged user profile
 
 //All users list  
 Route::get('/EloquentExample', 'AllUsersEloquent@eloquentt')->name('EloquentExample2');  //Active Record Eloquent example Route

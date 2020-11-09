@@ -27,7 +27,7 @@ class ShopTimelineProgress2
 			     <!-- Shop icon -->
 			    <div class="icon-item <?php echo ($activeClass == 'Shop' ? 'myactive' : 'myinactive'); ?> "> <!-- assign css class by function argument {$activeClass} -->
 			        <i class="fa fa-archive" style="font-size:24px;"></i>
-					<p><a href="{{ route('register') }}">Shop</a></p>
+					<p><a href="{{ route('shopSimple') }}">Shop</a></p>
 		        </div>
 				      
 				
@@ -40,7 +40,7 @@ class ShopTimelineProgress2
 			    <!-- Cart icon -->
 			    <div class="icon-item <?php echo ($activeClass == 'Cart' ? 'myactive' : 'myinactive'); ?> "> <!-- assign css class by function argument {$activeClass} -->
 			        <i class="fa fa-shopping-cart" style="font-size:24px;"></i>
-				    <p><a href="{{ route('register') }}">Cart</a></p>
+				    <p><a href="{{ route('cart') }}">Cart</a></p>
 		        </div>
 				
 				<!-- A line  -->

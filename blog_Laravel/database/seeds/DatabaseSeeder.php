@@ -1,4 +1,5 @@
 <?php
+//This is the MAIN SEEDER!!!!
 
 use Illuminate\Database\Seeder;
 //use App\database\seeds\SeedersFiles\ShopSimpleSeeder;
@@ -21,13 +22,15 @@ class DatabaseSeeder extends Seeder
 		 $this->call('Roles_Seeder');  //fill DB table {roles} with data {4 roles}
 		 $this->call('RoleUsers_Seeder');  //fill DB table {role_user} with data {assign admin to Dima}
 		 $this->call('ShopSimpleSeeder');  //fill DB table {shopsimple} with data. SEEDER IS IN SUBFOLDER /SeedersFiles.
-		 
+		 $this->call('ShopCategories_Seeder');  //fill DB table {shop_categories} with data. 
+
 		 $this->command->info('Таблица пользователей загружена данными!');
     }
 	
 	
   
 }
+//------------------- ALL SEEDERS CLASS -----------------------------------
 
 //fill DB table {Wpress_blog} with data 
 class Wpress_blog_post_Seeder extends Seeder {
@@ -102,3 +105,21 @@ class RoleUsers_Seeder extends Seeder {
     DB::table('role_user')->insert(['user_id' => 2, 'role_id' => 13 ]);
   }
 }
+
+
+
+
+//fill DB table {shop_categories} with data.
+class ShopCategories_Seeder extends Seeder {
+  public function run()
+  {
+    DB::table('shop_categories')->delete();  //whether to Delete old materials
+
+    DB::table('shop_categories')->insert(['categ_id' => 1, 'categ_name' => 'Desktop' ]);
+	DB::table('shop_categories')->insert(['categ_id' => 2, 'categ_name' => 'Mobile' ]);
+	DB::table('shop_categories')->insert(['categ_id' => 3, 'categ_name' => 'Tablet' ]);
+  }
+}
+
+
+

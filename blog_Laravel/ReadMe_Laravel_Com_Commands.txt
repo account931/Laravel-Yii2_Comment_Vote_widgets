@@ -531,7 +531,7 @@ USAGE
 		<link href="{{ asset('css/rbac/rbac.css') }}" rel="stylesheet">
     @endif	
 	
-	Variant 2 (working) (use/include in any child view before {@endsection}, i.e /views/auth/login) =>
+	Variant 2 (working) (use/include in any child view before {@endsection}, i.e /views/auth/login). OR right after @section('content') (if u don't want to encounter div loads for 1 sec without css styling) =>
 	    <!-- Include js/css file for this view only -->
         <script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>
         <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
@@ -786,7 +786,9 @@ composer dump-autoload
   In View =>  Details: <b>{!! $exception->getMessage() !!}</b>
   
   
- date(2020-11-07 16:21:49) => date('Y-m-d H:i:s')  
+# get Date(2020-11-07 16:21:49) => date('Y-m-d H:i:s');
+
+# Logging(logs go to /storage/logs/laravel.log) => use Illuminate\Support\Facades\Log;   Log::info('Showing user profile for user: '. $id . ' User IP is ' . $_SERVER['REMOTE_ADDR']);  
   
   
   

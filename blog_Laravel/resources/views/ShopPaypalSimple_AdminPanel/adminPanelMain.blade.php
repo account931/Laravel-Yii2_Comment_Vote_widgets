@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+<?php
+//shop uses $_SESSION['cart_dimmm931_1604938863'] to store and retrieve user's cart;
+?>
+
 @section('content')
 <div id="all" class="container animate-bottom">
     <div class="row">
@@ -52,9 +56,9 @@
 				
 				    <!-------- Cart icon with badge ----------->
 		            <?php 
-		            //get the car quantity
-		            if (isset($_SESSION['cart-simple-931t'])) { 
-		                $c = count($_SESSION['cart-simple-931t']); 
+		            //get the car quantity. NOT USED IN ADMIN PANEL.
+		            if (isset($_SESSION['cart_dimmm931_1604938863'])) { 
+		                $c = count($_SESSION['cart_dimmm931_1604938863']); 
 		            } else { 
 			           $c = 0; 
 		             } ?>
