@@ -20,9 +20,11 @@ class CreateShopSimpleTable extends Migration
 			$table->string('shop_image', 222)->nullable();   //Эквивалент VARCHAR с длинной 222 // ->nullable()  is a fix
             $table->decimal('shop_price', 6, 2); // DECIMAL equivalent with a precision and scale //this means that your column is set up to store 6 places (scale), with 2 to the right of the decimal (precision). A sample would be 1234.56.
 			$table->string('shop_currency', 8)->nullable();  //VARCHAR equivalent column, length 222 // ->nullable()  is a fix
-			$table->text('shop_descr')->nullable();         //equivalent for text  
-			//$table->foreign('shop_categ')->references('categ_id')->on('shop_categories');    //equivalent INTEGER Foreign Key 
-			$table->integer('shop_categ')->nullable();    
+			$table->text('shop_descr')->nullable();         //equivalent for text
+			
+			$table->integer('shop_categ')->nullable();   
+			//$table->foreign('shop_categ')->references('categ_id')->on('shop_categories'); //equivalent INTEGER Foreign Key 
+			
 			$table->timestamp('shop_created_at')->default( date('Y-m-d H:i:s') ); //	Эквивалент TIMESTAMP для базы данных
 
 			//$table->integer('wpBlog_author')->nullable();  //Эквивалент INTEGER для базы данных

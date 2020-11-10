@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\models\ShopSimple\ShopSimple; //model for DB table 
+use App\models\ShopSimple\ShopSimple;     //model for DB table 
+use App\models\ShopSimple\ShopCategories; //model for DB table 
 
 class ShopPayPalSimpleController extends Controller
 {
@@ -16,11 +17,18 @@ class ShopPayPalSimpleController extends Controller
      */
     public function index()
     {
-		$model = new ShopSimple();
-		$allDBProducts = ShopSimple::all();
-		//dd($allDBProducts);
+		$model = new ShopSimple(); //to call model method, e.g truncateTextProcessor($text, $maxLength)
+		$allDBProducts = ShopSimple::paginate(4); //with pagination
+		$countProducts = ShopSimple::all();       //count all products 
+		$allCategories = ShopCategories::all();  //for <select> dropdown
+		
 	    
-		return view('ShopPaypalSimple.shopIndex')->with(compact('allDBProducts', 'model'));  
+		return view('ShopPaypalSimple.shopIndex')->with(compact(
+		                                          'allDBProducts', //with pagination
+												  'countProducts',
+			                                      'model',
+			                                      'allCategories'  
+		));  
 	}
 	
 	

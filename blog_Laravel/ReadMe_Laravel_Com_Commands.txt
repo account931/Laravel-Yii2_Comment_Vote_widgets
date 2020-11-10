@@ -409,7 +409,7 @@ USAGE
       $articleOne[0]->wpBlog_author; // $articleOne>wpBlog_author;  DOES NOT WORK (<= NOT TRUE???)
 	  
 	# Pagination => 
-	   Controller =>   $articles = wpress_blog_post::where('wpBlog_status', '1')->paginate(3);
+	   Controller =>   $articles = wpress_blog_post::where('wpBlog_status', '1')->paginate(3); //$allDBProducts = ShopSimple::paginate(4);
 	   View =>      {{ $articles->links() }}
 //================================================================================================
 
@@ -789,7 +789,8 @@ composer dump-autoload
 # get Date(2020-11-07 16:21:49) => date('Y-m-d H:i:s');
 
 # Logging(logs go to /storage/logs/laravel.log) => use Illuminate\Support\Facades\Log;   Log::info('Showing user profile for user: '. $id . ' User IP is ' . $_SERVER['REMOTE_ADDR']);  
-  
+ 
+# Render partial =>  @include('ShopPaypalSimple.partial.dropdown', ['categ' => $allCategories])  => (will include the view at 'views/ShopPaypalSimple/partial/dropdown.blade.php'
   
   
 
@@ -851,7 +852,8 @@ $(document).on("click", '.sbmBtn', function() {   // this  click  is  used  to  
 # JS JQ selectors, use .parent() to go 1 level up, see example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/rbac/my-rbac.js or at /resources/assets/
 	var selectedText = $(this).closest("form").find(":selected").text();  //gets text of selected <select>, i.e 'manager'. If u use .val() instead of text(), u'll ger value, i.e 14
 	var userRolesText = $(this).parent().parent().parent().find( $(".user-roles-list" )).html();  //gets the <td> text with user roles, i.e "owner, manager"
-		   
+
+# JS JQ selectors var.2 (find 1st input) => var numProduct = Number($(this).closest('div').next().find('input:eq(0)').val()); see=> https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/ShopPaypalSimple/shopSimple.js or at /resources/assets/		   
 
 # get value of <select> => $( "#myselect" ).val(); // i.e 13
 # get text  of <select> => $( "#myselect option:selected" ).text(); // i.e 'manager'

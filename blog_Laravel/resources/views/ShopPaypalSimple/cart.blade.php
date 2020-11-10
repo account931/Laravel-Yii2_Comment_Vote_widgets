@@ -4,6 +4,15 @@
 ?>
 
 @section('content')
+
+
+<!-- Include js/css file for this view only -->
+<script src="{{ asset('js/ShopPaypalSimple/shopSimple_Loader.js')}}"></script> <!-- CSS Loader -->
+<link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
+<link href="{{ asset('css/ShopPaypalSimple/shopSimple_Loader.css') }}" rel="stylesheet">
+<!-- Include js file for thisview only -->
+
+
 <div id="all" class="container animate-bottom">
     <div class="row">
         <div class="col-sm-12 col-xs-12">
@@ -86,12 +95,6 @@
         </div>
     </div>
 </div> <!-- end . animate-bottom -->
-
-<!-- Include js/css file for this view only -->
-<script src="{{ asset('js/ShopPaypalSimple/shopSimple_Loader.js')}}"></script> <!-- CSS Loader -->
-<link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
-<link href="{{ asset('css/ShopPaypalSimple/shopSimple_Loader.css') }}" rel="stylesheet">
-<!-- Include js file for thisview only -->
 
 
 @endsection

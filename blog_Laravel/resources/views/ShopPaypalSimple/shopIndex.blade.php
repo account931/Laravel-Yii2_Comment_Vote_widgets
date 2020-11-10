@@ -9,7 +9,7 @@
 <!-- Include js/css file for this view only -->
 <script src="{{ asset('js/ShopPaypalSimple/shopSimple_Loader.js')}}"></script> <!-- CSS Loader -->
 <script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>   
-<!--<script src="{{ asset('js/ShopPaypalSimple/LazyLoad/jquery.lazyload.js')}}"></script>--> <!--Lazy Load lib JS-->
+<script src="{{ asset('js/ShopPaypalSimple/LazyLoad/jquery.lazyload.js')}}"></script> <!--Lazy Load lib JS-->
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple_Loader.css') }}" rel="stylesheet">
 
@@ -62,9 +62,14 @@
 
                 <div class="panel-body shop">
 				
-				    <div class="col-sm-10 col-xs-10">
+				    <div class="col-sm-7 col-xs-8">
                     <h1>Shop PayPal</h1>
 		            </div>	
+				
+				    <!-- Render Partial Select DropDown-->
+				    <div class="col-sm-3 col-xs-2">
+                        @include('ShopPaypalSimple.partial.dropdown', ['categ' => $allCategories])
+		            </div>
 				
 				
 				    <!-------- Cart icon with badge ----------->
@@ -134,6 +139,12 @@
 					@if(count($allDBProducts) == 0)
 						<center><br><br><p> No products in DB </p></center>
 					@endif
+					
+					<!-- Count found products in DB -->
+					<div class="col-sm-12 col-xs-12">
+					    <i class="fa fa-delicious" style="font-size:1em; color: navy;"></i> 
+						Found <span class="text-danger">{{count($countProducts)}} </span>items <p></p><p></p>
+					</div>
 	               
 				   
 		            <!--generate shop products, Loop ---------------------------------------------------------->
@@ -153,7 +164,7 @@
 						
 						   <!--lazyLoad-->
 						<!--<img class="lazy my-one" data-original="' . Yii::$app->getUrlManager()->getBaseUrl(). '/images/shopLiqPay_Simple/'. $allDBProducts[$i]['image'] . '" >-->
-					    <img class="my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$allDBProducts[$i]['shop_image'] }}"  alt="a"/>
+					    <img class="lazy my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$allDBProducts[$i]['shop_image'] }}"  alt="a" />
 					  </div>   
 				     </div>
 				 
@@ -170,7 +181,7 @@
 
 
 		
-		             <!--------- Hidden Modal ---------->
+		             <!--------- Hidden Modal Window with one clicked item ---------->
                      <div class="modal fade" id="myModal{{$i}}" role="dialog">
                        <div class="modal-dialog modal-lg">
                          <div class="modal-content">
@@ -196,12 +207,12 @@
 						  
 						  <div class="row list-group-item">
 						      <div class="col-sm-1 col-xs-3">Info</div>
-						      <div class="col-sm-4 col-xs-9"> {{$allDBProducts[$i]['shop_descr']}} </div> 
+						      <div class="col-sm-11 col-xs-9"> {{$allDBProducts[$i]['shop_descr']}} </div> 
 						  </div>
 						  
 						  <div class="row list-group-item">
 						      <div class="col-sm-1 col-xs-3">Category</div>
-						      <div class="col-sm-4 col-xs-9"> {{$allDBProducts[$i]->categoryName->categ_name}} </div>  
+						      <div class="col-sm-4 col-xs-9"><i> {{$allDBProducts[$i]->categoryName->categ_name}} </i></div>  
 						  </div>
 						  
 						  <!--- Total product sum calculation (2x16.64=N) -->
@@ -312,10 +323,13 @@
                   </div>
               </div>
            </div>
-          <!------------ End Modal ---------------> 
+          <!------------ End Hidden Modal Window with one clicked item ---------------> 
 		  
 		  
 		  @endfor
+		  
+		  <!-- Display pagination links -->
+		  {{ $allDBProducts->links() }}
 		  
 	  </div> <!-- row shop-items -->
 					

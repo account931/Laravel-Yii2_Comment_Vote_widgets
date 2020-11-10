@@ -118,6 +118,7 @@ class ShopCategories_Seeder extends Seeder {
     DB::table('shop_categories')->insert(['categ_id' => 1, 'categ_name' => 'Desktop' ]);
 	DB::table('shop_categories')->insert(['categ_id' => 2, 'categ_name' => 'Mobile' ]);
 	DB::table('shop_categories')->insert(['categ_id' => 3, 'categ_name' => 'Tablet' ]);
+	DB::table('shop_categories')->insert(['categ_id' => 4, 'categ_name' => 'Audio Pro' ]);
   }
 }
 
