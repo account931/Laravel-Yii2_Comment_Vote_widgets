@@ -123,3 +123,5 @@
 .modal-backdrop {
   z-index: -1;
 }
+
+.no-product{margin:1em 0em; background:red; padding:0.4em; }

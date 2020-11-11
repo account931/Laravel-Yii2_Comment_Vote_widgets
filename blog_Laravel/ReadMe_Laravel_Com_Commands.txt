@@ -871,6 +871,8 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 # Prevent and send form with Sweet alerts confirm dialogue => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/rbac/my-rbac.js  or if it was Gulp Webpacked =>  at /resources/assets/
 
 #//How to Toggle Password Visibility =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/login/login.js  or if it was Gulp Webpacked =>  at /resources/assets/
+
+# To show Bootstrap modal window by default => add class "in show" => div class="modal fade in show"
 //================================ End Move to Yii2 ReadMe =============================
 
 //================================================================================================

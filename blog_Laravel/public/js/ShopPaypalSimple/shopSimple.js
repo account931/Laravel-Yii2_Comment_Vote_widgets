@@ -26,6 +26,27 @@ $(document).ready(function(){
     
 	
 	
+	//Shop products/items category Dropdown. On change redirect to <option> href
+   // **************************************************************************************
+   // **************************************************************************************
+   //                                                                                     ** 
+	if(document.getElementById("dropdowShop") !== null){ //additional check to avoid errors in console in actions, other than actionShowAllBlogs(), when this id does not exist
+	   document.getElementById("dropdowShop").onchange = function() {
+          //if (this.selectedIndex!==0) {
+              window.location.href = this.value;
+          //}        
+       };
+	}
+	// **                                                                                  **
+    // **************************************************************************************
+    // **************************************************************************************
+
+
+
+
+
+
+	
 	 //==============================================
 	 //on opening a modal pop-up (when u click a product), do reset any changes if they were applied early (e.g <button> css was changed)
 	 $('.modal-trigger').on('click', function(){ 

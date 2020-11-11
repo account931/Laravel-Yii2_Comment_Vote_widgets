@@ -1,17 +1,16 @@
 
-<select class="mdb-select md-form" id="dropdownnn">
-    <option value={{ url("/wpBlogg") }}  selected="selected">All items</option>
+<select class="mdb-select md-form" id="dropdowShop">
+    <option value={{ url("/shopSimple") }}  selected="selected">All items</option>
    @foreach ($allCategories as $a)
    @php
    //gets to know what select <option> to make selected according to $_GET['']
-   if(isset($_GET['category']) && $_GET['category'] == $a->categ_id){
+   if(isset($_GET['shop-category']) && $_GET['shop-category'] == $a->categ_id){
 	    $selectStatus = 'selected="selected"';
    } else {
        $selectStatus = '';
    }
-   //$a->wpCategory_id
    @endphp
 					 
-   <option value={{ url("/wpBlogg?category=$a->categ_name") }}  {{$selectStatus }} > {{ $a->categ_name}} </option>
+   <option value={{ url("/shopSimple?shop-category=$a->categ_id") }}  {{$selectStatus }} > {{ $a->categ_name}} </option>
    @endforeach
 						    </select>

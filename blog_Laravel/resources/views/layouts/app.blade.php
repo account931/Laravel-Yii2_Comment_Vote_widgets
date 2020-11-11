@@ -155,7 +155,13 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('js/my-js.js') }}"></script>
-	<script src="{{ asset('js/wpress_blog.js') }}"></script> <!-- wpress_blog JS -->
+	
+	
+	
+	<!-- To register JS file for specific view only (In layout template) (for Wpress asset only) -->
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['wpBlogg'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
+        <script src="{{ asset('js/wpress_blog.js') }}"></script> <!-- wpress_blog JS -->
+    @endif
 	
     <!-- To register JS file for specific view only (In layout template) -->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['testRest', 'register'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
@@ -178,6 +184,15 @@
         <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script> <!--Sweet Alert JS-->
 	@endif
 	
+	
+	<!-- To register JS/CSS for specific view only (for ShopSimple asset only) -->
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['shopSimple'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
+	    <!-- Autocomplete -->
+        <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script> <!--autocomplete JS-->
+        <link rel="stylesheet" href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'> <!--autocomplete CSS -->
+        <script src="{{ asset('js/ShopPaypalSimple/autocomplete.js') }}"></script><!--autocomplete itself -->
+    @endif
+
 	<!-- ALL OTHER CSS/JS SCRIPT ARE LOADED IN EVERY SPECIFIC VIEW (before {endsection}) -->
 
 </body>
