@@ -9,7 +9,7 @@
 <!-- Include js/css file for this view only -->
 <script src="{{ asset('js/ShopPaypalSimple/shopSimple_Loader.js')}}"></script> <!-- CSS Loader -->
 <script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>   
-<script src="{{ asset('js/ShopPaypalSimple/LazyLoad/jquery.lazyload.js')}}"></script> <!--Lazy Load lib JS-->
+
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple_Loader.css') }}" rel="stylesheet">
 
@@ -66,8 +66,16 @@
                 <!-- End Display form validation errors var 2 -->				
 					
 					
-                <div class="panel-heading text-warning">
+                <div class="panel-heading text-warning row">
+				  <div class="col-sm-3 col-xs-6">
 				    Shop PayPal <span class="small text-danger">*</span> 
+				  </div>
+				  
+				  <!--------  Select DropDown (by Render Partial) --------->
+				  <div class="col-sm-3 col-xs-6">Choose
+					@include('ShopPaypalSimple.partial.dropdown', ['categ' => $allCategories])
+				  </div>
+					
 				</div>
 
 
@@ -80,7 +88,7 @@
 				
 				    <!--------  Select DropDown (by Render Partial) --------->
 				    <div class="col-sm-3 col-xs-6">
-                        @include('ShopPaypalSimple.partial.dropdown', ['categ' => $allCategories])
+                        <!--@include('ShopPaypalSimple.partial.dropdown', ['categ' => $allCategories])-->
 		            </div>
 				    <!-------- End Select DropDown (by Render Partial) ----->
 					
@@ -173,8 +181,17 @@
 				   
 		            <!--generate shop products, Loop ---------------------------------------------------------->
 					@for ($i = 0; $i < count($allDBProducts); $i++)
+					
+                    @php				
+					//check if product already in cart, if Yes-> get its quantity, if no-. sets to 1
+					if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']])){
+					     $quantityX = $_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']]; //gets the quantity from cart
+					} else {
+						$quantityX = 1;
+		            }
+					@endphp		
 			   	
-			        <div id="{{$allDBProducts[$i]['id']}}" class="col-sm-5 col-xs-12  list-group-item bg-success cursorX shadowX modal-trigger" data-toggle="modal" data-target="#myModal{{$i}}"> <!--data-toggle="modal" data-target="#myModal' . $i .   for modal -->
+			        <div id="{{$allDBProducts[$i]['id']}}" class="col-sm-5 col-xs-12  list-group-item bg-success cursorX shadowX modal-trigger" data-toggle="modal" data-target="#myModal{{$i}}" data-quantityZ="{{$quantityX}}"> <!--data-toggle="modal" data-target="#myModal' . $i .   for modal -->
 			          <div class="col-sm-4 col-xs-3"> {{$allDBProducts[$i]['shop_title']}} </div>
 				      <div class="col-sm-2 col-xs-2 word-breakX"> {{$allDBProducts[$i]['shop_price']}}   {{$allDBProducts[$i]['shop_currency']}}</div>
 				      <div class="col-sm-2 col-xs-3">             {{$model->truncateTextProcessor($allDBProducts[$i]['shop_descr'], 8) }}  </div>  	
@@ -186,9 +203,9 @@
 						    "</a>" .*/
 					    -->
 						
-						   <!--lazyLoad-->
-						<!--<img class="lazy my-one" data-original="' . Yii::$app->getUrlManager()->getBaseUrl(). '/images/shopLiqPay_Simple/'. $allDBProducts[$i]['image'] . '" >-->
-					    <img class="lazy my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$allDBProducts[$i]['shop_image'] }}"  alt="a" />
+						<!--Image with lazyLoad-->
+					    <!--<img class="lazy my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$allDBProducts[$i]['shop_image'] }}"  alt="a" />-->
+						<img class="lazy my-one" data-original="{{URL::to("/")}}/images/ShopSimple/{{$allDBProducts[$i]['shop_image'] }}"  alt="a" />
 					  </div>   
 				     </div>
 				 
@@ -282,13 +299,15 @@
 						 <!-- form with input -->
 						 <div class="col-sm-2 col-xs-3">
 					         <?php 
-							 
+							 //DUBLICATE
 							 //check if product already in cart, if Yes-> get its quantity, if no-. sets to 1
+							 /*
 							 if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']])){
 							     $quantityX = $_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']]; //gets the quantity from cart
 							 } else {
 								 $quantityX = 1;
 		                     }
+							 */
 							
 							 
 							 //Form with quantity input
@@ -308,10 +327,12 @@
 							 
 							 
 							 
-							 <!-- New form -->
-							 <form method="post" class="form-assign" action="{{url('/assignRole')}}">
-							   <input type="text" value="{{$quantityX}}" name="yourInputValue" class="item-quantity form-control" />
+							 <!-- New form (add to cart)-->
+							 <form method="post" class="form-assign" action="{{url('/addToCart')}}">
+							  <input type="hidden" value="{{csrf_token()}}" name="_token"/>
+							  <input type="text" value="{{$quantityX}}" name="yourInputValue" class="item-quantity form-control" />
 							   <input type="hidden" value="{{$allDBProducts[$i]['shop_id']}}" name="productID" />
+							   </br><input type="submit" class="btn btn-primary" value="Add to cart"/>
 							 </form>
 							 <!-- end new form -->
 						  </div>
@@ -352,75 +373,15 @@
 		  
 		  @endfor
 		  
+		  
+		  
+		  
 		  <!---------- Display pagination links -------------->
-		  {{ $allDBProducts->links() }}
+		  <div class="col-sm-12 col-xs-12"> {{ $allDBProducts->links() }} </div>
+		  
 		  
 	  </div> <!-- row shop-items -->
 					
-			
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

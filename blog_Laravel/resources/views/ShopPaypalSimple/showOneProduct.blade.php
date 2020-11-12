@@ -52,6 +52,11 @@
 					
                 <div class="panel-heading text-warning">
 				    One product <span class="small text-danger">*</span> 
+					<!-- Link to go back -->
+				    <div>
+				    &nbsp;<i class="fa fa-hand-o-left" style="font-size:24px"></i>
+				    <a href="{{ url('/shopSimple') }}">back to shop </a>
+                    </div>
 				</div>
 
                 <div class="panel-body shop">

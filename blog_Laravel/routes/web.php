@@ -68,6 +68,8 @@ Route::post('/addNewRole', 'RbacController@storeNewRole')->name('/addNewRole'); 
 Route::get('/shopSimple', 'ShopPayPalSimpleController@index')->name('shopSimple'); //display shopSimple start page
 Route::get('/cart', 'ShopPayPalSimpleController@cart')->name('cart'); //display shopSimple start page
 Route::get('/showOneProduct/{id}', 'ShopPayPalSimpleController@showOneProductt')->name('showOneProduct');
+Route::post('/addToCart', 'ShopPayPalSimpleController@storeToCart')->name('/addToCart');  //route to method to add to cart, send via POST form
+
 
 
 //ShopSimple Admin Panel
