@@ -84,7 +84,140 @@
 					</div>
 	                <!--------------  END  Progress Status Icons by component ----------------->
 					  
-					  
+					
+
+
+
+
+
+                    
+                    
+					
+					
+					
+					
+				    	
+					
+					@if (!isset($_SESSION['cart_dimmm931_1604938863']) || (count($_SESSION['cart_dimmm931_1604938863']) == 0) )
+		               <h2> So far the cart is empty  <i class='fa fa-cart-arrow-down' aria-hidden='true'></i></h2>
+		               <i class='fa fa-question-circle-o' style='font-size:78px;color:red'></i>
+	                @else 
+                    
+  
+   
+                    <!------------  CART Products List ------------->
+                    <div class="row shop-items">
+	                <div class="col-sm-12 col-xs-12 shadowX"><h3>You have <?=count($_SESSION['cart_dimmm931_1604938863']);?> items in your cart </h3></div>
+		 
+		           <!-- THEAD -->
+		           <div class="col-sm-12 col-xs-12  list-group-item shadowX">
+		           <div class="col-sm-4 col-xs-3">Name</div>
+			       <div class="col-sm-2 col-xs-2">Image</div>
+			       <div class="col-sm-2 col-xs-2">Price</div>
+			       <div class="col-sm-1 col-xs-2">Quant</div>
+			       <div class="col-sm-2 col-xs-3">Sum</div>
+		           </div>
+		           <!-- End THEAD -->
+	      
+		           <!-------------------------------------- Foreach $_SESSION['cart'] to dispaly all cart products --------------------------------------------->
+		          @php
+		          $i = 0;	
+                  $totalSum = 0;
+		          @endphp
+		  
+		         <form method="post" class="form-assign" action="{{url('/addToCart')}}">
+		  
+		         <?php var_dump($_SESSION['cart_dimmm931_1604938863']); ?>
+				 
+		         @foreach($_SESSION['cart_dimmm931_1604938863'] as $key => $value)
+		         @php
+				 $i++;
+			  
+			     //find in $_SESSION['productCatalogue'] index the product by id
+			     $keyN = array_search($key, array_keys($_SESSION['productCatalogue'])); //find in $_SESSION['productCatalogue'] index the product by id
+				 $keyN = $keyN - 1; //???? WTFFFF
+				 //var_dump("<p>" .$keyN . "</p>");
+				 @endphp						    						
+
+			     <!--Dispalay products-->
+		         <div id=" {{$_SESSION['productCatalogue'][$keyN]['shop_id'] }}" class="col-sm-12 col-xs-12  list-group-item bg-success cursorX" data-toggle="modal" data-target="#myModal{{$i}}"> <!--  //data-toggle="modal" data-target="#myModal' . $i .   for modal -->
+			     <div class="col-sm-4 col-xs-3"> {{$_SESSION['productCatalogue'][$keyN]['shop_title'] }} </div>'; <!--name-->
+			     <div class="col-sm-2 col-xs-2 word-breakX"> 
+				    <img class="lazy my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$_SESSION['productCatalogue'][$keyN]['shop_image'] }} "  alt="a" />
+                 </div>
+				 
+			    <div class="col-sm-2 col-xs-2 word-breakX"> {{$_SESSION['productCatalogue'][$keyN]['shop_price']}} ₴</div>
+				 
+				<!--//quantity div => contains Yii2 ActiveForm -->
+		        <div class="col-sm-1 col-xs-2"> <!-- // . $_SESSION['cart_dimmm931_1604938863'][$keyN]; //quantity-->
+				   <?php
+				   $quantityX = $_SESSION['cart_dimmm931_1604938863'][$keyN+1]; //gets the quantity
+				    //$form = ActiveForm::begin(['action' => ['shop-liqpay-simple/add-to-cart'],'options' => ['method' => 'post', 'id' => ''],]); 
+					//echo $form->field($myInputModel, 'yourInputValue')->textInput(['maxlength' => true,'value' => $quantityX, 'class' => 'form-control'])->label(false); //product quantity input
+					//ActiveForm::end();
+					?>
+					<input type="hidden" value="{{csrf_token()}}" name="_token"/>
+					<input type="text" value="{{$quantityX}}" name="yourInputValue" class="item-quantity form-control" />
+				</div>   <!--quantity-->	
+				{{--END quantity div => contains Yii2 ActiveForm --}}
+				
+				{{--Sum for one product--}}
+			    <div class="col-sm-2 col-xs-3">{{ ($_SESSION['cart_dimmm931_1604938863'][$keyN+1]*$_SESSION['productCatalogue'][$keyN]['shop_price']) }} {{$_SESSION['productCatalogue'][$keyN]['shop_currency']}}</div>   {{--total sum for this product, price*quantity--}}
+				     
+		      </div>
+				 
+			<?php
+			$totalSum+= $_SESSION['cart_dimmm931_1604938863'][$keyN+1]*$_SESSION['productCatalogue'][$keyN]['shop_price']; //Total sum for this one product (2x16.64=N)
+		    ?>
+		 @endforeach
+	  </div> <!-- row shop-items -->
+	  
+	  
+	  <!-- Total sum for all products -->
+	  <div class="col-sm-12 col-xs-12 shadowX">
+	      <h3>Total: </h3>
+		  <h2> {{ $totalSum }} ₴</h2>
+	  </div>
+  
+  
+       <div class="col-sm-12 col-xs-12">
+	     <hr>
+	     <button class="btn btn-info btn-lg shadowX">Check-out</button>
+		
+		 </form>
+	  </div>
+  
+  
+  @endif
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					
 				</div> <!-- end .shop -->
 				    
 					

@@ -15,11 +15,11 @@ $(function() {
 	setTimeout(function(){  
     //$("img.lazy").trigger('appear');
 	  $("img.lazy:lt(4)").trigger('appear'); //show 4 first images
-	}, 3000);
+	}, 4000);
 	
 });
 
-//Lazy Load
+//End Lazy Load
 
 
 
@@ -71,7 +71,12 @@ $(document).ready(function(){
 	
 	//Plus ++
     $('.button-plus').on('click', function(){ 
-		
+	
+	    //in case product was in cart, user minus-- it, till the last, and button was changed to "Remove from cart?"
+		if($('.submitX').val() != 'Add to cart'){
+			$('.submitX').val('Add to cart');
+			$('.submitX').css('background', '#717fe0');
+		}
 		
 		var numProduct = Number($(this).closest('div').next().find('input:eq(1)').val()); //gets current input quantity. Use {input:eq(1)}, as {input:eq(0)} is a CSRF token
 		
@@ -97,20 +102,26 @@ $(document).ready(function(){
     $('.button-minus').on('click', function(){
 		var numProduct = Number($(this).closest('div').prev().find('input:eq(1)').val()); //gets current input quantity. Use {input:eq(1)}, as {input:eq(0)} is a CSRF token
 		
-		if(numProduct == 0){
-			swal("Stop!", "Can't go further", "warning");
-			return false;
-		}
+		
+		
+		
 		
 		if(numProduct <= 1){
 			if(this.getAttribute("data-cartFlag")=="true"){ //if product was prev selected and now is in cartFlag
-			    $('.submitX').html('Remove from cart?'); 
+			    $('.submitX').val('Remove from cart?'); 
 				$('.submitX').css('background', 'red'); //change button style 
 			} else {
 			    swal("Stop!", "Can't select zero items", "warning");
 			    return false;
 			}
 		}
+		
+		
+		if(numProduct == 0){
+			swal("Stop!", "Can't go further", "warning");
+			return false;
+		}
+		
 		
 		$(this).closest('div').prev().find('input:eq(1)').val(numProduct - 1); //html new value--
 		
@@ -173,9 +184,9 @@ $(document).ready(function(){
   // **                                                                                  **
 	function normalizeAddToCartButton(thisX){
 		//$('.my-button-x').prop('disabled', false);
-		$('.submitX').html('Add to cart');
+		$('.submitX').val('Add to cart');
 		$('.submitX').css('background', '#717fe0');
-		$('.sum').html(''); //clear field with summing, e.g 16.16 x 2 = 33.28
+		$('.sum').html(''); //clear field with summing (in modal), e.g 16.16 x 2 = 33.28
 		var q = thisX.getAttribute("data-quantityZ");
 		$('.item-quantity').val(q);  
 		
