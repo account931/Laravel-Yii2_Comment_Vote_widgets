@@ -185,7 +185,7 @@
 	@endif
 	
 	
-	<!-- To register JS/CSS for specific view only (for ShopSimple asset only) -->
+	<!-- To register JS/CSS for specific view only (for ShopSimple asset only) + Some JS/CSS are included in View itself -->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['shopSimple'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
 	    <!-- Autocomplete -->
         <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script> <!--autocomplete JS-->
@@ -194,8 +194,15 @@
 		
 		<script src="{{ asset('js/ShopPaypalSimple/LazyLoad/jquery.lazyload.js')}}"></script> <!--Lazy Load lib JS-->
     @endif
+	
+	
+	<!-- To register JS/CSS for specific view only (for showOneProduct(page result from SearchBar) asset only) + Some JS/CSS are included in View itself -->
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['showOneProduct/{id}'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
+		<script src="{{ asset('js/ShopPaypalSimple/LazyLoad/jquery.lazyload.js')}}"></script> <!--Lazy Load lib JS-->
+    @endif
 
-	<!-- ALL OTHER CSS/JS SCRIPT ARE LOADED IN EVERY SPECIFIC VIEW (before {endsection}) -->
+
+	<!-- ALL OTHER/SOME OTHER CSS/JS SCRIPT ARE LOADED IN EVERY SPECIFIC VIEW (before {endsection}) -->
 
 </body>
 </html>

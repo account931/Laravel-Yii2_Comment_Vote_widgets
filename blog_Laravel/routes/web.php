@@ -69,6 +69,7 @@ Route::get('/shopSimple', 'ShopPayPalSimpleController@index')->name('shopSimple'
 Route::get('/cart', 'ShopPayPalSimpleController@cart')->name('cart'); //display shopSimple start page
 Route::get('/showOneProduct/{id}', 'ShopPayPalSimpleController@showOneProductt')->name('showOneProduct');
 Route::post('/addToCart', 'ShopPayPalSimpleController@storeToCart')->name('/addToCart');  //route to method to add to cart, send via POST form
+Route::post('/checkOut', 'ShopPayPalSimpleController@checkOut')->name('/checkOut');  //route to method to checkOut, send via POST form
 
 
 

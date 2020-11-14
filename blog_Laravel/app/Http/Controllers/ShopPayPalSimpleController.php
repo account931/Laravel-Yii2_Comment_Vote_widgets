@@ -168,7 +168,27 @@ class ShopPayPalSimpleController extends Controller
 		
 		
 		$productOne = ShopSimple::where('shop_id', $request->input('productID'))->get();
-		return redirect('/shopSimple')->with('flashMessageFailX', "Added to cart. Product: " . $productOne[0]->shop_title  . " Quantity:" . $request->input('yourInputValue') );
+		return redirect('/shopSimple')->with('flashMessageX', "Item was successfully added to cart. Product: " . $productOne[0]->shop_title  . ". Quantity : " . $request->input('yourInputValue') . " items" );
+	}
+	
+	
+	
+	
+	
+	
+	
+	/**
+     * method to add to cart. Request comes from form in ShopPaypalSimple.cart
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	 
+    public function checkOut(Request $request)
+    {
+		dd($request->input('productID'), $request->input('yourInputValueX'));
+		//dd($request->input('productID'));
+	    //return redirect('/shopSimple')->with('flashMessageX', "Was successfully added to cart. Product: " . $productOne[0]->shop_title  . ". Quantity : " . $request->input('yourInputValue') . " items" );
+
 	}
 	
 	

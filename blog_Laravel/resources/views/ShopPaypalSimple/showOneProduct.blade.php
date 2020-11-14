@@ -1,3 +1,7 @@
+<?php
+//show 1 product from SearchBar result
+?>
+
 @extends('layouts.app')
 <?php
 //uses $_SESSION['cart_dimmm931_1604938863'] to store and retrieve user's cart;
@@ -10,6 +14,10 @@
 <script src="{{ asset('js/ShopPaypalSimple/shopSimple_Loader.js')}}"></script> <!-- CSS Loader -->
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple_Loader.css') }}" rel="stylesheet">
+
+<!-- Sweet Alerts -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> <!-- Sweet Alert CSS -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script> <!--Sweet Alert JS-->
 <!-- Include js file for thisview only -->
 
 

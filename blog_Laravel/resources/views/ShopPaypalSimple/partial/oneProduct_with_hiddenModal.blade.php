@@ -1,5 +1,17 @@
-<!-- Show One product with hidden modal -->
-@php				
+
+<?php
+//<!-- Show One product with hidden modal. Used to render partial in loop(shopIndex.blade.php) or separately (when show 1 product from SearchBar) (showOneProduct.blade.php) -->
+//accepts 2 arg: arg[0] - is an iterator (to use in loop or for single record, arg[1] - is an object with data )
+//to work 100% must include js :
+   // <script src="{{ asset('js/ShopPaypalSimple/LazyLoad/jquery.lazyload.js')}}"></script> <!--Lazy Load lib JS-->
+   //<!-- Sweet Alerts -->
+   //<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> <!-- Sweet Alert CSS -->
+   //<script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script> <!--Sweet Alert JS-->
+   //<script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>
+
+
+
+				
 //check if product already in cart, if Yes-> get its quantity, if no-. sets to 1
 if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']])){
     $quantityX = $_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']]; //gets the quantity from cart
@@ -8,7 +20,7 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 }
 
 
-@endphp		
+?>		
 			   	
 <div id="{{$allDBProducts[$i]['id']}}" class="col-sm-5 col-xs-12  list-group-item bg-success cursorX shadowX modal-trigger" data-toggle="modal" data-target="#myModal{{$i}}" data-quantityZ="{{$quantityX}}"> <!--data-toggle="modal" data-target="#myModal' . $i .   for modal -->
     <div class="col-sm-4 col-xs-3">             {{$allDBProducts[$i]['shop_title']}} </div>
@@ -156,6 +168,15 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 					</br><input type="submit" class="btn btn-primary shadowX submitX rounded" value="Add to cart"/>
 				</form>
 				<!-- end New form (with button "add to cart")-->
+				
+				
+				<!------- New form (with button "Buy in one click") -------->
+				<form method="post" class="form-assign" action="{{url('/addToCart')}}">
+					<input type="hidden" value="{{csrf_token()}}" name="_token"/>
+					<input type="hidden" value="{{$allDBProducts[$i]['shop_id']}}" name="productID" />
+					</br><input type="submit" class="btn btn-primary shadowX rounded" value="Buy in one click"/>
+				</form>
+				<!-- end New form (with button "Buy in one click")-->
 			</div>
 						  
 			<!-- End form with input -->

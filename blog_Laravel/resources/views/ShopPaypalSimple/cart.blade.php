@@ -10,7 +10,8 @@
 <script src="{{ asset('js/ShopPaypalSimple/shopSimple_Loader.js')}}"></script> <!-- CSS Loader -->
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple_Loader.css') }}" rel="stylesheet">
-<!-- Include js file for thisview only -->
+
+<!-- Include js file for this view only -->
 
 
 <div id="all" class="container animate-bottom">
@@ -99,8 +100,10 @@
 				    	
 					
 					@if (!isset($_SESSION['cart_dimmm931_1604938863']) || (count($_SESSION['cart_dimmm931_1604938863']) == 0) )
-		               <h2> So far the cart is empty  <i class='fa fa-cart-arrow-down' aria-hidden='true'></i></h2>
-		               <i class='fa fa-question-circle-o' style='font-size:78px;color:red'></i>
+		               <div class="col-sm-12 col-xs-12"> <br><br><br><center>
+				       <h2> So far the cart is empty  <i class='fa fa-cart-arrow-down' aria-hidden='true'></i></h2>
+		               <i class='fa fa-question-circle-o' style='font-size:58px;color:red'></i></center>
+					   </div>
 	                @else 
                     
   
@@ -111,23 +114,27 @@
 		 
 		           <!-- THEAD -->
 		           <div class="col-sm-12 col-xs-12  list-group-item shadowX">
-		           <div class="col-sm-4 col-xs-3">Name</div>
+		           <div class="col-sm-4 col-xs-2">Name</div>
 			       <div class="col-sm-2 col-xs-2">Image</div>
 			       <div class="col-sm-2 col-xs-2">Price</div>
-			       <div class="col-sm-1 col-xs-2">Quant</div>
+			       <div class="col-sm-1 col-xs-3">Quant</div>
 			       <div class="col-sm-2 col-xs-3">Sum</div>
 		           </div>
 		           <!-- End THEAD -->
 	      
 		           <!-------------------------------------- Foreach $_SESSION['cart'] to dispaly all cart products --------------------------------------------->
 		          @php
+				  $startSec = time(); //seconds 
+				  $startMicroSec = microtime(true); //microseconds
 		          $i = 0;	
                   $totalSum = 0;
 		          @endphp
 		  
-		         <form method="post" class="form-assign" action="{{url('/addToCart')}}">
+		         <form method="post" class="form-assign" action="{{url('/checkOut')}}">
+				 <input type="hidden" value="{{csrf_token()}}" name="_token"/>
 		  
-		         <?php var_dump($_SESSION['cart_dimmm931_1604938863']); ?>
+		         <?php 
+				 //var_dump($_SESSION['cart_dimmm931_1604938863']); ?>
 				 
 		         @foreach($_SESSION['cart_dimmm931_1604938863'] as $key => $value)
 		         @php
@@ -141,23 +148,26 @@
 
 			     <!--Dispalay products-->
 		         <div id=" {{$_SESSION['productCatalogue'][$keyN]['shop_id'] }}" class="col-sm-12 col-xs-12  list-group-item bg-success cursorX" data-toggle="modal" data-target="#myModal{{$i}}"> <!--  //data-toggle="modal" data-target="#myModal' . $i .   for modal -->
-			     <div class="col-sm-4 col-xs-3"> {{$_SESSION['productCatalogue'][$keyN]['shop_title'] }} </div>'; <!--name-->
+			     <div class="col-sm-4 col-xs-2"> {{$_SESSION['productCatalogue'][$keyN]['shop_title'] }} </div> <!--name-->
 			     <div class="col-sm-2 col-xs-2 word-breakX"> 
 				    <img class="lazy my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$_SESSION['productCatalogue'][$keyN]['shop_image'] }} "  alt="a" />
                  </div>
 				 
+				<!-- Price -->
 			    <div class="col-sm-2 col-xs-2 word-breakX"> {{$_SESSION['productCatalogue'][$keyN]['shop_price']}} ₴</div>
 				 
 				<!--//quantity div => contains Yii2 ActiveForm -->
-		        <div class="col-sm-1 col-xs-2"> <!-- // . $_SESSION['cart_dimmm931_1604938863'][$keyN]; //quantity-->
+		        <div class="col-sm-1 col-xs-3"> <!-- // . $_SESSION['cart_dimmm931_1604938863'][$keyN]; //quantity-->
 				   <?php
+				   
 				   $quantityX = $_SESSION['cart_dimmm931_1604938863'][$keyN+1]; //gets the quantity
+				   //var_dump($quantityX);
 				    //$form = ActiveForm::begin(['action' => ['shop-liqpay-simple/add-to-cart'],'options' => ['method' => 'post', 'id' => ''],]); 
 					//echo $form->field($myInputModel, 'yourInputValue')->textInput(['maxlength' => true,'value' => $quantityX, 'class' => 'form-control'])->label(false); //product quantity input
 					//ActiveForm::end();
 					?>
-					<input type="hidden" value="{{csrf_token()}}" name="_token"/>
-					<input type="text" value="{{$quantityX}}" name="yourInputValue" class="item-quantity form-control" />
+                    <input type="hidden" value="{{$_SESSION['productCatalogue'][$keyN]['shop_id']}}" name="productID[]" />
+					<input type="text"  value="{{$quantityX}}" name="yourInputValueX[]" class="form-control" />
 				</div>   <!--quantity-->	
 				{{--END quantity div => contains Yii2 ActiveForm --}}
 				
@@ -170,6 +180,16 @@
 			$totalSum+= $_SESSION['cart_dimmm931_1604938863'][$keyN+1]*$_SESSION['productCatalogue'][$keyN]['shop_price']; //Total sum for this one product (2x16.64=N)
 		    ?>
 		 @endforeach
+		 
+		 <input type="submit" class="btn btn-info btn-lg shadowX" value="Check-out">
+		 </form>
+		 
+		 
+		 <?php
+		 $endSec = time();
+		 $endtMicroSec = microtime(true);
+		 echo "<p>BenchMark Session(Real Host)=> " . ($endSec - $startSec) . " sec vs " . ($endtMicroSec - $startMicroSec) . " microsec.</p>" ;
+		 ?>
 	  </div> <!-- row shop-items -->
 	  
 	  
@@ -182,9 +202,10 @@
   
        <div class="col-sm-12 col-xs-12">
 	     <hr>
-	     <button class="btn btn-info btn-lg shadowX">Check-out</button>
-		
+		 <!--
+	     <input type="submit" class="btn btn-info btn-lg shadowX" value="Check-out">
 		 </form>
+		 -->
 	  </div>
   
   
