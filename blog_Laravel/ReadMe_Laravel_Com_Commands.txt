@@ -403,8 +403,12 @@ USAGE
 	if( Role_User::where('user_id', intval($request->input('user_id')))->where('role_id', intval($request->input('role_sel')) )->exists()) { 
 
 
-    #Eloquent object to arry ->  $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get(); $articleOne->toArray(); 
-	   
+   #Eloquent object to arry ->  $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get(); $articleOne->toArray(); 
+	
+   #Eloquent search based on multiple ID's =>  
+      $models = Model::find([1, 2, 3]); OR $models = Model::findMany([1, 2, 3]); //if in SQL Table column is called {id}
+	  $models = Model::whereIn('shop_id', [1, 2, 3])->get(); ////if in SQL Table column is called other than {id}
+   
    #find one user 
    in Controller => 
       $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get();
@@ -827,6 +831,8 @@ composer dump-autoload
 35.3 Miscellaneous to move to Yii2 ReadMe
 //================================Move to Yii2 ReadMe =============================
 
+---------------------- PHP ----------
+
 # Array search examples (move it to Yii)
 $listOfLanguages = array(
 	"English" => array("langName" => "en", "langFlagImg" => "en-US.svg"),
@@ -843,7 +849,9 @@ $listOfLanguages = array(
 
 # END  Array search (Move it to Yii)
 
+#Benchmark => $startSec = time(); //seconds   $startMicroSec = microtime(true); //microseconds   $bench = $endSec - $startSec;
 
+# Array push/add => array_push($array, "blue", "yellow");
 
 ---------------------- JS ----------
 

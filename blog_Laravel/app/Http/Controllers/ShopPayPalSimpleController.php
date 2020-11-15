@@ -8,7 +8,10 @@ use App\models\ShopSimple\ShopCategories; //model for DB table
 
 class ShopPayPalSimpleController extends Controller
 {
-    
+    public function __construct(){
+		//session_start();
+	}
+	
 	
 	/**
      * display shop start page
@@ -67,10 +70,17 @@ class ShopPayPalSimpleController extends Controller
 		session_start(); 
 		
 		//if session with all products from DB was not set previously
-		if(!isset($_SESSION['productCatalogue'])){
-		   $allProductsAll = ShopSimple::all();  //all DB products
+		//if(!isset($_SESSION['productCatalogue'])){
+			
+		   $arrayWithIDsInCart = array(); //array to store products IDs that are currentlyin cart, i.e [5,7,9]
+		   foreach($_SESSION['cart_dimmm931_1604938863'] as $key => $value){
+			  array_push($arrayWithIDsInCart, $key);
+		   }
+		   //find DB products, but only those ids are present in the cart, i.e $_SESSION['cart_dimmm931_1604938863']
+		   $allProductsAll = ShopSimple::whereIn('shop_id', $arrayWithIDsInCart)->get();
+
 	       $_SESSION['productCatalogue'] = $allProductsAll->toArray(); //all products to session
-		}
+		//}
 		
 		return view('ShopPaypalSimple.cart')->with(compact('allProductsAll')); 
 	}
@@ -185,9 +195,13 @@ class ShopPayPalSimpleController extends Controller
 	 
     public function checkOut(Request $request)
     {
-		dd($request->input('productID'), $request->input('yourInputValueX'));
-		//dd($request->input('productID'));
+		session_start();
+		$productIDs = $request->input('productID'); //comes as array [6,9,9]
+		$productQuant = $request->input('yourInputValueX'); //comes as array [6,9,9]
+		
+		//dd($request->input('productID'), $request->input('yourInputValueX'));
 	    //return redirect('/shopSimple')->with('flashMessageX', "Was successfully added to cart. Product: " . $productOne[0]->shop_title  . ". Quantity : " . $request->input('yourInputValue') . " items" );
+        return view('ShopPaypalSimple.checkOut')->with(compact('productIDs', 'productQuant')); 
 
 	}
 	

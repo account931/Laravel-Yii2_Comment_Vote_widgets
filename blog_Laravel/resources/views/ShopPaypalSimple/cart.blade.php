@@ -134,20 +134,23 @@
 				 <input type="hidden" value="{{csrf_token()}}" name="_token"/>
 		  
 		         <?php 
-				 //var_dump($_SESSION['cart_dimmm931_1604938863']); ?>
+				 var_dump($_SESSION['cart_dimmm931_1604938863']); 
+				 //var_dump($_SESSION['productCatalogue']); 
+				 ?>
 				 
 		         @foreach($_SESSION['cart_dimmm931_1604938863'] as $key => $value)
-		         @php
+		         <?php
 				 $i++;
-			  
-			     //find in $_SESSION['productCatalogue'] index the product by id
-			     $keyN = array_search($key, array_keys($_SESSION['productCatalogue'])); //find in $_SESSION['productCatalogue'] index the product by id
-				 $keyN = $keyN - 1; //???? WTFFFF
-				 //var_dump("<p>" .$keyN . "</p>");
-				 @endphp						    						
+			     echo "<p>key " . $key . "</p>";
+			     //find in $_SESSION['productCatalogue'] index the product by id. MEGA FIX => use array_search(($key-1),... instead of array_search($key-1, ...
+			     $find =(int)$key - 1;
+				 $keyN = array_search($find, array_keys($_SESSION['productCatalogue'])); //find in $_SESSION['productCatalogue'] index the product by id
+				 //$keyN = $keyN - 1; //???? WTFFFF
+				 echo "<p>found keyN " . $keyN . "</p>";
+				 ?>						    						
 
 			     <!--Dispalay products-->
-		         <div id=" {{$_SESSION['productCatalogue'][$keyN]['shop_id'] }}" class="col-sm-12 col-xs-12  list-group-item bg-success cursorX" data-toggle="modal" data-target="#myModal{{$i}}"> <!--  //data-toggle="modal" data-target="#myModal' . $i .   for modal -->
+		         <div id="{{$_SESSION['productCatalogue'][$keyN]['shop_id'] }}" class="col-sm-12 col-xs-12  list-group-item bg-success cursorX" data-toggle="modal" data-target="#myModal{{$i}}"> <!--  //data-toggle="modal" data-target="#myModal' . $i .   for modal -->
 			     <div class="col-sm-4 col-xs-2"> {{$_SESSION['productCatalogue'][$keyN]['shop_title'] }} </div> <!--name-->
 			     <div class="col-sm-2 col-xs-2 word-breakX"> 
 				    <img class="lazy my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$_SESSION['productCatalogue'][$keyN]['shop_image'] }} "  alt="a" />
@@ -160,7 +163,7 @@
 		        <div class="col-sm-1 col-xs-3"> <!-- // . $_SESSION['cart_dimmm931_1604938863'][$keyN]; //quantity-->
 				   <?php
 				   
-				   $quantityX = $_SESSION['cart_dimmm931_1604938863'][$keyN+1]; //gets the quantity
+				   $quantityX = $_SESSION['cart_dimmm931_1604938863'][$key]; //gets the quantity
 				   //var_dump($quantityX);
 				    //$form = ActiveForm::begin(['action' => ['shop-liqpay-simple/add-to-cart'],'options' => ['method' => 'post', 'id' => ''],]); 
 					//echo $form->field($myInputModel, 'yourInputValue')->textInput(['maxlength' => true,'value' => $quantityX, 'class' => 'form-control'])->label(false); //product quantity input
@@ -172,12 +175,12 @@
 				{{--END quantity div => contains Yii2 ActiveForm --}}
 				
 				{{--Sum for one product--}}
-			    <div class="col-sm-2 col-xs-3">{{ ($_SESSION['cart_dimmm931_1604938863'][$keyN+1]*$_SESSION['productCatalogue'][$keyN]['shop_price']) }} {{$_SESSION['productCatalogue'][$keyN]['shop_currency']}}</div>   {{--total sum for this product, price*quantity--}}
+			    <div class="col-sm-2 col-xs-3">{{ ($_SESSION['cart_dimmm931_1604938863'][$key]*$_SESSION['productCatalogue'][$keyN]['shop_price']) }} {{$_SESSION['productCatalogue'][$keyN]['shop_currency']}}</div>   {{--total sum for this product, price*quantity--}}
 				     
 		      </div>
 				 
 			<?php
-			$totalSum+= $_SESSION['cart_dimmm931_1604938863'][$keyN+1]*$_SESSION['productCatalogue'][$keyN]['shop_price']; //Total sum for this one product (2x16.64=N)
+			$totalSum+= $_SESSION['cart_dimmm931_1604938863'][$key]*$_SESSION['productCatalogue'][$keyN]['shop_price']; //Total sum for this one product (2x16.64=N)
 		    ?>
 		 @endforeach
 		 

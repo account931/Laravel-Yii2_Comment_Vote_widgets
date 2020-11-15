@@ -36,7 +36,7 @@ $(document).ready(function(){
 	
 	     //fix function for autocomplete (u type email in <input id="userName">, get autocomplete hints and onSelect puts email value (i.e user ID to) to hidden <input id="userID">)
 	     function displaySelectedCategoryLabel(event, ui) {
-            $("#searchProduct").val(ui.item.label);
+            $("#searchProduct").val(ui.item.label); //ui.item.label
             //$("#userID").val(ui.item.value); //hidden <input id="userID"> to contain user (get from autocomplete array)
             //event.preventDefault();
         };
@@ -68,6 +68,7 @@ $(document).ready(function(){
             .data("item.autocomplete", b)
             .append('<a href="' + urlX + '/showOneProduct/' + b.value + '"> ' + b.label + '</a>  ')
             .appendTo(a);
+			//$("#searchProduct").val(b.label);
         };
 		//END Autocomplete wrap hints in URL <a href>
 	
