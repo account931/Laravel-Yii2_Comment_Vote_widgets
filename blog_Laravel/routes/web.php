@@ -70,6 +70,8 @@ Route::get('/cart', 'ShopPayPalSimpleController@cart')->name('cart'); //display 
 Route::get('/showOneProduct/{id}', 'ShopPayPalSimpleController@showOneProductt')->name('showOneProduct');
 Route::post('/addToCart', 'ShopPayPalSimpleController@storeToCart')->name('/addToCart');  //route to method to add to cart, send via POST form
 Route::post('/checkOut', 'ShopPayPalSimpleController@checkOut')->name('/checkOut');  //route to method to checkOut, send via POST form
+//just to prevent users entering get url for post method, i.e if user enter /checkOut manually in browser
+Route::get('/checkOut', function () { throw new \App\Exceptions\myException('Bad request. Not POST request, You are not expected to enter this page.'); });
 
 
 

@@ -63,6 +63,15 @@ class Handler extends ExceptionHandler
         if ($request->expectsJson()) {
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
+		
+		//my fix for disallow-direct-access-to-post-method-by-users
+		/*
+		if($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException){
+             return redirect('/');
+         }
+
+        return parent::render($request, $exception); */
+		//my fix for disallow-direct-access-to-post-method-by-users
 
         return redirect()->guest(route('login'));
     }

@@ -33,6 +33,7 @@ Table of Content:
 19. Cookie.
 20. How to create Helper
 21. Login with username instead of email
+22. Laravel production
 
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
@@ -203,7 +204,8 @@ USAGE
 		   dd(Input::all());
 		   
  #creating custom error messages, if use {Validator::make()} in controller => 
-  
+ 
+  use Illuminate\Support\Facades\Validator;
   public function assignRole(Request $request){
 		
     $rules = [
@@ -689,8 +691,24 @@ To create Hepler function you can reuse in many places:
 
 
 
+//================================================================================================
+22. Laravel production
+1. Apply changes to .env file: => APP_ENV=production; APP_DEBUG=false;
+2. Make sure that you are optimizing Composer's class autoloader map (docs):
+  composer dump-autoload --optimize
+  or along install: composer install --optimize-autoloader --no-dev
+  or during update: composer update --optimize-autoloader
 
-
+3. Optimizing Configuration Loading: => php artisan config:cache
+4. Optimizing Route Loading => php artisan route:cache
+5. Compile all of the application's Blade templates: => php artisan view:cache
+6.Cache the framework bootstrap files:  =>  php artisan optimize
+7.(Optional) Compiling assets (docs): => npm run production
+8.(Optional) Generate the encryption keys Laravel Passport needs (docs):  => php artisan passport:keys
+9.(Optional) Start Laravel task scheduler by adding the following Cron entry (docs): => * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+10.(Optional) Install, config and start the Supervisor (docs):
+11. (Optional) Create a symbolic link from public/storage to storage/app/public (docs): => php artisan storage:link
+//================================================================================================
 
 
 
@@ -797,7 +815,9 @@ composer dump-autoload
 # Logging(logs go to /storage/logs/laravel.log) => use Illuminate\Support\Facades\Log;   Log::info('Showing user profile for user: '. $id . ' User IP is ' . $_SERVER['REMOTE_ADDR']);  
  
 # Render partial =>  @include('ShopPaypalSimple.partial.dropdown', ['categ' => $allCategories])  => (will include the view at 'views/ShopPaypalSimple/partial/dropdown.blade.php'
-  
+
+# To prevent users entering get url for post method, i.e if user enter /checkOut manually in browser (use in routes/web.php) =>
+        Route::get('/checkOut', function () { throw new \App\Exceptions\myException('Bad request. Not POST request, You are not expected to enter this page.'); });  
   
 
 
@@ -883,6 +903,9 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 #//How to Toggle Password Visibility =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/login/login.js  or if it was Gulp Webpacked =>  at /resources/assets/
 
 # To show Bootstrap modal window by default => add class "in show" => div class="modal fade in show"
+
+# Use {toFixed(2)} to return 33.00 not 33.0008 =>  $(this).parent().next().html((numProduct*price).toFixed(2)); 
+
 //================================ End Move to Yii2 ReadMe =============================
 
 //================================================================================================

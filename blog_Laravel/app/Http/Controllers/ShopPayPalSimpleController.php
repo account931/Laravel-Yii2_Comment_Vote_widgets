@@ -1,10 +1,11 @@
 <?php
-//uses $_SESSION['cart_dimmm931_1604938863'] to store and retrieve user's cart;
+//uses $_SESSION['cart_dimmm931_1604938863'] to store and retrieve user's cart. Format is { [8]=> int(3) [1]=> int(2) [4]=> int(1) }
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\models\ShopSimple\ShopSimple;     //model for DB table 
 use App\models\ShopSimple\ShopCategories; //model for DB table 
+use Illuminate\Support\Facades\Validator;
 
 class ShopPayPalSimpleController extends Controller
 {
@@ -69,20 +70,27 @@ class ShopPayPalSimpleController extends Controller
     {
 		session_start(); 
 		
-		//if session with all products from DB was not set previously
-		//if(!isset($_SESSION['productCatalogue'])){
+		//if session with Cart set previously (user ha salready selected some products to cart)
+		if(isset($_SESSION['cart_dimmm931_1604938863'])){
 			
 		   $arrayWithIDsInCart = array(); //array to store products IDs that are currentlyin cart, i.e [5,7,9]
+		   
 		   foreach($_SESSION['cart_dimmm931_1604938863'] as $key => $value){
 			  array_push($arrayWithIDsInCart, $key);
 		   }
 		   //find DB products, but only those ids are present in the cart, i.e $_SESSION['cart_dimmm931_1604938863']
 		   $allProductsAll = ShopSimple::whereIn('shop_id', $arrayWithIDsInCart)->get();
-
-	       $_SESSION['productCatalogue'] = $allProductsAll->toArray(); //all products to session
-		//}
+           $inCartItems = $allProductsAll->toArray(); //object to array to perform search_array in view
+	       //$_SESSION['productCatalogue'] = $allProductsAll->toArray(); //all products to session //DEPRECATED!!!!
+		   
+		   return view('ShopPaypalSimple.cart')->with(compact('inCartItems')); 
 		
-		return view('ShopPaypalSimple.cart')->with(compact('allProductsAll')); 
+        //if session with Cart WAS NOT set previously, returns view only	
+		} else {
+			return view('ShopPaypalSimple.cart'); 
+		}
+		
+		
 	}
 	
 	
@@ -118,25 +126,45 @@ class ShopPayPalSimpleController extends Controller
 	 
     public function storeToCart(Request $request)
     {
+		//if $_POST['productID'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
 		if(!$request->input('productID')){
 			throw new \App\Exceptions\myException('Bad request, You are not expected to enter this page.');
 		}
 		
 		
+		$rules = [
+			'yourInputValue' => ['required', 'integer',  ] , 
+			'productID'      => [ 'required', 'integer' ] , 
+			
+		];
+		
+	    //creating custom error messages. Should pass it as 3rd param in Validator::make()
+	    $mess = [ 'role_sel.required' => 'We need this field',];
+		
+	    $validator = Validator::make($request->all(),$rules, $mess);
+	    if ($validator->fails()) {
+			return redirect('/shopSimple')->withInput()->with('flashMessageFailX', 'Validation Failed' )->withErrors($validator);
+	    }
+		
+		
+		
 		session_start();
 		
 		//if session with all products from DB was not set previously
+		/*
 		if(!isset($_SESSION['productCatalogue'])){
 		  $allProductsAll = ShopSimple::all();  // 
 	      $_SESSION['productCatalogue'] = $allProductsAll->toArray(); //all products to session
 		}
+		*/
 		
 		$itemsQuantity = $request->input('yourInputValue'); //gets quantity from form $_POST[]
 		$productID = (int)$request->input('productID'); //gets productID (hidden field) from form $_POST[]
 		
-		
+		$productOne = ShopSimple::where('shop_id', $request->input('productID'))->get(); //get one selected product from SQL DB by id
+
 		//find in $_SESSION['productCatalogue'] index the product by id, used in Flash
-		 $keyN = array_search($productID , array_keys($_SESSION['productCatalogue'])); //find in $_SESSION['productCatalogue'] index the product by id
+		 //$keyN = array_search($productID , array_keys($_SESSION['productCatalogue'])); //find in $_SESSION['productCatalogue'] index the product by id
 		 //dd($keyN .  " == " . $productID );
 		
 		//echo "Product: " . $productID . " quantity: " . $itemsQuantity;
@@ -146,7 +174,7 @@ class ShopPayPalSimpleController extends Controller
 				$temp = $_SESSION['cart_dimmm931_1604938863'];//save Session to temp var
 				unset($temp[$productID]);
 				$_SESSION['cart_dimmm931_1604938863'] = $temp;//write temp var to Cart
-				return redirect('/shopSimple')->with('flashMessageFailX', 'Product <b> ' . $_SESSION['productCatalogue'][$keyN-1]['shop_title'] . ' </b> was deleted from cart' );
+				return redirect('/shopSimple')->with('flashMessageFailX', 'Product <b> ' . $productOne[0]->shop_title . ' </b> was deleted from cart' );
 
 				//Yii::$app->session->setFlash('successX', 'Product <b> ' . $_SESSION['productCatalogue'][$keyN]['name'] . ' </b> was deleted from cart');
 			} else {}
@@ -171,13 +199,12 @@ class ShopPayPalSimpleController extends Controller
         $_SESSION['cart_dimmm931_1604938863'] = $temp;//write temp var to Cart
        
 	   
-       //return Yii::$app->getResponse()->redirect(['shop-liqpay-simple/index']);
+        //return Yii::$app->getResponse()->redirect(['shop-liqpay-simple/index']);
 	   
 	   
 		
 		
 		
-		$productOne = ShopSimple::where('shop_id', $request->input('productID'))->get();
 		return redirect('/shopSimple')->with('flashMessageX', "Item was successfully added to cart. Product: " . $productOne[0]->shop_title  . ". Quantity : " . $request->input('yourInputValue') . " items" );
 	}
 	
@@ -195,13 +222,57 @@ class ShopPayPalSimpleController extends Controller
 	 
     public function checkOut(Request $request)
     {
+		//Doesnot work as router would not come here a GET request
+		$method = $request->method();
+        if (!$request->isMethod('post')) {
+            throw new \App\Exceptions\myException('Bad request.Not POST, You are not expected to enter this page.');
+        }
+		//Doesnot work
+
+		//if $_POST['productID'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
+		if(!$request->input('productID')){
+			throw new \App\Exceptions\myException('Bad request, You are not expected to enter this page.');
+		}
+		
 		session_start();
 		$productIDs = $request->input('productID'); //comes as array [6,9,9]
 		$productQuant = $request->input('yourInputValueX'); //comes as array [6,9,9]
 		
+		//check if inputs are not even
+		if(count($productIDs) != count($productQuant)){
+			throw new \App\Exceptions\myException('Cart inputs arrays ids and quant are not even.');
+		}
+		
+		//update the $_SESSION['cart_dimmm931_1604938863'] in case at cart the user --minus product till zero
+		$temp = array();
+		for ($i = 0; $i < count($productIDs); $i++){
+		  if((int)$productQuant[$i] != 0){
+			$temp[$productIDs[$i]] = (int)$productQuant[$i];//в масив заносим количество of products 
+		  }
+		}
+		$_SESSION['cart_dimmm931_1604938863'] = $temp;//write temp var to Cart
+		//end update
+		
+		
+		//if session with Cart set previously (user ha salready selected some products to cart)
+		if(isset($_SESSION['cart_dimmm931_1604938863'])){
+			
+		   $arrayWithIDsInCart = array(); //array to store products IDs that are currentlyin cart, i.e [5,7,9]
+		   
+		   foreach($_SESSION['cart_dimmm931_1604938863'] as $key => $value){
+			  array_push($arrayWithIDsInCart, $key);
+		   }
+		   //find DB products, but only those ids are present in the cart, i.e $_SESSION['cart_dimmm931_1604938863']
+		   $allProductsAll = ShopSimple::whereIn('shop_id', $arrayWithIDsInCart)->get();
+           $inCartItems = $allProductsAll->toArray(); //object to array to perform search_array in view
+		} 
+		   
+		   
+		   
+		
 		//dd($request->input('productID'), $request->input('yourInputValueX'));
 	    //return redirect('/shopSimple')->with('flashMessageX', "Was successfully added to cart. Product: " . $productOne[0]->shop_title  . ". Quantity : " . $request->input('yourInputValue') . " items" );
-        return view('ShopPaypalSimple.checkOut')->with(compact('productIDs', 'productQuant')); 
+        return view('ShopPaypalSimple.checkOut')->with(compact('productIDs', 'productQuant', 'inCartItems')); 
 
 	}
 	

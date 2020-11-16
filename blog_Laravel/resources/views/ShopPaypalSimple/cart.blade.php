@@ -1,6 +1,6 @@
 @extends('layouts.app')
 <?php
-//uses $_SESSION['cart_dimmm931_1604938863'] to store and retrieve user's cart;
+//uses $_SESSION['cart_dimmm931_1604938863'] to store and retrieve user's cart; Format is { [8]=> int(3) [1]=> int(2) [4]=> int(1) }
 ?>
 
 @section('content')
@@ -10,6 +10,14 @@
 <script src="{{ asset('js/ShopPaypalSimple/shopSimple_Loader.js')}}"></script> <!-- CSS Loader -->
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple_Loader.css') }}" rel="stylesheet">
+
+<!-- Sweet Alerts -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> <!-- Sweet Alert CSS -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script> <!--Sweet Alert JS-->
+
+
+<link href="{{ asset('css/ShopPaypalSimple/cart.css') }}" rel="stylesheet"> <!-- Cart CSS  -->
+<script src="{{ asset('js/ShopPaypalSimple/cart.js')}}"></script>           <!-- Cart JS  -->
 
 <!-- Include js file for this view only -->
 
@@ -117,50 +125,55 @@
 		           <div class="col-sm-4 col-xs-2">Name</div>
 			       <div class="col-sm-2 col-xs-2">Image</div>
 			       <div class="col-sm-2 col-xs-2">Price</div>
-			       <div class="col-sm-1 col-xs-3">Quant</div>
+			       <div class="col-sm-2 col-xs-3">Quant</div>
 			       <div class="col-sm-2 col-xs-3">Sum</div>
 		           </div>
 		           <!-- End THEAD -->
 	      
 		           <!-------------------------------------- Foreach $_SESSION['cart'] to dispaly all cart products --------------------------------------------->
-		          @php
+		          <?php
 				  $startSec = time(); //seconds 
 				  $startMicroSec = microtime(true); //microseconds
 		          $i = 0;	
                   $totalSum = 0;
-		          @endphp
+		          ?>
 		  
 		         <form method="post" class="form-assign" action="{{url('/checkOut')}}">
 				 <input type="hidden" value="{{csrf_token()}}" name="_token"/>
 		  
 		         <?php 
 				 var_dump($_SESSION['cart_dimmm931_1604938863']); 
-				 //var_dump($_SESSION['productCatalogue']); 
+				 echo "</br>";
+				 //var_dump($inCartItems); 
 				 ?>
 				 
 		         @foreach($_SESSION['cart_dimmm931_1604938863'] as $key => $value)
 		         <?php
 				 $i++;
 			     echo "<p>key " . $key . "</p>";
-			     //find in $_SESSION['productCatalogue'] index the product by id. MEGA FIX => use array_search(($key-1),... instead of array_search($key-1, ...
-			     $find =(int)$key - 1;
-				 $keyN = array_search($find, array_keys($_SESSION['productCatalogue'])); //find in $_SESSION['productCatalogue'] index the product by id
+			     //find in $inCartItems index the product by id. MEGA FIX => use array_search(($key-1),... instead of array_search($key-1, ...
+			     //$find =(int)$key - 1; echo "find " . $find; 
+				 
+				 //MEGA FIX, should find by column iD 'shop_id'
+				 $keyN = array_search($key, array_column($inCartItems, 'shop_id')); //returns 3
+				 //$keyN = array_search($find, array_keys($inCartItems)); //find in $inCartItems index the product by id
+				 
 				 //$keyN = $keyN - 1; //???? WTFFFF
 				 echo "<p>found keyN " . $keyN . "</p>";
 				 ?>						    						
 
 			     <!--Dispalay products-->
-		         <div id="{{$_SESSION['productCatalogue'][$keyN]['shop_id'] }}" class="col-sm-12 col-xs-12  list-group-item bg-success cursorX" data-toggle="modal" data-target="#myModal{{$i}}"> <!--  //data-toggle="modal" data-target="#myModal' . $i .   for modal -->
-			     <div class="col-sm-4 col-xs-2"> {{$_SESSION['productCatalogue'][$keyN]['shop_title'] }} </div> <!--name-->
+		         <div id="{{$inCartItems[$keyN]['shop_id'] }}" class="col-sm-12 col-xs-12  list-group-item bg-success cursorX" data-toggle="modal" data-target="#myModal{{$i}}"> <!--  //data-toggle="modal" data-target="#myModal' . $i .   for modal -->
+			     <div class="col-sm-4 col-xs-2"> {{$inCartItems[$keyN]['shop_title'] }} </div> <!--name-->
 			     <div class="col-sm-2 col-xs-2 word-breakX"> 
-				    <img class="lazy my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$_SESSION['productCatalogue'][$keyN]['shop_image'] }} "  alt="a" />
+				    <img class="lazy my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$inCartItems[$keyN]['shop_image'] }} "  alt="a" />
                  </div>
 				 
-				<!-- Price -->
-			    <div class="col-sm-2 col-xs-2 word-breakX"> {{$_SESSION['productCatalogue'][$keyN]['shop_price']}} ₴</div>
+				<!-- Display Price -->
+			    <div class="col-sm-2 col-xs-2 word-breakX"> <span class="priceX">{{$inCartItems[$keyN]['shop_price']}} </span>  {{$inCartItems[$keyN]['shop_currency']}} </div>
 				 
-				<!--//quantity div => contains Yii2 ActiveForm -->
-		        <div class="col-sm-1 col-xs-3"> <!-- // . $_SESSION['cart_dimmm931_1604938863'][$keyN]; //quantity-->
+				<!--Display quantity & ++/-- buttons (div with form inputs)-->
+		        <div class="col-sm-2 col-xs-3"> <!-- // . $_SESSION['cart_dimmm931_1604938863'][$keyN]; //quantity-->
 				   <?php
 				   
 				   $quantityX = $_SESSION['cart_dimmm931_1604938863'][$key]; //gets the quantity
@@ -169,18 +182,25 @@
 					//echo $form->field($myInputModel, 'yourInputValue')->textInput(['maxlength' => true,'value' => $quantityX, 'class' => 'form-control'])->label(false); //product quantity input
 					//ActiveForm::end();
 					?>
-                    <input type="hidden" value="{{$_SESSION['productCatalogue'][$keyN]['shop_id']}}" name="productID[]" />
-					<input type="text"  value="{{$quantityX}}" name="yourInputValueX[]" class="form-control" />
+                    <input type="hidden" value="{{$inCartItems[$keyN]['shop_id']}}" name="productID[]" />
+					<input type="text"  value="{{$quantityX}}" name="yourInputValueX[]" class="form-control item-quantity" /> <!-- Quantity -->
+					
+					<!--- Plus/Minus buttons -->
+                    <button type="button" class="btn btn-danger   inline-btn btnCart-minus" data-currX=""  data-priceX="{{$inCartItems[$keyN]['shop_price']}}">-</button>					
+				    <button type="button" class="btn btn-primary  inline-btn btnCart-plus"  data-currX=""  data-priceX="{{$inCartItems[$keyN]['shop_price']}}">+</button>
+			        
+					
 				</div>   <!--quantity-->	
 				{{--END quantity div => contains Yii2 ActiveForm --}}
 				
+				
 				{{--Sum for one product--}}
-			    <div class="col-sm-2 col-xs-3">{{ ($_SESSION['cart_dimmm931_1604938863'][$key]*$_SESSION['productCatalogue'][$keyN]['shop_price']) }} {{$_SESSION['productCatalogue'][$keyN]['shop_currency']}}</div>   {{--total sum for this product, price*quantity--}}
+			    <div class="col-sm-2 col-xs-3 one-pr-sum">{{ ($_SESSION['cart_dimmm931_1604938863'][$key]*$inCartItems[$keyN]['shop_price']) }} {{$inCartItems[$keyN]['shop_currency']}}</div>   {{--total sum for this product, price*quantity--}}
 				     
 		      </div>
 				 
 			<?php
-			$totalSum+= $_SESSION['cart_dimmm931_1604938863'][$key]*$_SESSION['productCatalogue'][$keyN]['shop_price']; //Total sum for this one product (2x16.64=N)
+			$totalSum+= $_SESSION['cart_dimmm931_1604938863'][$key]*$inCartItems[$keyN]['shop_price']; //Total sum for this one product (2x16.64=N)
 		    ?>
 		 @endforeach
 		 
@@ -199,7 +219,7 @@
 	  <!-- Total sum for all products -->
 	  <div class="col-sm-12 col-xs-12 shadowX">
 	      <h3>Total: </h3>
-		  <h2> {{ $totalSum }} ₴</h2>
+		  <h2 id="finalSum"> {{ $totalSum }}  {{$inCartItems[$keyN]['shop_currency']}}</h2> <!-- ₴ -->
 	  </div>
   
   

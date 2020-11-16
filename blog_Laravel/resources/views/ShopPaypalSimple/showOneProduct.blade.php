@@ -4,7 +4,7 @@
 
 @extends('layouts.app')
 <?php
-//uses $_SESSION['cart_dimmm931_1604938863'] to store and retrieve user's cart;
+//uses $_SESSION['cart_dimmm931_1604938863'] to store and retrieve user's cart; Format is { [8]=> int(3) [1]=> int(2) [4]=> int(1) }
 ?>
 
 @section('content')
