@@ -163,11 +163,11 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 			    <!------- New form (with button "add to cart") -------->
 				<form method="post" class="form-assign" action="{{url('/addToCart')}}">
 					<input type="hidden" value="{{csrf_token()}}" name="_token"/>
-					<input type="text" value="{{$quantityX}}" name="yourInputValue" class="item-quantity form-control" />
+					<input type="number" value="{{$quantityX}}" name="yourInputValue" class="item-quantity form-control" />
 					<input type="hidden" value="{{$allDBProducts[$i]['shop_id']}}" name="productID" />
 					</br><input type="submit" class="btn btn-primary shadowX submitX rounded" value="Add to cart"/>
 				</form>
-				<!-- end New form (with button "add to cart")-->
+				<!-- end New form (with button "add to cart") -------->
 				
 				
 				<!------- New form (with button "Buy in one click") -------->

@@ -123,8 +123,8 @@
 		           <!-- THEAD -->
 		           <div class="col-sm-12 col-xs-12  list-group-item shadowX">
 		           <div class="col-sm-4 col-xs-2">Name</div>
-			       <div class="col-sm-2 col-xs-2">Image</div>
-			       <div class="col-sm-2 col-xs-2">Price</div>
+			       <div class="col-sm-2 col-xs-2 product-img-desktop">Image</div>
+			       <div class="col-sm-2 col-xs-3">Price</div>
 			       <div class="col-sm-2 col-xs-3">Quant</div>
 			       <div class="col-sm-2 col-xs-3">Sum</div>
 		           </div>
@@ -162,15 +162,23 @@
 				 echo "<p>found keyN " . $keyN . "</p>";
 				 ?>						    						
 
-			     <!--Dispalay products-->
+			     <!-- Dispalay products -->
 		         <div id="{{$inCartItems[$keyN]['shop_id'] }}" class="col-sm-12 col-xs-12  list-group-item bg-success cursorX" data-toggle="modal" data-target="#myModal{{$i}}"> <!--  //data-toggle="modal" data-target="#myModal' . $i .   for modal -->
-			     <div class="col-sm-4 col-xs-2"> {{$inCartItems[$keyN]['shop_title'] }} </div> <!--name-->
-			     <div class="col-sm-2 col-xs-2 word-breakX"> 
+			     
+				 <!-- Dispalay name -->
+				 <div class="col-sm-4 col-xs-2"> 
+				    {{$inCartItems[$keyN]['shop_title'] }} 
+				     <!-- image visible for mobile only -->
+				     <div class="lazy my-one mobile-only"><img class="my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$inCartItems[$keyN]['shop_image'] }} "  alt="a" /></div>
+				 </div> <!--name-->
+				 
+				 <!-- Image -->
+			     <div class="col-sm-2 col-xs-2 product-img-desktop"> 
 				    <img class="lazy my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$inCartItems[$keyN]['shop_image'] }} "  alt="a" />
                  </div>
 				 
 				<!-- Display Price -->
-			    <div class="col-sm-2 col-xs-2 word-breakX"> <span class="priceX">{{$inCartItems[$keyN]['shop_price']}} </span>  {{$inCartItems[$keyN]['shop_currency']}} </div>
+			    <div class="col-sm-2 col-xs-3 word-breakX font-mobile"> <span class="priceX">{{$inCartItems[$keyN]['shop_price']}} </span>  {{$inCartItems[$keyN]['shop_currency']}} </div>
 				 
 				<!--Display quantity & ++/-- buttons (div with form inputs)-->
 		        <div class="col-sm-2 col-xs-3"> <!-- // . $_SESSION['cart_dimmm931_1604938863'][$keyN]; //quantity-->
@@ -183,11 +191,11 @@
 					//ActiveForm::end();
 					?>
                     <input type="hidden" value="{{$inCartItems[$keyN]['shop_id']}}" name="productID[]" />
-					<input type="text"  value="{{$quantityX}}" name="yourInputValueX[]" class="form-control item-quantity" /> <!-- Quantity -->
+					<input type="number" value="{{$quantityX}}" name="yourInputValueX[]" class="form-control item-quantity" /> <!-- Quantity -->
 					
 					<!--- Plus/Minus buttons -->
-                    <button type="button" class="btn btn-danger   inline-btn btnCart-minus" data-currX=""  data-priceX="{{$inCartItems[$keyN]['shop_price']}}">-</button>					
-				    <button type="button" class="btn btn-primary  inline-btn btnCart-plus"  data-currX=""  data-priceX="{{$inCartItems[$keyN]['shop_price']}}">+</button>
+                    <button type="button" class="btn btn-danger   inline-btn btnCart-minus" data-currX="{{$inCartItems[$keyN]['shop_currency']}}"  data-priceX="{{$inCartItems[$keyN]['shop_price']}}"> - </button>					
+				    <button type="button" class="btn btn-primary  inline-btn btnCart-plus"  data-currX="{{$inCartItems[$keyN]['shop_currency']}}"  data-priceX="{{$inCartItems[$keyN]['shop_price']}}">+</button>
 			        
 					
 				</div>   <!--quantity-->	
@@ -195,7 +203,7 @@
 				
 				
 				{{--Sum for one product--}}
-			    <div class="col-sm-2 col-xs-3 one-pr-sum">{{ ($_SESSION['cart_dimmm931_1604938863'][$key]*$inCartItems[$keyN]['shop_price']) }} {{$inCartItems[$keyN]['shop_currency']}}</div>   {{--total sum for this product, price*quantity--}}
+			    <div class="col-sm-2 col-xs-3 one-pr-sum font-mobile">{{ ($_SESSION['cart_dimmm931_1604938863'][$key]*$inCartItems[$keyN]['shop_price']) }} {{$inCartItems[$keyN]['shop_currency']}}</div>   {{--total sum for this product, price*quantity--}}
 				     
 		      </div>
 				 

@@ -139,7 +139,7 @@ class ShopPayPalSimpleController extends Controller
 		];
 		
 	    //creating custom error messages. Should pass it as 3rd param in Validator::make()
-	    $mess = [ 'role_sel.required' => 'We need this field',];
+	    $mess = [ 'yourInputValue.required' => 'We need this field',];
 		
 	    $validator = Validator::make($request->all(),$rules, $mess);
 	    if ($validator->fails()) {
@@ -215,7 +215,7 @@ class ShopPayPalSimpleController extends Controller
 	
 	
 	/**
-     * method to add to cart. Request comes from form in ShopPaypalSimple.cart
+     * method to go to check-out (shipping details) page. Request comes from form in ShopPaypalSimple.cart
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -225,7 +225,7 @@ class ShopPayPalSimpleController extends Controller
 		//Doesnot work as router would not come here a GET request
 		$method = $request->method();
         if (!$request->isMethod('post')) {
-            throw new \App\Exceptions\myException('Bad request.Not POST, You are not expected to enter this page.');
+            throw new \App\Exceptions\myException('Bad request!!!.Not POST, You are not expected to enter this page.');
         }
 		//Doesnot work
 
@@ -253,8 +253,27 @@ class ShopPayPalSimpleController extends Controller
 		$_SESSION['cart_dimmm931_1604938863'] = $temp;//write temp var to Cart
 		//end update
 		
+	    return redirect('/checkOut2');
+
+	}
+	
+	
+	
+	
+	
+	//simple rule to make your life easier... NEVER return a view in response to a POST request. Always redirect somewhere else which shows the result of the post or displays the next form.
+	
+	/**
+     * method to go ????????
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	 
+    public function checkOut2()
+    {
+		session_start();
 		
-		//if session with Cart set previously (user ha salready selected some products to cart)
+		//if session with Cart set previously (user has already selected some products to cart)
 		if(isset($_SESSION['cart_dimmm931_1604938863'])){
 			
 		   $arrayWithIDsInCart = array(); //array to store products IDs that are currentlyin cart, i.e [5,7,9]
@@ -267,12 +286,77 @@ class ShopPayPalSimpleController extends Controller
            $inCartItems = $allProductsAll->toArray(); //object to array to perform search_array in view
 		} 
 		   
-		   
-		   
+		  
 		
 		//dd($request->input('productID'), $request->input('yourInputValueX'));
 	    //return redirect('/shopSimple')->with('flashMessageX', "Was successfully added to cart. Product: " . $productOne[0]->shop_title  . ". Quantity : " . $request->input('yourInputValue') . " items" );
-        return view('ShopPaypalSimple.checkOut')->with(compact('productIDs', 'productQuant', 'inCartItems')); 
+        return view('ShopPaypalSimple.checkOut')->with(compact('inCartItems')); 
+
+	}
+	
+	
+	
+	
+	
+	
+	/**
+     * method to pay. Request comes from form in ShopPaypalSimple.check-out
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	 
+    public function pay(Request $request)
+    {
+		//if $_POST['u_name'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
+		if(!$request->input('u_name')){
+			throw new \App\Exceptions\myException('Bad request, You are not expected to enter this page. <p>Param is missing.</p>');
+		}
+		
+		session_start();
+		
+		$RegExp_Phone = '/^[+]380[\d]{1,4}[0-9]+$/';
+		
+		$rules = [
+			'u_name' => ['required', 'string', 'min:3'], 
+			'u_address'  => [ 'required',  'string', 'min:8'],
+            'u_email'  => [ 'required', 'email' ] ,
+            'u_phone'  => [ 'required', "regex: $RegExp_Phone" ] ,			
+			
+		];
+		
+	    //creating custom error messages. Should pass it as 3rd param in Validator::make()
+	    $mess = [ 
+		    'u_name.required' => 'We need u to specify your name',
+			'u_email.email' => 'Give us real email',
+			'u_phone.regex' => 'Phone must be in format +380....',
+		];
+		
+	    $validator = Validator::make($request->all(),$rules, $mess);
+	    if ($validator->fails()) {
+			return redirect('/checkOut2')->withInput()->with('flashMessageFailX', 'Validation Failed' )->withErrors($validator);
+	    }
+		
+		//gets all inputs
+		$input = $request->all();
+		
+		//Gets Products that are already in cart to display them in view
+		//if session with Cart set previously (user has already selected some products to cart)
+		if(isset($_SESSION['cart_dimmm931_1604938863'])){
+			
+		   $arrayWithIDsInCart = array(); //array to store products IDs that are currentlyin cart, i.e [5,7,9]
+		   
+		   foreach($_SESSION['cart_dimmm931_1604938863'] as $key => $value){
+			  array_push($arrayWithIDsInCart, $key);
+		   }
+		   //find DB products, but only those ids are present in the cart, i.e $_SESSION['cart_dimmm931_1604938863']
+		   $allProductsAll = ShopSimple::whereIn('shop_id', $arrayWithIDsInCart)->get();
+           $inCartItems = $allProductsAll->toArray(); //object to array to perform search_array in view
+		} 
+		//End Gets Products that are already in cart to display them in view
+		
+		
+		
+		return view('ShopPaypalSimple.pay-page')->with(compact('input', 'inCartItems'));  
 
 	}
 	

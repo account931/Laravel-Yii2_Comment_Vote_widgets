@@ -1,5 +1,5 @@
 <?php
-//show checkout page
+//show pay page
 ?>
 
 @extends('layouts.app')
@@ -11,7 +11,7 @@
 
 <!-- Include js/css file for this view only -->
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet"> 
-<link href="{{ asset('css/ShopPaypalSimple/check-out.css') }}" rel="stylesheet">
+
 
 <!-- Sweet Alerts -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> <!-- Sweet Alert CSS -->
@@ -57,7 +57,7 @@
 					
 					
                 <div class="panel-heading text-warning">
-				    CheckOut <span class="small text-danger">*</span> 
+				    Pay your order <span class="small text-danger">*</span> 
 					<!-- Link to go back -->
 				    <div>
 				    &nbsp;<i class="fa fa-hand-o-left" style="font-size:24px"></i>
@@ -68,7 +68,7 @@
                 <div class="panel-body shop">
 				
 				    <div class="col-sm-10 col-xs-10">
-                    <h1>CheckOut </h1>
+                    <h1>Pay your order</h1>
 		            </div>	
 				
 				    <!-------- Cart icon with badge ----------->
@@ -91,7 +91,7 @@
 				    <!-------------------- Progress Status Icons by component ----------------->
 	                <!--display shop timeline progress via Helper => Progress Status Icons-->
 					<div class="col-sm-12 col-xs-12">
-	                {!! \App\Http\MyHelpers\ShopSimple\ShopTimelineProgress2::showProgress2("Order") !!}
+	                {!! \App\Http\MyHelpers\ShopSimple\ShopTimelineProgress2::showProgress2("Payment") !!}
 					</div>
 	                <!--------------  END  Progress Status Icons by component ----------------->
 					  
@@ -102,21 +102,14 @@
 					
 					@if (!isset($_SESSION['cart_dimmm931_1604938863']) || (count($_SESSION['cart_dimmm931_1604938863']) == 0) )
 		               <div class="col-sm-12 col-xs-12"> <br><br><br><center>
-				       <h2> So far there is nothing to check=out  </h2>
+				       <h2> So far there is nothing to pay for  </h2>
 		               <i class='fa fa-question-circle-o' style='font-size:58px;color:red'></i></center>
 					   </div>
 	                @else 
 						
 					 
 					
-				
 
-
-                      
-					  
-					 
-					  
-					  
 					    <!------------  CART Products List ------------->
                         <div class="row shop-items"><hr>
 	                        <div class="col-sm-12 col-xs-12 shadowX"><h3>You have <?=count($_SESSION['cart_dimmm931_1604938863']);?> items to Check-out</h3></div>
@@ -212,75 +205,38 @@
 	  </div>
   
   
-  
-      <!-- Form with user's details, i.e address, cell, etc -->
-	  <div class="col-sm-12 col-xs-12 shadowX">
-	     <h2> Shipping details </h2>
-	      <form class="form-horizontal" method="post" class="form-assign" action="{{url('/payPage')}}">
-		      <input type="hidden" value="{{csrf_token()}}" name="_token"/>
-			  
-			  <!-- Name --> 
-               <div class="form-group{{ $errors->has('u_name') ? ' has-error' : '' }}">
-                   <label for="u_name" class="col-md-4 control-label">Name</label>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" name="u_name" value="{{ old('u_name') }}" placeholder="Your name" required />       
-                        @if ($errors->has('u_name'))
-                            <span class="help-block"> <strong>{{ $errors->first('u_name') }}</strong> </span>
-                        @endif 
-					</div>
-               </div>
-
-               			   
-						
-              
-			    <!-- Email --> 
-               <div class="form-group{{ $errors->has('u_email') ? ' has-error' : '' }}">
-                   <label for="u_email" class="col-md-4 control-label">E-mail</label>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" name="u_email" value="{{ old('u_email') }}" placeholder="Your email" required />       
-                        @if ($errors->has('u_email'))
-                            <span class="help-block"> <strong>{{ $errors->first('u_email') }}</strong> </span>
-                        @endif 
-					</div>
-               </div>
-			   
-			   
-			   <!-- Address --> 
-               <div class="form-group{{ $errors->has('u_address') ? ' has-error' : '' }}">
-                   <label for="u_address" class="col-md-4 control-label">Address</label>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" name="u_address" value="{{ old('u_address') }}" placeholder="Your address" required />       
-                        @if ($errors->has('u_address'))
-                            <span class="help-block"> <strong>{{ $errors->first('u_address') }}</strong> </span>
-                        @endif 
-					</div>
-               </div>
-			   
-			   <!-- u_phone --> 
-               <div class="form-group{{ $errors->has('u_phone') ? ' has-error' : '' }}">
-                   <label for="u_phone" class="col-md-4 control-label">Phone</label>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" name="u_phone" value="{{ old('u_phone') }}" placeholder="Your phone" required />       
-                        @if ($errors->has('u_phone'))
-                            <span class="help-block"> <strong>{{ $errors->first('u_phone') }}</strong> </span>
-                        @endif 
-					</div>
-               </div>
-			   
-         
-                <div class="form-group">
-                    <div class="col-md-8 col-md-offset-4">
-                         <button type="submit" class="btn btn-primary shadowX submitX rounded"> Done </button>
-			        </div>
-				</div>
-		      
-
-		  </form><hr>
+      <div class="col-sm-12 col-xs-12 shadowX">
+	  <hr>
+	      <h3> Shipping details </h3> 
+		  <p> <i class="fa fa-address-card-o"></i>  {{ $input['u_name']    }}   </p>
+		  <p> <i class="fa fa-archive"></i>         {{ $input['u_email']   }}   </p>
+		  <p> <i class="fa fa-arrows"></i>          {{ $input['u_address'] }}   </p>
+		  <p> <i class="fa fa-bell-o"></i>          {{ $input['u_phone']   }}   </p>
+		  
+		 
 	  </div>
-	  <!-- End Form with user's details, i.e address, cell, etc -->
-       
+	  
+	  
+	  
   
-     
+       <!------- New form (with button "Pay with PayPal") -------->
+	   <form method="post" class="form-assign" action="{{url('/addToCart')}}">
+	       <input type="hidden" value="{{csrf_token()}}" name="_token"/></br>
+	       <!--<input type="submit" class="btn btn-primary shadowX submitX rounded" value='Pay with PayPal <i style="font-size:24px" class="fa">&#xf1f4;</i> '/>-->
+	       <button class="btn btn-primary" style="font-size:18px">Pay with PayPal <i class="fa fa-cc-paypal"></i></button>
+	   </form>
+	   
+	   <!-- end New form (with button "Pay with PayPal")) -------->
+				
+		
+
+       <!------- New form (with button "Pay with LiqPay") -------->
+	   <form method="post" class="form-assign" action="{{url('/addToCart')}}">
+	       <input type="hidden" value="{{csrf_token()}}" name="_token"/></br>
+	       <!--<input type="submit" class="btn btn-primary shadowX submitX rounded" value="Pay with LiqPay f1f1; >"/>-->
+	       <button class="btn btn-success" style="font-size:18px">Pay with LiqPay <i class="fa fa-cc-mastercard"></i></button>
+	   </form>
+	   <!-- end New form with button "Pay with LiqPay") ) -------->		
 			
 
 			

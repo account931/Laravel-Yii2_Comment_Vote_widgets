@@ -69,9 +69,15 @@ Route::get('/shopSimple', 'ShopPayPalSimpleController@index')->name('shopSimple'
 Route::get('/cart', 'ShopPayPalSimpleController@cart')->name('cart'); //display shopSimple start page
 Route::get('/showOneProduct/{id}', 'ShopPayPalSimpleController@showOneProductt')->name('showOneProduct');
 Route::post('/addToCart', 'ShopPayPalSimpleController@storeToCart')->name('/addToCart');  //route to method to add to cart, send via POST form
-Route::post('/checkOut', 'ShopPayPalSimpleController@checkOut')->name('/checkOut');  //route to method to checkOut, send via POST form
+Route::post('/checkOut', 'ShopPayPalSimpleController@checkOut')->name('/checkOut');  //route to method to checkOut (page with shipping details), send via POST form
 //just to prevent users entering get url for post method, i.e if user enter /checkOut manually in browser
 Route::get('/checkOut', function () { throw new \App\Exceptions\myException('Bad request. Not POST request, You are not expected to enter this page.'); });
+
+Route::get('/checkOut2', 'ShopPayPalSimpleController@checkOut2')->name('/checkOut2');  //route to method to checkOut (page with shipping details), send via POST form
+Route::post('/payPage', 'ShopPayPalSimpleController@pay')->name('/payPage');  //route final pay page, send via POST form
+
+
+
 
 
 

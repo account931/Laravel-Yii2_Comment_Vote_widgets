@@ -15,14 +15,19 @@ $(document).ready(function(){
 	//Plus ++
     $('.btnCart-plus').on('click', function(){ 
 	
-	    //var numProduct = Number($(this).closest('div').next().find('input:eq(1)').val()); //gets current input quantity. Use {input:eq(1)}, as {input:eq(0)} is a CSRF token
-		var numProduct = Number($(this).parent().find('input:eq(1)').val()); //gets the input with quantity
+		var numProduct1 = Number($(this).parent().find('input:eq(1)').val()); //gets the input with quantity
+		
+		//filter input, clears any chars that are not inegers or float (in case user print it manually)
+		var numProduct = filterNum(numProduct1.toString());
+		
 		var price = this.getAttribute("data-priceX"); //gets price from {data-priceX}
+		var currency = this.getAttribute("data-currX"); //gets price from {data-currX
 		//alert(numProduct + " " + price);
+		
 		$(this).parent().find('input:eq(1)').val(numProduct + 1); //html new quantitity value++
 		
 		
-        $(this).parent().next().html(((numProduct + 1) * price).toFixed(2));//html Div .one-pr-sum with new sum (this price * this quant)). Use {toFixed(2)} to return 33.00 not 33.0008	
+        $(this).parent().next().html(((numProduct + 1) * price).toFixed(2) + " " + currency);//html Div .one-pr-sum with new sum (this price * this quant)). Use {toFixed(2)} to return 33.00 not 33.0008	
 		
 		calcAllSum(); //recalculate the whole sum after ++/-- on any item in cart
 		
@@ -45,7 +50,7 @@ $(document).ready(function(){
 		console.log("price " + price);
 		calcPrice(numProduct+1, price, currency);
 		
-		//normalizeAddToCartButton();
+		
 		
 		*/
     });
@@ -60,7 +65,10 @@ $(document).ready(function(){
     $('.btnCart-minus').on('click', function(){
 		
 			
-		var numProduct = Number($(this).parent().find('input:eq(1)').val()); //gets the input with quantity
+		var numProduct1 = Number($(this).parent().find('input:eq(1)').val()); //gets the input with quantity
+		
+		//filter input, clears any chars that are not inegers or float (in case user print it manually)
+		var numProduct = filterNum(numProduct1.toString());
 		
 		if(numProduct == 0){
 			swal("Stop!", "Can't go further. This product is already nulled", "warning");
@@ -69,10 +77,12 @@ $(document).ready(function(){
 		
 		
 		var price = this.getAttribute("data-priceX"); //gets price from {data-priceX}
+		var currency = this.getAttribute("data-currX"); //gets price from {data-currX}
+		
 		//alert(numProduct + " " + price);
 		$(this).parent().find('input:eq(1)').val(numProduct - 1); //html new quantitity value++
 		
-        $(this).parent().next().html(((numProduct - 1) * price).toFixed(2));//html Div .one-pr-sum with new sum (this price * this quant)). Use {toFixed(2)} to return 33.00 not 33.0008	
+        $(this).parent().next().html(((numProduct - 1) * price).toFixed(2) + " " + currency);//html Div .one-pr-sum with new sum (this price * this quant)). Use {toFixed(2)} to return 33.00 not 33.0008	
 		
 		calcAllSum(); //recalculate the whole sum after ++/-- on any item in cart
 		
@@ -185,7 +195,7 @@ $(document).ready(function(){
 	
 	
 	
-	 
+	 //NOT USED HERE
 	 //==================================================================
 	 //calcs & html the amount of sum for all items, i,e 2x16.66 = N
 	 function calcPrice(quant, itemPrice, currencyArg){
@@ -227,24 +237,16 @@ $(document).ready(function(){
 		  }
     });
 	
-	
-  //return normal text, bg and attribute to "Add to cart" button if it was changed by -- for instance when you  -- last item in modal window
-  // **************************************************************************************
-  // **************************************************************************************
-  // **                                                                                  **
-  // **                                                                                  **
-	function normalizeAddToCartButton(thisX){
-		//$('.my-button-x').prop('disabled', false);
-		$('.submitX').val('Add to cart');
-		$('.submitX').css('background', '#717fe0');
-		$('.sum').html(''); //clear field with summing (in modal), e.g 16.16 x 2 = 33.28
-		var q = thisX.getAttribute("data-quantityZ");
-		$('.item-quantity').val(q);  
-		
-    }
-	
+
   
-	  
+	//allow only digits and float 
+    const filterNum = (str) => {
+       const numericalChar = new Set([ ".",",","0","1","2","3","4","5","6","7","8","9" ]);
+       str = str.split("").filter(char => numericalChar.has(char)).join("");
+	   str = Number(str);
+       return str;
+    }
+	 
 
 
 	

@@ -952,6 +952,9 @@ If you don't have .env copy from .env.example: =>   $ cp .env.example .env
   The solution => before 1st form add empty <form></form>
 
 # CSS error if Bootstrap modal appearing under background =>  .modal-backdrop { z-index: -1;}
+
+# $_POST => simple rule to make your life easier... NEVER return a view in response to a POST request. Always redirect somewhere else which shows the result of the post or displays the next form.
+
 =============================
 
 если токен не принимается обработчиком, то варианта существует по сути два – либо он не отправляется в запросе (отсутствует csrf_field() в форме, или нет нужного значения в аякс-запросе – там он может передаваться как в данных так и в заголовках запроса), либо на стороне сервера не загружается сессия – именно в ней сохраняется токен на стороне сервера, чтобы было с чем сравнить то что пришло в запросе.
