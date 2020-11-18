@@ -116,8 +116,8 @@
 		 
 		                    <!-- THEAD -->
 		                    <div class="col-sm-12 col-xs-12  list-group-item shadowX">
-		                        <div class="col-sm-4 col-xs-2">Name</div>
-			                    <div class="col-sm-2 col-xs-2 product-img-desktop">Image</div>
+		                        <div class="col-sm-4 col-xs-3">Name</div>
+			                    <div class="col-sm-2 hidden-xs">Image</div> <!-- hidden in mobile -->
 			                    <div class="col-sm-2 col-xs-4">Price</div>
 			                    <div class="col-sm-2 col-xs-2">Quant</div>
 			                    <div class="col-sm-2 col-xs-3">Sum</div>
@@ -151,16 +151,17 @@
 				              echo "<p>found keyN " . $keyN . "</p>";
 				              ?>						    						
 
-			                  <!--Display products name-->
+			                  <!-- Start Display product -->
 		                      <div id="{{$inCartItems[$keyN]['shop_id'] }}" class="col-sm-12 col-xs-12  list-group-item bg-success cursorX" data-toggle="modal" data-target="#myModal{{$i}}"> <!--  //data-toggle="modal" data-target="#myModal' . $i .   for modal -->
-			     
-				              <div class="col-sm-4 col-xs-2"> {{$inCartItems[$keyN]['shop_title'] }} 
+			                  
+							  <!-- Display product name ( + in mobile shows image) --> 
+				              <div class="col-sm-4 col-xs-3"> {{$inCartItems[$keyN]['shop_title'] }} 
 				                  <!-- image visible for mobile only -->
-				                  <div class="mobile-only"><img class="my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$inCartItems[$keyN]['shop_image'] }} "  alt="a" /></div>
+				                  <div class="visible-xs"><img class="my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$inCartItems[$keyN]['shop_image'] }} "  alt="a" /></div>
 				              </div> <!--name-->
 			     
-				              <!--Dispalay image-->
-				              <div class="col-sm-2 col-xs-2 product-img-desktop"> 
+				              <!--Dispalay image--> <!-- hidden in mobile -->
+				              <div class="col-sm-2 hidden-xs"> <!-- hidden in mobile -->
 				                  <img class="my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$inCartItems[$keyN]['shop_image'] }} "  alt="a" />
                               </div>
 				 
@@ -204,7 +205,7 @@
 		  <h2 id="finalSum"> {{ $totalSum }}  {{$inCartItems[$keyN]['shop_currency']}}</h2><hr> <!-- ₴ -->
 	  </div>
   
-  
+     <?php //dd($input); ?>
       <div class="col-sm-12 col-xs-12 shadowX">
 	  <hr>
 	      <h3> Shipping details </h3> 

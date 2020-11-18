@@ -1,14 +1,11 @@
 /*------ My CSS for Check-out (Order)-------------*/
 
 
-/*------Product image, in mobile show image in one column with name (below it). In destop, show in next column------------*/
-.mobile-only{display:none;}
+
 
 /* ---------------------------------------- Mobile */
 @media screen and (max-width: 480px) { 
-    .product-img-desktop {display:none;}
-    .mobile-only         {display:block; } /* my shop image*/
-	.mobile-only img     {width: 4em; }
+	.img-mobile {width: 4em; }
 	.font-mobile{font-size:0.8em;}
 }
  

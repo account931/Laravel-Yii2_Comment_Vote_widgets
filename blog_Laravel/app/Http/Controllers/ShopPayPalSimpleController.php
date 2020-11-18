@@ -213,9 +213,10 @@ class ShopPayPalSimpleController extends Controller
 	
 	
 	
-	
+	//simple rule to make your life easier... NEVER return a view in response to a POST request. Always redirect somewhere else which shows the result of the post or displays the next form.
+
 	/**
-     * method to go to check-out (shipping details) page. Request comes from form in ShopPaypalSimple.cart
+     * method to go to check-out page. Gets form data with Final Cart send via POST form and redirects to GET /checkOut2. Request comes from form in ShopPaypalSimple.cart
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -261,14 +262,15 @@ class ShopPayPalSimpleController extends Controller
 	
 	
 	
-	//simple rule to make your life easier... NEVER return a view in response to a POST request. Always redirect somewhere else which shows the result of the post or displays the next form.
 	
 	/**
-     * method to go ????????
+     * $_GET Method is accessed via redirect from this controller function checkOut(Request $request)
+	 * Displays page with Shipping details form
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
 	 
+	//CheckOut == Order 
     public function checkOut2()
     {
 		session_start();
@@ -298,14 +300,16 @@ class ShopPayPalSimpleController extends Controller
 	
 	
 	
-	
+	//simple rule to make your life easier... NEVER return a view in response to a POST request. Always redirect somewhere else which shows the result of the post or displays the next form.
+
 	/**
-     * method to pay. Request comes from form in ShopPaypalSimple.check-out
+     * $_POST Method gets <form> data via $_POST from Checkout/Order page {i.e this controller function checkOut2()}(Shipping details (address, phone. etc)) and redirects to $_GET page route {payPage2}. 
+	 * Form Request comes from form in ShopPaypalSimple.check-out
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
 	 
-    public function pay(Request $request)
+    public function pay1(Request $request)
     {
 		//if $_POST['u_name'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
 		if(!$request->input('u_name')){
@@ -339,6 +343,31 @@ class ShopPayPalSimpleController extends Controller
 		//gets all inputs
 		$input = $request->all();
 		
+		
+		return redirect('payPage2')->with(compact('input'));
+		 
+
+	}
+	
+	
+	
+	
+	/**
+     * $_GET Method is accessed via redirect from function pay1(Request $request) with data $input
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	 
+    public function pay2()
+    {
+		if(!session()->get('input')){
+			return redirect('/shopSimple')->with('flashMessageX', "You are returned here, as were not supposed to visit that prev page" );
+		}
+		session_start();
+		
+		//gets all inputs. Get it from redirect in function pay1(Request $request)
+		$input = session()->get('input');
+		
 		//Gets Products that are already in cart to display them in view
 		//if session with Cart set previously (user has already selected some products to cart)
 		if(isset($_SESSION['cart_dimmm931_1604938863'])){
@@ -359,6 +388,4 @@ class ShopPayPalSimpleController extends Controller
 		return view('ShopPaypalSimple.pay-page')->with(compact('input', 'inCartItems'));  
 
 	}
-	
-	
 }

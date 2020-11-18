@@ -122,8 +122,8 @@
 		 
 		           <!-- THEAD -->
 		           <div class="col-sm-12 col-xs-12  list-group-item shadowX">
-		           <div class="col-sm-4 col-xs-2">Name</div>
-			       <div class="col-sm-2 col-xs-2 product-img-desktop">Image</div>
+		           <div class="col-sm-4 col-xs-3">Name</div>  
+			       <div class="col-sm-2 hidden-xs">Image</div> <!-- hidden in mobile -->
 			       <div class="col-sm-2 col-xs-3">Price</div>
 			       <div class="col-sm-2 col-xs-3">Quant</div>
 			       <div class="col-sm-2 col-xs-3">Sum</div>
@@ -165,15 +165,15 @@
 			     <!-- Dispalay products -->
 		         <div id="{{$inCartItems[$keyN]['shop_id'] }}" class="col-sm-12 col-xs-12  list-group-item bg-success cursorX" data-toggle="modal" data-target="#myModal{{$i}}"> <!--  //data-toggle="modal" data-target="#myModal' . $i .   for modal -->
 			     
-				 <!-- Dispalay name -->
-				 <div class="col-sm-4 col-xs-2"> 
+				 <!-- Display product name ( + in mobile shows image) -->
+				 <div class="col-sm-4 col-xs-3"> 
 				    {{$inCartItems[$keyN]['shop_title'] }} 
 				     <!-- image visible for mobile only -->
-				     <div class="lazy my-one mobile-only"><img class="my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$inCartItems[$keyN]['shop_image'] }} "  alt="a" /></div>
+				     <div class="lazy my-one visible-xs"><img class="img-mobile" src="{{URL::to("/")}}/images/ShopSimple/{{$inCartItems[$keyN]['shop_image'] }} "  alt="a" /></div>
 				 </div> <!--name-->
 				 
-				 <!-- Image -->
-			     <div class="col-sm-2 col-xs-2 product-img-desktop"> 
+				 <!-- Image --> <!-- hidden in mobile -->
+			     <div class="col-sm-2 hidden-xs"> 
 				    <img class="lazy my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$inCartItems[$keyN]['shop_image'] }} "  alt="a" />
                  </div>
 				 

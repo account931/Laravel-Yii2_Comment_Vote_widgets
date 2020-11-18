@@ -69,13 +69,13 @@ Route::get('/shopSimple', 'ShopPayPalSimpleController@index')->name('shopSimple'
 Route::get('/cart', 'ShopPayPalSimpleController@cart')->name('cart'); //display shopSimple start page
 Route::get('/showOneProduct/{id}', 'ShopPayPalSimpleController@showOneProductt')->name('showOneProduct');
 Route::post('/addToCart', 'ShopPayPalSimpleController@storeToCart')->name('/addToCart');  //route to method to add to cart, send via POST form
-Route::post('/checkOut', 'ShopPayPalSimpleController@checkOut')->name('/checkOut');  //route to method to checkOut (page with shipping details), send via POST form
+Route::post('/checkOut', 'ShopPayPalSimpleController@checkOut')->name('/checkOut');  //route to method to checkOut, gets form data with Final Cart send via POST form and redirects to GET /checkOut2
 //just to prevent users entering get url for post method, i.e if user enter /checkOut manually in browser
 Route::get('/checkOut', function () { throw new \App\Exceptions\myException('Bad request. Not POST request, You are not expected to enter this page.'); });
 
-Route::get('/checkOut2', 'ShopPayPalSimpleController@checkOut2')->name('/checkOut2');  //route to method to checkOut (page with shipping details), send via POST form
-Route::post('/payPage', 'ShopPayPalSimpleController@pay')->name('/payPage');  //route final pay page, send via POST form
-
+Route::get('/checkOut2', 'ShopPayPalSimpleController@checkOut2')->name('/checkOut2');  //route to method to checkOut (page with shipping details), send via GET
+Route::post('/payPage1', 'ShopPayPalSimpleController@pay1')->name('/payPage1');  //route to get <form> data via $_POST from Checkout/Order page (Shipping details (address, phone. etc)) and redirects to $_GET page route {payPage2}. 
+Route::get('/payPage2',  'ShopPayPalSimpleController@pay2')->name('/payPage2');  //route final pay page, send via POST form
 
 
 
@@ -84,3 +84,6 @@ Route::post('/payPage', 'ShopPayPalSimpleController@pay')->name('/payPage');  //
 //ShopSimple Admin Panel
 Route::get('/shopAdminPanel', 'ShopPayPalSimple_AdminPanel@index')->name('shopAdminPanel'); //display Admin Panel start page
 
+Route::get('/404', function () {
+    return abort(404);
+});

@@ -735,7 +735,8 @@ To create Hepler function you can reuse in many places:
     .col-md- (medium devices - screen width equal to or greater than 768px)
     .col-lg- (large devices - screen width equal to or greater than 992px)
     .col-xl- (xlarge devices - screen width equal to or greater than 1200px)
-	
+# bootstrap 3 hidden/visible => .hidden-xs	visible-xs 
+
 #image =>           <img class="img-responsive my-cph" src="{{URL::to("/")}}/images/cph.jpg"  alt="a"/>
 #link a href => 	<li><a href="{{ route('register') }}">Gii</a></li>
 #link a href with $_GET => <a href="{{route('profile', ['id' => 1])}}">login here</a>
@@ -773,6 +774,10 @@ To create Hepler function you can reuse in many places:
   return redirect()->back()->with('success',"Update successfully");
   return redirect()->back()->withInput()->withErrors($validator);
   return redirect('/wpBlogg')->with('flashMessage',"Record deleted successfully");
+  
+#Redirect with view with data =>  
+  In controller:  return redirect('payPage2')->with(compact('input'));
+  get in view:    $input = session()->get('input');  
 
 
 # Get current route path (returns part after last slash, i.e "testRest")

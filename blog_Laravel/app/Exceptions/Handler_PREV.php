@@ -46,10 +46,20 @@ class Handler extends ExceptionHandler
     {
 		if ($exception instanceof \App\Exceptions\myException)  {
             return $exception->render($request);
-    }
+        }
+		
+		/*
+		// 404 page with status code 200
+        if ($exception instanceof ModelNotFoundException) {
+           return response()->view('errors.404', [], 404);
+        }
+        */
  
         return parent::render($request, $exception);
     }
+
+
+
 
     /**
      * Convert an authentication exception into an unauthenticated response.
@@ -63,6 +73,14 @@ class Handler extends ExceptionHandler
         if ($request->expectsJson()) {
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
+		
+		//my fix for disallow-direct-access-to-post-method-by-users
+		/*
+		if($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException){
+             return redirect('/');
+         }
+        return parent::render($request, $exception); */
+		//my fix for disallow-direct-access-to-post-method-by-users
 
         return redirect()->guest(route('login'));
     }

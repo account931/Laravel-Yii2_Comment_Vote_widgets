@@ -51,7 +51,7 @@ class ShopTimelineProgress2
                 <!-- Order icon -->				
 				<div class="icon-item <?php echo ($activeClass == 'Order' ? 'myactive' : 'myinactive'); ?> "> <!-- assign css class by function argument {$activeClass} -->	
 				    <i class="fa fa-tablet" style="font-size:24px;"></i>
-					<p>Order</p>
+					<p><a href="<?=route('/checkOut2')?>">Order</a></p>
 				</div>
 				
 				<!-- A line  -->
