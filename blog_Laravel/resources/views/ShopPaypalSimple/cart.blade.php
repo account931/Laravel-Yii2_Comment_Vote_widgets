@@ -191,7 +191,7 @@
 					//ActiveForm::end();
 					?>
                     <input type="hidden" value="{{$inCartItems[$keyN]['shop_id']}}" name="productID[]" />
-					<input type="number" value="{{$quantityX}}" name="yourInputValueX[]" class="form-control item-quantity" /> <!-- Quantity -->
+					<input type="number" value="{{$quantityX}}" name="yourInputValueX[]" class="form-control item-quantity font-mobile" /> <!-- Quantity -->
 					
 					<!--- Plus/Minus buttons -->
                     <button type="button" class="btn btn-danger   inline-btn btnCart-minus" data-currX="{{$inCartItems[$keyN]['shop_currency']}}"  data-priceX="{{$inCartItems[$keyN]['shop_price']}}"> - </button>					

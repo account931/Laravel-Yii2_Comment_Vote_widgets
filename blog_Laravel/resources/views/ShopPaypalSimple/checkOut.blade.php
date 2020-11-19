@@ -176,7 +176,7 @@
 			                  <div class="col-sm-2 col-xs-4 word-breakX font-mobile"> <span class="priceX">{{$inCartItems[$keyN]['shop_price']}} </span>  {{$inCartItems[$keyN]['shop_currency']}} </div>
 				 
 				     <!--Display quantity -->
-		             <div class="col-sm-2 col-xs-2"> <!-- // . $_SESSION['cart_dimmm931_1604938863'][$keyN]; //quantity-->
+		             <div class="col-sm-2 col-xs-2 font-mobile"> <!-- // . $_SESSION['cart_dimmm931_1604938863'][$keyN]; //quantity-->
 				          <?php
 				          $quantityX = $_SESSION['cart_dimmm931_1604938863'][$key]; //gets the quantity
 				          ?>
@@ -214,6 +214,19 @@
   
   
   
+      @if (Auth::guest()) <!-- if user is not logged -->
+          <div class="col-sm-12 col-xs-12 shadowX"><hr>
+	          <h3> You are currently not logged </h3>
+			  <p> Please  <button class="btn"><a href="{{ route('login') }}">Login </a></button>  or   <button class="btn"><a href="{{ route('register') }}">Register </a></button> if you want to keep history of your oders. Or proceed with <button class="btn"><a href="#">one-click buy </a></button> without logging  </p>
+          </div>	  
+	  @else <!-- if user is logged -->
+		  <div class="col-sm-12 col-xs-12 shadowX"><hr>
+	          <h3> You are currently  logged </h3>
+			  <p> Your account is <b> {{ auth()->user()->name }} </b> </p>
+			  <p> Email <b> {{ auth()->user()->email }} </b> </p>
+          </div> 
+	  @endif
+	  
       <!-- Form with user's details, i.e address, cell, etc -->
 	  <div class="col-sm-12 col-xs-12 shadowX">
 	     <h2> Shipping details </h2>
@@ -230,7 +243,7 @@
                         @endif 
 					</div>
                </div>
-
+       <!-- End Form with user's details, i.e address, cell, etc -->
                			   
 						
               

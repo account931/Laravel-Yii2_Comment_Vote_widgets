@@ -34,6 +34,7 @@ Table of Content:
 20. How to create Helper
 21. Login with username instead of email
 22. Laravel production
+23. After login redirect to prev page
 
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
@@ -715,6 +716,37 @@ To create Hepler function you can reuse in many places:
 
 
 
+//================================================================================================
+23. After login redirect to prev page
+
+In LoginController:
+
+use Illuminate\Support\Facades\Session;
+//use Illuminate\Support\Facades\URL; //?????
+
+
+   public function __construct()
+    {
+        $this->middleware('guest')->except('logout'); //was by default
+	    //MINE to redirect to prev page after Login
+		Session::put('backUrl', url()->previous());	
+    }
+	
+
+    //MINE to redirect to prev page after Login
+    public function redirectTo()
+    {
+	   //dd(session()->get('backUrl'));
+       return session()->get('backUrl') ? session()->get('backUrl') :   $this->redirectTo;
+    }
+	
+
+
+
+
+
+
+
 //================================================================================================ 
 34.Highlight active menu item
  #Highlight active menu item =>  (OR https://medium.com/@rizkhallamaau/create-a-helper-for-active-link-in-laravel-5-6-30827a760593)
@@ -824,7 +856,8 @@ composer dump-autoload
 # To prevent users entering get url for post method, i.e if user enter /checkOut manually in browser (use in routes/web.php) =>
         Route::get('/checkOut', function () { throw new \App\Exceptions\myException('Bad request. Not POST request, You are not expected to enter this page.'); });  
   
-
+# Session set => use Illuminate\Support\Facades\Session; Session::put('backUrl', url()->previous());
+# Session get => session()->get('backUrl');	
 
 
 

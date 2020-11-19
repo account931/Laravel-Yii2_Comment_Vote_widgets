@@ -21,12 +21,12 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 
 
 ?>		
-			   	
+		   	
 <div id="{{$allDBProducts[$i]['id']}}" class="col-sm-5 col-xs-12  list-group-item bg-success cursorX shadowX modal-trigger" data-toggle="modal" data-target="#myModal{{$i}}" data-quantityZ="{{$quantityX}}"> <!--data-toggle="modal" data-target="#myModal' . $i .   for modal -->
-    <div class="col-sm-4 col-xs-3">             {{$allDBProducts[$i]['shop_title']}} </div>
-	<div class="col-sm-2 col-xs-2 word-breakX"> {{$allDBProducts[$i]['shop_price']}}   {{$allDBProducts[$i]['shop_currency']}}</div>
-	<div class="col-sm-2 col-xs-3">             {{$model->truncateTextProcessor($allDBProducts[$i]['shop_descr'], 8) }}  </div>  	
-	<div class="col-sm-4 col-xs-4">
+    <div class="col-sm-4 col-xs-4">             {{$allDBProducts[$i]['shop_title']}} </div>
+	<div class="col-sm-3 col-xs-4 word-breakX"> {{$allDBProducts[$i]['shop_price']}}   {{$allDBProducts[$i]['shop_currency']}}</div>
+	<div class="col-sm-2 hidden-xs"> <!-- hidden in mobile --> {{$model->truncateTextProcessor($allDBProducts[$i]['shop_descr'], 8) }}  </div>  <!-- hidden in mobile --> 	
+	<div class="col-sm-3 col-xs-4">
         <!--  
 					        //LightBox variant, need downloading spec css/js libraries, see https://github.com/account931/portal_v2/blob/master/assets/AppAsset.php
 					        /*"<a href= " . Yii::$app->getUrlManager()->getBaseUrl(). '/images/shopLiqPay_Simple/'. $allDBProducts[$i]['image']  . "  data-lightbox='image-1' data-title='My caption'>" .
@@ -79,7 +79,7 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 					<div class="col-sm-4 col-xs-9"><span class="price-x"> {{$allDBProducts[$i]['shop_price']}} </span> {{$allDBProducts[$i]['shop_currency']}}  </div> 
 				</div>
 						  
-				<div class="row list-group-item">
+				<div class="row list-group-item">  
 					<div class="col-sm-1 col-xs-3">Info</div>
 				    <div class="col-sm-11 col-xs-9"> {{$allDBProducts[$i]['shop_descr']}} </div> 
 				</div>

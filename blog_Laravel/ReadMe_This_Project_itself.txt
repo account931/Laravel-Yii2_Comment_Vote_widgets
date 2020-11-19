@@ -1,11 +1,19 @@
 Table of content:
-1. ShopSimple
-2. 
-
+1. To do list of features to implement in future.
+2. ShopSimple
+3. 
 
 
 =================================================
-1. ShopSimple
+
+
+1. To do list of features to implement in future.
+  1.add Db table sh_product column Device type, eg "Turntable, flashdrive etc" and implement in autocomple search 
+  2. Controll Db table Product sh_product column Quantity (in modal, cart with Js, while adding to Session with Php.
+
+
+=================================================
+2. ShopSimple
 #Controller ShopPayPalSimpleController/ function index ()
  builds a list of all DB products with pagination by loop using Render Partial	template:
 @for ($i = 0; $i < count($allDBProducts); $i++)	

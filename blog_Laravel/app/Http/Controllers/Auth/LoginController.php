@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+//mine
+ use Illuminate\Support\Facades\Session;
+ //use Illuminate\Support\Facades\URL;
+
+
 class LoginController extends Controller
 {
     /*
@@ -25,7 +30,9 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/home'; //MINE to redirect to prev page after Login
+	
+	
 
     /**
      * Create a new controller instance.
@@ -35,10 +42,20 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+		//MINE to redirect to prev page after Login
+		Session::put('backUrl', url()->previous()); //dd(session()->get('backUrl'));
+		
     }
 	
 	
 	
+
+    //MINE to redirect to prev page after Login
+    public function redirectTo()
+    {
+	   //dd(session()->get('backUrl'));
+       return session()->get('backUrl') ? session()->get('backUrl') :   $this->redirectTo;
+    }
 	
 	
 	/**
