@@ -7,6 +7,8 @@ use App\models\ShopSimple\ShopSimple;     //model for DB table
 use App\models\ShopSimple\ShopCategories; //model for DB table 
 use Illuminate\Support\Facades\Validator;
 
+use App\Http\Requests\ShopShippingRequest; //my custom Form validation via Request
+
 class ShopPayPalSimpleController extends Controller
 {
     public function __construct(){
@@ -309,7 +311,7 @@ class ShopPayPalSimpleController extends Controller
      * @return \Illuminate\Http\Response
      */
 	 
-    public function pay1(Request $request)
+    public function pay1(ShopShippingRequest $request)  //Request $request //REASSIGNED to \Http\FormRequest\hopShippingRequest
     {
 		//if $_POST['u_name'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
 		if(!$request->input('u_name')){
@@ -318,6 +320,7 @@ class ShopPayPalSimpleController extends Controller
 		
 		session_start();
 		
+		/*
 		$RegExp_Phone = '/^[+]380[\d]{1,4}[0-9]+$/';
 		
 		$rules = [
@@ -339,6 +342,7 @@ class ShopPayPalSimpleController extends Controller
 	    if ($validator->fails()) {
 			return redirect('/checkOut2')->withInput()->with('flashMessageFailX', 'Validation Failed' )->withErrors($validator);
 	    }
+		*/
 		
 		//gets all inputs
 		$input = $request->all();
@@ -361,7 +365,7 @@ class ShopPayPalSimpleController extends Controller
     public function pay2()
     {
 		if(!session()->get('input')){
-			return redirect('/shopSimple')->with('flashMessageX', "You are returned here, as were not supposed to visit that prev page" );
+			return redirect('/shopSimple')->with('flashMessageFailX', "You are returned here, as were not supposed to visit that previous page {payPage2} directtle (without the input)" );
 		}
 		session_start();
 		

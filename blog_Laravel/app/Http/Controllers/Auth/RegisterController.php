@@ -6,6 +6,8 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Session; //MINE to redirect to prev page after Login
+
 
 class RegisterController extends Controller
 {
@@ -37,7 +39,20 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+		//MINE to redirect to prev page after Login
+		Session::put('backUrl', url()->previous()); //dd(session()->get('backUrl')); Here we save previous page to SESSION['backUrl']
     }
+	
+	
+	//MINE added function to redirect to prev page after Login. Was not in original file
+    public function redirectTo()
+    {
+	   //dd(session()->get('backUrl'));
+       return session()->get('backUrl') ? session()->get('backUrl') :   $this->redirectTo; //if SESSION['backUrl'] is set, go there, else go "/home"
+    }
+	
+	
+	
 
     /**
      * Get a validator for an incoming registration request.

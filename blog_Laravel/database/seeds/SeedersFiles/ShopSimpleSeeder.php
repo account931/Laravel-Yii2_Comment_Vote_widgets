@@ -23,6 +23,8 @@ class ShopSimpleSeeder extends Seeder {
     DB::table('shop_simple')->insert(['shop_title' => 'Samsung Sync',        'shop_image' => "samsung_sync.jpg",  'shop_price' => 18.96, 'shop_currency' => '$', 'shop_categ' => 3, 'shop_descr' => "Samsung Sync description..." ]);
     DB::table('shop_simple')->insert(['shop_title' => 'Audio-Tech AT-LP120', 'shop_image' => "turntable.jpg",     'shop_price' => 233,   'shop_currency' => '$', 'shop_categ' => 4, 'shop_descr' => "The best starter turntable with all the features you'll ever need." ]);
     DB::table('shop_simple')->insert(['shop_title' => 'Behringer Vmx200',    'shop_image' => "mixer.jpg",         'shop_price' => 92.04, 'shop_currency' => '$', 'shop_categ' => 4, 'shop_descr' => "Three channels mixer" ]);
+    DB::table('shop_simple')->insert(['shop_title' => 'Kington 16GB Flash',  'shop_image' => "kingston.jpg",      'shop_price' => 4,     'shop_currency' => '$', 'shop_categ' => 1, 'shop_descr' => "16 GB Falsh Drive" ]);
+    DB::table('shop_simple')->insert(['shop_title' => 'Pioneer DDJ-WEGO-K',  'shop_image' => "wego.jpg",          'shop_price' => 402.69,'shop_currency' => '$', 'shop_categ' => 4, 'shop_descr' => "Ultra-compact and affordable DJ controller. Plug & Play with bundled Virtual DJ LE software. Pulse Control Provides Visual Prompts via Various Types of Illuminations Directly on the Unit. Multi-colored LED for customization of lights to match the user's style" ]);
 
   }
 }

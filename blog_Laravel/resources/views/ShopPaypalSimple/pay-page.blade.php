@@ -1,5 +1,5 @@
 <?php
-//show pay page
+//show pay page. Show submitted on prev page Shipping form (address, phone etc ) & buttons to Pay.
 ?>
 
 @extends('layouts.app')

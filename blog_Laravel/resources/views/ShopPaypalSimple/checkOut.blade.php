@@ -1,5 +1,5 @@
 <?php
-//show checkout page. CheckOut == Order
+//show checkout page. CheckOut == Order. Shows selected products + Shipping form (address, phone etc). User has an option to login/register or proceed unlogged
 ?>
 
 @extends('layouts.app')
@@ -213,7 +213,7 @@
 	  </div>
   
   
-  
+      <!-- if user is not logged -->
       @if (Auth::guest()) <!-- if user is not logged -->
           <div class="col-sm-12 col-xs-12 shadowX"><hr>
 	          <h3> You are currently not logged </h3>
@@ -225,7 +225,7 @@
 			  <p> Your account is <b> {{ auth()->user()->name }} </b> </p>
 			  <p> Email <b> {{ auth()->user()->email }} </b> </p>
           </div> 
-	  @endif
+	  
 	  
       <!-- Form with user's details, i.e address, cell, etc -->
 	  <div class="col-sm-12 col-xs-12 shadowX">
@@ -237,21 +237,18 @@
                <div class="form-group{{ $errors->has('u_name') ? ' has-error' : '' }}">
                    <label for="u_name" class="col-md-4 control-label">Name</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" name="u_name" value="{{ old('u_name') }}" placeholder="Your name" required />       
+                        <input type="text" class="form-control" name="u_name" value="{{ old('u_name') ? old('u_name') : auth()->user()->name  }}" placeholder="Your name" required /> <!-- input value on load sets user DB name, but if input has old name (user printed some wrong name that failed validation and return the same page -->     
                         @if ($errors->has('u_name'))
                             <span class="help-block"> <strong>{{ $errors->first('u_name') }}</strong> </span>
                         @endif 
 					</div>
-               </div>
-       <!-- End Form with user's details, i.e address, cell, etc -->
-               			   
-						
+               </div>			
               
 			    <!-- Email --> 
                <div class="form-group{{ $errors->has('u_email') ? ' has-error' : '' }}">
                    <label for="u_email" class="col-md-4 control-label">E-mail</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" name="u_email" value="{{ old('u_email') }}" placeholder="Your email" required />       
+                        <input type="text" class="form-control" name="u_email" value="{{ old('u_email') ? old('u_email') : auth()->user()->email }}" placeholder="Your email" required />       
                         @if ($errors->has('u_email'))
                             <span class="help-block"> <strong>{{ $errors->first('u_email') }}</strong> </span>
                         @endif 
@@ -292,7 +289,7 @@
 		  </form><hr>
 	  </div>
 	  <!-- End Form with user's details, i.e address, cell, etc -->
-       
+      @endif 
   
      
 			

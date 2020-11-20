@@ -2,7 +2,7 @@ Laravel Framework 5.4.36
 OpenServer 5.2.2 Php 7.2
 Credentials: dimmm931@gmail.com =>  dimax2
 
-On HP EliteBook 2530p: Composer -> via Windows cmd, artisan -> via OpenServer, 
+On HP EliteBook 2530p: Composer -> via Windows cmd, artisan -> via OpenServer (navigate to your project folder first with cd ), 
         git -> via Windows cmd, NPM -> composer
 
 On T42: so far the same, but Composer -> via Openserver
@@ -15,8 +15,9 @@ Table of Content:
 4.Error handling, throw custom exceptions 
 5.Atrisan commands
 6.How to create new Controller/action, view and add to menu
-7.Forms
+7.Forms validation via Controller
 8.Form Validation
+8.1.1 Form Validation via Request Class
 8.1 Form input with in-line validation errors <span>, like in Yii2 
 8.2 Form fields Insert to DB
 9.Migrations/Seeders
@@ -34,7 +35,8 @@ Table of Content:
 20. How to create Helper
 21. Login with username instead of email
 22. Laravel production
-23. After login redirect to prev page
+23. After Login redirect to previous page
+23.2 After Registration redirect to previous page 
 
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
@@ -195,7 +197,7 @@ USAGE
 
 //================================================================================================
 
-7.Forms
+7.Forms validation via Controller
   to be proccessed
   # get one input => $request->input('role_sel');
   
@@ -264,6 +266,85 @@ USAGE
   
   use Illuminate\Support\Facades\Validator;
 //================================================================================================
+
+
+
+
+
+
+
+
+//================================================================================================
+8.1.1 Form Validation via Request Class, see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Requests/ShopShippingRequest.php
+ 1. php artisan make:request ShopShippingRequest
+ 2. In controller:
+     use App\Http\Requests\ShopShippingRequest; 
+	 function pay1(ShopShippingRequest $request) {
+	     // your code if validation is OK
+	 
+ 3. In app/Http/Requests/ShopShippingRequest
+ class ShopShippingRequest extends FormRequest
+{ 
+    public function authorize()
+    {
+        //return false;
+		return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+		$RegExp_Phone = '/^[+]380[\d]{1,4}[0-9]+$/';
+		
+        return [
+            'u_name' => ['required', 'string', 'min:3'], 
+			'u_address'  => [ 'required',  'string', 'min:8'],
+            'u_email'  => [ 'required', 'email' ] ,
+            'u_phone'  => [ 'required', "regex: $RegExp_Phone" ] ,	
+
+        ];
+    }
+	
+	/**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        // use trans instead on Lang 
+        return [
+           //'username.required' => Lang::get('userpasschange.usernamerequired'),
+	       'u_name.required' => 'We need u to specify your name',
+	       'u_email.email' => 'Give us real email',
+	       'u_phone.regex' => 'Phone must be in format +380....',
+		];
+	}
+	/**
+     * Return validation errors 
+     *
+     * @param Validator $validator
+     */
+    public function withValidator(Validator $validator)
+    {
+	    if ($validator->fails()) {
+            return redirect('/checkOut2')->withInput()->with('flashMessageFailX', 'Validation Failed!!!' )->withErrors($validator);
+        }
+	}
+ 
+}
+
+
+//================================================================================================
+
+
+
+
+
 
 
 //================================================================================================
@@ -717,13 +798,12 @@ To create Hepler function you can reuse in many places:
 
 
 //================================================================================================
-23. After login redirect to prev page
+23. After Login redirect to previous page, see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Auth/LoginController.php
 
 In LoginController:
 
 use Illuminate\Support\Facades\Session;
 //use Illuminate\Support\Facades\URL; //?????
-
 
    public function __construct()
     {
@@ -740,6 +820,15 @@ use Illuminate\Support\Facades\Session;
        return session()->get('backUrl') ? session()->get('backUrl') :   $this->redirectTo;
     }
 	
+
+
+
+
+//================================================================================================
+23.2 After Registration redirect to previous page 
+It is done pretty like the same as for Login, see  example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Auth/RegisterController.php
+
+
 
 
 
