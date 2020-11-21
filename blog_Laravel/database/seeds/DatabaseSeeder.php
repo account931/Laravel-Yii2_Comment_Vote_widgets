@@ -21,8 +21,9 @@ class DatabaseSeeder extends Seeder
 		 $this->call('Users_Seeder');  //fill DB table {users} with data
 		 $this->call('Roles_Seeder');  //fill DB table {roles} with data {4 roles}
 		 $this->call('RoleUsers_Seeder');  //fill DB table {role_user} with data {assign admin to Dima}
+		 $this->call('ShopCategories_Seeder');  //fill DB table {shop_categories} with data. MUST BE BEFORE {ShopSimpleSeeder} as contains Forein Keys for {ShopSimpleSeeder}
 		 $this->call('ShopSimpleSeeder');  //fill DB table {shopsimple} with data. SEEDER IS IN SUBFOLDER /SeedersFiles.
-		 $this->call('ShopCategories_Seeder');  //fill DB table {shop_categories} with data. 
+		 
 
 		 $this->command->info('Таблица пользователей загружена данными!');
     }

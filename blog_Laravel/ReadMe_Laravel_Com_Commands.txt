@@ -394,14 +394,24 @@ USAGE
  If migration error (Specified key was too long; max key length is 767 bytes)=> 
      SET @@global.innodb_large_prefix = 1;  => run this query before your query:, this will increase limit to 3072 bytes. SET @@global.innodb_large_prefix = 1;
   
-  php artisan migrate:refresh
+  # php artisan migrate:refresh
   
+  #Create Foreign key in migration, e.g for table {shop_categories}	=> see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/migrations/2020_11_21_165700_create_shop_simple_table.php
+	NB!!!! => If one table contains ID that used as Forein Keys in other table, then migtation for this first table must be run first or migration will crash. Example: first create migration{create_shop_categories_table}, then {create_shop_simple_table}
+	$table->unsignedInteger('shop_categ')->nullable(); //create a column in this DB table
+    $table->foreign('shop_categ')->references('other_table_categ_id')->on('other_table_shop_categories')->onUpdate('cascade')->onDelete('cascade');
+	    
+  # To add a new column to existing table => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/migrations/2020_11_21_171640_add_2_columns_to_shop_simple_table.php
+     1. php artisan make:migration add_2_columns_to_shop_simple_table
+	 2. see content in example
   
   //----------------------------
   
   #SEEDER
   see examples at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/seeds/DatabaseSeeder.php
-  
+  	NB!!!! => If one table contains ID that used as Forein Keys in other table, first table must be seeded first or seeding will crash. Example: first seed {shop_categories_table}, then {shop_simple_table}
+
+
   //Загрузка начальных данных в БД
   To seed all =>   php artisan db:seed   //By default, the db:seed command runs the DatabaseSeeder class, which may be used to call other seed classes
   # if u run seeder command and Seeder Class contain {DB::table('users')->delete()}, it will overwrite all data, if it doesnot, then it will add Seeder column data to existing values in DB 

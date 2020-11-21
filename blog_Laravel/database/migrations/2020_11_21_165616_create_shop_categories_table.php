@@ -1,5 +1,6 @@
 <?php
-
+//categories DB Table for products Shop simple
+//MUST BE BEFORE {create_shop_simple_table} migration as contains Forein Keys for {create_shop_simple_table}
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -31,4 +32,5 @@ class CreateShopCategoriesTable extends Migration
     {
         Schema::drop('shop_categories');
     }
+
 }

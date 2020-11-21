@@ -213,14 +213,33 @@
 	  </div>
   
   
+      
+	  
+	  
+	  
       <!-- if user is not logged -->
       @if (Auth::guest()) <!-- if user is not logged -->
           <div class="col-sm-12 col-xs-12 shadowX"><hr>
 	          <h3> You are currently not logged </h3>
-			  <p> Please  <button class="btn"><a href="{{ route('login') }}">Login </a></button>  or   <button class="btn"><a href="{{ route('register') }}">Register </a></button> if you want to keep history of your oders. Or proceed with <button class="btn"><a href="#">one-click buy </a></button> without logging  </p>
-          </div>	  
+			  <p> Please  <button class="btn  my-border"><a href="{{ route('login') }}">Login </a></button>  
+			        or    <button class="btn  my-border"><a href="{{ route('register') }}">Register </a></button> 
+					if you want to keep history of your oders. Or proceed with 
+					<!-- button to show form for unlogged user, works on bootstrap collapse -->
+					 <button class="btn my-border" data-toggle="collapse" data-target="#unloggedUserForm">one-click buy <i class="fa fa-check-square-o"></i></button> without logging  
+			  </p>
+          
+		      <!-- Show Form for unlogged user (by Render Partial) (Form is 90% like the same as for a logged user, but it does not have default user's values from DB + is display:none by default, hidden by Bootstrap class .collapse, in order to appear a user should click "Proceed with <button class="btn"><a href="#">one-click buy </a></button>) -->
+			  @include('ShopPaypalSimple.partial.checkOutView_unlogged_user_form', ['uuid' => $uuid ]) {{-- passing $uuid is not necessarily--}}
+			  <!-- Show Form for unlogged user (by Render Partial) -->
+			  
+		  </div>	  
+	  
+	  
+	  
+	  
 	  @else <!-- if user is logged -->
 		  <div class="col-sm-12 col-xs-12 shadowX"><hr>
+		      <h4> Your Order ID is <b> {{$uuid}} </b> </h4>
 	          <h3> You are currently  logged </h3>
 			  <p> Your account is <b> {{ auth()->user()->name }} </b> </p>
 			  <p> Email <b> {{ auth()->user()->email }} </b> </p>
@@ -279,6 +298,8 @@
                </div>
 			   
          
+		        <input type="hidden" name="u_uuid" value="{{ $uuid }}"  /> <!-- UUID-->
+				
                 <div class="form-group">
                     <div class="col-md-8 col-md-offset-4">
                          <button type="submit" class="btn btn-primary shadowX submitX rounded"> Done </button>
@@ -295,7 +316,7 @@
 			
 
 			
-       <div class="col-sm-12 col-xs-12"> <!-- just Spacing -->
+       <div class="col-sm-12 col-xs-12" style="height:10em;"> <!-- just Spacing -->
 	       <hr>
 	   </div>
   

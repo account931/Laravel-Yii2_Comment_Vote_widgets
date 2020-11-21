@@ -277,6 +277,12 @@ class ShopPayPalSimpleController extends Controller
     {
 		session_start();
 		
+		//Generate UUID (unique ID for order)
+		$model = new ShopSimple();
+		$uuid = $model->generateUUID();
+		//dd($uuid);
+		
+		//Gets Products that are already in cart to display them in view
 		//if session with Cart set previously (user has already selected some products to cart)
 		if(isset($_SESSION['cart_dimmm931_1604938863'])){
 			
@@ -289,12 +295,12 @@ class ShopPayPalSimpleController extends Controller
 		   $allProductsAll = ShopSimple::whereIn('shop_id', $arrayWithIDsInCart)->get();
            $inCartItems = $allProductsAll->toArray(); //object to array to perform search_array in view
 		} 
-		   
+		//End Gets Products that are already in cart to display them in view  
 		  
 		
 		//dd($request->input('productID'), $request->input('yourInputValueX'));
 	    //return redirect('/shopSimple')->with('flashMessageX', "Was successfully added to cart. Product: " . $productOne[0]->shop_title  . ". Quantity : " . $request->input('yourInputValue') . " items" );
-        return view('ShopPaypalSimple.checkOut')->with(compact('inCartItems')); 
+        return view('ShopPaypalSimple.checkOut')->with(compact('inCartItems', 'uuid')); 
 
 	}
 	
@@ -320,6 +326,7 @@ class ShopPayPalSimpleController extends Controller
 		
 		session_start();
 		
+		//This validation is reassigned for \App\Http\Requests\ShopShippingRequest;
 		/*
 		$RegExp_Phone = '/^[+]380[\d]{1,4}[0-9]+$/';
 		
@@ -371,6 +378,8 @@ class ShopPayPalSimpleController extends Controller
 		
 		//gets all inputs. Get it from redirect in function pay1(Request $request)
 		$input = session()->get('input');
+		
+		
 		
 		//Gets Products that are already in cart to display them in view
 		//if session with Cart set previously (user has already selected some products to cart)

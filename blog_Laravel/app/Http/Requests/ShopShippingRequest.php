@@ -1,5 +1,6 @@
 <?php
-//Using validation via Request Class, not via controller
+//used in ShopPayPalSimpleController/public function pay1(ShopShippingRequest $request)
+//Used for validation via Request Class, not via controller
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;

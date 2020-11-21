@@ -15,6 +15,7 @@ class CreateShopSimpleTable extends Migration
     {
 		if (!Schema::hasTable('shop_simple')) { //my fix for migration
 		    Schema::create('shop_simple', function (Blueprint $table) {
+				
             $table->increments('shop_id');
 			$table->string('shop_title', 82)->nullable();    //VARCHAR equivalent column, length 82 // ->nullable()  is a fix
 			$table->string('shop_image', 222)->nullable();   //Эквивалент VARCHAR с длинной 222 // ->nullable()  is a fix
@@ -22,8 +23,10 @@ class CreateShopSimpleTable extends Migration
 			$table->string('shop_currency', 8)->nullable();  //VARCHAR equivalent column, length 222 // ->nullable()  is a fix
 			$table->text('shop_descr')->nullable();         //equivalent for text
 			
-			$table->integer('shop_categ')->nullable();   
-			//$table->foreign('shop_categ')->references('categ_id')->on('shop_categories'); //equivalent INTEGER Foreign Key 
+			//Create Foreign key for table {shop_categories}	
+			$table->unsignedInteger('shop_categ')->nullable();
+            $table->foreign('shop_categ')->references('categ_id')->on('shop_categories')->onUpdate('cascade')->onDelete('cascade');
+	        //End Create Foreign key for table {shop_categories}	
 			
 			$table->timestamp('shop_created_at')->default( date('Y-m-d H:i:s') ); //	Эквивалент TIMESTAMP для базы данных
 

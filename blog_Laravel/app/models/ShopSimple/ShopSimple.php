@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShopSimple extends Model
 {
-
+  
+  private $UUID;
 
   /**
    * Connected DB table name.
@@ -39,5 +40,17 @@ class ShopSimple extends Model
 		} 
 	return $text;		
 	}
+	
+	
+
+  /**
+   * function to generate unique order number.
+   *
+   * @var string
+   */
+	function generateUUID() { // Public Domain/MIT
+       $this->UUID = md5(uniqid());  //md5 the unique number
+	   return $this->UUID;
+      }
   
 }
