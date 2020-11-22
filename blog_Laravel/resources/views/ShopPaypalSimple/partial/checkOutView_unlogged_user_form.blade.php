@@ -2,8 +2,9 @@
 <!-- It is display:none by default, hidden by Bootstrap class .collapse, in order to appear a user should click "Proceed with <button class="btn"><a href="#">one-click buy </a></button>) -->
 
 <!-- Form with user's details, i.e address, cell, etc -->
-	  <div class="col-sm-12 col-xs-12 shadowX collapse" id="unloggedUserForm"> <!-- hidden by Bootstrap class .collapse -->
-	  <h4> Your Order ID is <b> {{$uuid}} </b> </h4>
+<!-- When user clicks "Proceed unlogged", fill the form and submit and validation fails, so show this form with class ".in" -->
+	  <div class="col-sm-12 col-xs-12 shadowX collapse {{((count($errors) > 0)) ? ' in' : ''}}" id="unloggedUserForm"> <!-- hidden by Bootstrap class .collapse -->
+	  <p> Your Order ID is <b> {{$uuid}} </b> </p>
 	     <h2> Shipping details </h2>
 	      <form class="form-horizontal" method="post" class="form-assign" action="{{url('/payPage1')}}">
 		      <input type="hidden" value="{{csrf_token()}}" name="_token"/>
@@ -54,7 +55,11 @@
                </div>
 			   
          
-		        <input type="hidden" name="u_uuid" value="{{ $uuid }}"  /> <!-- UUID-->
+		         <!-- Other hidden fields/inputs -->
+		        <input type="hidden" name="u_uuid" value="{{ $uuid }}"  />            <!-- UUID-->
+				<input type="hidden" name="u_sum" value="{{ $totalSum }}" />           <!-- Sum -->
+				<input type="hidden" name="u_items_in_order" value="{{ count($_SESSION['cart_dimmm931_1604938863']) }}" /> <!-- Sum -->
+				<!-- Other hidden fields/inputs -->
 				
                 <div class="form-group">
                     <div class="col-md-8 col-md-offset-4">

@@ -208,7 +208,9 @@
      <?php //dd($input); ?>
       <div class="col-sm-12 col-xs-12 shadowX">
 	  <hr>
+	      <p> Order Id <i class="fa fa-check-square-o"></i>  {{ $input['u_uuid']   }}   </p>
 	      <h3> Shipping details </h3> 
+		  
 		  <p> <i class="fa fa-address-card-o"></i>  {{ $input['u_name']    }}   </p>
 		  <p> <i class="fa fa-archive"></i>         {{ $input['u_email']   }}   </p>
 		  <p> <i class="fa fa-arrows"></i>          {{ $input['u_address'] }}   </p>

@@ -239,7 +239,7 @@
 	  
 	  @else <!-- if user is logged -->
 		  <div class="col-sm-12 col-xs-12 shadowX"><hr>
-		      <h4> Your Order ID is <b> {{$uuid}} </b> </h4>
+		      <p> Your Order ID is <b> {{$uuid}} </b> </p>
 	          <h3> You are currently  logged </h3>
 			  <p> Your account is <b> {{ auth()->user()->name }} </b> </p>
 			  <p> Email <b> {{ auth()->user()->email }} </b> </p>
@@ -297,8 +297,16 @@
 					</div>
                </div>
 			   
-         
-		        <input type="hidden" name="u_uuid" value="{{ $uuid }}"  /> <!-- UUID-->
+			   
+			   
+                <!-- Other hidden fields/inputs -->
+		        <input type="hidden" name="u_uuid" value="{{ $uuid }}"  />            <!-- UUID-->
+				<input type="hidden" name="u_sum" value="{{ $totalSum }}" />           <!-- Sum -->
+				<input type="hidden" name="u_items_in_order" value="{{ count($_SESSION['cart_dimmm931_1604938863']) }}" /> <!-- Sum -->
+				<!-- Other hidden fields/inputs -->
+				
+				
+				
 				
                 <div class="form-group">
                     <div class="col-md-8 col-md-offset-4">

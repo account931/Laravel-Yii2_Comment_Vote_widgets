@@ -48,9 +48,10 @@ class ShopSimple extends Model
    *
    * @var string
    */
-	function generateUUID() { // Public Domain/MIT
-       $this->UUID = md5(uniqid());  //md5 the unique number
+	function generateUUID($length=10) 
+	{
+       $this->UUID = "sh-" . time() ."-". substr( md5(uniqid()), 0, $length);  //md5 the unique number
 	   return $this->UUID;
-      }
+    }
   
 }

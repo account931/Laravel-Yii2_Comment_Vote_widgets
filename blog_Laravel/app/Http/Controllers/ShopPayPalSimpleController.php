@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\models\ShopSimple\ShopSimple;     //model for DB table 
 use App\models\ShopSimple\ShopCategories; //model for DB table 
 use Illuminate\Support\Facades\Validator;
+use App\models\ShopSimple\ShopOrdersMain; //model for DB table {shop_orders_main} that stores general info about the order (general amount, price, email, etc )
+use App\models\ShopSimple\ShopOrdersItems; //model for DB table {shop_order_item} to store a one user's order split by items, ie if Order contains 2 items (dvdx2, iphonex3). 
 
 use App\Http\Requests\ShopShippingRequest; //my custom Form validation via Request
 
@@ -279,7 +281,7 @@ class ShopPayPalSimpleController extends Controller
 		
 		//Generate UUID (unique ID for order)
 		$model = new ShopSimple();
-		$uuid = $model->generateUUID();
+		$uuid = $model->generateUUID(6);
 		//dd($uuid);
 		
 		//Gets Products that are already in cart to display them in view
@@ -354,8 +356,19 @@ class ShopPayPalSimpleController extends Controller
 		//gets all inputs
 		$input = $request->all();
 		
+		//save Order to DB tables {shop_orders_main} and {shop_order_item}
+		$shopOrdersMain = new ShopOrdersMain();
 		
-		return redirect('payPage2')->with(compact('input'));
+		if($shopOrdersMain->saveFields($request->all())){
+			
+			return redirect('payPage2')->with(compact('input'));
+		} else {
+		    return redirect('/checkOut2')->with('flashMessageFailX', "Error saving to DB. Try Later" );
+
+		}
+		//save Order to DB tables {shop_orders_main} and {shop_order_item}
+		
+		
 		 
 
 	}
@@ -372,7 +385,7 @@ class ShopPayPalSimpleController extends Controller
     public function pay2()
     {
 		if(!session()->get('input')){
-			return redirect('/shopSimple')->with('flashMessageFailX', "You are returned here, as were not supposed to visit that previous page {payPage2} directtle (without the input)" );
+			return redirect('/shopSimple')->with('flashMessageFailX', 'You are returned here, as were not supposed to visit that previous page {payPage2} directtle (without the input)' );
 		}
 		session_start();
 		
