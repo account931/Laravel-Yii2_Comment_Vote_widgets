@@ -1,4 +1,4 @@
-<!------------ For for unlogged user (in checkout view) --------->
+<!------------ Form For for unlogged user (in checkout view) --------->
 <!-- It is display:none by default, hidden by Bootstrap class .collapse, in order to appear a user should click "Proceed with <button class="btn"><a href="#">one-click buy </a></button>) -->
 
 <!-- Form with user's details, i.e address, cell, etc -->

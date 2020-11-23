@@ -356,14 +356,46 @@ class ShopPayPalSimpleController extends Controller
 		//gets all inputs
 		$input = $request->all();
 		
+		
+		//Gets Products that are already in cart to display them in view
+		//if session with Cart set previously (user has already selected some products to cart)
+		if(isset($_SESSION['cart_dimmm931_1604938863'])){
+			
+		   $arrayWithIDsInCart = array(); //array to store products IDs that are currentlyin cart, i.e [5,7,9]
+		   
+		   foreach($_SESSION['cart_dimmm931_1604938863'] as $key => $value){
+			  array_push($arrayWithIDsInCart, $key);
+		   }
+		   //find DB products, but only those ids are present in the cart, i.e $_SESSION['cart_dimmm931_1604938863']
+		   $allProductsAll = ShopSimple::whereIn('shop_id', $arrayWithIDsInCart)->get();
+           $inCartItems = $allProductsAll->toArray(); //object to array to perform search_array in view
+		} 
+		//End Gets Products that are already in cart to display them in view  
+		
+		
+		
+		
 		//save Order to DB tables {shop_orders_main} and {shop_order_item}
 		$shopOrdersMain = new ShopOrdersMain();
+		$ShopOrdersItems = new ShopOrdersItems();
 		
-		if($shopOrdersMain->saveFields($request->all())){
+		//additionally check if SESSION still exists
+		if (!isset($_SESSION['cart_dimmm931_1604938863'])) {
+		    return redirect('/checkOut2')->with('flashMessageFailX', "Error, SESSION is coruupted " );
+		}
 			
-			return redirect('payPage2')->with(compact('input'));
+		
+		if($savedID = $shopOrdersMain->saveFields_to_shopOrdersMain($request->all())){  //$savedID is an id of saved/Inserted row
+		    
+			if($ShopOrdersItems->saveFields_to_shop_order_item( $savedID, $_SESSION['cart_dimmm931_1604938863'], $inCartItems )){
+				
+			    return redirect('payPage2')->with(compact('input', 'savedID'))->with('flashMessageX', "Your data is saved to DB with id " . $savedID . ". Now proceed with payment" );
+		    } else {
+				return redirect('/checkOut2')->with('flashMessageFailX', "Error saving to DB {shop_order_item}. Try Later" );
+			}
+			
 		} else {
-		    return redirect('/checkOut2')->with('flashMessageFailX', "Error saving to DB. Try Later" );
+		    return redirect('/checkOut2')->with('flashMessageFailX', "Error saving to DB {shop_orders_main}. Try Later" );
 
 		}
 		//save Order to DB tables {shop_orders_main} and {shop_order_item}

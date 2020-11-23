@@ -21,12 +21,12 @@ class ShopOrdersMain extends Model
   
    
     /**
-    * saves form inputs to DB (FINAL)
+    * saves form inputs to DB (shop_orders_main)
     *
     * @param  
     * @return 
     */
-	public function saveFields($data){
+	public function saveFields_to_shopOrdersMain($data){
 		$this->ord_uuid =        $data['u_uuid']; //auth()->user()->id;
 		$this->ord_sum =         $data['u_sum'];
 		$this->items_in_order =  $data['u_items_in_order'];
@@ -34,9 +34,32 @@ class ShopOrdersMain extends Model
 		$this->ord_address =     $data['u_address'];
 		$this->ord_email =       $data['u_email'];
 		$this->ord_phone =       $data['u_phone'];
-		//$this->ord_placed =      date('Y-m-d H:i:s');
+		$this->ord_user_id =     auth()->user()->id ?  auth()->user()->id : 0;// User/Buyer Id, 0 if unlogged
 		
 		$this->save();
-		return true;
+		//return true;
+		return $this->id; // returns the id of INSERTED row (this new created row). BUT SQL id column is "order_id"
 	}
+	
+	
+	
+	
+    /**
+    * HasMany
+    *
+    * @param  
+    * @return 
+    */
+	 public function categoryNamesX()
+	 {   //$this->hasOne $this->belongsTo
+		 return $this->belongsTo('App\models\ShopSimple\ShopOrdersItems', 'order_id','order_id')->withDefault(['order_id' => 'Unknown']);  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');
+	 }
+	 
+	
+	 public function items()
+        {
+          //return $this->hasMany('App\models\ShopSimple\ShopOrdersItems', 'order_id','order_id');
+		  return $this->hasMany('App\models\ShopSimple\ShopOrdersItems', 'order_id','order_id')->withDefault(['order_id' => 'Unknown']);  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');
+        
+        }
 }

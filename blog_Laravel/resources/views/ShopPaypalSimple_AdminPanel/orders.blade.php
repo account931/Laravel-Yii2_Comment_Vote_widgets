@@ -58,18 +58,22 @@
 					<!-- Link to go back -->
 				    <div>
 				    &nbsp;<i class="fa fa-hand-o-left" style="font-size:24px"></i>
-				    <a href="{{ url('/shopSimple') }}">back to shop </a>
+				    <a href="{{ url('/shopAdminPanel') }}">back to admin panel </a>
                     </div>
 				</div>
 
                 <div class="panel-body shop">
 				
 				    <div class="col-sm-10 col-xs-10">
-                    <h1>Orders</h1>
+                        <h1>Orders</h1>
 		            </div>	
 				
 				  
-		
+				    <!-- If no orders in DB --> 
+		            @if(count($shop_orders_main) == 0)
+					    <div class="col-sm-12 col-xs-12"><center><h4 class="text-danger"><i class="fa fa-calendar-check-o" style="font-size:24px"></i> No orders so far</center></h4></div>
+					@else
+						
 		
 		
 					  
@@ -82,27 +86,44 @@
 						<div class="col-sm-2 col-xs-6">Status</div>
 			            <div class="col-sm-1 col-xs-6">Sum</div>
 			            <div class="col-sm-1 col-xs-6">Quant</div>
+						<div class="col-sm-1 col-xs-6">items</div>
 			            <div class="col-sm-2 col-xs-6">Name</div>
 						<div class="col-sm-2 col-xs-6">Date</div>
-						<div class="col-sm-2 col-xs-12">Paid</div>
+						<div class="col-sm-1 col-xs-12">Paid</div>
 		            </div>
 		            <!-- End THEAD -->
 							
 							
-					@foreach($orderedItem as $v)
+					@foreach($shop_orders_main as $v)
 					  <div class="col-sm-12 col-xs-12  list-group-item">
-						<div class="col-sm-2 col-xs-12 ">{{ $v-> ord_uuid}}</div>
+						<div class="col-sm-2 col-xs-12 "><i class="fa fa-calendar-check-o" style="font-size:24px"></i> {{ $v-> ord_uuid}}</div>
 						<div class="col-sm-2 col-xs-12 ">{{ $v-> ord_status}}</div>
 						<div class="col-sm-1 col-xs-12 ">{{ $v-> ord_sum}}</div>
 						<div class="col-sm-1 col-xs-12 ">{{ $v-> items_in_order}}</div>
-						<div class="col-sm-2 col-xs-12 ">{{ $v-> ord_name }} {{ $v-> ord_address }} {{ $v-> ord_address }}</div>
+						
+						
+						<!-- hasMany. Order details from table {shop_order_item}-->
+						<div class="col-sm-1 col-xs-6"> 
+                           <?php //dd($v->category); ?>
+						   {{$v->order_id}}
+						</div>  <!-- hasMany. Order details from table {shop_order_item}-->
+						
+
+						
+						<div class="col-sm-2 col-xs-12 ">{{ $v-> ord_name }} {{ $v-> ord_address }} {{ $v-> ord_email }}</div>
 					    <div class="col-sm-2 col-xs-12 ">{{ $v-> ord_placed}}</div>
 						<div class="col-sm-2 col-xs-12 ">{{ ($v-> if_paid==0)? "Not paid" : "Paid"}}</div>
 					  </div>
 					@endforeach
 					</div>
 					
+					<!-- Pagination -->
+					<div class="col-sm-12 col-xs-12 ">
+					{{-- $shop_orders_main->links() --}}
+					</div>
+					<!-- Pagination -->
 					
+					@endif
                     
 					
 					

@@ -37,6 +37,7 @@ Table of Content:
 22. Laravel production
 23. After Login redirect to previous page
 23.2 After Registration redirect to previous page 
+24. Save to DB (SQL INSERT) via model function
 
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
@@ -381,6 +382,7 @@ USAGE
 //================================================================================================
 9.9.Migrations/Seeders    => see docs at => https://laravel.ru/docs/v5/migrations
   see examples at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/tree/master/blog_Laravel/database/migrations
+                  => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/migrations/2020_11_22_135811_create_shop_orders_main_table.php
   
   Laravel SQL  equivalents => https://laravel.com/docs/4.2/schema
   
@@ -844,6 +846,32 @@ It is done pretty like the same as for Login, see  example at => https://github.
 
 
 
+//================================================================================================
+24. Save to DB (SQL INSERT) via model function, see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/ShopSimple/ShopOrdersMain.php
+  1. In Cotroller =>
+       public function pay1(ShopShippingRequest $request){
+	     //save Order to DB tables {shop_orders_main} and {shop_order_item}
+		$shopOrdersMain = new ShopOrdersMain();
+		if($shopOrdersMain->saveFields($request->all())){ //all form inputs
+			return redirect('payPage2')->with(compact('input'));
+		} else {
+		    return redirect('/checkOut2')->with('flashMessageFailX', "Error saving to DB. Try Later" );
+        }
+  2. In model =>
+      public function saveFields($data){
+		$this->ord_uuid =        $data['u_uuid']; //auth()->user()->id;
+		$this->ord_sum =         $data['u_sum'];
+		$this->ord_phone =       $data['u_phone'];
+		//$this->ord_placed =      date('Y-m-d H:i:s');
+		$this->save();
+		return true;
+	}
+//================================================================================================
+
+
+
+
+
 
 
 //================================================================================================ 
@@ -885,7 +913,7 @@ It is done pretty like the same as for Login, see  example at => https://github.
 	  
 #pass several vars => return view('showprofile')->with(compact('id', 'name'));
 	  
-#isGuest var 1 => use Illuminate\Support\Facades\Auth; if(!Auth::check()){)
+#isGuest var 1 =>    use Illuminate\Support\Facades\Auth;  if(!Auth::check()){)
 #isGuest var 2  =>   public function __construct(){$this->middleware('auth');}
 
 #check if user is not guest =>  use Illuminate\Support\Facades\Auth; if (Auth::check()) {} => if (Auth::guest()
@@ -958,7 +986,7 @@ composer dump-autoload
 # Session set => use Illuminate\Support\Facades\Session; Session::put('backUrl', url()->previous());
 # Session get => session()->get('backUrl');	
 
-
+# get id of new saved row/Get the Last Inserted Id => see function saveFields_to_shopOrdersMain at example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/ShopSimple/ShopOrdersMain.php
 
 
 
@@ -1009,6 +1037,8 @@ $listOfLanguages = array(
 #Benchmark => $startSec = time(); //seconds   $startMicroSec = microtime(true); //microseconds   $bench = $endSec - $startSec;
 
 # Array push/add => array_push($array, "blue", "yellow");
+
+# UUID => function generateUUID($length=10) {$this->UUID = "sh-" . time() ."-". substr( md5(uniqid()), 0, $length);  return $this->UUID;}
 
 ---------------------- JS ----------
 
