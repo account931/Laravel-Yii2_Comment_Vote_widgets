@@ -62,25 +62,47 @@ class ShopPayPalSimple_AdminPanel extends Controller
 		
 		/*
 		  DB::table('shop_orders_main')
-//->select('shop_orders_main.id','shop_orders_main.name','shop_order_item.photo')
-->join('shop_order_item','shop_order_item.order_id','=','shop_orders_main.order_id')
-//->where(['something' => 'something', 'otherThing' => 'otherThing'])
-->get();
-*/
+          //->select('shop_orders_main.id','shop_orders_main.name','shop_order_item.photo')
+          ->join('shop_order_item','shop_order_item.order_id','=','shop_orders_main.order_id')
+         //->where(['something' => 'something', 'otherThing' => 'otherThing'])
+         ->get();
+         */
+		 
        //https://stackoverflow.com/questions/29165410/how-to-join-three-table-by-laravel-eloquent-model
        //$shop_orders_main = ShopOrdersMain::with('items')->get();
-	   $shop_orders_main = ShopOrdersMain::where('ord_status', 'not-proceeded')->paginate(3); 
 	   
+	   //Via  ass
+	   $shop_orders_main = ShopOrdersMain::with('orderDetail')->get(); //all();//where('ord_status', 'not-proceeded')->get(); //->paginate(3); 
+	   
+	   $itemsInOrder = array();
+	   foreach($shop_orders_main as $p){
+		   //if( ShopOrdersItems::where('fk_order_id', $p->order_id) ->exists()){
+		       $i = ShopOrdersItems::where('fk_order_id', $p->order_id)->get();
+		       array_push($itemsInOrder, $i);
+	       //}
+	   }
+	
 	    
 		/*
 		$shop_orders_main = ShopOrdersMain::where('ord_status', 'not-proceeded')->paginate(3); 
 		
-		$shop_orders_main->map(function ($cat){
-            $cat->items = ShopOrdersItems::where('order_id',$cat->order_id)->get();
-        });
-		*/
+		$t = $shop_orders_main->map(function ($cat){
+            $cat->items = ShopOrdersItems::where('fk_order_id', $cat->order_id)->get();
+        });*/
 		
-		return view('ShopPaypalSimple_AdminPanel.orders')->with(compact('shop_orders_main')); 
+		
+		return view('ShopPaypalSimple_AdminPanel.orders')->with(compact('shop_orders_main', 'itemsInOrder')); 
+	}
+	
+	
+	
+	
+	
+	
+	//for ajax counting
+	public function countOrders(){
+		$count = ShopOrdersMain::all()->count(); 
+		return $count;
 	}
 	
 }

@@ -4,7 +4,16 @@
 //shop uses $_SESSION['cart_dimmm931_1604938863'] to store and retrieve user's cart;
 ?>
 
+
+
+
+
 @section('content')
+
+<!-- Include js/css file for this view only -->
+<script src="{{ asset('js/ShopPaypalSimple_Admin/ajax_count_orders_quantity.js')}}"></script>  <!-- Count orders -->
+
+
 <div id="all" class="container animate-bottom">
     <div class="row">
         <div class="col-sm-12 col-xs-12">

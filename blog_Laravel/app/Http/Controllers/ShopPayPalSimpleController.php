@@ -8,6 +8,7 @@ use App\models\ShopSimple\ShopCategories; //model for DB table
 use Illuminate\Support\Facades\Validator;
 use App\models\ShopSimple\ShopOrdersMain; //model for DB table {shop_orders_main} that stores general info about the order (general amount, price, email, etc )
 use App\models\ShopSimple\ShopOrdersItems; //model for DB table {shop_order_item} to store a one user's order split by items, ie if Order contains 2 items (dvdx2, iphonex3). 
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\ShopShippingRequest; //my custom Form validation via Request
 
@@ -375,7 +376,7 @@ class ShopPayPalSimpleController extends Controller
 		
 		
 		
-		//save Order to DB tables {shop_orders_main} and {shop_order_item}
+		//save an Order to DB tables {shop_orders_main} and {shop_order_item}
 		$shopOrdersMain = new ShopOrdersMain();
 		$ShopOrdersItems = new ShopOrdersItems();
 		
@@ -384,13 +385,15 @@ class ShopPayPalSimpleController extends Controller
 		    return redirect('/checkOut2')->with('flashMessageFailX', "Error, SESSION is coruupted " );
 		}
 			
+	
 		
-		if($savedID = $shopOrdersMain->saveFields_to_shopOrdersMain($request->all())){  //$savedID is an id of saved/Inserted row
+		if($savedID = $shopOrdersMain->saveFields_to_shopOrdersMain($request->all())){  //saving to table {shop_orders_main} DB that stores general info about the order (general amount, price, email, etc ) //$savedID is an id of saved/Inserted row
 		    
 			if($ShopOrdersItems->saveFields_to_shop_order_item( $savedID, $_SESSION['cart_dimmm931_1604938863'], $inCartItems )){
 				
 			    return redirect('payPage2')->with(compact('input', 'savedID'))->with('flashMessageX', "Your data is saved to DB with id " . $savedID . ". Now proceed with payment" );
 		    } else {
+				
 				return redirect('/checkOut2')->with('flashMessageFailX', "Error saving to DB {shop_order_item}. Try Later" );
 			}
 			

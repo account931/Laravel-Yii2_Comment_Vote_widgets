@@ -381,8 +381,7 @@ USAGE
 
 //================================================================================================
 9.9.Migrations/Seeders    => see docs at => https://laravel.ru/docs/v5/migrations
-  see examples at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/tree/master/blog_Laravel/database/migrations
-                  => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/migrations/2020_11_22_135811_create_shop_orders_main_table.php
+  see examples (with comment column) at =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/migrations/2020_11_22_135811_create_shop_orders_main_table.php
   
   Laravel SQL  equivalents => https://laravel.com/docs/4.2/schema
   
@@ -448,13 +447,15 @@ USAGE
   1.Specify hasOne method in parent model  => 
       public function authorName(){return $this->hasOne('App\users', 'id', 'wpBlog_author')->withDefault(['name' => 'Unknown']);      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
       //->withDefault(['name' => 'Unknown']) this prevents the crash if this author id does not exist in table User (for example after fresh install and u forget to add users to user table)
-
+      arg -> (foreign_key', 'local_key');
+	  
   2.Use in view =>
       @foreach ($articles as $a){ 	p>Author:   {{ $a->authorName->name   }}</p> <!--   --> 
 
 10.2 hasMany relation
    1.Specify hasMany method in parent model  => 
      public function categoryNames(){return $this->belongsTo('App\models\wpress_category', 'wpBlog_category','wpCategory_id');  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');}
+     arg -> (foreign_key', 'local_key');
    2.Use in view =>
       <p>Category: {{ $a->categoryNames ->wpCategory_name }}</p> <!-- hasMany relations to show categoty name -->
 //================================================================================================
@@ -1073,6 +1074,9 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 
 # Use {toFixed(2)} to return 33.00 not 33.0008 =>  $(this).parent().next().html((numProduct*price).toFixed(2)); 
 
+# Check if not null => if($value->master && $value->master !== null)
+
+# Makes Grid table to be wide with scroll => <div class="col-sm-12 col-xs-12" style="width:80em;overflow-x: scroll;">
 //================================ End Move to Yii2 ReadMe =============================
 
 //================================================================================================

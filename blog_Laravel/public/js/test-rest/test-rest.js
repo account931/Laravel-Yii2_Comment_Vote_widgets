@@ -29,6 +29,7 @@ $(document).ready(function(){
         var dir = loc.substring(0, loc.lastIndexOf('/'));  ///laravel+Yii2_widgets/blog_Laravel/public    //yii2_REST_and_Rbac_2019/yii-basic-app-2.0.15/basic/web/manual-auto-quiz
 		//alert(dir);
 		var urlX = dir + '/api/articles/'+id;
+		//alert(urlX);
       
 	  // send ajax onLoad to PHP handler action to get list of questions  ************ 
         $.ajax({

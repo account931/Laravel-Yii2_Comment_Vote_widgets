@@ -10,6 +10,7 @@
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet"> 
 
 
+
 <!-- Sweet Alerts -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> <!-- Sweet Alert CSS -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script> <!--Sweet Alert JS-->
@@ -78,7 +79,7 @@
 		
 					  
 					<!-- Display orders -->
-                    <div class="col-sm-12 col-xs-12">
+                    <div class="col-sm-12 col-xs-12" style="width:80em;overflow-x: scroll;">
 					
 					<!-- THEAD -->
 		            <div class="col-sm-12 col-xs-12  list-group-item">
@@ -86,14 +87,15 @@
 						<div class="col-sm-2 col-xs-6">Status</div>
 			            <div class="col-sm-1 col-xs-6">Sum</div>
 			            <div class="col-sm-1 col-xs-6">Quant</div>
-						<div class="col-sm-1 col-xs-6">items</div>
+						<div class="col-sm-2 col-xs-6">Items</div>
 			            <div class="col-sm-2 col-xs-6">Name</div>
-						<div class="col-sm-2 col-xs-6">Date</div>
+						<div class="col-sm-1 col-xs-6">Date</div>
 						<div class="col-sm-1 col-xs-12">Paid</div>
 		            </div>
 		            <!-- End THEAD -->
 							
-							
+					<?php  //dd($itemsInOrder[5][0]->item_price); //dd(($v->orderDetail)->count()); ?>
+					<?php $i = 0; ?>
 					@foreach($shop_orders_main as $v)
 					  <div class="col-sm-12 col-xs-12  list-group-item">
 						<div class="col-sm-2 col-xs-12 "><i class="fa fa-calendar-check-o" style="font-size:24px"></i> {{ $v-> ord_uuid}}</div>
@@ -101,18 +103,31 @@
 						<div class="col-sm-1 col-xs-12 ">{{ $v-> ord_sum}}</div>
 						<div class="col-sm-1 col-xs-12 ">{{ $v-> items_in_order}}</div>
 						
-						
+						<!-- via ass -->
 						<!-- hasMany. Order details from table {shop_order_item}-->
-						<div class="col-sm-1 col-xs-6"> 
-                           <?php //dd($v->category); ?>
-						   {{$v->order_id}}
+						<div class="col-sm-2 col-xs-6" style="font-size:0.8em;"> 
+                           <?php  
+						     //dd($v->orderDetail); //dd(($v->orderDetail)->count()); 
+							 ?>
+							@for($k = 0; $k < count($itemsInOrder[$i]); $k++)
+							    @if($itemsInOrder[$i][$k]->item_price && $itemsInOrder[$i][$k]->item_price !== null) 
+									
+									<p><i class="fa fa-paperclip"></i> {{$itemsInOrder[$i][$k]->productName->shop_title}} </p> <!-- hasOne relation -->
+									<p>{{$itemsInOrder[$i][$k]->item_price}}$ * {{$itemsInOrder[$i][$k]->items_quantity}}  </p> <!-- price  * quantity -->
+								@else
+									<p> Not found </p>
+								@endif
+							    
+							@endfor
+							
+						   {{--$v->orderDetail->items_quantity--}}
 						</div>  <!-- hasMany. Order details from table {shop_order_item}-->
 						
-
+                       <?php $i++; ?>
 						
 						<div class="col-sm-2 col-xs-12 ">{{ $v-> ord_name }} {{ $v-> ord_address }} {{ $v-> ord_email }}</div>
-					    <div class="col-sm-2 col-xs-12 ">{{ $v-> ord_placed}}</div>
-						<div class="col-sm-2 col-xs-12 ">{{ ($v-> if_paid==0)? "Not paid" : "Paid"}}</div>
+					    <div class="col-sm-1 col-xs-12 ">{{ $v-> ord_placed}}</div>
+						<div class="col-sm-1 col-xs-12 ">{{ ($v-> if_paid==0)? "Not paid" : "Paid"}}</div>
 					  </div>
 					@endforeach
 					</div>

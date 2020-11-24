@@ -84,7 +84,7 @@ Route::get('/payPage2',  'ShopPayPalSimpleController@pay2')->name('/payPage2'); 
 //ShopSimple Admin Panel
 Route::get('/shopAdminPanel', 'ShopPayPalSimple_AdminPanel@index')->name('shopAdminPanel'); //display Admin Panel start page
 Route::get('/admin-orders',   'ShopPayPalSimple_AdminPanel@orders')->name('admin-orders'); //display Admin Panel ....
-
+Route::get('/count-orders', 'ShopPayPalSimple_AdminPanel@countOrders'); 
 
 
 
