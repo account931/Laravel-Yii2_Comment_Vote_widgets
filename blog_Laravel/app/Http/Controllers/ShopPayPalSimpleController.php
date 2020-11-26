@@ -388,12 +388,14 @@ class ShopPayPalSimpleController extends Controller
 	
 		
 		if($savedID = $shopOrdersMain->saveFields_to_shopOrdersMain($request->all())){  //saving to table {shop_orders_main} DB that stores general info about the order (general amount, price, email, etc ) //$savedID is an id of saved/Inserted row
-		    
-			if($ShopOrdersItems->saveFields_to_shop_order_item( $savedID, $_SESSION['cart_dimmm931_1604938863'], $inCartItems )){
+		    //an attempt to delete $savedID
+			try { 
+			    $ShopOrdersItems->saveFields_to_shop_order_item( $savedID, $_SESSION['cart_dimmm931_1604938863'], $inCartItems );  // saving to table {shop_order_item} to store a one user's order split by items, ie if Order contains 2 items (dvdx2, iphonex3). 
 				
 			    return redirect('payPage2')->with(compact('input', 'savedID'))->with('flashMessageX', "Your data is saved to DB with id " . $savedID . ". Now proceed with payment" );
-		    } else {
-				
+		    
+			} catch( Throwable $e ) {
+				$delete = ShopOrdersMain::where('order_id', $savedID)->delete(); //If error Delete by ID from table {shop_orders_main} as well
 				return redirect('/checkOut2')->with('flashMessageFailX', "Error saving to DB {shop_order_item}. Try Later" );
 			}
 			

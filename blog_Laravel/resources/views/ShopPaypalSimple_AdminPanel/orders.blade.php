@@ -1,5 +1,5 @@
 <?php
-//show.....
+//Admin page to show all shop orders in table
 ?>
 
 @extends('layouts.app')
@@ -7,8 +7,9 @@
 @section('content')
 
 <!-- Include js/css file for this view only -->
-<link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet"> 
 
+<link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet"> 
+<link href="{{ asset('css/ShopPaypalSimple_AdminPanel/shopSimpleAdmin_view_orders.css') }}" rel="stylesheet"> 
 
 
 <!-- Sweet Alerts -->
@@ -79,7 +80,7 @@
 		
 					  
 					<!-- Display orders -->
-                    <div class="col-sm-12 col-xs-12" style="width:80em;overflow-x: scroll;">
+                    <div class="col-sm-12 col-xs-12 fit-content">
 					
 					<!-- THEAD -->
 		            <div class="col-sm-12 col-xs-12  list-group-item">
@@ -88,9 +89,10 @@
 			            <div class="col-sm-1 col-xs-6">Sum</div>
 			            <div class="col-sm-1 col-xs-6">Quant</div>
 						<div class="col-sm-2 col-xs-6">Items</div>
-			            <div class="col-sm-2 col-xs-6">Name</div>
+			            <div class="col-sm-1 col-xs-6">Name</div>
 						<div class="col-sm-1 col-xs-6">Date</div>
-						<div class="col-sm-1 col-xs-12">Paid</div>
+						<div class="col-sm-1 col-xs-6">Paid</div>
+						<div class="col-sm-1 col-xs-6">User</div>
 		            </div>
 		            <!-- End THEAD -->
 							
@@ -99,42 +101,81 @@
 					@foreach($shop_orders_main as $v)
 					  <div class="col-sm-12 col-xs-12  list-group-item">
 						<div class="col-sm-2 col-xs-12 "><i class="fa fa-calendar-check-o" style="font-size:24px"></i> {{ $v-> ord_uuid}}</div>
-						<div class="col-sm-2 col-xs-12 ">{{ $v-> ord_status}}</div>
-						<div class="col-sm-1 col-xs-12 ">{{ $v-> ord_sum}}</div>
-						<div class="col-sm-1 col-xs-12 ">{{ $v-> items_in_order}}</div>
+						<!-- Status: proceeded/not-proceeded -->
+						<div class="col-sm-2 col-xs-12 ">{!! ($v->ord_status=='not-proceeded')? "<span class='text-danger'>Not proceeded</span>" : "<span class='text-success'>Pproceeded</span>" !!}</div><!-- Blade without escaping htmlentities()  -->
+						<div class="col-sm-1 col-xs-12 "><span class="visible-inline-xs">Sum:   </span> {{ $v-> ord_sum}} ₴ </div>       <!-- .visible-xs visible in mobile only, .visible-inline-xs is used to display in same line not next -->
+						<div class="col-sm-1 col-xs-12 "><span class="visible-inline-xs">Items: </span> {{ $v-> items_in_order}}</div>  <!-- .visible-xs visible in mobile only, .visible-inline-xs is used to display in same line not next -->
 						
-						<!-- via ass -->
-						<!-- hasMany. Order details from table {shop_order_item}-->
-						<div class="col-sm-2 col-xs-6" style="font-size:0.8em;"> 
-                           <?php  
-						     //dd($v->orderDetail); //dd(($v->orderDetail)->count()); 
-							 ?>
+						
+						
+						
+						
+						<!-- hasMany. Order details from table {shop_order_item} i.e  HP notebook 2 pcs * 35.31 ₴-->
+						
+						<div class="col-sm-2 col-xs-12" style="font-size:0.8em;"> 
+    
+							
+                            <!-- Start hasMany via ass. Working!!! Currently commented in view and reassigned to hasMany -->							
+							<?php
+							//php opening tag is used here only to comment the whole block of Blade
+							/*
 							@for($k = 0; $k < count($itemsInOrder[$i]); $k++)
 							    @if($itemsInOrder[$i][$k]->item_price && $itemsInOrder[$i][$k]->item_price !== null) 
-									
-									<p><i class="fa fa-paperclip"></i> {{$itemsInOrder[$i][$k]->productName->shop_title}} </p> <!-- hasOne relation -->
-									<p>{{$itemsInOrder[$i][$k]->item_price}}$ * {{$itemsInOrder[$i][$k]->items_quantity}}  </p> <!-- price  * quantity -->
+									<div class="border">
+									  <p><i class="fa fa-paperclip"></i> {{$itemsInOrder[$i][$k]->productName->shop_title}} </p> 
+									  <p>{{$itemsInOrder[$i][$k]->items_quantity}}  * {{$itemsInOrder[$i][$k]->item_price}}$  </p> {{-- quantity * price   --}}
+								    </div>
 								@else
 									<p> Not found </p>
 								@endif
 							    
 							@endfor
+						   */
+						   ?>
+						   <!-- End hasMany via ass. Working!!! Currently commented in view and reassigned to hasMany -->
+						   
+						   
+						   
+						   
+						    <!-- additionall check (in case u saved order to table {shop_orders_main} but saving to table {shop_order_item} failed and therefore table {shop_order_item} does not have related/corresponded column to  {shop_orders_main}) -->
+						    @if( $v->orderDetail->isEmpty() )
+								 corrupted data
+							@else
+						   
+						       <!-- hasMany realtionShip, Working!!!!. Mega Error: hasMany must be inside second foreach -->
+						       @foreach ($v->orderDetail as $x)
+						       <div class="border">
 							
-						   {{--$v->orderDetail->items_quantity--}}
+							     <p><i class="fa fa-paperclip"></i> {{$x->productName->shop_title}} </p> 
+							     <p> {{$x->items_quantity}} pcs  * {{$x->item_price}} ₴ = {{ $x->items_quantity * $x->item_price }} ₴ </p> {{-- quantity * price = sum  --}}
+							   </div>		  
+						       @endforeach
+						       <!-- hasMany realtionShip, Working!!!! -->
+						   
+						   @endif
+			 
+						   
 						</div>  <!-- hasMany. Order details from table {shop_order_item}-->
 						
                        <?php $i++; ?>
 						
-						<div class="col-sm-2 col-xs-12 ">{{ $v-> ord_name }} {{ $v-> ord_address }} {{ $v-> ord_email }}</div>
-					    <div class="col-sm-1 col-xs-12 ">{{ $v-> ord_placed}}</div>
-						<div class="col-sm-1 col-xs-12 ">{{ ($v-> if_paid==0)? "Not paid" : "Paid"}}</div>
+						
+						
+						<!-- Buyer details, address, phone, etc -->
+						<div class="col-sm-1 col-xs-12 "> {{ $v-> ord_name }}</br> {{ $v-> ord_address }}</br> {{ $v-> ord_email }} </div>
+					    <!-- Date, teime when order was placed -->
+						<div class="col-sm-1 col-xs-12 "> {{ $v-> ord_placed}}</div>
+						<div class="col-sm-1 col-xs-12 "> {!! ($v-> if_paid==0)? "<span class='text-danger'>Not paid</span>" : "<span class='text-success'>Paid</span>" !!}</div> <!-- Blade without escaping htmlentities()  -->
+					    <div class="col-sm-1 col-xs-12 "> <span class="visible-inline-xs">UserID: </span> {{ $v->ord_user_id }}</div> <!-- .visible-xs visible in mobile only, .visible-inline-xs is used to display in same line not next -->
 					  </div>
 					@endforeach
 					</div>
 					
+					
+					
 					<!-- Pagination -->
 					<div class="col-sm-12 col-xs-12 ">
-					{{-- $shop_orders_main->links() --}}
+					{{ $shop_orders_main->links() }}
 					</div>
 					<!-- Pagination -->
 					

@@ -71,8 +71,13 @@ class ShopPayPalSimple_AdminPanel extends Controller
        //https://stackoverflow.com/questions/29165410/how-to-join-three-table-by-laravel-eloquent-model
        //$shop_orders_main = ShopOrdersMain::with('items')->get();
 	   
-	   //Via  ass
-	   $shop_orders_main = ShopOrdersMain::with('orderDetail')->get(); //all();//where('ord_status', 'not-proceeded')->get(); //->paginate(3); 
+	   
+	   
+	   
+	   
+	   //Start hasMany Via ass (though working). Currently commented in view and reassigned to hasMany
+	   /*
+	   $shop_orders_main = ShopOrdersMain::where('ord_status', 'not-proceeded')->paginate(3); //all();//where('ord_status', 'not-proceeded')->get(); //->paginate(3); 
 	   
 	   $itemsInOrder = array();
 	   foreach($shop_orders_main as $p){
@@ -81,14 +86,13 @@ class ShopPayPalSimple_AdminPanel extends Controller
 		       array_push($itemsInOrder, $i);
 	       //}
 	   }
-	
+	   */
+	   //End  hasMany Via ass (though working). Currently commented in view and reassigned to hasMany
 	    
-		/*
-		$shop_orders_main = ShopOrdersMain::where('ord_status', 'not-proceeded')->paginate(3); 
 		
-		$t = $shop_orders_main->map(function ($cat){
-            $cat->items = ShopOrdersItems::where('fk_order_id', $cat->order_id)->get();
-        });*/
+		//Find all oreders by where clause. Will engage hasmany in view
+		$shop_orders_main = ShopOrdersMain::where('ord_status', 'not-proceeded')->orderBy('order_id', 'desc')->paginate(3);
+	
 		
 		
 		return view('ShopPaypalSimple_AdminPanel.orders')->with(compact('shop_orders_main', 'itemsInOrder')); 

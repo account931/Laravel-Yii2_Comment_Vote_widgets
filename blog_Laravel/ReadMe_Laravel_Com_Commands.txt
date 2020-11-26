@@ -452,12 +452,21 @@ USAGE
   2.Use in view =>
       @foreach ($articles as $a){ 	p>Author:   {{ $a->authorName->name   }}</p> <!--   --> 
 
-10.2 hasMany relation
+10.2 hasMany relation, see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/orders.blade.php
    1.Specify hasMany method in parent model  => 
-     public function categoryNames(){return $this->belongsTo('App\models\wpress_category', 'wpBlog_category','wpCategory_id');  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');}
-     arg -> (foreign_key', 'local_key');
+       public function categoryNames(){ return $this->hasMany('App\models\ShopSimple\ShopOrdersItems', 'fk_order_id', 'order_id');//->withDefault(['fk_order_id' => 'Unknown']); //arg -> (foreign_key', 'local_key');
+       WRONG => //public function categoryNames(){ return $this->belongsTo('App\models\wpress_category', 'wpBlog_category','wpCategory_id');  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');}
+     
    2.Use in view =>
-      <p>Category: {{ $a->categoryNames ->wpCategory_name }}</p> <!-- hasMany relations to show categoty name -->
+	  @foreach ($dbResulta as $v)
+	      @foreach ($v->categoryNames as $x) //hasMany must be inside second foreach
+		    {{$x->columnName}}
+	      @endforeach
+	  @endforeach
+	  WRONG =>  //<p>Category: {{ $a->categoryNames ->wpCategory_name }}</p> <!-- hasMany relations to show categoty name -->
+
+ # Check if relation exists (example for hasMany), see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/orders.blade.php
+  @if( $v->orderDetail->isEmpty() )
 //================================================================================================
 
 
@@ -895,7 +904,10 @@ It is done pretty like the same as for Login, see  example at => https://github.
     .col-md- (medium devices - screen width equal to or greater than 768px)
     .col-lg- (large devices - screen width equal to or greater than 992px)
     .col-xl- (xlarge devices - screen width equal to or greater than 1200px)
-# bootstrap 3 hidden/visible => .hidden-xs	visible-xs 
+	
+# bootstrap 3 hidden/visible on mobile  => .hidden-xs	visible-xs
+# bootstrap 3 hidden/visible on desktop  => .hidden-sm	visible-sm  
+                                           .visible-inline-xs is used to display on the same line not next 
 
 #image =>           <img class="img-responsive my-cph" src="{{URL::to("/")}}/images/cph.jpg"  alt="a"/>
 #link a href => 	<li><a href="{{ route('register') }}">Gii</a></li>
@@ -1005,6 +1017,11 @@ composer dump-autoload
 </div>
 
 
+/* ---------------------------------------- Mobile */
+@media screen and (max-width: 480px) { 
+    .my-one {width:100%;} /* my shop image*/
+}
+ 
 
 
 

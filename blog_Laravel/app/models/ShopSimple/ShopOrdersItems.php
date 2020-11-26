@@ -35,7 +35,7 @@ class ShopOrdersItems extends Model
     */
 	public function saveFields_to_shop_order_item($savedID, $sessionData, $inCartItems){ //args are [ id of saved Order in table {shop_orders_main}, Session cart $_SESSION['cart_dimmm931_1604938863'], SQl query of products in cart ]
 		
-		try{
+		//try{
 		    $v = array();
 		    foreach($sessionData as $key => $val){ //Mega Fix =>  you have to create new object in every step of loop, cant use $this
 			
@@ -49,14 +49,21 @@ class ShopOrdersItems extends Model
 			  $new->item_price =      $inCartItems[$keyN]['shop_price'];
 			  $new->currency =        $inCartItems[$keyN]['shop_currency'];
 			  //$new ->ord_user_id =     auth()->user()->id ?  auth()->user()->id : 0;// User/Buyer Id, 0 if unlogged
-			  $new ->save();	
+			  $new ->save();
+              			  
 		}
 		
-		} catch(Exception $e) {
+		
+		//} catch(Illuminate\Database\QueryException $ex /* Throwable $e */) {
                 //DOES NOT WORK!!!!!!!!!!!!!
 				//delete the Order inserted to table {shop_orders_main} by {$savedID}. I.e simulation of transactions
-				ShopOrdersMain::where('order_id', $savedID)->delete(); //Delete
-		}
+				/*dd('stopped');
+				} catch (PDOException $ex) {
+                  dd($ex);
+				}
+		*/	
+				//ShopOrdersMain::where('order_id', $savedID)->delete(); //Delete
+		//}
 		   
 		return true;
 		
