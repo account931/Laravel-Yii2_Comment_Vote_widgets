@@ -1,11 +1,11 @@
 <?php
 //show pay page. Show submitted on prev page Shipping form (address, phone etc ) & buttons to Pay.
+//THIS PAGE NO LONGER USES $_SESSION['cart_dimmm931_1604938863'] to store and retrieve user's cart; Format is { [8]=> int(3) [1]=> int(2) [4]=> int(1) }
+//THIS PAGE NO LONGER USES $_SESSION['cart_dimmm931_1604938863'] or $input => Values are now derived from DB by passed Order ID
 ?>
 
 @extends('layouts.app')
-<?php
-//uses $_SESSION['cart_dimmm931_1604938863'] to store and retrieve user's cart; Format is { [8]=> int(3) [1]=> int(2) [4]=> int(1) }
-?>
+
 
 @section('content')
 
@@ -206,19 +206,53 @@
 	  </div>
   
      <?php //dd($input); ?>
+	 
+	 <!--  getting Order detail from $input passed from {function pay1} -->
       <div class="col-sm-12 col-xs-12 shadowX">
 	  <hr>
 	      <p> Order Id <i class="fa fa-check-square-o"></i>  {{ $input['u_uuid']   }}   </p>
-	      <h3> Shipping details </h3> 
-		  
+	      <h3> Shipping details (from passed Input)</h3> 
 		  <p> <i class="fa fa-address-card-o"></i>  {{ $input['u_name']    }}   </p>
 		  <p> <i class="fa fa-archive"></i>         {{ $input['u_email']   }}   </p>
 		  <p> <i class="fa fa-arrows"></i>          {{ $input['u_address'] }}   </p>
 		  <p> <i class="fa fa-bell-o"></i>          {{ $input['u_phone']   }}   </p>
-		  
-		 
 	  </div>
 	  
+	  
+	  <!--  getting Order detail from DB by ID {$savedID} passed from {function pay1} -->
+	  <div class="col-sm-12 col-xs-12 shadowX">
+	  <hr>
+	      <p> Order Id <i class="fa fa-check-square-o"></i>  {{ $thisOrder[0]->ord_uuid }}   </p>
+	      <h3> Shipping details (from SQL) </h3>
+          <p>Data retrieved from DB by passed from {function pay1}Order ID savedID</p>		  
+		  <p> <i class="fa fa-address-card-o"></i>  {{ $thisOrder[0]->ord_name   }}   </p>
+		  <p> <i class="fa fa-archive"></i>         {{ $thisOrder[0]->ord_email   }}   </p>
+		  <p> <i class="fa fa-arrows"></i>          {{ $thisOrder[0]->ord_address }}   </p>
+		  <p> <i class="fa fa-bell-o"></i>          {{ $thisOrder[0]->ord_phone }}   </p>
+	  </div>
+	  
+	  
+	  
+	  <!-- Display Items of this Order by hasMany and hasOne. Order details comes from table {shop_order_item}-->
+	  <div class="col-sm-12 col-xs-12 shadowX ord-list">
+	  <hr>
+	  <!-- additionall check (in case u saved order to table {shop_orders_main} but saving to table {shop_order_item} failed and therefore table {shop_order_item} does not have related/corresponded column to  {shop_orders_main}) -->
+	      @if( $thisOrder[0]->orderDetail->isEmpty() )
+		     corrupted data
+		  @else
+						   
+		      <!-- hasMany realtionShip, hasMany must be inside second foreach -->
+		      @foreach ($thisOrder[0]->orderDetail as $x) <!-- hasMany -->
+		      <div class="border">
+							
+			      <p><i class="fa fa-paperclip"></i> {{$x->productName->shop_title}} </p> <!-- hasOne --> 
+			      <p> {{$x->items_quantity}} pcs  * {{$x->item_price}} ₴ = {{ $x->items_quantity * $x->item_price }} ₴ </p> {{-- quantity * price = sum  --}} <!-- hasOne --> 
+		      </div>		  
+		     @endforeach
+		     <!-- hasMany realtionShip, Working!!!! -->
+						   
+		 @endif	 				   
+	  </div>  <!-- end .ord-list --> <!-- hasMany. Order details from table {shop_order_item}-->
 	  
 	  
   
@@ -244,7 +278,7 @@
 
 			
        <div class="col-sm-12 col-xs-12"> <!-- just Spacing -->
-	       <hr>
+	       <hr
 	   </div>
   
   

@@ -392,7 +392,7 @@ class ShopPayPalSimpleController extends Controller
 			try { 
 			    $ShopOrdersItems->saveFields_to_shop_order_item( $savedID, $_SESSION['cart_dimmm931_1604938863'], $inCartItems );  // saving to table {shop_order_item} to store a one user's order split by items, ie if Order contains 2 items (dvdx2, iphonex3). 
 				
-			    return redirect('payPage2')->with(compact('input', 'savedID'))->with('flashMessageX', "Your data is saved to DB with id " . $savedID . ". Now proceed with payment" );
+			    return redirect('payPage2')->with(compact('input', 'savedID'))->with('flashMessageX', "Your data is saved to DB with id " . $savedID . ". Now proceed with payment" ); //$input in longer neccessary, reassigned to  $savedID , i.e ID of saved order (and use it to get values from DB)
 		    
 			} catch( Throwable $e ) {
 				$delete = ShopOrdersMain::where('order_id', $savedID)->delete(); //If error Delete by ID from table {shop_orders_main} as well
@@ -421,8 +421,8 @@ class ShopPayPalSimpleController extends Controller
 	 
     public function pay2()
     {
-		if(!session()->get('input')){
-			return redirect('/shopSimple')->with('flashMessageFailX', 'You are returned here, as were not supposed to visit that previous page {payPage2} directtle (without the input)' );
+		if(!session()->get('input')){ //$input in longer neccessary, as it'll be reassigned to  $savedID , i.e ID of saved order (and use it to get values from DB)
+			return redirect('/shopSimple')->with('flashMessageFailX', 'You are returned here, as were not supposed to visit that previous page {payPage2} directly (without the input and OrderID)' );
 		}
 		session_start();
 		
@@ -447,8 +447,10 @@ class ShopPayPalSimpleController extends Controller
 		//End Gets Products that are already in cart to display them in view
 		
 		
+		//finding this One order in DB by ID {$savedID} passed from {function pay1}
+		$thisOrder = ShopOrdersMain::where('order_id', session()->get('savedID') )->get();
 		
-		return view('ShopPaypalSimple.pay-page')->with(compact('input', 'inCartItems'));  
+		return view('ShopPaypalSimple.pay-page')->with(compact('input', 'inCartItems', 'thisOrder'));  
 
 	}
 }

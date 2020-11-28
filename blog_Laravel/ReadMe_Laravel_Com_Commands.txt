@@ -1,11 +1,13 @@
 Laravel Framework 5.4.36
-OpenServer 5.2.2 Php 7.2
+OpenServer 5.2.2 Php 7.2 Node-v13.14.0-x86.msi
 Credentials: dimmm931@gmail.com =>  dimax2
+
+  
 
 On HP EliteBook 2530p: Composer -> via Windows cmd, artisan -> via OpenServer (navigate to your project folder first with cd ), 
         git -> via Windows cmd, NPM -> composer
 
-On T42: so far the same, but Composer -> via Openserver
+On T42: so far the same, but Composer -> via Openserver, NPM -> via Windows cmd
 
 Table of Content:
 1.How to install Laravel
@@ -38,6 +40,7 @@ Table of Content:
 23. After Login redirect to previous page
 23.2 After Registration redirect to previous page 
 24. Save to DB (SQL INSERT) via model function
+25. Laravel Vue
 
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
@@ -618,9 +621,9 @@ USAGE
    Works so muck like Browserify + Gulp.......
     All Development css/js (js/css u're changing) are located in /resources/assets/. They are not included to index.php (\resources\views\layouts). 
 	Included css/js are in /public. To convert Development assets to Production(to minify, concatenate), run => npm run production
-    «апустить все задачи Mix и минифицировать вывод => go to cmd => npm run production 
+    # npm run production  => «апустить все задачи Mix и минифицировать вывод => go to cmd => 
    
-   if error {"cross-env" не €вл€етс€ внутренней или внешней командой}  =>   npm i cross-env --save
+   if error {"cross-env" не €вл€етс€ внутренней или внешней командой} (in project folder)  =>   npm i cross-env --save
    if error {"Node events.js:167 throw er; // Unhandled 'error' event"} =>  Removing the node_modules directory and reinstalling again using npm install should solve the problem.
 
    
@@ -884,6 +887,22 @@ It is done pretty like the same as for Login, see  example at => https://github.
 
 
 
+//================================================================================================
+25. Laravel Vue
+ Vue components are updated upon watch or npm run production
+ #change css based on props =>  <div class="panel-body" :class="cssState? ' text-danger' : ''"> <!-- change css based on props -->
+//================================================================================================
+
+
+
+
+
+
+
+
+
+
+
 //================================================================================================ 
 34.Highlight active menu item
  #Highlight active menu item =>  (OR https://medium.com/@rizkhallamaau/create-a-helper-for-active-link-in-laravel-5-6-30827a760593)
@@ -1001,7 +1020,12 @@ composer dump-autoload
 
 # get id of new saved row/Get the Last Inserted Id => see function saveFields_to_shopOrdersMain at example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/ShopSimple/ShopOrdersMain.php
 
-
+# gets url route for ajax =>
+  1. via js  =>  see example at =>https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/ShopPaypalSimple_Admin/ajax_count_orders_quantity.js
+       var loc = window.location.pathname;
+       var dir = loc.substring(0, loc.lastIndexOf('/'));  ///laravel+Yii2_widgets/blog_Laravel/public    
+       var urlX = dir + '/count-orders';
+  2. via php => see =>  # pass php var to js
 
 
 

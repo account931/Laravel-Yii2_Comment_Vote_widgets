@@ -85,7 +85,7 @@
                     <div class="col-sm-12 col-xs-12 adm-icons"> <hr>
                       <center>
 	   
-	                  <div class="col-sm-2 col-xs-6 mobile-padding badge1 bb " data-badge=""> <!-- badge -->
+	                  <div class="col-sm-2 col-xs-6 mobile-padding badge1 bb " data-badge="?"> <!-- badge -->
                         <div class='subfolder border shadowX'>
 					       <a href="{{ route('cart') }}">  
 						     <i class="fa fa-address-card-o" style="font-size:96px"></i> 

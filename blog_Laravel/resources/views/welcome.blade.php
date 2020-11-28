@@ -101,7 +101,8 @@
                 </div>
 				
 				
-
+                <example></example> <!-- Vue Component -->
+				
                 <div class="links">
 				    <div class="col-sm-4 col-xs-6">
 				        <a href="#">MyWaze</a>

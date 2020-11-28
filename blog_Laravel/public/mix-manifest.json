@@ -1,7 +1,3 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/js/wpress_blog.js": "/js/wpress_blog.js",
-    "/js/test-rest/test-rest.js": "/js/test-rest/test-rest.js",
-    "/css/my_css.css": "/css/my_css.css"
+    "/js/app.js": "/js/app.js"
 }

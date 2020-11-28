@@ -101,6 +101,7 @@
 							 <li class="{{ Request::is('shopAdminPanel*') ? 'active' : '' }}"><a href="{{ route('shopAdminPanel') }}">E-shop AdminP</a></li>
 							 <li><a href="{{ route('register') }}">Booking(N/A)</a></li>
 							 <li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>
+							 <li><a href="{{ route('register') }}">Vue JS(N/A)</a></li>
 						 </ul>
                        </li>
 					 <!-- END Submenu DropDown!!!! (Bootsrap) -->
