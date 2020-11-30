@@ -41,6 +41,8 @@ Table of Content:
 23.2 After Registration redirect to previous page 
 24. Save to DB (SQL INSERT) via model function
 25. Laravel Vue
+26. PayPal
+
 
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
@@ -900,6 +902,24 @@ It is done pretty like the same as for Login, see  example at => https://github.
 
 
 
+//================================================================================================
+26. PayPal
+ https://developer.paypal.com/developer/accounts/
+ https://www.sandbox.paypal.com/mep/dashboard
+
+For SandBox use:
+  Facilitator/Business Account
+  Buyer Account
+  
+  
+//================================================================================================
+
+
+
+
+
+
+
 
 
 
@@ -1028,7 +1048,8 @@ composer dump-autoload
   2. via php => see =>  # pass php var to js
 
 
-
+# where store API Keys (NOT WORKING!!!!!!) => in .env.php =>  'SECRET_API_KEY' => 'PUT YOUR API KEY HERE'
+   get: env('SECRET_API_KEY');
 
 //================================================================================================
 35.2.Miscellaneous VA HTML/CSS

@@ -103,11 +103,17 @@
 .my-one {width:90%;}
 .my-one-modal{width:60%;}
 
+.my-one-2{width:6%;} /* image in views/pay-page.blade.php */
+
 
 /* ---------------------------------------- Mobile */
 @media screen and (max-width: 480px) { 
     .my-one {width:100%;} /* my shop image*/
+	.my-one-2{width:10%;} /* image in views/pay-page.blade.php */
 }
+ 
+ 
+ 
  
  
 /* ---- Shadow CSS */

@@ -325,9 +325,11 @@
 
 			
        <div class="col-sm-12 col-xs-12" style="height:10em;"> <!-- just Spacing -->
-	       <hr>
+	       <hr> key goes here...<?php echo env('LIQPAY_PUBLIC_KEY', 'screw you'); ?>
 	   </div>
-  
+	   
+	  
+     
   
   
   

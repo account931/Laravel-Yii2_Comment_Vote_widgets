@@ -233,23 +233,48 @@
 	  
 	  
 	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  <!-- Display ordered Items from SQL DB -->
 	  <!-- Display Items of this Order by hasMany and hasOne. Order details comes from table {shop_order_item}-->
 	  <div class="col-sm-12 col-xs-12 shadowX ord-list">
 	  <hr>
 	  <!-- additionall check (in case u saved order to table {shop_orders_main} but saving to table {shop_order_item} failed and therefore table {shop_order_item} does not have related/corresponded column to  {shop_orders_main}) -->
-	      @if( $thisOrder[0]->orderDetail->isEmpty() )
+	      @if( $thisOrder[0]->orderDetail->isEmpty() ) <!-- hasMany relation, model {ShopOrdersMain} connects by ID to model {ShopOrdersItems} -->
 		     corrupted data
 		  @else
 						   
 		      <!-- hasMany realtionShip, hasMany must be inside second foreach -->
 		      @foreach ($thisOrder[0]->orderDetail as $x) <!-- hasMany -->
 		      <div class="border">
-							
-			      <p><i class="fa fa-paperclip"></i> {{$x->productName->shop_title}} </p> <!-- hasOne --> 
-			      <p> {{$x->items_quantity}} pcs  * {{$x->item_price}} ₴ = {{ $x->items_quantity * $x->item_price }} ₴ </p> {{-- quantity * price = sum  --}} <!-- hasOne --> 
-		      </div>		  
+			  
+			       <!-- product title -->
+				  <div class="col-sm-12 col-xs-12">		
+			          <p><b><i class="fa fa-paperclip"></i> {{$x->productName2->shop_title}} </b></p> <!-- hasOne --> <!--hasOne function {productName} from model {ShopOrdersItems} connects by id to model {ShopSimple} -->
+			      </div>
+				  
+			      <!-- image -->
+			      <div class="col-sm-12 col-xs-12">
+				      &nbsp;&nbsp;<img class="my-one-2" src="{{URL::to("/")}}/images/ShopSimple/{{$x->productName2->shop_image }} "alt="a" /><!-- hasOne --> <!--hasOne function {productName} from model {ShopOrdersItems} connects by id to model {ShopSimple} -->
+				  </div>
+				  
+				  <!-- quantity * price = sum -->
+				  <div class="col-sm-12 col-xs-12">
+				      <div class="col-sm-4 col-xs-3">  {{$x->items_quantity}} <span class="hidden-xs">pcs</span>  </div> <!-- .hidden-xs = visible in desktop only -->
+					  <div class="col-sm-4 col-xs-4">  {{$x->item_price}} ₴       </div> 
+					  <div class="col-sm-4 col-xs-5">  {{ $x->items_quantity * $x->item_price }} ₴ </div> {{-- quantity * price = sum  --}} <!-- hasOne --> 
+		              <hr>
+				  </div>
+				  
+			  </div>		  
 		     @endforeach
-		     <!-- hasMany realtionShip, Working!!!! -->
+		     <!-- End hasMany realtionShip, Working!!!! -->
+			 <!-- END Display ordered Items from SQL DB -->
 						   
 		 @endif	 				   
 	  </div>  <!-- end .ord-list --> <!-- hasMany. Order details from table {shop_order_item}-->
@@ -276,10 +301,76 @@
 	   <!-- end New form with button "Pay with LiqPay") ) -------->		
 			
 
-			
+
+
+
+
+
+
+
+
+       <!-------  REAL PAYPAL ------>
+	   <?php
+	   $payNowButtonUrl = 'https://www.sandbox.paypal.com/cgi-bin/websc';
+	   $receiverEmail = 'sb-qwtmd3901800@personal.example.com'; //email получателя платежа(на него зарегестрирован paypal аккаунт) 
+
+       $productId = 1;
+       $itemName = 'Complex Order';	// название продукта
+       $amount = $totalSum; //'1.0'; // цена продукта(за 1 шт.)
+       $quantity = 1;	// количество
+
+      $returnUrl = 'http://account93.zzz.com.ua/laravel_CPH/public/pay-or-fail?status=paymentSuccess';
+      $customData = ['user' => 'Dima', 'product_id' => $productId, 'myOrderID' => $thisOrderID ];
+      ?>
+
+     <form action="<?php echo $payNowButtonUrl; ?>" method="post">
+    <input type="hidden" name="cmd" value="_xclick">
+    <input type="hidden" name="business" value="<?php echo $receiverEmail; ?>">
+    <input id="paypalItemName" type="hidden" name="item_name" value="<?php echo $itemName; ?>">
+    <input id="paypalQuantity" type="hidden" name="quantity" value="<?php echo $quantity; ?>">
+    <input id="paypalAmmount" type="hidden" name="amount" value="<?php echo $amount; ?>">
+    <input type="hidden" name="no_shipping" value="1">
+    <input type="hidden" name="return" value="<?php echo $returnUrl; ?>">
+
+    <input type="hidden" name="custom" value="<?php echo json_encode($customData);?>">
+
+    <input type="hidden" name="currency_code" value="USD">
+    <input type="hidden" name="lc" value="US">
+    <input type="hidden" name="bn" value="PP-BuyNowBF">
+
+    <button type="submit" class="btn btn-primary" style="font-size:18px">Pay with PayPal <?=$totalSum?> ₴ <i class="fa fa-cc-paypal"></i>   
+    </button>
+ </form><hr><hr>
+	<!-------  END REAL PAYPAL ------>   
+
+		
+
+   <!-------  LiqPay Button ------>  
+   <div class="col-sm-12 col-xs-12">
+        <?php
+		$LiqPayButton = $liqpay->cnb_form(array(
+                  'action'         => 'pay',
+                  'amount'         => $totalSum, //'22',
+                  'currency'       => 'USD',
+                  'description'    => 'hey-hey',
+                  'order_id'       => 'order_id_1',
+                  'version'        => '3',
+                  'language'       => 'en'
+        ));
+		echo $LiqPayButton;
+		?>
+   </div>
+   <!-------  LiqPay Button ------>
+
+
+		
        <div class="col-sm-12 col-xs-12"> <!-- just Spacing -->
-	       <hr
+	       <hr>
 	   </div>
+  
+  
+  
+  
   
   
   

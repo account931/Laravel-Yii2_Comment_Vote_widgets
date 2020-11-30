@@ -11,6 +11,7 @@ use App\models\ShopSimple\ShopOrdersItems; //model for DB table {shop_order_item
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\ShopShippingRequest; //my custom Form validation via Request
+use App\ThirdParty_SDK\LiqPaySDK\LiqPay; //LiqPay SDK
 
 class ShopPayPalSimpleController extends Controller
 {
@@ -301,6 +302,10 @@ class ShopPayPalSimpleController extends Controller
 		//End Gets Products that are already in cart to display them in view  
 		  
 		
+		
+		
+
+
 		//dd($request->input('productID'), $request->input('yourInputValueX'));
 	    //return redirect('/shopSimple')->with('flashMessageX', "Was successfully added to cart. Product: " . $productOne[0]->shop_title  . ". Quantity : " . $request->input('yourInputValue') . " items" );
         return view('ShopPaypalSimple.checkOut')->with(compact('inCartItems', 'uuid')); 
@@ -422,7 +427,7 @@ class ShopPayPalSimpleController extends Controller
     public function pay2()
     {
 		if(!session()->get('input')){ //$input in longer neccessary, as it'll be reassigned to  $savedID , i.e ID of saved order (and use it to get values from DB)
-			return redirect('/shopSimple')->with('flashMessageFailX', 'You are returned here, as were not supposed to visit that previous page {payPage2} directly (without the input and OrderID)' );
+			return redirect('/shopSimple')->with('flashMessageFailX', ' <i class="fa fa-angle-double-left" style="font-size:3em;color:red"></i> &nbsp; You are returned here, as were not supposed to visit that previous page {payPage2} directly (without the input and OrderID) ' );
 		}
 		session_start();
 		
@@ -446,11 +451,40 @@ class ShopPayPalSimpleController extends Controller
 		} 
 		//End Gets Products that are already in cart to display them in view
 		
+		$thisOrderID = session()->get('savedID');
 		
 		//finding this One order in DB by ID {$savedID} passed from {function pay1}
 		$thisOrder = ShopOrdersMain::where('order_id', session()->get('savedID') )->get();
 		
-		return view('ShopPaypalSimple.pay-page')->with(compact('input', 'inCartItems', 'thisOrder'));  
+		
+		
+		
+		//LiqPay SDK Button  (to pass to view)    
+		//$liqpay = new LiqPay(env('LIQPAY_PUBLIC_KEY'), env('LIQPAY_PRIVATE_KEY'));
+		$liqpay = new LiqPay('LIQPAY_PUBLIC_KEY', 'LIQPAY_PRIVATE_KEY');
+        
+
+		
+		return view('ShopPaypalSimple.pay-page')->with(compact('input', 'inCartItems', 'thisOrder', 'thisOrderID', 'liqpay'));  
 
 	}
+	
+	
+	
+	
+	/**
+     * final payment page, returned by PayPal INP Listener, displays if payment was successfull or not
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	 
+    public function payOrFail()
+    {
+		$postData = file_get_contents('php://input');
+		
+		$input_data = $_POST;
+		
+		return view('ShopPaypalSimple.payOrFail_final')->with(compact('postData', 'input_data'));  
+	}
+	
 }

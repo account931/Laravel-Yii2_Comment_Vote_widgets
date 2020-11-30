@@ -73,9 +73,10 @@ Route::post('/checkOut', 'ShopPayPalSimpleController@checkOut')->name('/checkOut
 //just to prevent users entering get url for post method, i.e if user enter /checkOut manually in browser
 Route::get('/checkOut', function () { throw new \App\Exceptions\myException('Bad request. Not POST request, You are not expected to enter this page.'); });
 
-Route::get('/checkOut2', 'ShopPayPalSimpleController@checkOut2')->name('/checkOut2');  //route to method to checkOut (page with shipping details), send via GET
-Route::post('/payPage1', 'ShopPayPalSimpleController@pay1')->name('/payPage1');  //route to get <form> data via $_POST from Checkout/Order page (Shipping details (address, phone. etc)) and redirects to $_GET page route {payPage2}. 
-Route::get('/payPage2',  'ShopPayPalSimpleController@pay2')->name('/payPage2');  //route final pay page, send via POST form
+Route::get('/checkOut2',   'ShopPayPalSimpleController@checkOut2')->name('/checkOut2');  //route to method to checkOut (page with shipping details), send via GET
+Route::post('/payPage1',   'ShopPayPalSimpleController@pay1')->name('/payPage1');        //route to get <form> data via $_POST from Checkout/Order page (Shipping details (address, phone. etc)) and redirects to $_GET page route {payPage2}. 
+Route::get('/payPage2',    'ShopPayPalSimpleController@pay2')->name('/payPage2');        //route final pay page, send via POST form
+Route::get('/pay-or-fail', 'ShopPayPalSimpleController@payOrFail')->name('pay-or-fail'); //final payment page, returned by PayPal INP Listener, displays if payment was successfull or not
 
 
 
@@ -84,7 +85,7 @@ Route::get('/payPage2',  'ShopPayPalSimpleController@pay2')->name('/payPage2'); 
 //ShopSimple Admin Panel
 Route::get('/shopAdminPanel', 'ShopPayPalSimple_AdminPanel@index')->name('shopAdminPanel'); //display Admin Panel start page
 Route::get('/admin-orders',   'ShopPayPalSimple_AdminPanel@orders')->name('admin-orders'); //display Admin Panel ....
-Route::get('/count-orders', 'ShopPayPalSimple_AdminPanel@countOrders'); 
+Route::get('/count-orders',   'ShopPayPalSimple_AdminPanel@countOrders'); // fot ajax counting Orders in Admin panel
 
 
 

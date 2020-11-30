@@ -55,14 +55,23 @@
                 <!-- End Display form validation errors var 2 -->				
 					
 					
-                <div class="panel-heading text-warning">
-				    Admin Orders <span class="small text-danger">*</span> 
+                <div class="panel-heading text-warning col-sm-12 col-xs-12">
+				     
+
 					<!-- Link to go back -->
-				    <div>
-				    &nbsp;<i class="fa fa-hand-o-left" style="font-size:24px"></i>
-				    <a href="{{ url('/shopAdminPanel') }}">back to admin panel </a>
+				    <div class="col-sm-8 col-xs-6">
+					    <p>Admin Orders <span class="small text-danger">*</span></p>
+				        &nbsp;<i class="fa fa-hand-o-left" style="font-size:24px"></i>
+				        <a href="{{ url('/shopAdminPanel') }}">back to admin panel </a>
                     </div>
+					
+					<div class="col-sm-4 col-xs-6">
+					    Add Dropdown here
+					</div>
+					
 				</div>
+				
+				
 
                 <div class="panel-body shop">
 				
@@ -102,7 +111,7 @@
 					  <div class="col-sm-12 col-xs-12  list-group-item">
 						<div class="col-sm-2 col-xs-12 "><i class="fa fa-calendar-check-o" style="font-size:24px"></i> {{ $v-> ord_uuid}}</div>
 						<!-- Status: proceeded/not-proceeded -->
-						<div class="col-sm-2 col-xs-12 ">{!! ($v->ord_status=='not-proceeded')? "<span class='text-danger'>Not proceeded</span>" : "<span class='text-success'>Pproceeded</span>" !!}</div><!-- Blade without escaping htmlentities()  -->
+						<div class="col-sm-2 col-xs-12 ">{!! ($v->ord_status=='not-proceeded')? "<span class='text-danger'>Not proceeded</span>" : "<span class='text-success'>Pproceeded</span>" !!} </br>ADD DROPDOWN here</div><!-- Blade without escaping htmlentities()  -->
 						<div class="col-sm-1 col-xs-12 "><span class="visible-inline-xs">Sum:   </span> {{ $v-> ord_sum}} ₴ </div>       <!-- .visible-xs visible in mobile only, .visible-inline-xs is used to display in same line not next -->
 						<div class="col-sm-1 col-xs-12 "><span class="visible-inline-xs">Items: </span> {{ $v-> items_in_order}}</div>  <!-- .visible-xs visible in mobile only, .visible-inline-xs is used to display in same line not next -->
 						
@@ -138,7 +147,7 @@
 						   
 						   
 						    <!-- additionall check (in case u saved order to table {shop_orders_main} but saving to table {shop_order_item} failed and therefore table {shop_order_item} does not have related/corresponded column to  {shop_orders_main}) -->
-						    @if( $v->orderDetail->isEmpty() )
+						    @if( $v->orderDetail->isEmpty() ) <!-- hasMany relation, model {ShopOrdersMain} connects by ID to model {ShopOrdersItems} -->
 								 corrupted data
 							@else
 						   
@@ -146,7 +155,7 @@
 						       @foreach ($v->orderDetail as $x)
 						       <div class="border">
 							
-							     <p><i class="fa fa-paperclip"></i> {{$x->productName->shop_title}} </p> 
+							     <p><i class="fa fa-paperclip"></i> {{$x->productName2->shop_title}} </p> <!--hasOne function {productName} from model {ShopOrdersItems} connects by id to model {ShopSimple} -->
 							     <p> {{$x->items_quantity}} pcs  * {{$x->item_price}} ₴ = {{ $x->items_quantity * $x->item_price }} ₴ </p> {{-- quantity * price = sum  --}}
 							   </div>		  
 						       @endforeach

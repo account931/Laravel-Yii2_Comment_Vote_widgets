@@ -76,7 +76,7 @@ class ShopOrdersItems extends Model
     * @param  
     * @return 
     */
-	public function productName(){
+	public function productName2(){
 		return $this->hasOne('App\models\ShopSimple\ShopSimple', 'shop_id', 'product_id')->withDefault(['shop_title' => 'Unknown']);      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
     }
 	
