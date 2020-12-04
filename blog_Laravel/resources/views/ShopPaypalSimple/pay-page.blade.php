@@ -236,8 +236,10 @@
 	  
 	  
 	  
-	  
-	  
+	  <?php
+	  //description for LiqPay button/form. Products in order
+	  $descriptionX = "";
+	  ?>
 	  
 	  
 	  <!-- Display ordered Items from SQL DB -->
@@ -251,6 +253,9 @@
 						   
 		      <!-- hasMany realtionShip, hasMany must be inside second foreach -->
 		      @foreach ($thisOrder[0]->orderDetail as $x) <!-- hasMany -->
+			  <?php
+			  $descriptionX.= $x->productName2->shop_title . " " .  $x->items_quantity . " items. "
+			  ?>
 		      <div class="border">
 			  
 			       <!-- product title -->
@@ -345,6 +350,7 @@
 
 		
 
+
    <!-------  LiqPay Button ------>  
    <div class="col-sm-12 col-xs-12">
         <?php
@@ -352,7 +358,7 @@
                   'action'         => 'pay',
                   'amount'         => $totalSum, //'22',
                   'currency'       => 'USD',
-                  'description'    => 'hey-hey',
+                  'description'    => $descriptionX,
                   'order_id'       => 'order_id_1',
                   'version'        => '3',
                   'language'       => 'en'

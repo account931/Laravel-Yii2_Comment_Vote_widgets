@@ -528,6 +528,24 @@ USAGE
 	# Pagination => 
 	   Controller =>   $articles = wpress_blog_post::where('wpBlog_status', '1')->paginate(3); //$allDBProducts = ShopSimple::paginate(4);
 	   View =>      {{ $articles->links() }}
+	   
+	# $allDBProducts = ShopSimple::orderBy('shop_price', 'desc')->paginate(6); //with pagination and desc/asc
+	
+	# Eloqent query with diffrent orderBy clauses based on $_GET['order'] => see example at function index() => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimpleController.php
+	
+	    if ( !isset($_GET['shop-category']) /*|| (isset($_GET['shop-category']) && $_GET['shop-category']==null  ) */){ 
+		    
+			$allDBProducts = ShopSimple::when(isset($_GET['order']) && $_GET['order'] == 'lowest', function ($q) /* use($s) */  {
+               return $q->orderBy('shop_price', 'asc');
+            })
+			->when(isset($_GET['order']) && $_GET['order'] == 'highest', function ($q) /* use($s) */  {
+               return $q->orderBy('shop_price', 'desc');
+            })
+			->when(isset($_GET['order']) && $_GET['order'] == 'newest', function ($q) /* use($s) */  {
+               return $q->orderBy('shop_created_at', 'desc');
+            })
+			->paginate(6); //with pagination
+			
 //================================================================================================
 
 
@@ -1021,7 +1039,7 @@ Pass var from controller to view =>  return view('home2', compact('user'));
 
 composer dump-autoload
 
-# Exception with html unescapped tags=>
+# Exception with html unescapped tags / without escapping =>
   In controller=> $text = 'You are not logged, <a href="'. route('login') . '"> click here  </a>  to login'; throw new \App\Exceptions\myException( $text );
   In View =>  Details: <b>{!! $exception->getMessage() !!}</b>
   
@@ -1048,8 +1066,8 @@ composer dump-autoload
   2. via php => see =>  # pass php var to js
 
 
-# where store API Keys (NOT WORKING!!!!!!) => in .env.php =>  'SECRET_API_KEY' => 'PUT YOUR API KEY HERE'
-   get: env('SECRET_API_KEY');
+# where store API Keys (NOT WORKING!!!!!!) => in .env.php =>  SECRET_API_KEY=PUT YOUR API KEY HERE  //use no single quotes!!!
+   get key:   env('SECRET_API_KEY');
 
 //================================================================================================
 35.2.Miscellaneous VA HTML/CSS

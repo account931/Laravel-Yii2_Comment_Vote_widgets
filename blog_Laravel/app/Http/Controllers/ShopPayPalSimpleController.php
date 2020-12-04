@@ -34,22 +34,85 @@ class ShopPayPalSimpleController extends Controller
 		$allCategories = ShopCategories::all();  //for <select> dropdown
 		$allProductsSearchBar = ShopSimple::all();  // for Search Bar
 		
-		//if no GET - find all products with pagination
-	    if (!isset($_GET['shop-category'])){ 
-		    //found all products with pagination
-			$allDBProducts = ShopSimple::paginate(6); //with pagination
+		//detect if url contains $_GET['order'] for sorting by lowest price, highest price, newst date
+		/*if(isset($_GET['order'])){
+		    $order = $_GET['order'];
+			if($_GET['order'] == 'lowest'){
+				$s = "orderBy('shop_price', 'desc')";
+			}
+			if($_GET['order'] == 'highest'){
+			}
+			if($_GET['order'] == 'newest'){
+			}
+		} */
+		
+		
+		//if no $_GET['shop-category'] - find all products with pagination. OR if $_GET but == empty
+	    if ( !isset($_GET['shop-category']) /*|| (isset($_GET['shop-category']) && $_GET['shop-category']==null  ) */){ 
+		    
+			//found all products with pagination
+			//$allDBProducts = ShopSimple::paginate(6); //Working!!! Was the First variant
+			//$allDBProducts = ShopSimple::orderBy('shop_price', 'desc')->paginate(6); //with pagination. Working!!!!
+		
+		    //Eloqent query with diffrent orderBy clauses based on $_GET['order']
+			$allDBProducts = ShopSimple::when(isset($_GET['order']) && $_GET['order'] == 'lowest', function ($q) /* use($s) */  {
+               return $q->orderBy('shop_price', 'asc');
+            })
+			//case to order by highest price
+			->when(isset($_GET['order']) && $_GET['order'] == 'highest', function ($q) /* use($s) */  {
+               return $q->orderBy('shop_price', 'desc');
+            })
+			//case to order by newest inserted product
+			->when(isset($_GET['order']) && $_GET['order'] == 'newest', function ($q) /* use($s) */  {
+               return $q->orderBy('shop_created_at', 'desc');
+            })
+			
+			//condition to use anyway
+			->paginate(6); //with pagination
+			
+			
+
+			
 		    //count found products
 			$countProducts = ShopSimple::all();       //for counting all products 
 		}
 		
-		//if isset GET, find products by category with pagination
+		
+		
+		
+		
+		//if isset GET['shop-category'], find products by category with pagination
 		if(isset($_GET['shop-category'])){
 			//found products by category with pagination
-			$allDBProducts = ShopSimple::where('shop_categ', $_GET['shop-category'])->paginate(4); //with pagination
-		    //count found articles
+			//$allDBProducts = ShopSimple::where('shop_categ', $_GET['shop-category'])->paginate(4); //with pagination Working!!! Was the First variant
+		    
+			
+			//Eloqent query with diffrent orderBy clauses based on $_GET['order']
+			$allDBProducts = ShopSimple::when(isset($_GET['order']) && $_GET['order'] == 'lowest', function ($q) /* use($s) */  {
+               return $q->orderBy('shop_price', 'asc');
+            })
+			//case to order by highest price
+			->when(isset($_GET['order']) && $_GET['order'] == 'highest', function ($q) /* use($s) */  {
+               return $q->orderBy('shop_price', 'desc');
+            })
+			//case to order by newest inserted product
+			->when(isset($_GET['order']) && $_GET['order'] == 'newest', function ($q) /* use($s) */  {
+               return $q->orderBy('shop_created_at', 'desc');
+            })
+			//condition to use anyway
+			->where('shop_categ', $_GET['shop-category'])->paginate(4); //with pagination
+			
+			
+			//count found articles
 			$countProducts = ShopSimple::where('shop_categ', $_GET['shop-category'])->get();
 
 		}
+		
+		
+		
+		
+		
+		
 		
 		
 		//$_SESSION['productCatalogue'] = $allProductsSearchBar; //all products to session
@@ -459,9 +522,9 @@ class ShopPayPalSimpleController extends Controller
 		
 		
 		
-		//LiqPay SDK Button  (to pass to view)    
+		//LiqPay SDK Button (to pass to view). LiqPay Object is created here with credentials. method is called in view.    
 		//$liqpay = new LiqPay(env('LIQPAY_PUBLIC_KEY'), env('LIQPAY_PRIVATE_KEY'));
-		$liqpay = new LiqPay('LIQPAY_PUBLIC_KEY', 'LIQPAY_PRIVATE_KEY');
+		$liqpay = new LiqPay(env('LIQPAY_PUBLIC_KEY', 'screw you'), env('LIQPAY_PRIVATE_KEY', 'screw you')); //using env Constants
         
 
 		

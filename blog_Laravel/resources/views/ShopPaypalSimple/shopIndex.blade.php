@@ -67,15 +67,21 @@
 					
 					
                 <div class="panel-heading text-warning row">
+				
 				  <div class="col-sm-3 col-xs-6">
 				    Shop PayPal <span class="small text-danger">*</span> 
 				  </div>
 				  
-				  <!--------  Select DropDown (by Render Partial) --------->
+				  <!--------  Select DropDown(select by category) (by Render Partial) --------->
 				  <div class="col-sm-3 col-xs-6">Choose
 					@include('ShopPaypalSimple.partial.dropdown', ['categ' => $allCategories])
 				  </div>
 					
+				 <!--------  Select DropDown (filter by price)(by Render Partial) --------->
+				  <div class="col-sm-3 col-xs-12">
+				    @include('ShopPaypalSimple.partial.dropdownPrice')
+				  </div>
+				  
 				</div>
 
 
