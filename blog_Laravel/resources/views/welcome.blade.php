@@ -1,3 +1,6 @@
+<!-- HOME PAGE -->
+
+
 <!--<!doctype html>
 <html lang="{{ app()->getLocale() }}">
     <head>
@@ -76,9 +79,9 @@
 
     @section('content')
 
-        <div class="flex-center position-ref full-height my-main">
+        <div class="flex-center position-ref my-main home-wall"> <!-- .full-height -->
 		{{-- @if (Route::has('login'))
-                <div class="top-right links">
+                <div class="top-right links home-page-links">
                     @if (Auth::check())
                         <a href="{{ url('/home') }}">Home</a>
                     @else
@@ -100,10 +103,11 @@
                    <center> <h1>Laravel CPH 2019</h1> </center> 
                 </div>
 				
+				<div class="col-sm-12 col-xs-12">
+                    <example></example> <!-- Vue Component -->
+				</div>
 				
-                <example></example> <!-- Vue Component -->
-				
-                <div class="links">
+                <div class="links home-page-links">
 				    <div class="col-sm-4 col-xs-6">
 				        <a href="#">MyWaze</a>
 					</div>
@@ -129,7 +133,11 @@
 		            <div class="alert alert-danger"> 
 					    By default this home page used no layout, now was edited to use it, particulary {resources\views\layouts\app.blade.php} 
 					</div>
-			           <center><img class="img-responsive my-cph" src="{{URL::to('/')}}/images/cph.jpg"  alt=""/> <!-- image --></center>
+			           <center>
+					       <img class="img-responsive my-cph" src="{{URL::to('/')}}/images/copenn2.jpg"  alt=""/> <!-- image -->
+						   <img class="img-responsive my-cph" src="{{URL::to('/')}}/images/copenn.jpg"  alt=""/> <!-- image -->
+						   <img class="img-responsive my-cph" src="{{URL::to('/')}}/images/cph.jpg"  alt=""/> <!-- image -->
+					   </center>
 				    
 				</div>
 			

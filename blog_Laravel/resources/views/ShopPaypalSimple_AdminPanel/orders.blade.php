@@ -65,9 +65,33 @@
 				        <a href="{{ url('/shopAdminPanel') }}">back to admin panel </a>
                     </div>
 					
+					
+					
+					
+					<!--- Dropdown to select between "proceeded"/"non-proceeded/shipped". Works on Bootstrap dropdown   -->
 					<div class="col-sm-4 col-xs-6">
-					    Add Dropdown here
+					
+					    <div class="dropdown">
+						<!-- display Text based on $_GET['admOrderStatus'] using ternary, if no S_GET in URL, display "Not-proceed", else display S_GET text and make 1st letter capital -->
+						    {{ (!isset($_GET['admOrderStatus'])) ? 'Not-proceed' : ucfirst($_GET['admOrderStatus']) }}
+                             <i class="fa fa-chevron-down dropdown-toggle" data-toggle="dropdown"></i>   
+ 
+                            <div class="dropdown-menu ">                                        
+	                          <ul>
+	                            <!-- for every <li> check if URL contains ($_GET['admOrderStatus']) and if $_GET['admOrderStatus']=='item' and in that case make that <li> invisible  -->
+                                <li class="{{ (!isset($_GET['admOrderStatus'])) ? 'hidden':''}}"> <a class="dropdown-item" href={{ url("/admin-orders") }}> Not proceeded </a></li> 
+								<li class="{{ (isset($_GET['admOrderStatus']) && $_GET['admOrderStatus'] == 'proceeded') ? 'hidden':''}}"> <a class="dropdown-item" href={{ url("/admin-orders?admOrderStatus=proceeded") }} > Proceeded </a></li> 
+                                <li class="{{ (isset($_GET['admOrderStatus']) && $_GET['admOrderStatus'] == 'delivered') ? 'hidden':''}}"><a class="dropdown-item" href={{ url("/admin-orders?admOrderStatus=delivered") }} > Shipped   </a></li> 
+                              </ul>
+                            </div>
+                        </div>
+						
 					</div>
+					<!--- End Dropdown to select between "proceeded"/"non-proceeded" -->
+					
+					
+					
+					
 					
 				</div>
 				
@@ -82,7 +106,9 @@
 				  
 				    <!-- If no orders in DB --> 
 		            @if(count($shop_orders_main) == 0)
-					    <div class="col-sm-12 col-xs-12"><center><h4 class="text-danger"><i class="fa fa-calendar-check-o" style="font-size:24px"></i> No orders so far</center></h4></div>
+					    <div class="col-sm-12 col-xs-12"><center><h4 class="text-danger"><i class="fa fa-calendar-check-o" style="font-size:24px"></i> 
+					        No {{(isset($_GET['admOrderStatus'])) ? $_GET['admOrderStatus'] : ' new not-proceeded '}} orders so far</center></h4>
+						</div>
 					@else
 						
 		

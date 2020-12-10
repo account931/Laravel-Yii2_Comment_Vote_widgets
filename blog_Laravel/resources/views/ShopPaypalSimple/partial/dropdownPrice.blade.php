@@ -1,9 +1,10 @@
 <?php
-//Select by lowest, highest price, newest etc. Done by adding to url $_GET param, i.e &order=lowest OR &order=highest 
+//Select(orderBy) by lowest, highest price, newest etc. Done by adding to url $_GET param, i.e &order=lowest OR &order=highest 
 //Proccessin happens in Controller in function index() -> ShopPayPalSimpleController.php
 
-//Auto generate correct url path, i.e "shopSimple?order=highest" or "/shopSimple?shop-category=2&order=lowest"
-//if url already contain some $_GET, i.e $_GET['shop-category'], get it 
+//Auto generate correct url path, i.e if URL has already $_GET['shop-category'], this $_GET will stay and be concatenated to selected $_GET['order']. 
+// E.g if URL was ""/shopSimple?shop-category=2" it will turn "/shopSimple?shop-category=2&order=lowest". If URL has no $_GET['shop-category'], it will turn "shopSimple?order=highest" 
+//here if url already contain some $_GET, i.e $_GET['shop-category'], get it 
 if(isset($_GET['shop-category'])){
 	$categoryX = "?shop-category=" . $_GET['shop-category'] . "&"; //i.e will be "?shop-category=desktop&"
 } else {
@@ -20,6 +21,7 @@ if(isset($_GET['page'])){
 
 
 <!-- Bootstrap dropdown (instead of select)-->
+<p class="visible-xs"></p> <!-- visble on mobile only -->
 <div class="dropdown">
     Price <i class="fa fa-chevron-down dropdown-toggle" data-toggle="dropdown"></i>   
  

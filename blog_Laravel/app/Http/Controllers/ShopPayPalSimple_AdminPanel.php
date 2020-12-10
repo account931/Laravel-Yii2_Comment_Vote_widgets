@@ -45,6 +45,7 @@ class ShopPayPalSimple_AdminPanel extends Controller
      */
     public function orders()
     {
+		//RBAC control
 		if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
            throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
 		}
@@ -90,11 +91,36 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	   //End  hasMany Via ass (though working). Currently commented in view and reassigned to hasMany
 	    
 		
-		//Find all oreders by where clause. Will engage hasmany in view
-		$shop_orders_main = ShopOrdersMain::where('ord_status', 'not-proceeded')->orderBy('order_id', 'desc')->paginate(3);
+		
+		
 	
 		
+		//---------------------------------------------------
+		//if no $_GET['admOrderStatus'] - find all orders with {'ord_status', 'not-proceeded'} with pagination
+	    if ( !isset($_GET['admOrderStatus']) ){ 
+		    
+		    //Find all orders by where clause. Will engage hasMany in view
+		    $shop_orders_main = ShopOrdersMain::where('ord_status', 'not-proceeded')->orderBy('order_id', 'desc')->paginate(3);
+			
+		    //count all orders with {'ord_status', 'not-proceeded'}
+			$countOrders =  ShopOrdersMain::where('ord_status', 'not-proceeded')->get();    //for counting 
+		}
 		
+		
+		//---------------------------------------------------
+		//if isset GET['admOrderStatus'], find products by GET['admOrderStatus'] with pagination
+		if(isset($_GET['admOrderStatus'])){
+			
+            //Find all orders by where clause. Will engage hasMany in view
+		    $shop_orders_main = ShopOrdersMain::where('ord_status', $_GET['admOrderStatus'])->orderBy('order_id', 'desc')->paginate(3);
+			
+		    //count all orders with {'ord_status', 'not-proceeded'}
+			$countOrders =  ShopOrdersMain::where('ord_status', $_GET['admOrderStatus'])->get();    //for counting 
+			
+		}
+		
+		
+
 		return view('ShopPaypalSimple_AdminPanel.orders')->with(compact('shop_orders_main', 'itemsInOrder')); 
 	}
 	
@@ -103,9 +129,18 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	
 	
 	
-	//for ajax counting
+	
+	/**
+     * for ajax counting
+     *
+     * @return \Illuminate\Http\Response
+     */
 	public function countOrders(){
-		$count = ShopOrdersMain::all()->count(); 
+		$count = ShopOrdersMain::where('ord_status', 'not-proceeded')->count();
+        if(!$count){
+			$count = 0;
+		}	
+        	
 		return $count;
 	}
 	

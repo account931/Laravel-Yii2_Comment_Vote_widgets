@@ -286,7 +286,7 @@
 	  
 	  
   
-       <!------- New form (with button "Pay with PayPal") -------->
+       <!------- NOT REAL. New form (with button "Pay with PayPal") -------->
 	   <form method="post" class="form-assign" action="{{url('/addToCart')}}">
 	       <input type="hidden" value="{{csrf_token()}}" name="_token"/></br>
 	       <!--<input type="submit" class="btn btn-primary shadowX submitX rounded" value='Pay with PayPal <i style="font-size:24px" class="fa">&#xf1f4;</i> '/>-->
@@ -297,7 +297,7 @@
 				
 		
 
-       <!------- New form (with button "Pay with LiqPay") -------->
+       <!------- NOT REAL. New form (with button "Pay with LiqPay") -------->
 	   <form method="post" class="form-assign" action="{{url('/addToCart')}}">
 	       <input type="hidden" value="{{csrf_token()}}" name="_token"/></br>
 	       <!--<input type="submit" class="btn btn-primary shadowX submitX rounded" value="Pay with LiqPay f1f1; >"/>-->
@@ -373,6 +373,18 @@
        <div class="col-sm-12 col-xs-12"> <!-- just Spacing -->
 	       <hr>
 	   </div>
+	   
+	    
+	   <div class="col-sm-12 col-xs-12">
+	        <p>Cards for testing LiqPay</p>
+            <p>4242424242424242	Successful payment</p>
+            <p>000000000003063	Successful payment with 3DS</p>
+            <p>4000000000003089	Successful payment with OTP</p>
+            <p>4000000000003055	Successful payment with CVV</p>
+            <p>4000000000000002	Failure payment. Error code - limit</p>
+            <p>4000000000009995	Failure payment. Error code - 9859 </p>
+            <p>sandbox_token	Successful payment with token      </p>
+       </div>
   
   
   

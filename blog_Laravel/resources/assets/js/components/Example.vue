@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading" v-on:click="changeEntry()">Example Vue Component</div>
+                    <div class="panel-heading pointer" v-on:click="changeEntry()">Example Vue Component</div>
 
                     <div class="panel-body" :class="cssState? ' text-primary bg-danger' : ''"> <!-- change css based on props -->
                         I'm a Vue component example </br>

@@ -1,6 +1,9 @@
+
+//Start Lazy Load
 //Lazy Load (to use: 1.download js=> <script src="jquery.lazyload.js"></script> 2. use in html=> <img class="lazy" data-original="img/example1.jpg"; 3. use code below in js
 //https://vash-webmaster.ru/2017/08/11/lazyload-js/
 
+//<!-- Lazy load is loaded in views/app.blade.php, otherwise it wont work -->
 $(function() {
 	
 	
@@ -21,7 +24,7 @@ $(function() {
 
 //End Lazy Load
 
-
+//----------------------------------------------------------------
 
 
 //Js for front SHOP {Simple}, (main) part of the shop (page with products)

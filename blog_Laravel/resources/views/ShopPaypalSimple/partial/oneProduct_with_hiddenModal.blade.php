@@ -58,7 +58,16 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-delicious" style="font-size:3em; color: navy;"></i> <b> Product</b> </h4>
+                <h4 class="modal-title">
+				    <i class="fa fa-delicious" style="font-size:3em; color: navy;"></i> 
+					<b> Product</b> <span class="small-x"> 
+					
+					<!-- show "direct URL" link only if current url contains route "/shopSimple", don't show if "/showOneProduct/{id}" -->
+					@if (in_array(Route::getFacadeRoot()->current()->uri(), ['shopSimple']))
+					    <a href="{{ route('showOneProduct', ['id'=> $allDBProducts[$i]['shop_id'] ]) }}"> open direct URL</a></span>
+				    @endif
+					
+				</h4> 
 		        <?php
 				//var_dump($_SESSION['cart_dimmm931_1604938863']);
 				//echo "llll " . $_SESSION['cart_dimmm931_1604938863'][7] . " ";
@@ -66,7 +75,7 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 				if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']])){
 				    echo "<p class='text-danger'>Already " . $_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']] . " items was added to the cart.</p>";
 				} else {
-					echo "not";
+					echo "not in cart";
 				}
 				?>
             </div>

@@ -5,6 +5,7 @@
 ?>
 
 @section('content')
+<!-- Lazy load is loaded in views/app.blade.php, otherwise it wont work!!!!!!!! -->
 
 <!-- Include js/css file for this view only -->
 <script src="{{ asset('js/ShopPaypalSimple/shopSimple_Loader.js')}}"></script> <!-- CSS Loader -->

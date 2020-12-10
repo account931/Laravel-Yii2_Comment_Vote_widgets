@@ -1,3 +1,6 @@
+<?php
+//NOT USED????
+?>
 @extends('layouts.app')
 
 @section('content')

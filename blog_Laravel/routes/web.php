@@ -89,6 +89,9 @@ Route::get('/count-orders',   'ShopPayPalSimple_AdminPanel@countOrders'); // fot
 
 
 
+//test route to call controller via command-line. Actually does not need any Route as called via CLI Tinker just to check it works. Controller function just saves current time to log.
+Route::get('/cli', 'CliCommandController@index')->name('cli'); //
+
 
 Route::get('/404', function () {
     return abort(404);

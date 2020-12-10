@@ -76,14 +76,15 @@ $(document).ready(function(){
    //                                                                                     ** 
 	function displayBadgeValue(data)
 	{
-		 if(data > 0){
+		
+		 if(data  >= 0 ){ 
 			 if(!$('.bb:eq(2)').hasClass('badge1')) {
 				 $('.bb:eq(2)').addClass('badge1');
 			 }
 
 			 $('.bb:eq(2)').attr('data-badge', data); //$('.badge1:eq(0)').stop().fadeOut("slow",function(){ $(this).attr('data-badge', data.count) }).fadeIn(2000);   
 		 } else {
-		     $('.bb:eq(2)').removeClass('badge1');
+		     $('.bb:eq(2)').removeClass('badge1'); 
 		 }
 		
 	}

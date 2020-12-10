@@ -1,4 +1,4 @@
-Laravel Framework 5.4.36
+Laravel Framework 5.4.36 Release (January 24th, 2017), Security Fixes Until (January 24th, 2018)
 OpenServer 5.2.2 Php 7.2 Node-v13.14.0-x86.msi
 Credentials: dimmm931@gmail.com =>  dimax2
 
@@ -42,6 +42,8 @@ Table of Content:
 24. Save to DB (SQL INSERT) via model function
 25. Laravel Vue
 26. PayPal
+27. CLI command => call controller via command line
+28. PhpUnit tests vs Laravel Dusk
 
 
 34.Highlight active menu item
@@ -531,7 +533,7 @@ USAGE
 	   
 	# $allDBProducts = ShopSimple::orderBy('shop_price', 'desc')->paginate(6); //with pagination and desc/asc
 	
-	# Eloqent query with diffrent orderBy clauses based on $_GET['order'] => see example at function index() => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimpleController.php
+	# Eloqent query with different "orderBy" clauses based on $_GET['order'] => see example at function index() => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimpleController.php
 	
 	    if ( !isset($_GET['shop-category']) /*|| (isset($_GET['shop-category']) && $_GET['shop-category']==null  ) */){ 
 		    
@@ -545,6 +547,12 @@ USAGE
                return $q->orderBy('shop_created_at', 'desc');
             })
 			->paginate(6); //with pagination
+			
+	# If Laravel Pagination links not including other GET parameters =>
+	//adds this to SQL Result Object (in Controller) in order Laravel Pagination links would including other GET parameters when u naviagate to page=2, etc; i.e the URL would contain previous $_GET[] params, like it was "shopSimple?order=lowest", when goes to page=2 it will be "shopSimple?order=lowest&page=2". Without this fix URL will be just "shopSimple?page=2"
+	$allDBProducts = ShopSimple::orderBy('shop_price', 'desc')->paginate(6);
+	$allDBProducts = $allDBProducts->appends(\Illuminate\Support\Facades\Input::except('page'));
+	//... return view(......)
 			
 //================================================================================================
 
@@ -661,10 +669,12 @@ USAGE
 
   Variant 1 (most working)(use/include in main layout, i.e /views/layout/blade.php)!!! =>
     <!-- To register JS/CSS file for specific view only (In layout template) -->
-    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['testRest', 'register']))
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['testRest', 'register', 'showOneProduct/{id}']))
         <script src="{{ asset('js/test-rest/test-rest.js') }}"></script>
 		<link href="{{ asset('css/rbac/rbac.css') }}" rel="stylesheet">
     @endif	
+	
+	
 	
 	Variant 2 (working) (use/include in any child view before {@endsection}, i.e /views/auth/login). OR right after @section('content') (if u don't want to encounter div loads for 1 sec without css styling) =>
 	    <!-- Include js/css file for this view only -->
@@ -938,6 +948,53 @@ For SandBox use:
 
 
 
+//================================================================================================
+
+27. CLI command => call controller via command line
+navigate by CLI to folder and:
+  php artisan tinker
+  $cc = app()->make('App\Http\Controllers\CliCommandController');
+  app()->call([$cc, 'index'], ['filter[id]'=>1, 'anotherparam' => '2']); //the last [] in the app()->call() can hold arguments such as [user_id] => 10 etc'
+
+//================================================================================================
+
+
+
+
+
+
+
+
+//================================================================================================
+28. PhpUnit tests vs Laravel Dusk
+
+PhpUnit supports module (i.e unit) tests and functional tests.
+https://phpunit.readthedocs.io/ru/latest/assertions.html
+
+  php vendor/phpunit/phpunit/phpunit    => run all PhpUnit tests (in folder "tests/Unit" and "tests/Feature"). Does not run tests in "/tests/Browser"
+  php artisan dusk                      => run Dusk tests only (in "/tests/Browser")
+  
+  // below is ????
+  php artisan dusk:make LoginTest
+  
+ The visit and see method no longer works in Laravel 5.4 by default. You need to install Laravel Dusk package.
+    composer require --dev laravel/dusk
+
+    php artisan dusk:install
+
+composer require laravel/browser-kit-testing --dev
+
+composer require --dev laravel/dusk v1.1    => only this is OK for Laravel 5.4 !!!!!!!!!!!!!!
+
+
+//update Composer
+ c:\users\dima\desktop\server\ospanel\modules\php\PHP_7.2\composer self-update
+Updating to version 2.0.8 (stable channel).
+Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7cd019a3b75e28f391
+//================================================================================================
+
+
+
 
 
 
@@ -970,6 +1027,12 @@ For SandBox use:
 #link a href => 	<li><a href="{{ route('register') }}">Gii</a></li>
 #link a href with $_GET => <a href="{{route('profile', ['id' => 1])}}">login here</a>
 #link with helper => $post = App\Models\Post::find(1);  echo url("/posts/{$post->id}");
+
+# Link by route ID => 
+   Route::get('/showOneProduct/{id}', 'ShopPayPalSimpleController@showOneProductt')->name('showOneProduct');
+   <a href="{{ route('showOneProduct', ['id'=> 3]) }}"> 
+   
+   
 
 # Render Controller/View (Active Record / Eloquent) => 
    in Controller=>     
@@ -1029,6 +1092,10 @@ $articles = ($yourArticles->count() > 1) ? 'articles' : 'article';
 In Blade (in-line) => <p> You have <b> {{$yourArticles->count()}} </b>  {{($yourArticles->count() > 1) ? 'articles' : 'article'}} </p>
                       <p> You have <b> {{$yourArticles->count()}} </b>  {{($yourArticles->count() > 1 || $yourArticles->count() == 0 ) ? 'articles' : 'article'}} </p>
 
+# ternary CSS class=>
+     <li class="{{ (isset($_GET['admOrderStatus']) && $_GET['admOrderStatus'] == 'Shipped') ? 'hidden':''}}">
+
+
 # pass php var to js =>
 Pass var from controller to view =>  return view('home2', compact('user')); 
   <script>
@@ -1066,8 +1133,22 @@ composer dump-autoload
   2. via php => see =>  # pass php var to js
 
 
-# where store API Keys (NOT WORKING!!!!!!) => in .env.php =>  SECRET_API_KEY=PUT YOUR API KEY HERE  //use no single quotes!!!
-   get key:   env('SECRET_API_KEY');
+# where store API Keys (Works on hosting, does not work on local) => in .env.php =>  SECRET_API_KEY=PUT YOUR API KEY HERE  //use no single quotes!!!
+   get key =>   env('SECRET_API_KEY');
+   
+# how to check laravel version =>   php artisan --version       Check php version =>  php -v
+
+
+# register in AppServiceProvider => go to app/providers/AppServiceProvider 
+
+
+
+
+
+
+
+
+
 
 //================================================================================================
 35.2.Miscellaneous VA HTML/CSS

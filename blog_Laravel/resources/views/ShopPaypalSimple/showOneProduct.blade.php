@@ -1,5 +1,6 @@
 <?php
-//show 1 product from SearchBar result
+//show 1 product from SearchBar autocomplete result
+//+ aditionally simply show 1 product by href (when u click 'open in new page') in hidden modal pop-up window
 ?>
 
 @extends('layouts.app')
@@ -8,6 +9,8 @@
 ?>
 
 @section('content')
+<!-- Lazy load is loaded in views/app.blade.php, otherwise it wont work!!!!!!!! -->
+
 <script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>  
 
 <!-- Include js/css file for this view only -->
@@ -70,7 +73,7 @@
                 <div class="panel-body shop">
 				
 				    <div class="col-sm-10 col-xs-10">
-                    <h1>One product </h1>
+                        <h1>One product </h1>
 		            </div>	
 				
 				    <!-------- Cart icon with badge ----------->

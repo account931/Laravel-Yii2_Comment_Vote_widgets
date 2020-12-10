@@ -46,7 +46,7 @@ class ShopPayPalSimpleController extends Controller
 			}
 		} */
 		
-		
+		//---------------------------------------------------
 		//if no $_GET['shop-category'] - find all products with pagination. OR if $_GET but == empty
 	    if ( !isset($_GET['shop-category']) /*|| (isset($_GET['shop-category']) && $_GET['shop-category']==null  ) */){ 
 		    
@@ -80,7 +80,7 @@ class ShopPayPalSimpleController extends Controller
 		
 		
 		
-		
+		//---------------------------------------------------
 		//if isset GET['shop-category'], find products by category with pagination
 		if(isset($_GET['shop-category'])){
 			//found products by category with pagination
@@ -117,7 +117,8 @@ class ShopPayPalSimpleController extends Controller
 		
 		//$_SESSION['productCatalogue'] = $allProductsSearchBar; //all products to session
 		
-		
+		//adds this to SQL Result Object in order Laravel Pagination links would including other GET parameters when u naviagate to page=2, etc; i.e the URL would contain previous $_GET[] params, like it was "shopSimple?order=lowest", when goes to page=2 it will be "shopSimple?order=lowest&page=2". Without this fix URL will be just "shopSimple?page=2"
+		$allDBProducts = $allDBProducts->appends(\Illuminate\Support\Facades\Input::except('page'));
 	    
 		return view('ShopPaypalSimple.shopIndex')->with(compact(
 		                                          'allDBProducts', //with pagination
