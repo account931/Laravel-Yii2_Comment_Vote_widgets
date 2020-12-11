@@ -8,6 +8,7 @@ use App\models\ShopSimple\ShopOrdersMain; //model for DB table {shop_orders_main
 use App\models\ShopSimple\ShopOrdersItems; //model for DB table {shop_order_item} to store a one user's order split by items, ie if Order contains 2 items (dvdx2, iphonex3). 
 
 use Illuminate\Support\Facades\DB; //???
+use App\Http\Requests\ShopPaypalSimple_AdminPanel\OrderStatusChangeRequest; //my custom Form validation via Request
 
 class ShopPayPalSimple_AdminPanel extends Controller
 {
@@ -119,9 +120,14 @@ class ShopPayPalSimple_AdminPanel extends Controller
 			
 		}
 		
+		//count separatedly proceeded, not-proceeded, delivered 
+		$countProceeded =    ShopOrdersMain::where('ord_status', 'proceeded')->count();    //for counting 
+		$countNotProceeded = ShopOrdersMain::where('ord_status', 'not-proceeded')->count();    //for counting 
+		$countDelivered =    ShopOrdersMain::where('ord_status', 'delivered')->count();    //for counting 
 		
 
-		return view('ShopPaypalSimple_AdminPanel.orders')->with(compact('shop_orders_main', 'itemsInOrder')); 
+		return view('ShopPaypalSimple_AdminPanel.orders')
+		    ->with(compact('shop_orders_main', 'countOrders', 'countProceeded', 'countNotProceeded', 'countDelivered' /*, 'itemsInOrder'*/)); 
 	}
 	
 	
@@ -143,5 +149,37 @@ class ShopPayPalSimple_AdminPanel extends Controller
         	
 		return $count;
 	}
+	
+	
+	
+	
+	
+	
+	/**
+     * method to update Order Status in AdminPanel, from {public function orders()}. (E.g  change from 'proceeded' to 'not-proceeded')
+     * @param  \Illuminate\Http\OrderStatusChangeRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+	 
+    public function updateStatusField(OrderStatusChangeRequest $request)
+	{
+		//dd($request->input('u_status') . " = " .  $request->input('u_orderID') ); //gets quantity from form $_POST[]);
+	    $orderID = $request->input('u_orderID');
+		$orderStatus = $request->input('u_status');
+		
+		//check if user/admin wants to change the current Order status to the same value, e.g the status is 'proceeded' and admin wants change to the same 'proceeded;
+	    $OneOrder = ShopOrdersMain::where('order_id', $request->input('u_orderID'))->first(); 
+		
+		if($OneOrder->ord_status == $request->input('u_status')){
+		    return redirect()->back()->withInput()->with('flashMessageFailX', 'You tried to update Order <b>' . $orderID . ' </b> Status with the same value <b>' . ucfirst($orderStatus) . '</b>. It is unacceptable!!!' );
+
+		} else { //it is OK to update
+			ShopOrdersMain::where('order_id', $request->input('u_orderID'))->update([  'ord_status' => $orderStatus ]);
+			return redirect()->back()->withInput()->with('flashMessageX', 'You successfully update Order <b>' . $orderID . ' </b> with new Status <b> ' . ucfirst($orderStatus) . '</b>' );
+		}
+	}
+	
+	
+	
 	
 }

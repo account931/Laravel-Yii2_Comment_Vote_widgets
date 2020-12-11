@@ -99,7 +99,7 @@
                         <div class='subfolder border shadowX'>
 					       <a href="{{ route('admin-orders') }}">  
 						     <i class="fa fa-truck" style="font-size:96px"></i> 
-							 <p>Orders</p><br>  
+							 <p>New Orders</p><br>  
 						   </a>
 		                 </div> 
                       </div>

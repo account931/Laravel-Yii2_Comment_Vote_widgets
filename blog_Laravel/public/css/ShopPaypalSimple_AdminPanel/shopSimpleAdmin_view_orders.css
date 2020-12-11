@@ -1,7 +1,7 @@
 
 /* stretch the width of div with orders table over the page visibility */
 .fit-content { 
-    width:80em;
+    width:100em;
 	overflow-x: scroll;
 }
 

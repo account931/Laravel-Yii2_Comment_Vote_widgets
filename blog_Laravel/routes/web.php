@@ -86,6 +86,7 @@ Route::get('/pay-or-fail', 'ShopPayPalSimpleController@payOrFail')->name('pay-or
 Route::get('/shopAdminPanel', 'ShopPayPalSimple_AdminPanel@index')->name('shopAdminPanel'); //display Admin Panel start page
 Route::get('/admin-orders',   'ShopPayPalSimple_AdminPanel@orders')->name('admin-orders'); //display Admin Panel ....
 Route::get('/count-orders',   'ShopPayPalSimple_AdminPanel@countOrders'); // fot ajax counting Orders in Admin panel
+Route::post('/updateStatus',  'ShopPayPalSimple_AdminPanel@updateStatusField')->name('/updateStatus');   //route to get <form> data via $_POST from {ShopPayPalSimple_AdminPanel@orders} page ()) and redirects back. 
 
 
 

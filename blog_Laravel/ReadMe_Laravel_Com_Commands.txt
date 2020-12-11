@@ -974,6 +974,9 @@ https://phpunit.readthedocs.io/ru/latest/assertions.html
   php vendor/phpunit/phpunit/phpunit    => run all PhpUnit tests (in folder "tests/Unit" and "tests/Feature"). Does not run tests in "/tests/Browser"
   php artisan dusk                      => run Dusk tests only (in "/tests/Browser")
   
+  # Unit test example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/tests/Unit/MyTest.php
+  # to use Dusk uncomment register in /app/Providers/AppServiceProvider.php
+  
   // below is ????
   php artisan dusk:make LoginTest
   

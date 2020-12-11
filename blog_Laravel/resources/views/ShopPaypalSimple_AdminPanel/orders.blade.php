@@ -73,15 +73,15 @@
 					
 					    <div class="dropdown">
 						<!-- display Text based on $_GET['admOrderStatus'] using ternary, if no S_GET in URL, display "Not-proceed", else display S_GET text and make 1st letter capital -->
-						    {{ (!isset($_GET['admOrderStatus'])) ? 'Not-proceed' : ucfirst($_GET['admOrderStatus']) }}
+						    {{ (!isset($_GET['admOrderStatus'])) ? 'Not-proceed (' . $countOrders->count() . ')'  : ucfirst($_GET['admOrderStatus']) . ' (' . $countOrders->count() . ')' }}
                              <i class="fa fa-chevron-down dropdown-toggle" data-toggle="dropdown"></i>   
  
                             <div class="dropdown-menu ">                                        
 	                          <ul>
 	                            <!-- for every <li> check if URL contains ($_GET['admOrderStatus']) and if $_GET['admOrderStatus']=='item' and in that case make that <li> invisible  -->
-                                <li class="{{ (!isset($_GET['admOrderStatus'])) ? 'hidden':''}}"> <a class="dropdown-item" href={{ url("/admin-orders") }}> Not proceeded </a></li> 
-								<li class="{{ (isset($_GET['admOrderStatus']) && $_GET['admOrderStatus'] == 'proceeded') ? 'hidden':''}}"> <a class="dropdown-item" href={{ url("/admin-orders?admOrderStatus=proceeded") }} > Proceeded </a></li> 
-                                <li class="{{ (isset($_GET['admOrderStatus']) && $_GET['admOrderStatus'] == 'delivered') ? 'hidden':''}}"><a class="dropdown-item" href={{ url("/admin-orders?admOrderStatus=delivered") }} > Shipped   </a></li> 
+                                <li class="{{ (!isset($_GET['admOrderStatus'])) ? 'hidden':''}}"> <a class="dropdown-item" href={{ url("/admin-orders") }}> Not proceeded ({{ $countNotProceeded }}) </a></li>  <!-- e.g Not proceeded (12) -->
+								<li class="{{ (isset($_GET['admOrderStatus']) && $_GET['admOrderStatus'] == 'proceeded') ? 'hidden':''}}"> <a class="dropdown-item" href={{ url("/admin-orders?admOrderStatus=proceeded") }} > Proceeded ({{ $countProceeded }}) </a></li> 
+                                <li class="{{ (isset($_GET['admOrderStatus']) && $_GET['admOrderStatus'] == 'delivered') ? 'hidden':''}}"><a class="dropdown-item" href={{ url("/admin-orders?admOrderStatus=delivered") }} > Delivered  ({{ $countDelivered }})  </a></li> 
                               </ul>
                             </div>
                         </div>
@@ -107,7 +107,8 @@
 				    <!-- If no orders in DB --> 
 		            @if(count($shop_orders_main) == 0)
 					    <div class="col-sm-12 col-xs-12"><center><h4 class="text-danger"><i class="fa fa-calendar-check-o" style="font-size:24px"></i> 
-					        No {{(isset($_GET['admOrderStatus'])) ? $_GET['admOrderStatus'] : ' new not-proceeded '}} orders so far</center></h4>
+					        <!-- Below I.e =>  No new not-proceeded orders so far 0 -->
+							No {{(isset($_GET['admOrderStatus'])) ? $_GET['admOrderStatus'] : ' new not-proceeded '}} orders so far</center></h4>
 						</div>
 					@else
 						
@@ -130,14 +131,61 @@
 						<div class="col-sm-1 col-xs-6">User</div>
 		            </div>
 		            <!-- End THEAD -->
-							
+					
+
+
+					
 					<?php  //dd($itemsInOrder[5][0]->item_price); //dd(($v->orderDetail)->count()); ?>
 					<?php $i = 0; ?>
+					
 					@foreach($shop_orders_main as $v)
 					  <div class="col-sm-12 col-xs-12  list-group-item">
+					  
+					    <!----- Order UUID ------>
 						<div class="col-sm-2 col-xs-12 "><i class="fa fa-calendar-check-o" style="font-size:24px"></i> {{ $v-> ord_uuid}}</div>
-						<!-- Status: proceeded/not-proceeded -->
-						<div class="col-sm-2 col-xs-12 ">{!! ($v->ord_status=='not-proceeded')? "<span class='text-danger'>Not proceeded</span>" : "<span class='text-success'>Pproceeded</span>" !!} </br>ADD DROPDOWN here</div><!-- Blade without escaping htmlentities()  -->
+						
+						<!-- Status: proceeded/not-proceeded/delivered and <form> to change the status -->
+						<div class="col-sm-2 col-xs-12 ">
+						     {!! ($v->ord_status=='not-proceeded')? "<span class='text-danger'>Not proceeded</span>" : "<span class='text-success'>Proceeded</span>" !!} </br> <!-- Blade without escaping htmlentities()  -->
+						     
+							 <!-- Form to change/updaye status -->
+							 <form class="form-horizontal" method="post" class="form-assign" action="{{url('/updateStatus')}}">
+		                         <input type="hidden" value="{{csrf_token()}}" name="_token"/>
+			  
+			                    <!-- Form input to change Status. Uses <Select><option>  --> 
+                                <div class="form-group{{ $errors->has('u_status') ? ' has-error' : '' }}">
+                                    
+                                    <div class="col-md-6">
+									    <select class="mdb-select md-form form-control" name="u_status">
+                                            <option value='not-proceeded' {{ $v->ord_status=='not-proceeded' ?  "selected='selected'" : '' }}> Not proceeded </option> <!-- check if make this option selected='selected -->
+											<option value='proceeded'     {{ $v->ord_status=='proceeded'     ?  "selected='selected'" : '' }} > Proceeded    </option>
+											<option value='delivered'     {{ $v->ord_status=='delivered'     ?  "selected='selected'" : '' }} > Delivered    </option>
+										</select>
+										
+                                        @if ($errors->has('u_status'))
+                                          <span class="help-block"> <strong>{{ $errors->first('u_status') }}</strong> </span>
+                                        @endif 
+					                </div>
+                                </div>
+								<!-- End Form input to change Status. Uses <Select><option>  -->
+
+                                <!-- Other hidden fields/inputs -->
+		                        <input type="hidden" name="u_orderID" value="{{ $v->order_id }}"  />   <!-- Order ID-->
+				
+                                <div class="form-group">
+                                    <div class="col-md-8 ">
+                                        <button type="submit" class="btn btn-primary shadowX submitX rounded"> Done </button>
+			                        </div>
+				                </div>
+		     
+		                     </form>								
+								
+						</div>
+						<!-- End Status: proceeded/not-proceeded/delivered and <form> to change the status -->
+						
+						
+						
+						<!-- Sum -->
 						<div class="col-sm-1 col-xs-12 "><span class="visible-inline-xs">Sum:   </span> {{ $v-> ord_sum}} ₴ </div>       <!-- .visible-xs visible in mobile only, .visible-inline-xs is used to display in same line not next -->
 						<div class="col-sm-1 col-xs-12 "><span class="visible-inline-xs">Items: </span> {{ $v-> items_in_order}}</div>  <!-- .visible-xs visible in mobile only, .visible-inline-xs is used to display in same line not next -->
 						
@@ -145,8 +193,7 @@
 						
 						
 						
-						<!-- hasMany. Order details from table {shop_order_item} i.e  HP notebook 2 pcs * 35.31 ₴-->
-						
+						<!--  Order details from table {shop_order_item} i.e  HP notebook 2 pcs * 35.31 ₴. Uses hasMany.-->
 						<div class="col-sm-2 col-xs-12" style="font-size:0.8em;"> 
     
 							
