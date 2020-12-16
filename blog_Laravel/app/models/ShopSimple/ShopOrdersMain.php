@@ -26,7 +26,7 @@ class ShopOrdersMain extends Model
     * saves form inputs to DB (shop_orders_main)
     *
     * @param  
-    * @return 
+    * @return integer $id
     */
 	public function saveFields_to_shopOrdersMain($data){
 		
@@ -37,6 +37,7 @@ class ShopOrdersMain extends Model
 		$this->ord_address =     $data['u_address'];
 		$this->ord_email =       $data['u_email'];
 		$this->ord_phone =       $data['u_phone'];
+		$this->ord_placed =      date('Y-m-d H:i:s');
 		if(Auth::check()){
 			$this->ord_user_id =   auth()->user()->id;
 		}
@@ -51,8 +52,7 @@ class ShopOrdersMain extends Model
 	
 	
     /**
-    * HasMany
-    *
+    * HasMany relation
     * @param  
     * @return 
     */

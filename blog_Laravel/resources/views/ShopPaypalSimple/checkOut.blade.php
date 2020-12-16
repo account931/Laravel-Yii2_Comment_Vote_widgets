@@ -311,6 +311,7 @@
                 <div class="form-group">
                     <div class="col-md-8 col-md-offset-4">
                          <button type="submit" class="btn btn-primary shadowX submitX rounded"> Done </button>
+						 <span class='small font-italic text-danger' >You have to clear the Cart here as well</span>
 			        </div>
 				</div>
 		      

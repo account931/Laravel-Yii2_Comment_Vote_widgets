@@ -461,7 +461,7 @@ class ShopPayPalSimpleController extends Controller
 			try { 
 			    $ShopOrdersItems->saveFields_to_shop_order_item( $savedID, $_SESSION['cart_dimmm931_1604938863'], $inCartItems );  // saving to table {shop_order_item} to store a one user's order split by items, ie if Order contains 2 items (dvdx2, iphonex3). 
 				
-			    return redirect('payPage2')->with(compact('input', 'savedID'))->with('flashMessageX', "Your data is saved to DB with id " . $savedID . ". Now proceed with payment" ); //$input in longer neccessary, reassigned to  $savedID , i.e ID of saved order (and use it to get values from DB)
+			    return redirect('payPage2')->with(compact('input', 'savedID'))->with('flashMessageX', "Your Order data is saved to DB with id " . $savedID . ". Now you have 24 hours to proceed with payment or the Order will be discarted (i.e DELETE where not-paid && now() - order time =< 24 hours)." ); //$input in longer neccessary, reassigned to  $savedID , i.e ID of saved order (and use it to get values from DB)
 		    
 			} catch( Throwable $e ) {
 				$delete = ShopOrdersMain::where('order_id', $savedID)->delete(); //If error Delete by ID from table {shop_orders_main} as well
@@ -525,7 +525,7 @@ class ShopPayPalSimpleController extends Controller
 		
 		//LiqPay SDK Button (to pass to view). LiqPay Object is created here with credentials. method is called in view.    
 		//$liqpay = new LiqPay(env('LIQPAY_PUBLIC_KEY'), env('LIQPAY_PRIVATE_KEY'));
-		$liqpay = new LiqPay(env('LIQPAY_PUBLIC_KEY', 'screw you'), env('LIQPAY_PRIVATE_KEY', 'screw you')); //using env Constants
+		$liqpay = new LiqPay(env('LIQPAY_PUBLIC_KEY', 'screw'), env('LIQPAY_PRIVATE_KEY', 'screw')); //using env Constants
         
 
 		

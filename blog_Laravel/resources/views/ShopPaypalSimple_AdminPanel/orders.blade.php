@@ -17,6 +17,8 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script> <!--Sweet Alert JS-->
 <!-- Include js file for thisview only -->
 
+<script src="{{ asset('js/ShopPaypalSimple_Admin/ViewOrders/adminOrders.js')}}"></script> <!-- CSS Loader -->
+
 
 <div class="container">
     <div class="row">
@@ -174,7 +176,7 @@
 				
                                 <div class="form-group">
                                     <div class="col-md-8 ">
-                                        <button type="submit" class="btn btn-primary shadowX submitX rounded"> Done </button>
+                                        <button type="submit" class="btn btn-primary shadowX submitX rounded change-status-click" data-prev-status="{{$v->ord_status}}" > Done </button>
 			                        </div>
 				                </div>
 		     
@@ -244,7 +246,7 @@
 						
 						
 						<!-- Buyer details, address, phone, etc -->
-						<div class="col-sm-1 col-xs-12 "> {{ $v-> ord_name }}</br> {{ $v-> ord_address }}</br> {{ $v-> ord_email }} </div>
+						<div class="col-sm-1 col-xs-12 "> {{ $v-> ord_name }}</br> {{ $v-> ord_address }}</br> {{ $v-> ord_email }} </br> {{ $v-> ord_phone }}</div>
 					    <!-- Date, teime when order was placed -->
 						<div class="col-sm-1 col-xs-12 "> {{ $v-> ord_placed}}</div>
 						<div class="col-sm-1 col-xs-12 "> {!! ($v-> if_paid==0)? "<span class='text-danger'>Not paid</span>" : "<span class='text-success'>Paid</span>" !!}</div> <!-- Blade without escaping htmlentities()  -->

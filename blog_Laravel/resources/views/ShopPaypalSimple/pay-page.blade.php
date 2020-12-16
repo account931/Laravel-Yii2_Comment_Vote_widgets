@@ -250,9 +250,11 @@
 	      @if( $thisOrder[0]->orderDetail->isEmpty() ) <!-- hasMany relation, model {ShopOrdersMain} connects by ID to model {ShopOrdersItems} -->
 		     corrupted data
 		  @else
-						   
-		      <!-- hasMany realtionShip, hasMany must be inside second foreach -->
-		      @foreach ($thisOrder[0]->orderDetail as $x) <!-- hasMany -->
+				
+			  
+		      <!-- Shows related data from table {shop_order_item} via hasMany realtionShip, hasMany must be inside second foreach -->
+		      <!-- Shows order details, i.e  HP notebook 4530S, 2 pcs * 287.36 ₴ = 574.72 ₴; Canon EOS R, 2 pcs * 2354.16 ₴ = 4708.32 ₴ -->
+			  @foreach ($thisOrder[0]->orderDetail as $x) <!-- hasMany -->
 			  <?php
 			  $descriptionX.= $x->productName2->shop_title . " " .  $x->items_quantity . " items. "
 			  ?>
@@ -359,9 +361,11 @@
                   'amount'         => $totalSum, //'22',
                   'currency'       => 'USD',
                   'description'    => $descriptionX,
-                  'order_id'       => 'order_id_1',
+                  'order_id'       => $thisOrder[0]->ord_uuid,
                   'version'        => '3',
-                  'language'       => 'en'
+                  'language'       => 'en',
+				  'result_url'     => 'http://account93.zzz.com.ua/laravel_CPH/public/pay-or-fail?status=paymentSuccess', //URL в Вашем магазине на который покупатель будет переадресован после завершения покупки.
+				  'server_url'     => '' //URL API в Вашем магазине для уведомлений об изменении статуса платежа (сервер->серв
         ));
 		echo $LiqPayButton;
 		?>

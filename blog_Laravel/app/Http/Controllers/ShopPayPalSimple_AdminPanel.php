@@ -163,6 +163,12 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	 
     public function updateStatusField(OrderStatusChangeRequest $request)
 	{
+		//if $_POST['productID'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
+		if(!$request->input('u_orderID')){
+			throw new \App\Exceptions\myException('Bad request, You are not expected to enter this page.');
+		}
+		
+		
 		//dd($request->input('u_status') . " = " .  $request->input('u_orderID') ); //gets quantity from form $_POST[]);
 	    $orderID = $request->input('u_orderID');
 		$orderStatus = $request->input('u_status');

@@ -1142,7 +1142,8 @@ composer dump-autoload
 # how to check laravel version =>   php artisan --version       Check php version =>  php -v
 
 
-# register in AppServiceProvider => go to app/providers/AppServiceProvider 
+# to register smth in AppServiceProvider => go to app/providers/AppServiceProvider 
+# Application Timezone => go to  '/config/app.hp'    =>  'timezone' => 'Europe/Kiev', //'UTC',
 
 
 
@@ -1241,6 +1242,8 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 # Check if not null => if($value->master && $value->master !== null)
 
 # Makes Grid table to be wide with scroll => <div class="col-sm-12 col-xs-12" style="width:80em;overflow-x: scroll;">
+
+# Swal Sweet Alert not waiting until user clicks ok => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/rbac/my-rbac.js or relevant at at /resources/assets/ . See section => $(document).on("click", '.detach-role', function(e)
 //================================ End Move to Yii2 ReadMe =============================
 
 //================================================================================================
@@ -1289,6 +1292,10 @@ If you don't have .env copy from .env.example: =>   $ cp .env.example .env
 # CSS error if Bootstrap modal appearing under background =>  .modal-backdrop { z-index: -1;}
 
 # $_POST => simple rule to make your life easier... NEVER return a view in response to a POST request. Always redirect somewhere else which shows the result of the post or displays the next form.
+
+# Laravel view not found on production Server => Just delete all files in the bootstrap/cache folder of the server. Now the server will not use the cache of the localhost.
+
+# Laravel does not show images on production server => causes the same folder /bootstrap/cache. Run on local {php artisan cache:clear} then {php artisan optimize} and  re-upload /bootstrap/cache to server. {php artisan optimize} will optimize command which will re-build your configuration cache, bootstrap file cache and route
 
 =============================
 
