@@ -87,7 +87,7 @@
 	   
 	                  <div class="col-sm-2 col-xs-6 mobile-padding badge1 bb " data-badge="?"> <!-- badge -->
                         <div class='subfolder border shadowX'>
-					       <a href="{{ route('cart') }}">  
+					       <a href="{{ route('admin-products') }}">  
 						     <i class="fa fa-address-card-o" style="font-size:96px"></i> 
 							 <p>Products</p><br>  
 						   </a>
@@ -108,7 +108,7 @@
                         <div class='subfolder border shadowX'>
 					       <a href="{{ route('cart') }}">  
 						     <i class="fa fa-automobile" style="font-size:96px"></i> 
-							 <p>Some text</p><br>  
+							 <p>Category</p><br>  
 						   </a>
 		                 </div> 
                       </div>

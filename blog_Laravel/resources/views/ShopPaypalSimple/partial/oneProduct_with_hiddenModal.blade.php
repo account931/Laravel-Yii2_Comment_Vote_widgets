@@ -95,7 +95,7 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 						  
 				<div class="row list-group-item">
 				    <div class="col-sm-1 col-xs-3">Category</div>
-				    <div class="col-sm-4 col-xs-9"><i> {{$allDBProducts[$i]->categoryName->categ_name}} </i></div>  
+				    <div class="col-sm-4 col-xs-9"><i> {{$allDBProducts[$i]->categoryName->categ_name}} </i></div> <!--hasMany relation --> 
 				</div>
 						  
 			    <!--- Total product sum calculation (2x16.64=N) -->

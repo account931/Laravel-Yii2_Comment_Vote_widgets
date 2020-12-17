@@ -6,9 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\models\ShopSimple\ShopOrdersMain; //model for DB table {shop_orders_main} that stores general info about the order (general amount, price, email, etc )
 use App\models\ShopSimple\ShopOrdersItems; //model for DB table {shop_order_item} to store a one user's order split by items, ie if Order contains 2 items (dvdx2, iphonex3). 
+use App\models\ShopSimple\ShopSimple;     //model for DB table 
+use App\models\ShopSimple\ShopCategories; //model for DB table 
 
 use Illuminate\Support\Facades\DB; //???
-use App\Http\Requests\ShopPaypalSimple_AdminPanel\OrderStatusChangeRequest; //my custom Form validation via Request
+use App\Http\Requests\ShopPaypalSimple_AdminPanel\OrderStatusChangeRequest; //my custom Form validation via Request Class (to update status in table {shop_orders_main})
+use App\Http\Requests\ShopPaypalSimple_AdminPanel\SaveNewProductRequest; //my custom Form validation via Request Class (to create a new product in table {shop_simple})
+
+
 
 class ShopPayPalSimple_AdminPanel extends Controller
 {
@@ -38,7 +43,13 @@ class ShopPayPalSimple_AdminPanel extends Controller
 		return view('ShopPaypalSimple_AdminPanel.adminPanelMain')->with(compact('item')); 
 	}
 	
-	
+
+
+
+
+
+
+ //==================================  Orders view section =================================================	
 	/**
      * display Admin Panel Orders page
      *
@@ -184,6 +195,112 @@ class ShopPayPalSimple_AdminPanel extends Controller
 			return redirect()->back()->withInput()->with('flashMessageX', 'You successfully update Order <b>' . $orderID . ' </b> with new Status <b> ' . ucfirst($orderStatus) . '</b>' );
 		}
 	}
+	
+ //================================== End Orders view section =================================================
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+ //================================== Products view section =================================================
+	
+	
+    /**
+     * Display admin panel view with all shop products and option to edit, add new
+     * @param  
+     * @return \Illuminate\Http\Response
+     */
+	 
+    public function products()
+    {
+		if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
+           throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
+		}
+		
+		$allProducts = ShopSimple::paginate(7); //all shop products with pagination
+		$allCategories = ShopCategories::all();  //for <select> dropdown
+		
+		return view('ShopPaypalSimple_AdminPanel.shop-products.shop-products-list')->with(compact('allProducts', 'allCategories'));  
+	}
+	
+	
+	
+	
+	/**
+     * Display admin page with a form to add a new product
+     * @param  
+     * @return \Illuminate\Http\Response
+     */
+	 
+    public function addProduct()
+    {
+		if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
+           throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
+		}
+		
+		$allCategories = ShopCategories::all();  //for <select> dropdown in form
+		
+		return view('ShopPaypalSimple_AdminPanel.shop-products.add-product')->with(compact('allCategories'));  
+	}
+	
+	
+	
+	
+	/**
+     * Saves new product to DB. Gets $_POST[''] seny by form in {public function addProduct()}
+     * @param  
+     * @return \Illuminate\Http\Response
+     */
+	 
+    public function storeProduct(SaveNewProductRequest $request)
+    {
+		if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
+           throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
+		}
+		
+		//if $_POST['productID'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
+		if(!$request->input('product-desr')){
+			throw new \App\Exceptions\myException('Bad request, You are not expected to enter this page.');
+		}
+		
+		
+		/*
+		$imageName = time().'.'.request()->image->getClientOriginalExtension();
+        request()->image->move(public_path('images'), $imageName);
+        return back()
+            ->with('success','You have successfully upload image.')
+            ->with('image',$imageName);
+		*/
+		//dd($request->input('image')); // Not working
+		//dd($request->image);
+		
+		//$filename = $this->getFileName($request->image);
+		
+		
+		$imageName = time(). '_' . $request->image->getClientOriginalName();
+		
+	     return redirect('/admin-add-product')->withInput()
+		       ->with('flashMessageX', 'Validation is OK. Implement saving to DB. Image is ' . $imageName  . '. Size is ' . $request->image->getSize() . ' kilobyte. Format is <b>' . $request->image->getClientOriginalExtension() . '</b>')
+		       ->with('image',$imageName);
+ 
+	}         
+	
+	//================================== END Products view section =================================================
+	
+	
+
+	
+	
+	
+	
 	
 	
 	

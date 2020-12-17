@@ -87,6 +87,9 @@ Route::get('/shopAdminPanel', 'ShopPayPalSimple_AdminPanel@index')->name('shopAd
 Route::get('/admin-orders',   'ShopPayPalSimple_AdminPanel@orders')->name('admin-orders'); //display Admin Panel ....
 Route::get('/count-orders',   'ShopPayPalSimple_AdminPanel@countOrders'); // fot ajax counting Orders in Admin panel
 Route::post('/updateStatus',  'ShopPayPalSimple_AdminPanel@updateStatusField')->name('/updateStatus');   //route to get <form> data via $_POST from {ShopPayPalSimple_AdminPanel@orders} page ()) and redirects back. 
+Route::get('/admin-products', 'ShopPayPalSimple_AdminPanel@products')->name('admin-products'); //display Admin Panel with all products (and option to edit them)
+Route::get('/admin-add-product', 'ShopPayPalSimple_AdminPanel@addProduct')->name('admin-add-product'); //display Admin Page to add a product
+Route::post('/storeNewproduct',  'ShopPayPalSimple_AdminPanel@storeProduct')->name('storeNewproduct'); //display Admin Page to add a product
 
 
 
@@ -110,7 +113,7 @@ Route::get('/404', function () {
 
 
 
-
+// Routes to emulate SSH on Hosting Server, when u don't have access to SSH
 
 //Clear Cache facade value:
 Route::get('/clear-cache', function() {

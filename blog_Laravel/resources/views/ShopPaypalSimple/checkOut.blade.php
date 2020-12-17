@@ -228,7 +228,7 @@
 					 <button class="btn my-border" data-toggle="collapse" data-target="#unloggedUserForm">one-click buy <i class="fa fa-check-square-o"></i></button> without logging  
 			  </p>
           
-		      <!-- Show Form for unlogged user (by Render Partial) (Form is 90% like the same as for a logged user, but it does not have default user's values from DB + is display:none by default, hidden by Bootstrap class .collapse, in order to appear a user should click "Proceed with <button class="btn"><a href="#">one-click buy </a></button>) -->
+		      <!-- Show Form for unlogged user (by Render Partial) (Form with user's details, i.e address, cell, etc)(Form is 90% like the same as for a logged user, but it does not have default user's values from DB + is display:none by default, hidden by Bootstrap class .collapse, in order to appear a user should click "Proceed with <button class="btn"><a href="#">one-click buy </a></button>) -->
 			  @include('ShopPaypalSimple.partial.checkOutView_unlogged_user_form', ['uuid' => $uuid ]) {{-- passing $uuid is not necessarily--}}
 			  <!-- Show Form for unlogged user (by Render Partial) -->
 			  
@@ -246,7 +246,7 @@
           </div> 
 	  
 	  
-      <!-- Form with user's details, i.e address, cell, etc -->
+      <!-- Form with user's details, i.e address, cell, etc. Form is 90% like {ShopPaypalSimple.partial.checkOutView_unlogged_user_form} i.e (for a unlogged user), it does have default user's values from DB + IS NOT display:none by default, IS NOT hidden by Bootstrap class .collapse, in order to appear a user should click "Proceed with <button class="btn"><a href="#">one-click buy </a></button>)-->
 	  <div class="col-sm-12 col-xs-12 shadowX">
 	     <h2> Shipping details </h2>
 	      <form class="form-horizontal" method="post" class="form-assign" action="{{url('/payPage1')}}">

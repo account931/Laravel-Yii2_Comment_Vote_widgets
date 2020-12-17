@@ -17,7 +17,7 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script> <!--Sweet Alert JS-->
 <!-- Include js file for thisview only -->
 
-<script src="{{ asset('js/ShopPaypalSimple_Admin/ViewOrders/adminOrders.js')}}"></script> <!-- CSS Loader -->
+<script src="{{ asset('js/ShopPaypalSimple_Admin/ViewOrders/adminOrders.js')}}"></script> <!-- Orders JS -->
 
 
 <div class="container">
@@ -62,7 +62,11 @@
 
 					<!-- Link to go back -->
 				    <div class="col-sm-8 col-xs-6">
-					    <p>Admin Orders <span class="small text-danger">*</span></p>
+					    <p>  
+						     <i class="fa fa-truck border shadowX" style="font-size:46px; margin-right: 0.5em;"></i>  
+							 Admin Orders <span class="small text-danger">*</span> 
+							 <br>  
+						</p>
 				        &nbsp;<i class="fa fa-hand-o-left" style="font-size:24px"></i>
 				        <a href="{{ url('/shopAdminPanel') }}">back to admin panel </a>
                     </div>
@@ -90,11 +94,16 @@
 						
 					</div>
 					<!--- End Dropdown to select between "proceeded"/"non-proceeded" -->
+				
 					
-					
-					
-					
-					
+				</div>
+				
+				
+				
+				<!-- Just info, may delete later -->
+				<div class="col-sm-12 col-xs-12 alert alert-danger small font-italic text-danger shadowX">
+				    Now the script selects all stuff by {ShopOrdersMain::where('ord_status', 'not-proceeded')->get();}
+					</br> In future it must additionally select ->where('if_paid', 1) if your shop is intendented to work with on-line payment only (no payment on delivery)
 				</div>
 				
 				

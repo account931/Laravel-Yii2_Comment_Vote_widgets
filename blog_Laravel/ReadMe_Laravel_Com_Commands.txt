@@ -20,6 +20,7 @@ Table of Content:
 7.Forms validation via Controller
 8.Form Validation
 8.1.1 Form Validation via Request Class
+8.1.2 Image Upload and validation
 8.1 Form input with in-line validation errors <span>, like in Yii2 
 8.2 Form fields Insert to DB
 9.Migrations/Seeders
@@ -236,8 +237,9 @@ USAGE
 			->withErrors($validator);
 	} else { return redirect('/rbac')->with('flashMessageX',"Assigned successfully " . $request->input('role_sel')); }   
 
-# validate in range => $rules = ['role_sel' => ['required', 'string', Rule::in(['admin', 'second-zone']) ] , //integer];
-
+# validate in range => use Illuminate\Validation\Rule;  $rules = ['role_sel' => ['required', 'string', Rule::in(['admin', 'second-zone']) ] , //integer];   
+See example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/RbacController.php at section public function assignRole(Request $request)
+See example with Range in message => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Requests/ShopPaypalSimple_AdminPanel/SaveNewProductRequest.php
 //-------------------------------		   
 #WHAT IS BELOW????
 # Install require laravelcollective/html to be able to use {{ Form::open(array('url' => 'storeNewWpress')) }}
@@ -291,6 +293,7 @@ USAGE
 	     // your code if validation is OK
 	 
  3. In app/Http/Requests/ShopShippingRequest
+ use Illuminate\Validation\Rule; //for in: validation
  class ShopShippingRequest extends FormRequest
 { 
     public function authorize()
@@ -312,7 +315,11 @@ USAGE
             'u_name' => ['required', 'string', 'min:3'], 
 			'u_address'  => [ 'required',  'string', 'min:8'],
             'u_email'  => [ 'required', 'email' ] ,
-            'u_phone'  => [ 'required', "regex: $RegExp_Phone" ] ,	
+            'u_phone'  => [ 'required', "regex: $RegExp_Phone" ],
+			'product-price' => ['required', 'numeric'], //numeric to accept float
+			'product-category' => ['required', 'string', Rule::in(['admin', 'second-zone']) ] , //integer];
+			'image' => ['required', /*'image',*/ 'mimes:jpeg,png,jpg,gif,svg', 'max:2048' ], // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',,
+			
 
         ];
     }
@@ -330,6 +337,8 @@ USAGE
 	       'u_name.required' => 'We need u to specify your name',
 	       'u_email.email' => 'Give us real email',
 	       'u_phone.regex' => 'Phone must be in format +380....',
+		   'product-category.in' => 'Category has invalid value',
+
 		];
 	}
 	/**
@@ -354,16 +363,33 @@ USAGE
 
 
 
+//================================================================================================
+8.1.2 Image Upload and validation
+ Validation example see at =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Requests/ShopPaypalSimple_AdminPanel/SaveNewProductRequest.php
+
+#u can get image via request => $request->image (DONT USE $request->input('image') as IT WON"T WORK)
+# get file extension => $request->image->getClientOriginalExtension();
+# get file size =>      $request->image->getSize()
+# get file name =>      $request->image->getClientOriginalName()
+
+
 
 //================================================================================================
 8.1 Form input with in-line validation errors <span>, like in Yii2  => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/auth/login.blade.php
-<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
-@if ($errors->has('email'))
-    <span class="help-block">
-        <strong>{{ $errors->first('email') }}</strong>
-    </span>
-@endif
+<div class="form-group{{ $errors->has('product-name') ? ' has-error' : '' }}">
+    <label for="product-name" class="col-md-4 control-label">Product name</label>
+
+    div class="col-md-6">
+        <input id="product-name" type="email" class="form-control" name="product-name" value="{{ old('email') }}" required autofocus>
+                                
+        @if ($errors->has('product-name'))
+            <span class="help-block">
+                <strong>{{ $errors->first('product-name') }}</strong>
+            </span>
+        @endif 
+	</div>
+ </div>	    
 //================================================================================================
 
 
@@ -1098,6 +1124,9 @@ In Blade (in-line) => <p> You have <b> {{$yourArticles->count()}} </b>  {{($your
 # ternary CSS class=>
      <li class="{{ (isset($_GET['admOrderStatus']) && $_GET['admOrderStatus'] == 'Shipped') ? 'hidden':''}}">
 
+# ternary <select> <option selected="selected">  =>
+	<option value={{ $a->categ_id }} {{ old('product-category')!=null && old('product-category') == $a->categ_id  ?  ' selected="selected"' : '' }} > {{ $a->categ_name}} </option>
+
 
 # pass php var to js =>
 Pass var from controller to view =>  return view('home2', compact('user')); 
@@ -1164,7 +1193,8 @@ composer dump-autoload
 	<div class="panel-heading">text</div>
 </div>
 
-
+ # Bootstrap small red font-size =>  <span class='small font-italic text-danger'>
+ 
 /* ---------------------------------------- Mobile */
 @media screen and (max-width: 480px) { 
     .my-one {width:100%;} /* my shop image*/

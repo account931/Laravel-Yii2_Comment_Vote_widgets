@@ -551,4 +551,8 @@ class ShopPayPalSimpleController extends Controller
 		return view('ShopPaypalSimple.payOrFail_final')->with(compact('postData', 'input_data'));  
 	}
 	
+	
+	
+	
+
 }
