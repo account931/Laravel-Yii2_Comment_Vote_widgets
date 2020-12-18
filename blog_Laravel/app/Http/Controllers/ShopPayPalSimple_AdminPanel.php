@@ -227,8 +227,9 @@ class ShopPayPalSimple_AdminPanel extends Controller
 		
 		$allProducts = ShopSimple::paginate(7); //all shop products with pagination
 		$allCategories = ShopCategories::all();  //for <select> dropdown
+		$allProductsSearchBar = ShopSimple::all();  // for Search Bar
 		
-		return view('ShopPaypalSimple_AdminPanel.shop-products.shop-products-list')->with(compact('allProducts', 'allCategories'));  
+		return view('ShopPaypalSimple_AdminPanel.shop-products.shop-products-list')->with(compact('allProducts', 'allCategories', 'allProductsSearchBar'));  
 	}
 	
 	
@@ -286,9 +287,12 @@ class ShopPayPalSimple_AdminPanel extends Controller
 		
 		
 		$imageName = time(). '_' . $request->image->getClientOriginalName();
+		$sizeInByte =     $request->image->getSize() . ' byte';
+		$sizeInKiloByte = round( ($request->image->getSize() / 1024), 2 ). ' kilobyte'; //round 10.55364364 to 10.5
+		$fileExtens =     $request->image->getClientOriginalExtension();
 		
 	     return redirect('/admin-add-product')->withInput()
-		       ->with('flashMessageX', 'Validation is OK. Implement saving to DB. Image is ' . $imageName  . '. Size is ' . $request->image->getSize() . ' kilobyte. Format is <b>' . $request->image->getClientOriginalExtension() . '</b>')
+		       ->with('flashMessageX', 'Validation is OK. Implement saving to DB. Image is ' . $imageName  . '. Size is ' . $sizeInByte . ' or ' . $sizeInKiloByte . '. Format is <b>' . $fileExtens . '</b>')
 		       ->with('image',$imageName);
  
 	}         

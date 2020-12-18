@@ -187,7 +187,7 @@
 	
 	
 	<!-- To register JS/CSS for specific view only (for ShopSimple asset only) + Some JS/CSS are included in View itself -->
-    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['shopSimple'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['shopSimple', 'admin-products'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
 	    <!-- Autocomplete -->
         <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script> <!--autocomplete JS-->
         <link rel="stylesheet" href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'> <!--autocomplete CSS -->

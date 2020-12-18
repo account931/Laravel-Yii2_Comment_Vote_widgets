@@ -14,7 +14,7 @@ class Add2ColumnsToShopSimpleTable extends Migration
     public function up()
     {
     Schema::table('shop_simple', function($table) {
-        $table->integer('sh_stock_quantity')->nullable(); //amount of product in stock
+        $table->integer('sh_stock_quantity')->nullable(); //amount of product in stock // NOT USED, reassigned to separate table {shop_quantity_}
 		$table->string('sh_device_type', 77)->nullable(); //product device type, i.e flash drive, turntable, etc
 		
     });
@@ -28,8 +28,8 @@ class Add2ColumnsToShopSimpleTable extends Migration
     public function down()
     {
     Schema::table('shop_simple', function($table) {
-        $table->dropColumn('sh_stock_quantity');
-		$table->dropColumn('sh_stock_quantity');
+        $table->dropColumn('sh_stock_quantity'); // NOT USED, reassigned to separate table {shop_quantity}
+		$table->dropColumn('sh_device_type');
     });
     }
 }

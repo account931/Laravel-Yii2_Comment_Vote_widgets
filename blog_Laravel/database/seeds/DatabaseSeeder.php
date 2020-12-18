@@ -22,10 +22,13 @@ class DatabaseSeeder extends Seeder
 		 $this->call('Roles_Seeder');  //fill DB table {roles} with data {4 roles}
 		 $this->call('RoleUsers_Seeder');  //fill DB table {role_user} with data {assign admin to Dima}
 		 $this->call('ShopCategories_Seeder');  //fill DB table {shop_categories} with data. MUST BE BEFORE {ShopSimpleSeeder} as contains Forein Keys for {ShopSimpleSeeder}
-		 $this->call('ShopSimpleSeeder');  //fill DB table {shopsimple} with data. SEEDER IS IN SUBFOLDER /SeedersFiles.
 		 
+		 //Seeder in separated file
+    	 $this->call('ShopSimpleSeeder');  //fill DB table {shopsimple} with data. SEEDER IS IN SUBFOLDER /SeedersFiles.
+		 
+		 $this->call('Shop_Quantity_Seeder');  //fill DB table {shop_quantity} with data. 
 
-		 $this->command->info('Таблица пользователей загружена данными!');
+		 $this->command->info('Seedering action was successful!');
     }
 	
 	
@@ -124,4 +127,25 @@ class ShopCategories_Seeder extends Seeder {
 }
 
 
+
+
+
+//fill DB table {shop_quantity} with data.
+class Shop_Quantity_Seeder extends Seeder {
+  public function run()
+  {
+    DB::table('shop_quantity')->delete();  //whether to Delete old materials
+
+    DB::table('shop_quantity')->insert(['id' => 1, 'product_id' => 1, 'all_quantity' => 200, 'left_quantity' => 200 ]);
+	DB::table('shop_quantity')->insert(['id' => 2, 'product_id' => 2, 'all_quantity' => 20,  'left_quantity' => 20 ]);
+	DB::table('shop_quantity')->insert(['id' => 3, 'product_id' => 3, 'all_quantity' => 10,  'left_quantity' => 10 ]);
+	DB::table('shop_quantity')->insert(['id' => 4, 'product_id' => 4, 'all_quantity' => 10,  'left_quantity' => 10 ]);
+	DB::table('shop_quantity')->insert(['id' => 5, 'product_id' => 5, 'all_quantity' => 10,  'left_quantity' => 10 ]);
+	DB::table('shop_quantity')->insert(['id' => 6, 'product_id' => 6, 'all_quantity' => 10,  'left_quantity' => 10 ]);
+	DB::table('shop_quantity')->insert(['id' => 7, 'product_id' => 7, 'all_quantity' => 10,  'left_quantity' => 10 ]);
+	DB::table('shop_quantity')->insert(['id' => 8, 'product_id' => 8, 'all_quantity' => 10,  'left_quantity' => 10 ]);
+	DB::table('shop_quantity')->insert(['id' => 9, 'product_id' => 9, 'all_quantity' => 10,  'left_quantity' => 10 ]);
+	DB::table('shop_quantity')->insert(['id' => 10, 'product_id' => 10, 'all_quantity' => 3,   'left_quantity' => 3 ]);
+  }
+}
 

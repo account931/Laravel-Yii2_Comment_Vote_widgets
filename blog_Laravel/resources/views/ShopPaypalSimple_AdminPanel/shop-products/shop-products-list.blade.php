@@ -8,7 +8,14 @@
 
 <!-- Include js/css file for this view only -->
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet"> 
+
+<!-- Autocomplete is in views/layout/ -->
 <!-- End Include js/css file for this view only -->
+
+<script>
+  //passing php var to JS (for autocomplete.js)
+  var productsX = {!! $allProductsSearchBar->toJson() !!};
+</script>
 
 
 <div class="container">
@@ -58,22 +65,25 @@
                 <div class="panel-heading text-warning col-sm-12 col-xs-12">
 				     
 
-					<!-- Link to go back -->
-				    <div class="col-sm-8 col-xs-6">
-					    <p>  
-						     <i class="fa fa-address-card-o border shadowX" style="font-size:46px; margin-right: 0.5em;"></i>  
-							 All shop products <span class="small text-danger">*</span> 
-							 <br>  
-						</p>
-				        &nbsp;<i class="fa fa-hand-o-left" style="font-size:24px"></i>
+					<!-- Link to go back,  -->
+				    <div class="col-sm-8 col-xs-8">
+					      
+					    <h3>
+						    <i class="fa fa-address-card-o border shadowX" style="font-size:36px; margin-right: 0.2em;"></i> 
+							<div class="visible-xs small" style="margin-top:0.2em;">Shop products</div> <!-- visible for mobile only-->
+							<span class="hidden-xs">All shop products <span class="small text-danger">*</span></span> <!-- visible for Desktop only-->
+						</h3>  
+
+				        <p>&nbsp;<i class="fa fa-hand-o-left" style="font-size:24px"></i>
 				        <a href="{{ url('/shopAdminPanel') }}">back to admin panel </a>
+						</p>
                     </div>
 					
 					
 					
 					
 					<!--- Start of Dropdown to switch between shop categories i.e "desktop/mobile". Built on SQL query to table {shop_categories} . Works on Bootstrap dropdown   -->
-					<div class="col-sm-4 col-xs-6">
+					<div class="col-sm-4 col-xs-4">
 					
 					    <div class="dropdown">
                              <i class="fa fa-chevron-down dropdown-toggle" data-toggle="dropdown"></i>   
@@ -100,20 +110,33 @@
 				</div>
 				
 				
+				
+				
+				<!-------- Search bar (by Render Partial) ------------->
+                    @include('ShopPaypalSimple.partial.searchBar')
+                <!-------- End Search bar (by Render Partial) --------->
+					
+
+
+
+					
+						
 				<!-- Just info, may delete later -->
-				<div class="col-sm-12 col-xs-12 alert alert-danger small font-italic text-danger  shadowX">
+				<div class="col-sm-12 col-xs-12 alert alert-info small font-italic text-danger  shadowX" style="margin-top:1em;">
 					</br> Some notes here.....
 				</div>
 				
 				
+				
+					
 
                 <div class="panel-body shop">
 				
 				    <div class="col-sm-10 col-xs-10">
-                        <h1>All shop stuff</h1>
+                       <!-- <h1>All shop stuff</h1>-->
 						
 						<!-- Add new button -->
-						<div class='col-sm-2 col-xs-4 subfolder shadowX'>
+						<div class='col-sm-2 col-xs-4 subfolder shadowX' style="margin-bottom:1em;">
 					       <a href="{{ route('admin-add-product') }}">  
 						     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square-o" style="font-size:46px"></i> 
 							 <p> &nbsp;&nbsp;Add new</p><br>  
@@ -146,11 +169,16 @@
 							       {{ $oneProduct->categoryName->categ_name }} <!-- Category. hasMany relation --> 
 							    </div>
 								
-								<div class="col-sm-3 col-xs-12">
+								<div class="col-sm-2 col-xs-12">
 							       {{ $oneProduct->shop_price  }} {{ $oneProduct->shop_currency  }}  <!-- 1121 $ --> 
 							    </div>
 								
-								<div class="col-sm-3 col-xs-12"><!-- Edit Button --> 
+								<div class="col-sm-2 col-xs-12"> <!-- View  Button --> 
+							       <button><a href = 'edit/{{ $oneProduct->shop_id }}'>  <span>View  <i class="fa fa-eye" style="cursor:pointer;"></i> </span></a></button>  
+							    </div>
+								
+								
+								<div class="col-sm-2 col-xs-12"> <!-- Edit Button --> 
 							       <button><a href = 'edit/{{ $oneProduct->shop_id }}'>  <span onclick="return confirm('Are you sure to edit?')">Edit via/GET  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>  
 							    </div>
 							

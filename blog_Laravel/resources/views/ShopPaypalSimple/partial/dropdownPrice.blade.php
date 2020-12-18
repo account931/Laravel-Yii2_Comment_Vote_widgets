@@ -21,7 +21,7 @@ if(isset($_GET['page'])){
 
 
 <!-- Bootstrap dropdown (instead of select)-->
-<p class="visible-xs"></p> <!-- visble on mobile only -->
+<p class="visible-xs"></p> <!-- visible on mobile only (just to emulate <br>)-->
 <div class="dropdown">
     Price <i class="fa fa-chevron-down dropdown-toggle" data-toggle="dropdown"></i>   
  

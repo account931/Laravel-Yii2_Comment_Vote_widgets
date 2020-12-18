@@ -222,7 +222,7 @@
 										<!-- Form with Roles dropdown select. Displays content without html escaping -->
 										<td>
 										    
-											    <form></form>
+											<form></form><!-- Mega Fix!!!!! -->
 											
 										    <form method="post" class="form-assign" action="{{url('/assignRole')}}">
 				

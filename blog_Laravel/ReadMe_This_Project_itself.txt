@@ -40,4 +40,4 @@ $_SESSION['cart_dimmm931_1604938863'] in function checkOut(Request $request)
 	 # shop_orders_main => this DB table that stores general info about one user's order (uuid, items in order, general $ amount, status name, email, etc )
 	 # shop_order_item =>  this DB table is used to store a one user's order split by items, ie if Order contains 2 items (dvdx2, iphonex3). 
 	 # shop_transactions
-	 # shop_quantity_stock ?????
+	 # shop_quantity    => this DB table is used to store quantity of products from table {shop_simple}. Uses Foreign key

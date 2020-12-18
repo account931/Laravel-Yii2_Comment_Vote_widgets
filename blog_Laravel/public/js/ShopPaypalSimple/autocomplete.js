@@ -1,4 +1,5 @@
-//autocomplete for .....
+//autocomplete for both .....
+//works both on user 'shopSimple' or admin 'admin-products' routes and redirects to different < a href>
 //JQ autocomplete UI,(+ must include JQ_UI.js + JQ_UI.css in index.php)
 $(document).ready(function(){
 	 
@@ -14,9 +15,9 @@ $(document).ready(function(){
 	}
 	
 	//Getting current URL to construct <a href> in autocomplete. Must ne redone after pretty URLS
-	var path = window.location.href;
-	var urlX = path.substring(0, path.lastIndexOf("/") /*- 1*/);
-	//alert(urlX);
+	var path = window.location.href;                              //http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public/admin-products
+	var urlX = path.substring(0, path.lastIndexOf("/") /*- 1*/); //http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public
+	//alert("i " +urlX);
 	
 	
 	//array which will contain all products for autocomplete
@@ -25,11 +26,28 @@ $(document).ready(function(){
 	
 	//Loop through passed php object, object is echoed in JSON in Controller Product/action Shop
 	for (var key in productsX) {
-		arrayAutocomplete.push(  { label: productsX[key]['shop_title'] + "  => " +  productsX[key]['shop_price'], value: productsX[key]['shop_id'] }  ); //gets name of every user and form in this format to get and lable and value(Name & ID)
+		arrayAutocomplete.push(  { label: productsX[key]['sh_device_type'] + " " + productsX[key]['shop_title'] + "  => " +  productsX[key]['shop_price'], value: productsX[key]['shop_id'] }  ); //gets name of every user and form in this format to get and lable and value(Name & ID)
 
 	}
 	
+    //Amendmenents in order one autocomplete can work both on user 'shopSimple' or admin 'admin-products' routes
+	//Redirects to different < a href> when users click autocompleted product
+	//we see here what is the route and determines what <a href> to use, when users click autocompleted product
+	var allPath = path.split('/');
+	var currenrRoute = allPath[allPath.length -1]; //returns 'admin-products' or 'shopSimple'
+	//alert(currenrRoute);
+	if(currenrRoute == 'shopSimple'){
+		var adminOrUserURL = 'showOneProduct' 
+	}
+	
+	if(currenrRoute == 'admin-products'){
+		var adminOrUserURL = 'admin-products';
+	}
+	//End Amendmenents in order one autocomplete can work both on user 'shopSimple' or admin 'admin-products' routes
 
+	
+	
+	
 	
     //Autocomplete itself
     $( function() {	
@@ -66,7 +84,7 @@ $(document).ready(function(){
         }).data("ui-autocomplete")._renderItem = function (a, b) {
             return $("<li></li>")
             .data("item.autocomplete", b)
-            .append('<a href="' + urlX + '/showOneProduct/' + b.value + '"> ' + b.label + '</a>  ')
+            .append('<a href="' + urlX + '/' + adminOrUserURL + '/' + b.value + '"> ' + b.label + '</a>' ) 
             .appendTo(a);
 			//$("#searchProduct").val(b.label);
         };
