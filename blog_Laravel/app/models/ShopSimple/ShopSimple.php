@@ -22,12 +22,18 @@ class ShopSimple extends Model
   
   
   
-  //hasOne relation
+  //hasOne relation (for Category table)
   public function categoryName(){
-	  return $this->hasOne('App\models\ShopSimple\ShopCategories', 'categ_id', 'shop_categ')->withDefault(['name' => 'Unknown cat']);      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
+	  return $this->hasOne('App\models\ShopSimple\ShopCategories', 'categ_id', 'shop_categ')->withDefault(['name' => 'Unknown categoty']);      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
       //->withDefault(['name' => 'Unknown']) this prevents the crash if this author id does not exist in table User (for example after fresh install and u forget to add users to user table)
   }
 
+
+  //hasOne relation (For Quantity table)
+  public function quantityGet(){
+	  return $this->hasOne('App\models\ShopSimple\ShopQuantity', 'product_id', 'shop_id')->withDefault(['name' => 'Unknown quantity']);      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
+      //->withDefault(['name' => 'Unknown']) this prevents the crash if this author id does not exist in table User (for example after fresh install and u forget to add users to user table)
+  }
 
   
   

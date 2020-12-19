@@ -297,6 +297,54 @@ class ShopPayPalSimple_AdminPanel extends Controller
  
 	}         
 	
+	
+	
+    /**
+     * Display one product view by ID
+     * @param  
+     * @return \Illuminate\Http\Response
+     */
+	 
+    public function showOneProduct($id)
+    {
+		if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
+           throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
+		}
+		
+		//find the product by id
+		$productOne = ShopSimple::where('shop_id', $id)->get();
+		//dd($productOne);
+		
+		return view('ShopPaypalSimple_AdminPanel.shop-products.adm-one-product')->with(compact('productOne'));  
+	}
+	
+	
+	
+	
+	
+	/**
+     * Display form to edit an existing product
+     * @param  
+     * @return \Illuminate\Http\Response
+     */
+	 
+    public function editProduct($id)
+    {
+	    if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
+           throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
+		}
+		
+		//find the product by id
+		$productOne = ShopSimple::where('shop_id', $id)->get();
+		
+		return view('ShopPaypalSimple_AdminPanel.shop-products.edit-product')->with(compact('productOne'));  
+	}
+	
+	
+	
+	
+	
+	
 	//================================== END Products view section =================================================
 	
 	

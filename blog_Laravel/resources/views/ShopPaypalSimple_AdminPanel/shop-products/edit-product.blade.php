@@ -69,18 +69,16 @@
 					<!-- Link to go back -->
 				    <div class="col-sm-8 col-xs-6">
 					    <p>  
-						     <i class="fa fa-file-text-o border shadowX" style="font-size:46px; margin-right: 0.5em;"></i>  
-							 Add a new  <span class="small text-danger">*</span> 
+						     <i class="fa fa-paperclip border shadowX" style="font-size:46px; margin-right: 0.5em;"></i>  
+							 Edit  <span class="small text-danger">*</span> 
 							 <br>  
 						</p>
-				        &nbsp;<i class="fa fa-hand-o-left" style="font-size:24px"></i>
-				        <a href="{{ url('/shopAdminPanel') }}">back to admin panel </a><br>
-						
-						&nbsp;<i class="fa fa-hand-o-left" style="font-size:24px"></i>
-						<a href="{{ url('/admin-products') }}">back to View all products </a>
+				        
+						&nbsp;<i class="fa fa-arrow-circle-o-left" style="font-size:24px"></i>&nbsp;       <a href="{{ url('/admin-products') }}">back to View all products </a><br>
+				        &nbsp;<i class="fa fa-arrow-circle-o-left" style="font-size:24px"></i>&nbsp;&nbsp;<a href="{{ url('/shopAdminPanel') }}">back to admin panel </a>
                     </div>
 					
-					 
+					
 					
 					
 					<!--- Start of Dropdown to switch between shop categories i.e "desktop/mobile". Built on SQL query to table {shop_categories} . Works on Bootstrap dropdown   -->
@@ -104,7 +102,7 @@
                 <div class="panel-body shop">
 				
 				    <div class="col-sm-10 col-xs-10">
-                        <h1>Add a new item</h1>
+                        <h1>Edit an item</h1>
 			
 		            </div>	
 				
@@ -122,13 +120,14 @@
                             
                             <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
  
+ 
                             <!-- product name -->
                             <div class="form-group{{ $errors->has('product-name') ? ' has-error' : '' }}">
                                 <label for="product-name" class="col-md-4 control-label">Product name</label>
 
                                 <div class="col-md-6">
-                                    <input id="product-name" type="text" class="form-control" name="product-name" value="{{ old('product-name') }}" required autofocus>
-                                
+                                    <input id="product-name" type="text" class="form-control" name="product-name" value="{{old('product-name', $productOne[0]->shop_title)}}" required autofocus>
+                                                                                       
                                     @if ($errors->has('product-name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('product-name') }}</strong>
@@ -138,13 +137,14 @@
                             </div>	    
                            
 						   
+						   
 						    <!-- product description -->
                             <div class="form-group{{ $errors->has('product-desr') ? ' has-error' : '' }}">
                                 <label for="product-desr" class="col-md-4 control-label">Description</label>
 
                                 <div class="col-md-6">
-                                    <textarea cols="5" rows="5" id="product-desr" class="form-control" name="product-desr"  required> {{ old('product-desr') }} </textarea>
-                                
+                                    <textarea cols="5" rows="5" id="product-desr"  class="form-control" name="product-desr" required> {{old('product-desr', $productOne[0]->shop_descr)}} </textarea>
+                                                                                                                                    
                                     @if ($errors->has('product-desr'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('product-desr') }}</strong>
@@ -194,9 +194,7 @@
 
                                     <select name="product-category" class="mdb-select md-form">
 						              <option  disabled="disabled"  selected="selected">Choose category</option>
-		                              @foreach ($allCategories as $a)
-									      <option value={{ $a->categ_id }} {{ old('product-category')!=null && old('product-category') == $a->categ_id  ?  ' selected="selected"' : '' }} > {{ $a->categ_name}} </option>
-					                  @endforeach
+		                              
 						            </select>
 
 									

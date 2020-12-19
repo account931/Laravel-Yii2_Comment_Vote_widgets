@@ -1059,7 +1059,8 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 
 # Link by route ID => 
    Route::get('/showOneProduct/{id}', 'ShopPayPalSimpleController@showOneProductt')->name('showOneProduct');
-   <a href="{{ route('showOneProduct', ['id'=> 3]) }}"> 
+   var 1 => <a href="{{ route('showOneProduct', ['id'=> 3]) }}"> 
+   var 2 => <a href="{{ url('/admin-edit-product')}}/{{$productOne[0]->shop_id }}" >
    
    
 

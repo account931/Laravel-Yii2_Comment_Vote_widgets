@@ -80,8 +80,9 @@ Route::get('/pay-or-fail', 'ShopPayPalSimpleController@payOrFail')->name('pay-or
 
 
 
-
-
+//Tried but failed Entrust middleware
+//Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function() {
+	
 //ShopSimple Admin Panel
 Route::get('/shopAdminPanel', 'ShopPayPalSimple_AdminPanel@index')->name('shopAdminPanel'); //display Admin Panel start page
 Route::get('/admin-orders',   'ShopPayPalSimple_AdminPanel@orders')->name('admin-orders'); //display Admin Panel ....
@@ -90,6 +91,16 @@ Route::post('/updateStatus',  'ShopPayPalSimple_AdminPanel@updateStatusField')->
 Route::get('/admin-products', 'ShopPayPalSimple_AdminPanel@products')->name('admin-products'); //display Admin Panel with all products (and option to edit them)
 Route::get('/admin-add-product', 'ShopPayPalSimple_AdminPanel@addProduct')->name('admin-add-product'); //display Admin Page to add a product
 Route::post('/storeNewproduct',  'ShopPayPalSimple_AdminPanel@storeProduct')->name('storeNewproduct'); //display Admin Page to add a product
+
+Route::get('/admin-one-product/{id}',  'ShopPayPalSimple_AdminPanel@showOneProduct')->name('admin-one-product'); //show one product by ID
+Route::get('admin-edit-product/{id}', 'ShopPayPalSimple_AdminPanel@editProduct')->name('admin-edit-product/{id}'); //display Admin Page to edit an existing product
+
+ 
+//});
+
+
+
+
 
 
 

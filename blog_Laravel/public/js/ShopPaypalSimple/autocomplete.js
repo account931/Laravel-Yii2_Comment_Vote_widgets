@@ -1,6 +1,6 @@
-//autocomplete for both .....
-//works both on user 'shopSimple' or admin 'admin-products' routes and redirects to different < a href>
-//JQ autocomplete UI,(+ must include JQ_UI.js + JQ_UI.css in index.php)
+//autocomplete both for '/shopSimple' or admin '/admin-products' routes  .....autocompletes products by "sh_device_type" & "shop_title"
+//works both on user 'shopSimple' or admin 'admin-products' routes and redirects to different <a href>
+//JQ autocomplete UI,(+ must include JQ_UI.js + JQ_UI.css in index.php + must pass a PHP var 'productsX' (with autocomplete DB list) to JS), for example by => var productsX = {!! $allProductsSearchBar->toJson() !!};
 $(document).ready(function(){
 	 
 	//var productsX is passed in View with var productsX = {!! $allProductsSearchBar->toJson() !!};
@@ -30,7 +30,9 @@ $(document).ready(function(){
 
 	}
 	
-    //Amendmenents in order one autocomplete can work both on user 'shopSimple' or admin 'admin-products' routes
+	
+	
+    //Amendmenents in order one autocomplete can work both on user 'shopSimple' or admin 'admin-one-product' routes
 	//Redirects to different < a href> when users click autocompleted product
 	//we see here what is the route and determines what <a href> to use, when users click autocompleted product
 	var allPath = path.split('/');
@@ -41,10 +43,13 @@ $(document).ready(function(){
 	}
 	
 	if(currenrRoute == 'admin-products'){
-		var adminOrUserURL = 'admin-products';
+		var adminOrUserURL = 'admin-one-product'; //url to show one product
 	}
-	//End Amendmenents in order one autocomplete can work both on user 'shopSimple' or admin 'admin-products' routes
+	//End Amendmenents in order one autocomplete can work both on user '/shopSimple' or admin '/admin-products' routes
 
+	
+	
+	
 	
 	
 	
