@@ -9,7 +9,8 @@
 
 <!-- Include js/css file for this view only -->
 <script src="{{ asset('js/ShopPaypalSimple/shopSimple_Loader.js')}}"></script> <!-- CSS Loader -->
-<script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>   
+<script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>  
+<script src="{{ asset('js/ShopPaypalSimple/my_LazyLoad_Shop_Simple.js')}}"></script>  <!--implement LazyLoad --> 
 
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
 <link href="{{ asset('css/ShopPaypalSimple/shopSimple_Loader.css') }}" rel="stylesheet">

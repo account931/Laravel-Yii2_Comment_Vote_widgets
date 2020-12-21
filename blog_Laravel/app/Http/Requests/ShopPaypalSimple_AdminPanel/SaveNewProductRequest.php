@@ -40,9 +40,12 @@ class SaveNewProductRequest extends FormRequest
 		//dd($rolesList);
 		
         return [
-            'product-desr' =>  ['required', 'string', 'min:3'],  
+		    'product-name' =>  ['required', 'string', 'min:3', 'unique:shop_simple,shop_title'],  //unique:tableName, columnName
+            'product-desr' =>  ['required', 'string', 'min:3'],   
 			'product-price' => ['required', 'string', 'min:3'],
 			'product-price' => ['required', 'numeric'], //numeric to accept float
+			'product-type' =>  ['required', 'string', 'min:3'], 
+			
 			//'product-category' => ['required', 'string', Rule::in(['admin', 'second-zone']) ] , //integer];
             'product-category' => ['required', 'string', Rule::in($rolesList) ] , //integer];
 			//image validation https://hdtuto.com/article/laravel-57-image-upload-with-validation-example

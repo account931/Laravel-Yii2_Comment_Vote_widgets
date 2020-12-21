@@ -256,7 +256,8 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	
 	
 	/**
-     * Saves new product to DB. Gets $_POST[''] seny by form in {public function addProduct()}
+     * Saves new product to DB. Gets $_POST[''] sent by form in {public function addProduct()}
+	 * Validation via Request Class
      * @param  
      * @return \Illuminate\Http\Response
      */
@@ -282,20 +283,46 @@ class ShopPayPalSimple_AdminPanel extends Controller
 		*/
 		//dd($request->input('image')); // Not working
 		//dd($request->image);
-		
 		//$filename = $this->getFileName($request->image);
 		
-		
+		//getting Image info for Flash Message
 		$imageName = time(). '_' . $request->image->getClientOriginalName();
 		$sizeInByte =     $request->image->getSize() . ' byte';
 		$sizeInKiloByte = round( ($request->image->getSize() / 1024), 2 ). ' kilobyte'; //round 10.55364364 to 10.5
 		$fileExtens =     $request->image->getClientOriginalExtension();
+		//getting Image info for Flash Message
 		
-	     return redirect('/admin-add-product')->withInput()
-		       ->with('flashMessageX', 'Validation is OK. Implement saving to DB. Image is ' . $imageName  . '. Size is ' . $sizeInByte . ' or ' . $sizeInKiloByte . '. Format is <b>' . $fileExtens . '</b>')
+		
+		//Move uploaded image to the specified folder 
+		request()->image->move(public_path('images/ShopSimple'), $imageName);
+		
+		
+		//saving a new product data to table {shop_simple}
+		$data = $request->all(); 
+		$shop = new ShopSimple();
+		
+		$shop->shop_title      = $data['product-name'];
+		$shop->shop_descr      = $data['product-desr'];
+		$shop->shop_price      = $data['product-price'];
+		$shop->shop_image      = $imageName; //$request->image->getClientOriginalName();
+		$shop->shop_currency   = '$' ;
+		$shop->shop_categ      = $data['product-category'];
+		$shop->sh_device_type  = $data['product-type'];
+		$shop->shop_created_at = date('Y-m-d H:i:s');
+		
+		if($shop->save()){
+		
+	     return redirect('/admin-products')/*->withInput()*/
+		       ->with('flashMessageX', 'Validation was OK. Product<b> ' . $data['product-name'] .  ' </b> was saved to DB. Image was successfully uploaded. Image is ' . $imageName  . '. Size is ' . $sizeInByte . ' or ' . $sizeInKiloByte . '. Format is <b>' . $fileExtens . '</b>')
 		       ->with('image',$imageName);
- 
+			   
+        } else {
+	        return redirect('/admin-add-product')->withInput()->with('flashMessageFailX', 'Saving Failed');
+		}
 	}         
+	
+	
+	
 	
 	
 	
@@ -343,6 +370,31 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	
 	
 	
+	
+	/**
+     * Delete a one product. Gets $_POST sent by form in function products()
+     * @param  
+     * @return \Illuminate\Http\Response
+     */
+	 
+    public function deleteProduct(Request $request)
+    {
+		if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
+           throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
+		}
+		
+		//gets the id to delete
+		$deleteID = $request->input('prod_id');
+		
+		if(ShopSimple::where('shop_id', $deleteID )->delete()){   //Delete){
+		    return redirect('/admin-products')/*->withInput()*/
+		       ->with('flashMessageX', 'Deleted item <b> ' . $deleteID .  ' </b> successfully');
+			   
+        } else {
+	        return redirect('/admin-products')->withInput()->with('flashMessageFailX', 'Deleting Failed');
+		}
+		
+	}
 	
 	
 	//================================== END Products view section =================================================

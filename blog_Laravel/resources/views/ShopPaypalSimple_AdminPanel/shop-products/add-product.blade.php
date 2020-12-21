@@ -95,7 +95,7 @@
 				
 				
 				<!-- Just info, may delete later -->
-				<div class="col-sm-12 col-xs-12 alert alert-danger small font-italic text-danger  shadowX">
+				<div class="col-sm-12 col-xs-12 alert alert-info small font-italic text-danger  shadowX">
 					</br> Some notes here.....
 				</div>
 				
@@ -154,6 +154,25 @@
                             </div>	 
 							
 							
+							
+							
+							<!-- product Type -->
+                            <div class="form-group{{ $errors->has('product-type') ? ' has-error' : '' }}">
+                                <label for="product-type" class="col-md-4 control-label">Product Type</label>
+
+                                <div class="col-md-6">
+                                    <input id="product-type" type="text"  class="form-control" name="product-type" value="{{ old('product-type') }}" required>
+                                
+                                    @if ($errors->has('product-type'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('product-type') }}</strong>
+                                    </span>
+                                    @endif 
+							     </div>
+                            </div>
+							
+							
+							
 							<!-- product price -->
                             <div class="form-group{{ $errors->has('product-price') ? ' has-error' : '' }}">
                                 <label for="product-price" class="col-md-4 control-label">Price</label>
@@ -168,6 +187,7 @@
                                     @endif 
 							     </div>
                             </div>	 
+							
 							
 							
 							<!-- product quantity (to add to table {}) -->
@@ -242,7 +262,7 @@
                         </form>
 			
 					</div>  <!-- end .admin-add-new-item -->
-					<!--------- End Display products  --------------->	
+					<!--------- End Form to a add new item    --------------->	
                        
 					
 					

@@ -118,7 +118,7 @@
                         <div class='subfolder border shadowX'>
 					       <a href="{{ route('cart') }}">  
 						     <i class="fa fa-book" style="font-size:96px"></i> 
-							 <p>Some text</p><br>  
+							 <p>Quantity</p><br>  
 						   </a>
 		                 </div> 
                       </div>

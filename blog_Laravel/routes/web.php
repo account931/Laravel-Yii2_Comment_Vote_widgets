@@ -92,8 +92,9 @@ Route::get('/admin-products', 'ShopPayPalSimple_AdminPanel@products')->name('adm
 Route::get('/admin-add-product', 'ShopPayPalSimple_AdminPanel@addProduct')->name('admin-add-product'); //display Admin Page to add a product
 Route::post('/storeNewproduct',  'ShopPayPalSimple_AdminPanel@storeProduct')->name('storeNewproduct'); //display Admin Page to add a product
 
-Route::get('/admin-one-product/{id}',  'ShopPayPalSimple_AdminPanel@showOneProduct')->name('admin-one-product'); //show one product by ID
+Route::get('/admin-one-product/{id}', 'ShopPayPalSimple_AdminPanel@showOneProduct')->name('admin-one-product'); //show one product by ID
 Route::get('admin-edit-product/{id}', 'ShopPayPalSimple_AdminPanel@editProduct')->name('admin-edit-product/{id}'); //display Admin Page to edit an existing product
+Route::post('/admin-delete-product',  'ShopPayPalSimple_AdminPanel@deleteProduct')->name('/admin-delete-product');  //route to method to delete certian product by ID. Sent by POST form
 
  
 //});

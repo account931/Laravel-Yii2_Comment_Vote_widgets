@@ -127,6 +127,7 @@
 				<!-- Just info, may delete later -->
 				<div class="col-sm-12 col-xs-12 alert alert-info small font-italic text-danger  shadowX" style="margin-top:1em;">
 					</br> Some notes here.....
+					</br> Please Do edit and delete only products you have created by yourself via form, not the ones created via Seeder. 
 				</div>
 				
 				
@@ -135,18 +136,20 @@
 
                 <div class="panel-body shop">
 				
-				    <div class="col-sm-10 col-xs-10">
+				    <div class="col-sm-10 col-xs-10 add-new">
                        <!-- <h1>All shop stuff</h1>-->
 						
 						<!-- Add new button -->
-						<div class='col-sm-2 col-xs-4 subfolder shadowX' style="margin-bottom:1em;">
-					       <a href="{{ route('admin-add-product') }}">  
-						     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square-o" style="font-size:46px"></i> 
-							 <p> &nbsp;&nbsp;Add new</p><br>  
-						   </a>
-		                 </div>
+						<div class='col-sm-2 col-xs-5 subfolder shadowX icon-my' style="margin-bottom:1em;">
+					       <div class="inside">
+						     <a href="{{ route('admin-add-product') }}">  
+						       <i class="fa fa-plus-circle " style="font-size:46px"></i> 
+							   <p> Add new</p><br>  
+						     </a>
+		                   </div>
+						 </div>
 						 
-		            </div>	
+		            </div>	<!-- end .add-new -->
 				
 				  
 				    <!-- If no orders in DB --> 
@@ -164,11 +167,11 @@
 					    @foreach($allProducts as $oneProduct)
 						    <div class="col-sm-12 col-xs-12  list-group-item bg-success cursorX shadowX">
 							
-							    <div class="col-sm-3 col-xs-12">
+							    <div class="col-sm-2 col-xs-12">
 							       {{ $oneProduct->shop_title }} <!-- product Name --> 
 							    </div>
 								
-								<div class="col-sm-3 col-xs-12">
+								<div class="col-sm-2 col-xs-12">
 							       {{ $oneProduct->categoryName->categ_name }} <!-- Category. hasMany relation --> 
 							    </div>
 								
@@ -182,8 +185,24 @@
 								
 								
 								<div class="col-sm-2 col-xs-12"> <!-- Edit Button --> 
-							       <button><a href = 'admin-edit-product/{{ $oneProduct->shop_id }}'>  <span onclick="return confirm('Are you sure to edit?')">Edit via/GET  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>  
-							    </div>     
+							       <button><a href = 'admin-edit-product/{{ $oneProduct->shop_id }}'>  <span onclick="return confirm('Are you sure to edit?')">Edit via /GET  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>  
+							    </div> 
+                                
+								<div class="col-sm-2 col-xs-12"> <!-- Delete Button --> 							    
+								
+								<form class="detach" method="post" action="{{url("/admin-delete-product")}}" >
+                                    <input type="hidden" value="{{csrf_token()}}" name="_token" />
+	                                <input type="hidden" value="{{$oneProduct->shop_id}}" name="prod_id" />
+	                                <button  onclick="return confirm('Are you sure to Delete?')" type="submit" class="detach-role"> 
+									   Delete via /Post <i class="fa fa-trash-o" style="cursor:pointer;color:red; font-size:1.6em;"></i> 
+									 </button> 
+                                </form>
+								
+								 
+								
+								
+								
+								</div>    
 							
 							</div>
 						@endforeach

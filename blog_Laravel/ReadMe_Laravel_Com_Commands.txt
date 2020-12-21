@@ -318,6 +318,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
             'u_phone'  => [ 'required', "regex: $RegExp_Phone" ],
 			'product-price' => ['required', 'numeric'], //numeric to accept float
 			'product-category' => ['required', 'string', Rule::in(['admin', 'second-zone']) ] , //integer];
+			'product-name' =>  ['required', 'string', 'min:3', 'unique:shop_simple,shop_title'],  //unique:tableName, columnName
+
 			'image' => ['required', /*'image',*/ 'mimes:jpeg,png,jpg,gif,svg', 'max:2048' ], // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',,
 			
 
@@ -1058,9 +1060,9 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 #link with helper => $post = App\Models\Post::find(1);  echo url("/posts/{$post->id}");
 
 # Link by route ID => 
-   Route::get('/showOneProduct/{id}', 'ShopPayPalSimpleController@showOneProductt')->name('showOneProduct');
-   var 1 => <a href="{{ route('showOneProduct', ['id'=> 3]) }}"> 
-   var 2 => <a href="{{ url('/admin-edit-product')}}/{{$productOne[0]->shop_id }}" >
+   In '/routes/web.php'  => Route::get('/showOneProduct/{id}', 'ShopPayPalSimpleController@showOneProductt')->name('showOneProduct');
+   In view Var_1 => <a href="{{ route('showOneProduct', ['id'=> 3]) }}">  // ..blog_Laravel/public/showOneProduct/3
+   In view Var_2 => <a href="{{ url('/admin-edit-product')}}/{{$productOne[0]->shop_id }}" >
    
    
 
@@ -1297,6 +1299,7 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 36. Known Errors
 
 # Error "Unknown Column 'updated_at' => public $timestamps = false; //put in model to override Error "Unknown Column 'updated_at'" that fires when saving new entry
+2 =>     protected $primaryKey = 'shop_id'; // override in model autoincrement column name
 
 # Error "Specified key was too long; max key length is 767 bytes" => see 9.Migrations/Seeders
 

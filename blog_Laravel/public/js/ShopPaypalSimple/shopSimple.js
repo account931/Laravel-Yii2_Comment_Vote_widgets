@@ -1,31 +1,4 @@
 
-//Start Lazy Load
-//Lazy Load (to use: 1.download js=> <script src="jquery.lazyload.js"></script> 2. use in html=> <img class="lazy" data-original="img/example1.jpg"; 3. use code below in js
-//https://vash-webmaster.ru/2017/08/11/lazyload-js/
-
-//<!-- Lazy load is loaded in views/app.blade.php, otherwise it wont work -->
-$(function() {
-	
-	
-    $("img.lazy").lazyload({
-		 effect : "fadeIn", //appear effect
-		 effectspeed: 200,
-		 placeholder : "images/grey.gif", //preloader image
-         //threshold : 0 //content will load only on scrolling down 10px
-    });
-	
-	//my fix. As lazy images used to load on scroll only and onload remained with placeholder, we load with delay first 4 images, rest would load on scroll
-	setTimeout(function(){  
-    //$("img.lazy").trigger('appear');
-	  $("img.lazy:lt(4)").trigger('appear'); //show 4 first images
-	}, 4000);
-	
-});
-
-//End Lazy Load
-
-//----------------------------------------------------------------
-
 
 //Js for front SHOP {Simple}, (main) part of the shop (page with products)
   

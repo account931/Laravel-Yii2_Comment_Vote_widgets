@@ -14,7 +14,7 @@ $(document).ready(function(){
 		//console.log(productsX );
 	}
 	
-	//Getting current URL to construct <a href> in autocomplete. Must ne redone after pretty URLS
+	//Getting current URL to construct <a href> in autocomplete. Must be redone after pretty URLS (????)
 	var path = window.location.href;                              //http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public/admin-products
 	var urlX = path.substring(0, path.lastIndexOf("/") /*- 1*/); //http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public
 	//alert("i " +urlX);

@@ -62,16 +62,19 @@
 
 					<!-- Link to go back -->
 				    <div class="col-sm-8 col-xs-6">
-					    <p>  
-						     <i class="fa fa-truck border shadowX" style="font-size:46px; margin-right: 0.5em;"></i>  
-							 Admin Orders <span class="small text-danger">*</span> 
-							 <br>  
-						</p>
-				        &nbsp;<i class="fa fa-hand-o-left" style="font-size:24px"></i>
+					 
+						 <h3>
+						    <i class="fa fa-truck border shadowX" style="font-size:36px; margin-right: 0.2em;"></i> 
+							<div class="visible-xs small" style="margin-top:0.2em;">Admin orders</div> <!-- visible for mobile only-->
+							<span class="hidden-xs">All shop orders <span class="small text-danger">*</span></span> <!-- visible for Desktop only-->
+						</h3> 
+						
+				        &nbsp;<i class="fa fa-arrow-circle-o-left" style="font-size:24px"></i>
 				        <a href="{{ url('/shopAdminPanel') }}">back to admin panel </a>
                     </div>
 					
-					
+					    
+						
 					
 					
 					<!--- Dropdown to select between "proceeded"/"non-proceeded/shipped". Works on Bootstrap dropdown   -->
@@ -101,7 +104,7 @@
 				
 				
 				<!-- Just info, may delete later -->
-				<div class="col-sm-12 col-xs-12 alert alert-danger small font-italic text-danger shadowX">
+				<div class="col-sm-12 col-xs-12 alert alert-info small font-italic text-danger shadowX">
 				    Now the script selects all stuff by {ShopOrdersMain::where('ord_status', 'not-proceeded')->get();}
 					</br> In future it must additionally select ->where('if_paid', 1) if your shop is intendented to work with on-line payment only (no payment on delivery)
 				</div>

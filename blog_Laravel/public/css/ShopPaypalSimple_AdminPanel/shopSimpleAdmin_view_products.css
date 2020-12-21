@@ -12,13 +12,15 @@
  
  .headering-x{margin-bottom: 0.2em;}
  
+ /* configure 'Add new' button */
+ .inside i{margin-left:28%; margin-top:0.6em;} /* fa fa image */
+ .inside p{margin-left:20%; }
  
  
  
  
-/* ---------------------- Some import from /css/ShopPaypalSimple/shopSimple.css */
+/* ---------------------- Some CSS import from /css/ShopPaypalSimple/shopSimple.css */
 
-  
  /* ---- Shadow CSS */
 .shadowX {
 	box-shadow: 0 1px 4px rgba(0, 0, 0, .3),

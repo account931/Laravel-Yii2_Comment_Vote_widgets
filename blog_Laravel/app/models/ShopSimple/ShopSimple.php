@@ -17,9 +17,10 @@ class ShopSimple extends Model
   protected $table = 'shop_simple';
   
   
-  //protected $fillable = ['wpBlog_author', 'title', 'description', 'category_sel'];  //????? protected $fillable = ['wpBlog_author', 'wpBlog_text', 'wpBlog_author', 'wpBlog_category'];
-  //public $timestamps = false; //to override Error "Unknown Column 'updated_at'" that fires when saving new entry
   
+  //protected $fillable = ['wpBlog_author', 'title', 'description', 'category_sel'];  //????? protected $fillable = ['wpBlog_author', 'wpBlog_text', 'wpBlog_author', 'wpBlog_category'];
+  public $timestamps = false; //to override Error "Unknown Column 'updated_at'" that fires when saving new entry
+  protected $primaryKey = 'shop_id'; // override
   
   
   //hasOne relation (for Category table)

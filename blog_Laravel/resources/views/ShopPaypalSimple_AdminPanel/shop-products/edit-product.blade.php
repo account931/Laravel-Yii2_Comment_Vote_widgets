@@ -93,7 +93,7 @@
 				
 				
 				<!-- Just info, may delete later -->
-				<div class="col-sm-12 col-xs-12 alert alert-danger small font-italic text-danger  shadowX">
+				<div class="col-sm-12 col-xs-12 alert alert-info small font-italic text-danger  shadowX">
 					</br> Some notes here.....
 				</div>
 				
