@@ -317,6 +317,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
             'u_email'  => [ 'required', 'email' ] ,
             'u_phone'  => [ 'required', "regex: $RegExp_Phone" ],
 			'product-price' => ['required', 'numeric'], //numeric to accept float
+			'product-quant' =>  ['required', 'integer', 'min:1' ],
+
 			'product-category' => ['required', 'string', Rule::in(['admin', 'second-zone']) ] , //integer];
 			'product-name' =>  ['required', 'string', 'min:3', 'unique:shop_simple,shop_title'],  //unique:tableName, columnName
 
@@ -367,12 +369,19 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 //================================================================================================
 8.1.2 Image Upload and validation
- Validation example see at =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Requests/ShopPaypalSimple_AdminPanel/SaveNewProductRequest.php
 
-#u can get image via request => $request->image (DONT USE $request->input('image') as IT WON"T WORK)
+ # Image Validation rules example (via Request Class) see at =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Requests/ShopPaypalSimple_AdminPanel/SaveNewProductRequest.php
+ # Upload image example (Controller) => see {public function storeProduct(SaveNewProductRequest $request)}  =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
+ # Delete image example (Controller) => see {public function deleteProduct(Request $request)} =>   https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
+ 
+---------------------------------------
+#u can get image via request =>  $request->image (DONT USE $request->input('image') as IT WON"T WORK)
 # get file extension => $request->image->getClientOriginalExtension();
 # get file size =>      $request->image->getSize()
 # get file name =>      $request->image->getClientOriginalName()
+
+
+
 
 
 
@@ -725,14 +734,47 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 //================================================================================================
 16. CRUD
- 16.1 Delete => see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   =>  public function destroy($id) 
+ 16.1 Delete => see example_1 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   =>  public function destroy($id) 
  #Delete with confirm
   <a href = 'delete/{{ $a->wpBlog_id }}'> Delete  <img class="deletee" onclick="return confirm('Are you sure?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></a>
-
-  
+ 
+ 
+ # Delete example_2 => 
+     # View => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/shop-products-list.blade.php
+              <button><a href = 'admin-edit-product/{{ $oneProduct->shop_id }}'>  <span onclick="return confirm('Are you sure to edit?')">Edit via /GET  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>  
+     # Controller => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
+	                 => public function deleteProduct(Request $request){}
+	
+--------------------------------------	
   16.2 Update 
-	   wpress_blog_post::where('wpBlog_id', $id)->update([  'wpBlog_text' => $data['description'], 'wpBlog_title' => $data['title'], 'wpBlog_category' => $data['category_sel'] ]);
+	   Update example_1 (Wpress) => 
+	        # View (form) =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/wpBlog/edit.blade.php
+	                    
+            
+			# Controller => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php
+			                => public function edit($id) {)                     (Edit Form)
+							=> public function update(Request $request, $id) {} (Store)
+	                        wpress_blog_post::where('wpBlog_id', $id)->update([  'wpBlog_text' => $data['description'], 'wpBlog_title' => $data['title'], 'wpBlog_category' => $data['category_sel'] ]);
+					
+					
+		Update example_2 (Shop AdminPanel, edit product) => 
+		    # View (Form) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/edit-product.blade.php
+			# Controller =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
+			                 public function editProduct($id){} (Form)
+							                                    (Store)????
+																
+---------------------------------------
 
+    16.3 Create	example_1 (Shop AdminPanel, create product) => 
+	        # View (Form) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/add-product.blade.php
+            
+			# Controller  => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
+              public function addProduct(){} (Form)
+			  public function storeProduct(SaveNewProductRequest $request) (Store)
+			  
+--------------------------------------
+    16.4 Read example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
+	                     public function products(){}
 //================================================================================================
 
 
@@ -1158,7 +1200,7 @@ composer dump-autoload
 # Session set => use Illuminate\Support\Facades\Session; Session::put('backUrl', url()->previous());
 # Session get => session()->get('backUrl');	
 
-# get id of new saved row/Get the Last Inserted Id => see function saveFields_to_shopOrdersMain at example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/ShopSimple/ShopOrdersMain.php
+# get id of new saved row/Get the Last Inserted Id => $m->save(); $id = $m->id;  see function saveFields_to_shopOrdersMain at example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/ShopSimple/ShopOrdersMain.php
 
 # gets url route for ajax =>
   1. via js  =>  see example at =>https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/ShopPaypalSimple_Admin/ajax_count_orders_quantity.js
@@ -1178,7 +1220,14 @@ composer dump-autoload
 # Application Timezone => go to  '/config/app.hp'    =>  'timezone' => 'Europe/Kiev', //'UTC',
 
 
-
+# remove file (image) from Folder =>
+       //delete an actual image from folder '/images/ShopSimple/'
+		if(file_exists(public_path('images/ShopSimple/' . $product->shop_image))){ //check if image exists
+		    \Illuminate\Support\Facades\File::delete('images/ShopSimple/' . $product->shop_image);
+			$s = ' Image was removed from Folder.';
+		} else {
+			$s = ' Image removing crashed.';
+		}
 
 
 

@@ -8,6 +8,7 @@ use App\models\ShopSimple\ShopOrdersMain; //model for DB table {shop_orders_main
 use App\models\ShopSimple\ShopOrdersItems; //model for DB table {shop_order_item} to store a one user's order split by items, ie if Order contains 2 items (dvdx2, iphonex3). 
 use App\models\ShopSimple\ShopSimple;     //model for DB table 
 use App\models\ShopSimple\ShopCategories; //model for DB table 
+use App\models\ShopSimple\ShopQuantity;   //model for DB table with product quantity
 
 use Illuminate\Support\Facades\DB; //???
 use App\Http\Requests\ShopPaypalSimple_AdminPanel\OrderStatusChangeRequest; //my custom Form validation via Request Class (to update status in table {shop_orders_main})
@@ -310,11 +311,24 @@ class ShopPayPalSimple_AdminPanel extends Controller
 		$shop->sh_device_type  = $data['product-type'];
 		$shop->shop_created_at = date('Y-m-d H:i:s');
 		
-		if($shop->save()){
 		
-	     return redirect('/admin-products')/*->withInput()*/
-		       ->with('flashMessageX', 'Validation was OK. Product<b> ' . $data['product-name'] .  ' </b> was saved to DB. Image was successfully uploaded. Image is ' . $imageName  . '. Size is ' . $sizeInByte . ' or ' . $sizeInKiloByte . '. Format is <b>' . $fileExtens . '</b>')
-		       ->with('image',$imageName);
+		
+		if($shop->save() ){
+			
+		    //saving qunatity to table {shop_quantity}. Must be transaction with $shop->save()
+		    $quant = new ShopQuantity();
+		    $quant->product_id = $shop->shop_id;
+		    $quant->all_quantity = $data['product-quant'];
+			$quant->left_quantity = $data['product-quant']; // it is new, so qunatity is the same not ++
+		    $quant->all_updated =  date('Y-m-d H:i:s');
+		    $quant->save();
+		   
+			if($quant->save() ){
+				
+	            return redirect('/admin-products')/*->withInput()*/
+		           ->with('flashMessageX', 'Validation was OK. Product<b> ' . $data['product-name'] .  ' </b> was saved to DB. Image was successfully uploaded. Image is <b> ' . $imageName  . '</b>. Size is ' . $sizeInByte . ' or ' . $sizeInKiloByte . '. Format is <b>' . $fileExtens . '</b>. Quantity ' . $data['product-quant'] . ' was loaded')
+		           ->with('image',$imageName);
+			}
 			   
         } else {
 	        return redirect('/admin-add-product')->withInput()->with('flashMessageFailX', 'Saving Failed');
@@ -379,6 +393,7 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	 
     public function deleteProduct(Request $request)
     {
+		//Rbac works on Delete request
 		if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
            throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
 		}
@@ -386,9 +401,29 @@ class ShopPayPalSimple_AdminPanel extends Controller
 		//gets the id to delete
 		$deleteID = $request->input('prod_id');
 		
+		
+		//found image in 
+		$product = ShopSimple::where('shop_id', $deleteID )->first();
+		//dd($product->shop_image);
+		
+		//geting quantity ID qunatity from table {shop_quantity} to delete later
+		$quantID = $product->shop_id;
+		
+		//delete an actual image from folder '/images/ShopSimple/'
+		if(file_exists(public_path('images/ShopSimple/' . $product->shop_image))){
+		    \Illuminate\Support\Facades\File::delete('images/ShopSimple/' . $product->shop_image);
+			$s = ' Image ' .  $product->shop_image . ' was removed from Folder /images/ShopSimple/.';
+		} else {
+			$s = ' Image removing crashed.';
+		}
+		
 		if(ShopSimple::where('shop_id', $deleteID )->delete()){   //Delete){
+			
+			//geting quantity  from table {shop_quantity} by ID
+			ShopQuantity::where('product_id', $quantID )->delete();
+			
 		    return redirect('/admin-products')/*->withInput()*/
-		       ->with('flashMessageX', 'Deleted item <b> ' . $deleteID .  ' </b> successfully');
+		       ->with('flashMessageX', 'Deleted item <b> ' . $deleteID .  ' </b> successfully. ' . $s . '. Quantity removed from shop_quantity');
 			   
         } else {
 	        return redirect('/admin-products')->withInput()->with('flashMessageFailX', 'Deleting Failed');

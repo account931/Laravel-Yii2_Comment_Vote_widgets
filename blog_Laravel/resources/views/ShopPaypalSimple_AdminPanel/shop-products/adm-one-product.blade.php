@@ -136,7 +136,11 @@
 					    
 						<!-- image -->
 					    <div class="col-sm-12 col-xs-12  list-group-item bg-success cursorX shadowX">
-						    <img class="admin-one-img" src="{{URL::to("/")}}/images/ShopSimple/{{$productOne[0]->shop_image }}"  alt="product"/>
+						    @if(file_exists(public_path('images/ShopSimple/' . $productOne[0]->shop_image)))
+						      <img class="admin-one-img" src="{{URL::to("/")}}/images/ShopSimple/{{$productOne[0]->shop_image }}"  alt="product"/>
+						    @else
+							   <img class="admin-one-img" src="{{URL::to("/")}}/images/ShopSimple/no-image.png"  alt="product"/>
+							@endif
 						</div>
 						
 						<!-- name -->
@@ -169,18 +173,34 @@
 						    Initial Quantity in stock:<b> {{ $productOne[0]->quantityGet->all_quantity }} </b>items <!--hasMany relation on table {shop_quantity} -->
 						</div>
 						
+						
 						<!-- Quantity Left -->
 						<div class="col-sm-12 col-xs-12  list-group-item bg-success cursorX shadowX">
 						    Quantity left:<b> {{ $productOne[0]->quantityGet->left_quantity }} </b>items <!--hasMany relation on table {shop_quantity} -->
-						    <p class="small font-italic text-danger">(last purchase: {{ $productOne[0]->quantityGet->left_updated }})</p>
+						    @if($productOne[0]->quantityGet->left_updated != null)
+							    <p class="small font-italic text-danger">(last purchase: {{ $productOne[0]->quantityGet->left_updated }})</p>
+							@else
+								<p class="small font-italic text-danger">(last purchase: was never purchased)</p>
+						    @endif
 						</div>
+			
 			
 			            <!-- Edit button -->
 						<div class="col-sm-12 col-xs-12  list-group-item bg-success cursorX shadowX">
-						    <button><a href="{{   url('/admin-edit-product')}}/{{$productOne[0]->shop_id }}" > <span onclick="return confirm('Are you sure to edit?')">Edit via/GET  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>
-      
-								
+						    <button><a href="{{   url('/admin-edit-product')}}/{{$productOne[0]->shop_id }}" > <span onclick="return confirm('Are you sure to edit?')">Edit via/GET  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>		
 						</div>
+						
+						 <!-- Delete button -->
+						<div class="col-sm-12 col-xs-12  list-group-item bg-success cursorX shadowX">
+						    <form class="detach" method="post" action="{{url("/admin-delete-product")}}" >
+                                <input type="hidden" value="{{csrf_token()}}" name="_token" />
+	                            <input type="hidden" value="{{$productOne[0]->shop_id}}" name="prod_id" />
+	                            <button  onclick="return confirm('Are you sure to Delete?')" type="submit" class="detach-role"> 
+									Delete via /Post <i class="fa fa-trash-o" style="cursor:pointer;color:red; font-size:1.6em;"></i> 
+							    </button> 
+                            </form>
+						</div>
+						
 						
 					</div>  <!-- end .admin-one-product-->
 					<!--------- End Display products  --------------->	

@@ -45,6 +45,8 @@ class SaveNewProductRequest extends FormRequest
 			'product-price' => ['required', 'string', 'min:3'],
 			'product-price' => ['required', 'numeric'], //numeric to accept float
 			'product-type' =>  ['required', 'string', 'min:3'], 
+			'product-quant' =>  ['required', 'integer', 'min:1' ],
+			
 			
 			//'product-category' => ['required', 'string', Rule::in(['admin', 'second-zone']) ] , //integer];
             'product-category' => ['required', 'string', Rule::in($rolesList) ] , //integer];

@@ -36,7 +36,7 @@ class CreateShopQuantityTable extends Migration
 			$table->timestamp('all_updated')->default( date('Y-m-d H:i:s') )->comment = 'when new amount arrived'; //Эквивалент TIMESTAMP для базы данных
 			
 			//Date of last updating of column 'all_quantity', updated when when someones buy an item
-			$table->timestamp('left_updated')->default( date('Y-m-d H:i:s') )->comment = 'updated when when someones buy an item'; //	Эквивалент TIMESTAMP для базы данных
+			$table->timestamp('left_updated')->nullable()->comment = 'updated when when someones buy an item'; //	Эквивалент TIMESTAMP для базы данных
 			
 			
 			
