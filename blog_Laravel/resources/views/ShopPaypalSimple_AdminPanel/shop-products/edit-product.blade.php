@@ -6,10 +6,9 @@
 
 @section('content')
 
-<!-- Include js/css file for this view only -->
-
-<link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet"> 
-
+<!-- Include js/css file for this view only + SEE ONE JS AT THE BOTTOM -->
+<link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
+<link href="{{ asset('css/ShopPaypalSimple_AdminPanel/product_tabs.css') }}" rel="stylesheet"> <!-- Css for W3school Full Page Tabs (uses css + js) https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
 
 <!-- Sweet Alerts -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> <!-- Sweet Alert CSS -->
@@ -103,19 +102,33 @@
 				
 				    <div class="col-sm-10 col-xs-10">
                         <h1>Edit an item</h1>
-			
 		            </div>	
 				
 				  
 		
-					  
-					<!--------- Form to a add new item   --------------->
-                    <div class="col-sm-12 col-xs-12 admin-add-new-item">
-					    
+		            
 					
 					
 					
-					    <form class="form-horizontal" method="post" action="{{url('/storeNewproduct')}}" enctype="multipart/form-data">
+					
+					
+					
+					<!-- Here displays page: edit product, edit quantity. Shown via Tabs -->
+				    <div class="col-sm-12 col-xs-12 admin-add-new-item">
+					
+					
+					
+					    <!-- Start W3school Full Page Tabs (uses css + js file + js <button onclick="openPage()") https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
+					    <button class="tablink" onclick="openPage('Home', this, 'red')" id="defaultOpen">Edit product</button>
+                        <button class="tablink" onclick="openPage('EditQuantity', this, 'blue')">Load Stock</button>
+                        <button class="tablink" onclick="openPage('About', this, 'orange')">Info</button>
+
+
+                        <!--------  1st tab div (with edit product form) --------------> 
+                        <div id="Home" class="tabcontent">
+						
+                            <!--------- Form to a add new item   --------------->
+				            <form class="form-horizontal" method="post" action="{{url('/storeNewproduct')}}" enctype="multipart/form-data">
 			
                             
                             <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
@@ -170,21 +183,6 @@
                             </div>	 
 							
 							
-							<!-- product quantity (to add to table {}) -->
-                            <div class="form-group{{ $errors->has('product-quant') ? ' has-error' : '' }}">
-                                <label for="product-quant" class="col-md-4 control-label">Quantity</label>
-
-                                <div class="col-md-6">
-                                    <input id="product-quant" type="number" min="0" class="form-control" name="product-quant" value="{{ old('product-quant') }}" required>
-                                
-                                    @if ($errors->has('product-quant'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('product-quant') }}</strong>
-                                    </span>
-                                    @endif 
-							     </div>
-                            </div>	
-							
 							
 							<!-- product category Select dropdown  -->
                             <div class="form-group{{ $errors->has('product-category') ? ' has-error' : '' }}">
@@ -237,10 +235,105 @@
 
 								
                                 
-                        </form>
+                            </form>
+						<!--------- End Form to a add new item   --------------->    
+                        </div>
+                        <!------------------ End 1st tab div (with edit product form) -------------->
+                    
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					    <!-------------------- 2nd tab div (with edit quantity form) ---------------------------------->
+                        <div id="EditQuantity" class="tabcontent">
+                            <h3>Edit quantity</h3>
+                            <p>Load to stock new quantity of : <span style="color:red; font-weight:bold;"> {{ $productOne[0]->shop_title }} </b></p>
+							<p> 
+							    All quantity:  {{ $productOne[0]->quantityGet->all_quantity }} items <!--hasOne relation in '/model/ShopSimple' on table {shop_quantity} -->
+							    Last load:     {{ $productOne[0]->quantityGet->all_updated }}        <!--hasOne relation in '/model/ShopSimple' on table {shop_quantity} -->
+							</p>
+							
+							<p> Currently left: {{ $productOne[0]->quantityGet->left_quantity }} items</p><!--hasOne relation in '/model/ShopSimple' on table {shop_quantity} -->
+
+
+							<!--------- Form to a edit a quntity   --------------->
+				            <form class="form-horizontal" method="post" action="{{url('/storeNewproduct')}}" enctype="multipart/form-data">
+			
+                            
+                            <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
+							
+							<!-- product quantity (to add to table {}) -->
+                            <div class="form-group{{ $errors->has('product-quant') ? ' has-error' : '' }}">
+                                <label for="product-quant" class="col-md-4 control-label">Quantity</label>
+
+                                <div class="col-md-6">
+                                    <input id="product-quant" type="number" min="0" class="form-control" name="product-quant" value="{{ old('product-quant') }}" required>
+                                
+                                    @if ($errors->has('product-quant'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('product-quant') }}</strong>
+                                    </span>
+                                    @endif 
+							     </div>
+                            </div>	
+							
+							
+							<!-- Button --> 
+                            <div class="form-group">
+                                <div class="col-md-8 col-md-offset-4">
+                                    <button type="submit" class="btn btn-primary"> Load </button>
+                                </div>
+                            </div>
+							
+                            </form>
+						<!--------- End Form to edit quantity  --------------->  
+						
+                        </div>
+						<!------------------------ End 2nd tab div (with edit quantity form) ----------------->
+  
+  
+  
+  
+  
+  
+  
+  
+  
+                        <!-------- 3rd tab div ------->
+                        <div id="About" class="tabcontent">
+                            <h3>Info</h3>
+                            <p>At those tabs you can edit products and their quantity.</p>
+                        </div>
+						<!-------- End 3rd tab div ------->
+						
+						
+						
+
+                        <!-- End W3school Full Page Tabs https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
+
+
+
+
+
+
+		
+					  
+					
+			
 			
 					</div>  <!-- end .admin-add-new-item -->
-					<!--------- End Display products  --------------->	
+					<!--------- End  Here displays page: edit product, edit quantity. Shown via Tabs -->
+	
                        
 					
 					
@@ -289,8 +382,8 @@
     </div>
 </div> <!-- end . animate-bottom -->
 
-<script>
-
-</script>
+<!-- Include js/css file for this view only -->
+ <script src="{{ asset('js/ShopPaypalSimple_Admin/Products/product_tabs.js') }}"></script> <!--  JS for W3school Full Page Tabs (uses css + js) https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
+<!-- Include js/css file for this view only -->
 
 @endsection

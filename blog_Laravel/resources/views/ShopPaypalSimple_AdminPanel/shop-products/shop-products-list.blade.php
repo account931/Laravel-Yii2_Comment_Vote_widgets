@@ -172,7 +172,7 @@
 							    </div>
 								
 								<div class="col-sm-2 col-xs-12">
-							       {{ $oneProduct->categoryName->categ_name }} <!-- Category. hasMany relation --> 
+							       {{ $oneProduct->categoryName->categ_name }} <!-- Category. <!--hasOne(NOT hasMany) relation in '/model/ShopSimple' on table {shop_categories} -->
 							    </div>
 								
 								<div class="col-sm-2 col-xs-12">
