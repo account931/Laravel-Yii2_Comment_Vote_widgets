@@ -99,6 +99,10 @@
                              <li class="{{ Request::is('rbac*') ? 'active' : '' }}">      <a href="{{ route('rbac') }}"> RBAC </a></li>
                              <li class="{{ Request::is('shopSimple*') ? 'active' : '' }}"> <a href="{{ route('shopSimple') }}">E-shop</a></li>
 							 <li class="{{ Request::is('shopAdminPanel*') ? 'active' : '' }}"><a href="{{ route('shopAdminPanel') }}">E-shop AdminP</a></li>
+							 
+							 <li class="{{ Request::is('testMiddle*') ? 'active' : '' }}"><a href="{{ route('testMiddle') }}">Test Middle</a></li>
+                             <li class="{{ Request::is('tokenGuard*') ? 'active' : '' }}"><a href="{{ route('tokenGuard') }}">Rest Api TokenGuard</a></li>
+
 							 <li><a href="{{ route('register') }}">Booking(N/A)</a></li>
 							 <li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>
 							 <li><a href="{{ route('register') }}">Vue JS(N/A)</a></li>

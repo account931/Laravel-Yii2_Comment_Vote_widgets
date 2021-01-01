@@ -4,7 +4,7 @@
 
 
 
-//$(document).ready(function(){  //Comment it otherwise => Uncaught ReferenceError: openPage is not defined
+//$(document).ready(function(){  //Comment it (ready(function)), otherwise => Uncaught ReferenceError: openPage is not defined
 	
     function openPage(pageName,elmnt,color) {
         var i, tabcontent, tablinks;

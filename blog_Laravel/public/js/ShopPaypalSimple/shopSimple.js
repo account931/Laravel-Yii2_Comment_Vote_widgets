@@ -56,6 +56,16 @@ $(document).ready(function(){
 		
 		var numProduct = Number($(this).closest('div').next().find('input:eq(1)').val()); //gets current input quantity. Use {input:eq(1)}, as {input:eq(0)} is a CSRF token
 		
+		//check a case if a user clicks button "+" more times than items are available (Db table{}) 
+		var leftItems = this.getAttribute("data-quantLeft"); //gets qunatity from {data-quantLeft} on button "+"
+		
+		if(numProduct >= leftItems){
+			swal("Stop!", "You took all the items in stock. No more items are available for now.", "warning");
+			return false;
+		}
+		//end check a case if a user clicks button "+" more times than items are available (Db table{}) 
+
+		
 		$(this).closest('div').next().find('input:eq(1)').val(Number(numProduct) + 1); //html new value++
 		
 		

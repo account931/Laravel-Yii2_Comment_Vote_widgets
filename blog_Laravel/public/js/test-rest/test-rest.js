@@ -89,9 +89,31 @@ $(document).ready(function(){
     // **************************************************************************************
     // **************************************************************************************
 
-
-
-
+    
+	
+	
+	
+	
+ /*
+  |--------------------------------------------------------------------------
+  | when user clicks CREATE button
+  |--------------------------------------------------------------------------
+  |
+  |
+  */
+  //click "Create" button
+  $(document).on("click", '#createArticle', function(e) {  //for newly generated 
+    e.preventDefault(); //prevent submit form
+    alert("Api saving new article must be implemented here......");
+   });
+	
+	
+	
+	
+	
+	
+	
+	
 	
 });
 // end ready	

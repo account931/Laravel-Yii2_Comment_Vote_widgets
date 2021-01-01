@@ -386,8 +386,10 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 
 //================================================================================================
-8.1 Form input with in-line validation errors <span>, like in Yii2  => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/auth/login.blade.php
-
+8.1 Form input with in-line validation errors <span>, like in Yii2  => 
+  => see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/auth/login.blade.php
+  => see example2 with different inputs(textarea, select) at =>https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/add-product.blade.php
+  
 <div class="form-group{{ $errors->has('product-name') ? ' has-error' : '' }}">
     <label for="product-name" class="col-md-4 control-label">Product name</label>
 

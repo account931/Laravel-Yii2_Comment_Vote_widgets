@@ -1,5 +1,8 @@
 
 <?php
+//Is used both in /views/ShopPaypalSimple/shopIndex.blade.php and /views/ShopPaypalSimple/showOneProduct.blade.php
+//Show One product with hidden modal
+
 //<!-- Show One product with hidden modal. Used to render partial in loop(shopIndex.blade.php) or separately (when show 1 product from SearchBar) (showOneProduct.blade.php) -->
 //accepts 2 arg: arg[0] - is an iterator (to use in loop or for single record, arg[1] - is an object with data )
 //to work 100% must include js :
@@ -53,7 +56,7 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 
 
 		
-<!--------- Hidden Modal Window with one clicked item ---------->
+<!--------- Hidden Modal Window with one clicked item (category, description, price and other additional info)---------->
 <div class="modal fade" id="myModal{{$i}}" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -140,9 +143,15 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 			</div>
 					    
 						
-			<!--- Plus button -->
+			<!--- Plus button, contains additional data: price, currency, quantity left -->
 			<div class="col-sm-1 col-xs-2"> 
-				<button type="button" class="btn btn-primary button-plus" data-currX="{{$allDBProducts[$i]['shop_currency']}}" data-priceX="{{$allDBProducts[$i]['shop_price']}}">+</button>
+				<button type="button" class="btn btn-primary button-plus" 
+				        data-currX="{{$allDBProducts[$i]['shop_currency']}}" 
+						data-priceX="{{$allDBProducts[$i]['shop_price']}}" 
+						data-quantLeft="{{$allDBProducts[$i]->quantityGet->left_quantity }}"><!--hasOne relation in '/model/ShopSimple' on table {shop_quantity} -->
+				    +
+				</button> 
+				                                                                                                                
 			</div>
 						 
 						 

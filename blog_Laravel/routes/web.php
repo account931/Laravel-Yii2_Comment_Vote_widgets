@@ -99,6 +99,12 @@ Route::post('/admin-delete-product',  'ShopPayPalSimple_AdminPanel@deleteProduct
  
 //});
 
+//Test for middle (like one developed in Yii2)
+Route::get('/testMiddle', 'TestMiddleController@index')->name('testMiddle'); 
+
+
+//Rest Api with TokenGuard, access to Rest by token (Bearer authentication  (also called token authentication))
+Route::get('/tokenGuard', 'TokenGuardController@index')->name('tokenGuard'); 
 
 
 

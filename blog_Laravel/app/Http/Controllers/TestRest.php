@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\models\wpress_blog_post; //model for all posts
+use App\models\wpress_category; //model for all wpress_category
 
 
 class TestRest extends Controller
@@ -16,9 +17,10 @@ class TestRest extends Controller
 	public function index()
     {
 		
-		$articles = wpress_blog_post::all(); //Eloquent ORM
+		$articles   = wpress_blog_post::all(); //Eloquent ORM to create dropdown with article to select to be fetched by ajax
+		$categories = wpress_category::all();
 		
-        return view('testRest.restOne', compact('articles'));
+        return view('testRest.restOne', compact('articles', 'categories'));
     }
 	
 	
