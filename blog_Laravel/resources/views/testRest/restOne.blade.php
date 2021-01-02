@@ -60,7 +60,8 @@
 					 <div class="collapse" id="collapseExample">
                         <div class="card card-body">
 						    <hr>
-						    <h4> Create a new article via Rest Api</h4>   
+						    <h4> Create a new article via Rest Api</h4> 
+							
 							<!-- Form -->
 						    <form class="form-horizontal" method="post">
 			

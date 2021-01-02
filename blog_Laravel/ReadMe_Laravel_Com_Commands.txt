@@ -541,7 +541,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
   use Illuminate\Support\Facades\DB;  $users = $articles = DB::table('wpress_blog_post')->get();
   use Illuminate\Support\Facades\DB; $articles = DB::table('wpress_blog_post')->where('wpBlog_status', '1')->get();
 
-  //check if record exists, if not custom exception, traditional way like followingdoes not work =>  $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get(); if ($articleOne){exception}
+  //check if record exists-1, if not custom exception, traditional way like followingdoes not work =>  $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get(); if ($articleOne){exception}
        try{
 	      $articleOne = wpress_blog_post::where('wpBlog_id',$id)->firstOrFail(); //find the article by id  ->firstOrFail();
 	   } catch (\Exception $e) {
@@ -1129,7 +1129,9 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 #ACF Yii2 equivalent, let only logged users, use in Controller =>   public function __construct(){$this->middleware('auth');}
 
 
-#current user => use Illuminate\Support\Facades\Auth; $user = auth()->user();  $id = auth()->user()->id; 
+#current user => use Illuminate\Support\Facades\Auth; 
+    $user = auth()->user(); //returns array with all DB columns  
+	$name = auth()->user()->name;  $id = auth()->user()->id; 
 
 
 # Turn on debugger => go to .env => APP_DEBUG=true
@@ -1185,7 +1187,7 @@ Pass var from controller to view =>  return view('home2', compact('user'));
 
 composer dump-autoload
 
-# Exception with html unescapped tags / without escapping =>
+# Exception with html unescapped tags / without escapping ('Bad request, go LOGIN first') => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShowProfile.php
   In controller=> $text = 'You are not logged, <a href="'. route('login') . '"> click here  </a>  to login'; throw new \App\Exceptions\myException( $text );
   In View =>  Details: <b>{!! $exception->getMessage() !!}</b>
   
@@ -1232,6 +1234,8 @@ composer dump-autoload
 		}
 
 
+# Edit form input field, show either old input or value from DB/Session => 
+    <input id="email" type="email" class="form-control" name="email" value="{{ $mailX ?$mailX : old('email') }}" required>
 
 
 

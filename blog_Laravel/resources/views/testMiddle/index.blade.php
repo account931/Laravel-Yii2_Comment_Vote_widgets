@@ -68,7 +68,7 @@
                 <div class="panel-body test-middle-x">
 				
 				    <div class="col-sm-7 col-xs-4">
-                        <h1>Test for Middle</h1>
+                        <h1>Test for Middle <i class="fa fa-briefcase" style="font-size:36px"></i></h1>
 		            </div>	
 				    
 					
@@ -78,7 +78,57 @@
 						</br> Test for middle, just like the one implemented in Yii2
 				    </div>
 					
-				
+					
+					
+					<!-- If user is already logged -->
+					@if (!Auth::guest())
+						<div class="col-sm-12 col-xs-12">
+						    <p>Hello, {{ auth()->user()->name }}. You are currently logged.</p>
+					        <p>In order to fully test this section, please log out </p>
+						</div>
+					@endif
+					
+					
+					<!-- If user is Guest, not logged -->
+					@if (Auth::guest())
+					
+				        <!-- Form -->
+					    <div class="col-sm-12 col-xs-12">
+                            <p> Give us you e-mail to figure out what to do </p>
+						
+						    <form class="form-horizontal" method="post" action="{{url('/checkEmail')}}">
+							
+                                <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
+							
+						        <!-- E-mail -->
+                                <div class="form-group{{ $errors->has('user-email') ? ' has-error' : '' }}">
+                                    <label for="product-name" class="col-md-4 control-label">E-mail</label>
+
+                                    <div class="col-md-6">
+                                         <input id="user-email" type="text" class="form-control" name="user-email" value="{{ old('user-email') }}" required autofocus>
+                                
+                                        @if ($errors->has('user-email'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('user-email') }}</strong>
+                                            </span>
+                                        @endif 
+							        </div>
+                                </div>
+                            
+                                <!-- Submit Button --> 
+                                <div class="form-group">
+                                    <div class="col-md-8 col-md-offset-4">
+                                        <button type="submit" class="btn btn-primary"> Go </button>
+                                    </div>
+                                </div>							
+							
+					        </form>
+				        </div>
+					    <!-- End Form -->
+					
+					@endif
+					
+					
 				</div> <!-- end .test-middle-x -->
 				    
 					
