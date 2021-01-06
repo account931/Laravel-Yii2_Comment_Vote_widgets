@@ -10,11 +10,11 @@
 ## About This ReadMe
 
 ### Content
-- [1. Go to My Acnchored Section 1](##real-cool-heading1)
+- [1. Go to My Acnchored Section 1](#1-real-cool-heading1)
 
-- [2. Go to My Acnchored Section 2](##real-cool-heading2)
+- [2. Go to My Acnchored Section 2](#2-real-cool-heading2)
 
-- [3. Go to My Acnchored Section 3](#real-cool-heading3)
+- [3. Go to My Acnchored Section 3](#3-real-cool-heading3)
 
 [My Git link](https://www.google.com "My")
 
@@ -44,7 +44,7 @@ alert(s);
 ## 3. Real Cool Heading3
 Some my text
 
-```
+```php
 $b = "Подсветка Php";
 echo($b);
 ```

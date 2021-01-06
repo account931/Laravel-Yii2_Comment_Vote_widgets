@@ -1,6 +1,6 @@
 <?php
 //Rest controller, works with DB name wpress_blog_post. 
-//Uses separated Wpress model for table {wpress_blog_post} => /models/rest/WpressRest.php. (Model isstrictly for REST Api requests)  !!!!!!!!!
+//Uses separated Rest Wpress model for table {wpress_blog_post} => /models/rest/WpressRest.php. (Model isstrictly for REST Api requests)  !!!!!!!!!
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
