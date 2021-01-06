@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\User; //model for Users
+use Illuminate\Support\Facades\Auth; //for Auth::check()
 /*
 use Illuminate\Http\Request;
 use App\models\wpress_blog_post; //model for all posts
@@ -85,10 +86,17 @@ class TestMiddleController extends Controller
      */
     public function customLogin()
     {
-		//if $_POST['productID'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
+		//Case when a user is already Authenticated. In case if the user navigates to this page by enetering URL directly
+		if(Auth::check()){
+			return redirect('/testMiddle')->withInput()->with('flashMessageX', 'You are successfully logged' ); //->withErrors($validator);
+		}
+		
+		//Case if session()->get('userMail'))  is not passed. I.e if u enetered this page without "->with(compact('userMail')". In case the user navigates to this page by enetering URL directly
 		if(!session()->get('userMail')){
-			$text = 'Bad request, You are not expected to enter this page without some session data. Go back to <a href="'. route('testMiddle') . '">Start page</a>.';
-			throw new \App\Exceptions\myException( $text );
+			//$text = 'Bad request, You are not expected to enter this page without some session data. Go back to <a href="'. route('testMiddle') . '">Start page</a>.';
+			//throw new \App\Exceptions\myException( $text );
+			return redirect('/testMiddle')->withInput()->with('flashMessageFailX', 'You are back here from Login page as you had Bad request, You were not expected to enter Login page without e-mail session data' ); //->withErrors($validator);
+
 		}
 		
 		$mailX = session()->get('userMail'); //gets the email from ->with section {return redirect('/customLogin')->with('flashMessageX', "Your email exists, please enter password")->with(compact('userMail'));}
@@ -104,6 +112,20 @@ class TestMiddleController extends Controller
      */
     public function customRegister()
     {
+			
+		//Case when a user is already Authenticated. In case if the user navigates to this page by enetering URL directly
+		if(Auth::check()){
+			return redirect('/testMiddle')->withInput()->with('flashMessageX', 'You are successfully registered and logged' ); //->withErrors($validator);
+		}
+		
+		//Case if session()->get('userMail'))  is not passed. I.e if u enetered this page without "->with(compact('userMail')". In case the user navigates to this page by enetering URL directly
+		if(!session()->get('userMail')){
+			//$text = 'Bad request, You are not expected to enter this page without some session data. Go back to <a href="'. route('testMiddle') . '">Start page</a>.';
+			//throw new \App\Exceptions\myException( $text );
+			return redirect('/testMiddle')->withInput()->with('flashMessageFailX', 'You are back here from Register page as you had Bad request, You were not expected to enter Register page without e-mail session data' ); //->withErrors($validator);
+
+		}
+		
 		$mailX = session()->get('userMail'); //gets the email from ->with section {return redirect('/customLogin')->with('flashMessageX', "Your email exists, please enter password")->with(compact('userMail'));}
 
         return view('testMiddle.customRegister',  compact('mailX'));

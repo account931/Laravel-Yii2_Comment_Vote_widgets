@@ -67,8 +67,8 @@
 
                 <div class="panel-body test-middle-x">
 				
-				    <div class="col-sm-7 col-xs-4">
-                        <h1>Test for Middle <i class="fa fa-briefcase" style="font-size:36px"></i></h1>
+				    <div class="col-sm-7 col-xs-12">
+                        <h1>Test for Middle <i class="fa fa-briefcase" style="font-size:34px"></i></h1>
 		            </div>	
 				    
 					
@@ -83,8 +83,19 @@
 					<!-- If user is already logged -->
 					@if (!Auth::guest())
 						<div class="col-sm-12 col-xs-12">
-						    <p>Hello, {{ auth()->user()->name }}. You are currently logged.</p>
-					        <p>In order to fully test this section, please log out </p>
+						    <p>Hello, <b>{{ auth()->user()->name }} </b>. You are currently logged.</p>
+					        <p>
+							    In order to fully test this section, please 
+								    <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            Log out
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+							</p>
 						</div>
 					@endif
 					

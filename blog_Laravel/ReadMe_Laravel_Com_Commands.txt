@@ -18,7 +18,7 @@ Table of Content:
 5.Atrisan commands
 6.How to create new Controller/action, view and add to menu
 7.Forms validation via Controller
-8.Form Validation
+8.Form Validation (General info)
 8.1.1 Form Validation via Request Class
 8.1.2 Image Upload and validation
 8.1 Form input with in-line validation errors <span>, like in Yii2 
@@ -170,6 +170,11 @@ USAGE
   Usage => 
       use Illuminate\Support\Facades\Auth;
       if(!Auth::check()){ throw new \App\Exceptions\myException('Something Went Wrong.'); }
+
+
+--------------------------------------------	  
+ #General Error info => on any framework error (not your exception), you'll see a detailed ErrorException (e.g "Trying to get property of non-object. View:/home/..index.blade.php"). 
+ But in production you can set .env file with APP_DEBUG=false and then the browser will just show blank "Whoops, looks like something went wrong".
   
 //=============================================================================================
  
@@ -206,8 +211,7 @@ USAGE
 
 //================================================================================================
 
-7.Forms validation via Controller
-  to be proccessed
+7.Forms validation via Controller => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   at =>  public function store(Request $request)
   # get one input => $request->input('role_sel');
   
   #get form input => 
@@ -270,7 +274,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 //================================================================================================
 
-8.Form Validation => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   at =>  public function store(Request $request)
+8.Form Validation (General info) => 
+  NB: first implement back-emd validation, then front-end
   # 4 ways of validation => https://laravel.demiart.ru/ways-of-laravel-validation/
   #Docs => https://laravel.ru/docs/v5/validation
   
@@ -541,21 +546,25 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
   use Illuminate\Support\Facades\DB;  $users = $articles = DB::table('wpress_blog_post')->get();
   use Illuminate\Support\Facades\DB; $articles = DB::table('wpress_blog_post')->where('wpBlog_status', '1')->get();
 
-  //check if record exists-1, if not custom exception, traditional way like followingdoes not work =>  $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get(); if ($articleOne){exception}
+
+  //Check if record exists-1, if not throw custom exception, traditional way like followingdoes not work =>  $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get(); if ($articleOne){exception}
        try{
 	      $articleOne = wpress_blog_post::where('wpBlog_id',$id)->firstOrFail(); //find the article by id  ->firstOrFail();
 	   } catch (\Exception $e) {
 	      throw new \App\Exceptions\myException('Article does not exist');
 	   }
-	//check if record exists-2    
+	//Check if record exists-2    
 	$roleAdmin =  self::where('name', 'admin')->get();
     if (!$roleAdmin){ }
 	
-	//check if record exists-3. Returns boolean. The best!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//Check if record exists-3. Returns boolean. The best!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if( Role_User::where('user_id', intval($request->input('user_id')))->where('role_id', intval($request->input('role_sel')) )->exists()) { 
+    if (!User::where('id', $id)->exists()) { 
+	      throw new \App\Exceptions\myException('User ' . $id . ' does not exist');
+	}
 
 
-   #Eloquent object to arry ->  $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get(); $articleOne->toArray(); 
+   #Eloquent object to array ->  $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get(); $articleOne->toArray(); 
 	
    #Eloquent search based on multiple ID's =>  
       $models = Model::find([1, 2, 3]); OR $models = Model::findMany([1, 2, 3]); //if in SQL Table column is called {id}
@@ -1294,6 +1303,39 @@ $listOfLanguages = array(
 
 # UUID => function generateUUID($length=10) {$this->UUID = "sh-" . time() ."-". substr( md5(uniqid()), 0, $length);  return $this->UUID;}
 
+# Authentication(login/pass) vs authorization (Rbac)
+
+#Github Readme.md => Markdown is a lightweight markup language,
+ to test what my readme.md file will look like before committing to github => http://tmpvar.com/markdown.html
+ my example => /root/readme_template_example.md
+
+# Conventional Commits (git-flow) => 
+   example=>
+   fix(products): поправить длину строки с ценой
+   Часть заголовков неправильно отображается в мобильной версии из-за ошибокв проектировании универсальных компонентов.
+
+ type=>
+  build	Сборка проекта или изменения внешних зависимостей    ci	Настройка CI и работа со скриптами
+  docs	Обновление документации
+  feat	Добавление нового функционала
+  fix	Исправление ошибок
+  perf	Изменения направленные на улучшение производительности
+  refactor	Правки кода без исправления ошибок или добавления новых функций
+  revert	Откат на предыдущие коммиты
+  style	Правки по кодстайлу (табы, отступы, точки, запятые и т.д.)
+  test	Добавление тестов
+
+# phpdoc => 
+    /* @var $this yii\web\View */
+    /* @var $searchModel \app\models\search\UserSearch */
+    /* @var $dataProvider yii\data\ActiveDataProvider */
+	
+	/**
+     * Saves the current record.
+     * @param boolean $runValidation whether to perform validation before saving the record.
+     * @param array $attributeNames list of attribute names that need to be saved.
+     * @return boolean whether the saving succeeded (i.e. no validation errors occurred).
+     */
 ---------------------- JS ----------
 
 //Check if <select> is selected (not empty) (when multiple forms are generated in loop )=> 
@@ -1354,7 +1396,9 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 36. Known Errors
 
 # Error "Unknown Column 'updated_at' => public $timestamps = false; //put in model to override Error "Unknown Column 'updated_at'" that fires when saving new entry
-2 =>     protected $primaryKey = 'shop_id'; // override in model autoincrement column name
+2 =>     protected $primaryKey = 'shop_id';          // override in model autoincrement column name
+         protected $table      = 'wpress_blog_post'; //specify the DB table table
+		 protected $fillable   = ['wpBlog_author', 'wpBlog_title', 'wpBlog_text', 'wpBlog_category']; //specify fields for mass assignment
 
 # Error "Specified key was too long; max key length is 767 bytes" => see 9.Migrations/Seeders
 

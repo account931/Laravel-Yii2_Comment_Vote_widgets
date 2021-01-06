@@ -54,6 +54,11 @@ class AllUsersEloquent extends Controller
      */
     public function showOne($id)
     {
+	    //additional check in case user directly intentionally navigates to this URL with not-existing ID
+	    if (!User::where('id', $id)->exists()) { 
+	        throw new \App\Exceptions\myException('User ' . $id . ' does not exist');
+	    }
+	   
 		//find the user by id
 		$userOne = User::where('id', $id)->get();
 		

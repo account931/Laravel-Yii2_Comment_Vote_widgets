@@ -1,5 +1,6 @@
 <?php
-//Rest controller, works with DB name wpress_blog_post
+//Rest controller, works with DB name wpress_blog_post. 
+//Uses separated Wpress model for table {wpress_blog_post} => /models/rest/WpressRest.php. (Model isstrictly for REST Api requests)  !!!!!!!!!
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -35,8 +36,21 @@ class Rest extends Controller
    */
     public function store(Request $request)
     {
-		//return $request->all();
-        return WpressRest::create($request->all());
+		//return $request->all(); //mine
+        return WpressRest::create($request->all()); //original rest line
+		//return $request->input('wpBlog_title');
+		
+		//my  variant
+		/*
+		$model = new WpressRest();
+		$model->wpBlog_author = $request->input('wpBlog_author');
+		$model->wpBlog_title  = $request->input('wpBlog_title');
+		$model->wpBlog_text   = $request->input('wpBlog_text');
+		$model->wpBlog_category = $request->input('wpBlog_category');
+		//$model->updated_at = '2020-10-04 10:54:50';
+		$model->save(['timestamps'=>false]);
+		return "Saved";
+		*/
     }
 
 

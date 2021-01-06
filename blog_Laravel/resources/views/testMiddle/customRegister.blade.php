@@ -66,7 +66,7 @@
 
                 <div class="panel-body test-middle-x">
 				
-				    <div class="col-sm-7 col-xs-4">
+				    <div class="col-sm-7 col-xs-12">
                         <h1>My custom register page <i class="fa fa-cubes" style="font-size:48px;color:red"></i></h1>
 						&nbsp;<i class="fa fa-arrow-circle-o-left" style="font-size:24px"></i>&nbsp;   <a href="{{ url('testMiddle') }}">back to start </a><br>
 		            </div>	

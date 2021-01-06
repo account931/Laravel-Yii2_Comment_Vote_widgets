@@ -21,11 +21,11 @@ class wpress_blog_post extends Model
    * @var string
    */
   protected $table = 'wpress_blog_post';
+
   
-  
-  //protected $fillable = ['wpBlog_author', 'wpBlog_title', 'wpBlog_text', 'wpBlog_category'];  //????? protected $fillable = ['wpBlog_author', 'wpBlog_text', 'wpBlog_author', 'wpBlog_category'];
+  protected $fillable = ['wpBlog_author', 'wpBlog_title', 'wpBlog_text', 'wpBlog_category'];  //????? protected $fillable = ['wpBlog_author', 'wpBlog_text', 'wpBlog_author', 'wpBlog_category',  'updated_at', 'created_at'];
   public $timestamps = false; //to override Error "Unknown Column 'updated_at'" that fires when saving new entry
-  
+
   
   /**
    * hasOne => get user name from table {users} based on column {wpBlog_author} in table {wpress_blog_post} .

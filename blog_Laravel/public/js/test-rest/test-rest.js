@@ -3,6 +3,8 @@
 
 
 $(document).ready(function(){
+
+//Rest Api Uses separated Wpress model for table {wpress_blog_post} => /models/rest/WpressRest.php. (Model isstrictly for REST Api requests)  !!!!!!!!!
 	
 	
   /*
@@ -107,6 +109,8 @@ $(document).ready(function(){
     e.preventDefault(); //prevent submit form
     //alert("Api saving new article must be implemented here......");
 	
+	
+	
 	//getting the path to current folder with JS to form url for ajax, i.e /yii2_REST_and_Rbac_2019/yii-basic-app-2.0.15/basic/web/booking-cph/ajax_get_6_month
 	var loc = window.location.pathname;
     var dir = loc.substring(0, loc.lastIndexOf('/'));  ///laravel+Yii2_widgets/blog_Laravel/public    //yii2_REST_and_Rbac_2019/yii-basic-app-2.0.15/basic/web/manual-auto-quiz
@@ -118,17 +122,17 @@ $(document).ready(function(){
                           
 						  url: urlX, //'../web/rests?access-token=57Wpa-dlg-EonG6kB3myfsEjpo7v8R5b', //we use here url with this user access-token(from DB), it is universal, if authenticator' => is disabled, the script just won't pay attaention to this $_GET['access-token']
                           type: 'POST', //POST is to create a new user
-						  crossDomain: true,
+						  //crossDomain: true,
 						  contentType: "application/json; charset=utf-8",
-			              //dataType: 'json', // without this it returned string(that can be alerted), now it returns object
+			              //dataType: 'json', //In Laravel causes crash!!!!!// without this it returned string(that can be alerted), now it returns object
 						  
 						  headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                           contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 						   
-			              //passing the city
+			              //passing the data
                           data: //dataX//JSON.stringify(dataX) 
 						  {   //username and password_reset_token musr be UNIQUE!!!!!
-			                  wpBlog_title:'dima33333', wpBlog_text:'rpWTxyZV1Oaafv60zWyEaMRoDCOs2S_V' , wpBlog_category: 1, wpBlog_author: 2, wpBlog_created_at: '2020-10-04 10:54:50', wpBlog_status: 1
+			                  wpBlog_title:'TitleTest', wpBlog_text:'some text....' , wpBlog_category: 1, wpBlog_author: 2, wpBlog_status: 1 //wpBlog_created_at: '2020-10-04 10:54:50'
 							 
 			              },
                           success: function(data) {
@@ -137,6 +141,7 @@ $(document).ready(function(){
 			                //alert(data);
 							console.log(data);
 							var ress =  JSON.stringify(data, null, 4);
+							
 							/*for (var i = 0; i < data.length; i++){
 								ress+= data[i].username + "-> " + data[i].email + "<br>";
 							}

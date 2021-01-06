@@ -1,3 +1,6 @@
+<?php
+//Rest Api Uses separated Wpress model for table {wpress_blog_post} => /models/rest/WpressRest.php. (Model isstrictly for REST Api requests)  !!!!!!!!!
+?>
 @extends('layouts.app')
 
 

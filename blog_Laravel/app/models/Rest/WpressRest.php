@@ -16,9 +16,10 @@ class WpressRest extends Model
   protected $table = 'wpress_blog_post';
   
   
-  protected $fillable = ['wpBlog_author', 'wpBlog_text', 'wpBlog_author', 'wpBlog_category'];
+  protected $fillable = [ 'wpBlog_title', 'wpBlog_author', 'wpBlog_text', 'wpBlog_author', 'wpBlog_category'];
+  public $timestamps = false; //to override Error "Unknown Column 'updated_at'" that fires when saving new entry
 
-  protected $hidden = ['created_at', 'password'];
+  //protected $hidden = ['created_at', 'password'];
   
   
   
