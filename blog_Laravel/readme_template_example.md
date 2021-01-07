@@ -16,6 +16,8 @@
 
 - [3. Go to My Acnchored Section 3](#3-real-cool-heading3)
 
+- [3. Render view in Laravel](#4-render-view)
+
 [My Git link](https://www.google.com "My")
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
@@ -48,6 +50,16 @@ Some my text
 $b = "Подсветка Php";
 echo($b);
 ```
+
+## 4. Render view
+
+```php
+$articles   = wpress_blog_post::all(); 
+return view('testRest.restOne', compact('articles'));
+```
+
+
+
 
 ## Learning Laravel
 

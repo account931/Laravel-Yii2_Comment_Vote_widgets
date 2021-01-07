@@ -167,13 +167,18 @@ class ShopPayPalSimpleController extends Controller
 	
 	
 	/**
-     * display One Product as a result from search bar
+     * display One Product as a result from search bar (or by click on direct <href> in pop-up modal)
      *
      * @return \Illuminate\Http\Response
      */
     public function showOneProductt($id)
     {
 		session_start();
+		
+		 //additional check in case user directly intentionally navigates to this URL with not-existing ID
+	    if (!ShopSimple::where('shop_id', $id)->exists()) { 
+	        throw new \App\Exceptions\myException('Product ' . $id . ' does not exist');
+	    }
 		
 		//find the product by id
 		$productOne = ShopSimple::where('shop_id', $id)->get();

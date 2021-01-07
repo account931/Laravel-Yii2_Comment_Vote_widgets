@@ -375,6 +375,11 @@ class ShopPayPalSimple_AdminPanel extends Controller
            throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
 		}
 		
+		 //additional check in case user directly intentionally navigates to this URL with not-existing ID
+	    if (!ShopSimple::where('shop_id', $id)->exists()) { 
+	        throw new \App\Exceptions\myException('Product ' . $id . ' does not exist');
+	    }
+		
 		//find the product by id
 		$productOne = ShopSimple::where('shop_id', $id)->get();
 		

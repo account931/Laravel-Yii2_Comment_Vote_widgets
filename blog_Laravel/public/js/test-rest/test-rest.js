@@ -9,12 +9,12 @@ $(document).ready(function(){
 	
   /*
   |--------------------------------------------------------------------------
-  | when user clicks NEXT button
+  | when user clicks "Show one Article" (by ID) button
   |--------------------------------------------------------------------------
   |
   |
   */
-  //click "Next" button
+  //click "ShowOne" button
   $(document).on("click", '#showOne', function() {  //for newly generated 
   
   
@@ -54,15 +54,21 @@ $(document).ready(function(){
 				   setProgressBarQ(currentQ)
 				 );
 				 */
-				 
-				 var finalText = "";
-				 for(var i = 0; i < data.length; i++){
-					 finalText+= "<p> ID: "    + data[i].wpBlog_id    + "</p>";
-					 finalText+= "<p> Title: " + data[i].wpBlog_title + "</p>";
-					 finalText+= "<p> Text: " +  data[i].wpBlog_text  + "</p>";
-					 finalText+= "<p> Author <span class='small'>(hasOne)</span>: "   +  data[i].author_name.name + "</p>";   //(while DB field name is {wpBlog_author}), author_name is model hasOne function, {name} is DB field)   //data[i].wpBlog_author is an foreign key ID
-					 finalText+= "<p> Category <span class='small'>(hasMany)</span>: " + data[i].category_names.wpCategory_name  + "</p>";  //data[i].wpBlog_category is an foreign key ID
+				
+				 //if article is found by ID
+				 if (data.status == 'OK') {  //data = {'status' => 'OK', 'messageX'=> 'Article found', 'contentX'=> $wpressEloquent} 
+				     var finalText = "";
+				     for(var i = 0; i < data.contentX.length; i++){
+					     finalText+= "<p> ID: "    + data.contentX[i].wpBlog_id    + "</p>"; 
+					     finalText+= "<p> Title: " + data.contentX[i].wpBlog_title + "</p>";
+					     finalText+= "<p> Text: " +  data.contentX[i].wpBlog_text  + "</p>";
+					     finalText+= "<p> Author <span class='small'>(hasOne)</span>: "   +  data.contentX[i].author_name.name + "</p>";   //(while DB field name is {wpBlog_author}), author_name is model hasOne function, {name} is DB field)   //data[i].wpBlog_author is an foreign key ID
+					     finalText+= "<p> Category <span class='small'>(hasMany)</span>: " + data.contentX[i].category_names.wpCategory_name  + "</p>";  //data[i].wpBlog_category is an foreign key ID
 
+				     }
+				 //if article IS NOT found by ID, e.g ID does not exist
+				 } else if (data.status == 'Fail') {
+					 finalText = "<p class='text-danger'>" + data.messageX + "</p>"; //e.g "ID does not exist"
 				 }
 			   
 				 $("#result").stop().fadeOut("slow",function(){ $(this).html(finalText)}).fadeIn(2000);
@@ -98,7 +104,7 @@ $(document).ready(function(){
 	
  /*
   |--------------------------------------------------------------------------
-  | when user clicks CREATE button
+  | when user clicks CREATE button (REST POST)
   |--------------------------------------------------------------------------
   |
   |
@@ -116,6 +122,7 @@ $(document).ready(function(){
     var dir = loc.substring(0, loc.lastIndexOf('/'));  ///laravel+Yii2_widgets/blog_Laravel/public    //yii2_REST_and_Rbac_2019/yii-basic-app-2.0.15/basic/web/manual-auto-quiz
 	//alert(dir);
 	var urlX = dir + '/api/articles';
+	;
 	
 	$.ajax({
 						  //url: '../web/rest',  //url if 'authenticator' => is disabled in controllers/RestController
@@ -130,9 +137,13 @@ $(document).ready(function(){
                           contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 						   
 			              //passing the data
-                          data: //dataX//JSON.stringify(dataX) 
+                          data: //dataX//JSON.stringify(dataX)  ('#createNew').serialize()
 						  {   //username and password_reset_token musr be UNIQUE!!!!!
-			                  wpBlog_title:'TitleTest', wpBlog_text:'some text....' , wpBlog_category: 1, wpBlog_author: 2, wpBlog_status: 1 //wpBlog_created_at: '2020-10-04 10:54:50'
+			                  wpBlog_title:    $('#product-name').val(), 
+							  wpBlog_text:     $('#product-desr').val(), 
+							  wpBlog_category: $('#categgg option:selected').val() , //same == $('#categgg').val(), 
+							  wpBlog_author: 2,  //minor conflict, anyone can save with my ID
+							  wpBlog_status: 1 //wpBlog_created_at: '2020-10-04 10:54:50'
 							 
 			              },
                           success: function(data) {
@@ -146,6 +157,19 @@ $(document).ready(function(){
 								ress+= data[i].username + "-> " + data[i].email + "<br>";
 							}
 							*/
+							
+							//if saving was OK
+							if (data.status == "OK") {
+								$('#product-name').val(''); //reset the fields 
+								$('#product-desr').val(''); 
+								$('#categgg').val('');
+							    ress = "<p class='text-primary'> Saved succesfully </p>" + ress + "<hr>";
+								
+							//if saving crashed, e/g due to validation
+							} else if (data.status == "Fail") {
+								ress = "<p class='text-danger'>Saving failed. <br> " + data.messageX + "</p>"; //e.g "Validation failed"
+							}
+							
 							$("#result").stop().fadeOut("slow", function(){ $(this).html(ress) }).fadeIn(2000);
 				
                           },  //end success

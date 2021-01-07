@@ -35,6 +35,9 @@
 		                              @foreach ($articles as $a)
 									      <option value={{ $a->wpBlog_id }} >  {{ $loop->iteration }} => {{ $a->wpBlog_id}} {{ $a->truncateTextProcessor($a->wpBlog_text, 12)    }} </option>
 					                  @endforeach
+									  
+									      <!-- Test for not-existing id -->
+									      <option value="999999999" >  Test => Not-existing ID     </option>
 						            </select>
 									
 									 
@@ -63,10 +66,10 @@
 					 <div class="collapse" id="collapseExample">
                         <div class="card card-body">
 						    <hr>
-						    <h4> Create a new article via Rest Api</h4> 
+						    <h4 style="padding-top:4em;"> Create a new article via Rest Api</h4> 
 							
 							<!-- Form -->
-						    <form class="form-horizontal" method="post">
+						    <form class="form-horizontal" method="post" id="createNew">
 			
                             <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
  
@@ -109,7 +112,7 @@
 
                                 <div class="col-md-6">
 
-                                    <select name="product-category" class="mdb-select md-form">
+                                    <select name="product-category" class="mdb-select md-form" id="categgg">
 						              <option  disabled="disabled"  selected="selected">Choose category</option>
 		                              @foreach ($categories as $b)
 									      <option value={{ $b->wpCategory_id }} {{ old('product-category')!=null && old('product-category') == $b->wpCategory_id  ?  ' selected="selected"' : '' }} > {{ $b->wpCategory_name}} </option>

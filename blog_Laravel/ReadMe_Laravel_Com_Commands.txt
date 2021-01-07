@@ -166,6 +166,7 @@ USAGE
 
 //================================================================================================
 4.Error handling, throw custom exceptions => 
+  see your custom exception => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Exceptions/myException.php
   see docs => https://code.tutsplus.com/ru/tutorials/exception-handling-in-laravel--cms-30210
   Usage => 
       use Illuminate\Support\Facades\Auth;
@@ -174,7 +175,19 @@ USAGE
 
 --------------------------------------------	  
  #General Error info => on any framework error (not your exception), you'll see a detailed ErrorException (e.g "Trying to get property of non-object. View:/home/..index.blade.php"). 
- But in production you can set .env file with APP_DEBUG=false and then the browser will just show blank "Whoops, looks like something went wrong".
+ But in production you can set .env file with APP_DEBUG=false and then the browser will just show default built-in Laravel blank "Whoops, looks like something went wrong".
+ 
+ #You don't need to implement {public function report()} in your custom exception class, as it will log any errors anyway(including when your custom exception fires) to storage/laravel.log. Due to {class myException extends Exception}
+ 
+  In brief about what error u'll see =>
+    # If u set in .env => APP_DEBUG=true,  on any error(except when u throw your custom exception by yourself), Laravel will show detaled debug, e.g '(1/1) FatalThrowableError. Parse error: syntax error, unexpected 'if' (T_IF)'
+    # If u set in .env => APP_DEBUG=false, on any error(except when u throw your custom exception by yourself), Laravel will fire only "Whoops, looks like something went wrong." on an white screen.
+
+    # If you throw your custom Exception {throw new \App\Exceptions\myException('Product ' . $id . ' does not exist');}, it does not matter if .env => APP_DEBUG=false or APP_DEBUG=true, it'll anyway show your custom exception view, e.g {custom.blade.php}
+    # If you want that while in .env => APP_DEBUG=false, and u want Laravel to show your error view on errors, (instead of default built-in Laravel blank "Whoops, looks like something went wrong"), 
+	then change /app/Exceptions/Handler.php by adding 
+	       return response()->view('errors.custom-whoops'); 
+	#But in this case, even if .env => APP_DEBUG=true u'll see only this your custom error view
   
 //=============================================================================================
  
@@ -211,7 +224,9 @@ USAGE
 
 //================================================================================================
 
-7.Forms validation via Controller => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   at =>  public function store(Request $request)
+7.Forms validation via Controller => 
+    see example_1 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimpleController.php    at => public function storeToCart(Request $request)
+    see example_2 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   at =>  public function store(Request $request)
   # get one input => $request->input('role_sel');
   
   #get form input => 
@@ -231,7 +246,11 @@ USAGE
 		];
 		
 	//creating custom error messages. Should pass it as 3rd param in Validator::make()
-	$mess = [ 'role_sel.required' => 'We need this field',];
+	 $mess = [ 
+		    'role_sel.required' => 'You did not provided Description field', 
+			'rDescr.min' => 'We need at least 3 letters for description',
+			];
+		
 		
 	$validator = Validator::make($request->all(),$rules, $mess);
 	if ($validator->fails()) {
@@ -1305,9 +1324,10 @@ $listOfLanguages = array(
 
 # Authentication(login/pass) vs authorization (Rbac)
 
-#Github Readme.md => Markdown is a lightweight markup language,
+#Github Readme.md => Markdown is a lightweight markup language. Craete Anchor =>  - [1. Go to My Acnchored Section 1](#1-real-cool-heading1)    ## 1. Real Cool Heading1
+Some my text
  to test what my readme.md file will look like before committing to github => http://tmpvar.com/markdown.html
- my example => /root/readme_template_example.md
+ see my example => /root/readme_template_example.md
 
 # Conventional Commits (git-flow) => 
    example=>
@@ -1315,15 +1335,11 @@ $listOfLanguages = array(
    Часть заголовков неправильно отображается в мобильной версии из-за ошибокв проектировании универсальных компонентов.
 
  type=>
-  build	Сборка проекта или изменения внешних зависимостей    ci	Настройка CI и работа со скриптами
-  docs	Обновление документации
-  feat	Добавление нового функционала
-  fix	Исправление ошибок
-  perf	Изменения направленные на улучшение производительности
-  refactor	Правки кода без исправления ошибок или добавления новых функций
-  revert	Откат на предыдущие коммиты
-  style	Правки по кодстайлу (табы, отступы, точки, запятые и т.д.)
-  test	Добавление тестов
+  build	 => Сборка проекта или изменения внешних зависимостей    ci	 => Настройка CI и работа со скриптами
+  feat  =>Добавление нового функционала     fix  => Исправление ошибок
+  docs  => Обновление документации          perf => Изменения направленные на улучшение производительности  
+  refactor => Правки кода без исправления ошибок или добавления новых функций  revert  => Откат на предыдущие коммиты
+  style	=> Правки по кодстайлу (табы, отступы, точки, запятые и т.д.)             test => Добавление тестов
 
 # phpdoc => 
     /* @var $this yii\web\View */
@@ -1445,3 +1461,12 @@ If you don't have .env copy from .env.example: =>   $ cp .env.example .env
 а) сессии должны корректно сохраняться и восстанавливаться. за выбор способа работы с сессиями отвечает SESSION_DRIVER в .env а конкретные настройки лежат в config/session.php. по умолчанию стоит file – проверяем права доступа к storage/framework/sessions. если драйвер database – должна быть создана таблица сессий и настроено подключение к базе. для memcached и redis должны быть запущены и настроен доступ к соответствующим демонам. драйвера null и array не поддерживают сохранение данных никуда вообще – с ними CSRF-проверка работать не будет в любом случае. драйвер cookie не требует настроек так как передаёт все данные сразу в куках в шифрованном виде – неэффективно но просто и для того чтобы быстро что-то потестировать вполне подходит
 б) если сессии настроены и работают – проверяем что сессия реально сохраняется и восстанавливается при запросах, за это отвечает миддлварь Illuminate\Session\Middleware\StartSession которая входит в группу миддлварей web. в версии 5.3 эта группа применена на маршрутах заданных в routes/web.php. в более ранних версиях оно задаётся явно в app\Http\routes.php с помощью группы Route::group(['middleware' => ['web']], function () { /* ... */ }); маршруты, которым не назначена группа web или явно миддлварь StartSession не получают сессии и соответственно не могут прочитать сохранённый токен
 в) если сессии настроены, миддлвари прикреплены к маршрутам, где отображается и куда сабмитится форма, а токен всё равно нет тот – остаётся только установить xdebug и погулять по коду, проверяя где токены создаются и сравниваются, потому что на этом месте у меня закончилась фантазия как ещё можно сломать простой и надёжный как валенок механизм работы с CSRF-токенами smile
+
+
+  /*
+  |--------------------------------------------------------------------------
+  | when user clicks NEXT button
+  |--------------------------------------------------------------------------
+  |
+  |
+  */

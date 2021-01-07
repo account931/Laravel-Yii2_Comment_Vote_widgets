@@ -6,7 +6,7 @@
 
 //$(document).ready(function(){  //Comment it (ready(function)), otherwise => Uncaught ReferenceError: openPage is not defined
 	
-    function openPage(pageName,elmnt,color) {
+    function openPage(pageName,elmnt, color) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {

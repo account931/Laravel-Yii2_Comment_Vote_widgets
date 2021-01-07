@@ -13,6 +13,7 @@ class myException extends Exception
      */
     public function report()
     {
+		//dont have to implement, your custom exception is saved to log anyway
     }
  
     /**

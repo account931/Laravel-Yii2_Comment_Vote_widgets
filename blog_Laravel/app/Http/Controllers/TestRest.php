@@ -17,6 +17,7 @@ class TestRest extends Controller
 	public function index()
     {
 		
+		
 		$articles   = wpress_blog_post::all(); //Eloquent ORM to create dropdown with article to select to be fetched by ajax
 		$categories = wpress_category::all();
 		

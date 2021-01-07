@@ -113,14 +113,14 @@
 					
 					
 					
-					<!-- Here displays page: edit product, edit quantity. Shown via Tabs -->
+					<!-- Here displays page: edit product, edit quantity. Shown via W3school Tabs -->
 				    <div class="col-sm-12 col-xs-12 admin-add-new-item">
 					
 					
 					
 					    <!-- Start W3school Full Page Tabs (uses css + js file + js <button onclick="openPage()") https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
-					    <button class="tablink" onclick="openPage('Home', this, 'red')" id="defaultOpen">Edit product</button>
-                        <button class="tablink" onclick="openPage('EditQuantity', this, 'blue')">Load Stock</button>
+					    <button class="tablink" onclick="openPage('Home', this, '#d4d4f7')" id="defaultOpen">Edit product</button>
+                        <button class="tablink" onclick="openPage('EditQuantity', this, '#eaeafb')">Load Stock</button>
                         <button class="tablink" onclick="openPage('About', this, 'orange')">Info</button>
 
 
