@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Test Rest</div>
+                <div class="panel-heading">Test Rest API</div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -25,6 +25,15 @@
                             {{ session('status') }}
                         </div>
                     @endif
+					
+					
+					<!-- Just info, may delete later -->
+				    <div class="col-sm-12 col-xs-12 alert alert-info small font-italic text-danger  shadowX">
+					    </br> Some notes here.....
+						</br> Here you can test REST API, via showOne article (/GET HTTP REQUEST), create (/POST HTTP REQUEST), update (/PUT HTTP REQUEST), delete (/DELETE HTTP REQUEST).
+				        </br> 
+					</div>
+					
 					
 					
 					<!---- DropDown select with article to choose to be fetched by ajax-->
@@ -43,8 +52,10 @@
 									 
 									 <button type="submit" id="showOne" class="btn btn-primary">Show</button>
 									 <button type="button" id="createOne" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Create new</button>
-									 <button type="button" id="deleteOne" class="btn btn-danger" onclick="return confirm('Are you sure to delete?')">Delete</button>
-								
+									 <button type="button" id="updateOne" class="btn btn-success">Edit/Update</button>
+								     <button type="button" id="deleteOne" class="btn btn-danger">Delete</button>
+									 <button type="button" id="clear" class="btn btn-primary">Clear</button>
+
                              </form>	
                      </div>
 					 <!---- DropDown seelect -->
@@ -66,8 +77,8 @@
 					 <div class="collapse" id="collapseExample">
                         <div class="card card-body">
 						    <hr>
-						    <h4 style="padding-top:4em;"> Create a new article via Rest Api</h4> 
-							
+						    <h4 style="padding-top:4em;"> Create a new article via Rest Api /POST HTTP REQUEST</h4> 
+							  
 							<!-- Form -->
 						    <form class="form-horizontal" method="post" id="createNew">
 			
@@ -147,7 +158,109 @@
 					<!---- End Hidden/collapsed Div with Form to create a new record(by Bootstrap)
 					
 					
+                    
+					
+					
+					
+					
+					
+					
+					
+					
+					<!-----------------------  Edit/UPDATE Form  /PUT HTTP  --------------->
+					<!---- Hidden Div with Form to edit/update a record(hidden by css, shown by JS click in '/js/test-rest.js') -->
+					 <div class="" id="edit-update-div" style="display:none;">
+                        <div class="card card-body">
+						    <hr>
+						    <h4 style="padding-top:4em;"> Edit/update an article via Rest Api /PUT HTTP REQUEST)</h4> 
+							  
+							<!-- Form -->
+						    <form class="form-horizontal" id="upgardeArticle">
+			
+                            <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
+							
+							<input type="hidden" value="" id="articleID" /><!-- ArticleID-->
+ 
+                            <!-- product name -->
+                            <div class="form-group{{ $errors->has('product-name') ? ' has-error' : '' }}">
+                                <label for="product-name" class="col-md-4 control-label">Title</label>
 
+                                <div class="col-md-6">
+                                    <input id="productNameUpdate" type="text" class="form-control" name="product-name" value="{{ old('product-name') }}" required autofocus>
+                                
+                                    @if ($errors->has('product-name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('product-name') }}</strong>
+                                    </span>
+                                    @endif 
+							     </div>
+                            </div>	
+                            
+                            
+                            <!-- article textarea description -->
+                            <div class="form-group{{ $errors->has('product-desr') ? ' has-error' : '' }}">
+                                <label for="product-desr" class="col-md-4 control-label">Text</label>
+
+                                <div class="col-md-6">
+                                    <textarea cols="5" rows="5" id="productDesrUpdate" class="form-control" name="product-desr"  required> {{ old('product-desr') }} </textarea>
+                                
+                                    @if ($errors->has('product-desr'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('product-desr') }}</strong>
+                                    </span>
+                                    @endif 
+							     </div>
+                            </div>	 
+							
+
+							
+                            <!-- article category Select dropdown  -->
+                            <div class="form-group{{ $errors->has('product-category') ? ' has-error' : '' }}">
+                                <label for="product-category" class="col-md-4 control-label">Category</label>
+
+                                <div class="col-md-6">
+
+                                    <select name="product-category" class="mdb-select md-form" id="productCategUpdate">
+						              <option  disabled="disabled"  selected="selected">Choose category</option>
+		                              @foreach ($categories as $b)
+									      <option value={{ $b->wpCategory_id }} {{ old('product-category')!=null && old('product-category') == $b->wpCategory_id  ?  ' selected="selected"' : '' }} > {{ $b->wpCategory_name}} </option>
+					                  @endforeach
+						            </select>
+
+									
+                                    @if ($errors->has('product-category'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('product-category') }}</strong>
+                                    </span>
+                                    @endif 
+							     </div>
+                            </div>	
+
+                            			
+							<!-- Update Button --> 
+                            <div class="form-group">
+                                <div class="col-md-8 col-md-offset-4">
+                                    <button type="button" id="updateArticle" class="btn btn-primary"> Update </button>
+                                </div>
+                            </div>
+
+								
+                                
+                        </form>							
+							
+							<!-- End Form -->
+							
+                        </div>
+                    </div>
+					<!---- End Hidden/collapsed Div with Form to create a new record(by Bootstrap)
+					
+					
+					
+					
+					
+					
+					
+					
                    
                 </div>
             </div>

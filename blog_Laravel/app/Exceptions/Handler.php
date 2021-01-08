@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
 		if ($exception instanceof \App\Exceptions\myException)  {
             return $exception->render($request);
         }
-		//is a must to handle my custom myException class
+		//End is a must to handle my custom myException class
 		
 		
 	    //return response()->view('errors.custom-whoops', compact('exception'));  //works //My custom view instead of "Whoops". BUT: while is active, it wont show detaled debug info regardless if .env =>  APP_DEBUG=true or APP_DEBUG=false

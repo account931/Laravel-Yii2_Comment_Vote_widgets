@@ -23,7 +23,7 @@ class wpress_blog_post extends Model
   protected $table = 'wpress_blog_post';
 
   
-  protected $fillable = ['wpBlog_author', 'wpBlog_title', 'wpBlog_text', 'wpBlog_category'];  //????? protected $fillable = ['wpBlog_author', 'wpBlog_text', 'wpBlog_author', 'wpBlog_category',  'updated_at', 'created_at'];
+  protected $fillable = ['wpBlog_author', 'wpBlog_title', 'wpBlog_text', 'wpBlog_category', 'wpBlog_created_at'];  //????? protected $fillable = ['wpBlog_author', 'wpBlog_text', 'wpBlog_author', 'wpBlog_category',  'updated_at', 'created_at'];
   public $timestamps = false; //to override Error "Unknown Column 'updated_at'" that fires when saving new entry
 
   
@@ -111,7 +111,7 @@ class wpress_blog_post extends Model
         $this->	wpBlog_title = $data['title'];
         $this->	wpBlog_text = $data['description'];
 		$this->	wpBlog_category = $data['category_sel'];
-
+        $this-> wpBlog_created_at = date('Y-m-d H:i:s');
         $this->save();
         return 1;
     }

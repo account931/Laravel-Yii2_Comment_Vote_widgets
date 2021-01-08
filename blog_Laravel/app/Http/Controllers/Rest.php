@@ -19,19 +19,28 @@ class Rest extends Controller
         return WpressRest::all();
     }
  
+ 
+ 
    /**
    * returns One blogs/articles using hasOne/hasMany relations
    * @return 
    */
     public function show($id)
     {
+		//return WpressRest::with('authorName', 'categoryNames')->where('wpBlog_id', $id)->get(); //it was one original Rest line, built by default Laravel 
+
+        //Token guard manual, working
+        /*if (!isset($_GET['token'])) {
+			$responseX = array('status' => 'Fail', 'messageX'=> 'No token is provided in request' );
+			return $responseX;
+		}*/
+
 		//Check if Article ID exists at all
 		if (!WpressRest::where('wpBlog_id', $id)->exists()) {
 			$responseX = array('status' => 'Fail', 'messageX'=> 'Article ID does not exist' );
 			return $responseX;
 		}
         //return WpressRest::find($id);
-		//return WpressRest::with('authorName', 'categoryNames')->where('wpBlog_id', $id)->get(); //one original Rest line, built by default Laravel 
 		$wpress = WpressRest::with('authorName', 'categoryNames')->where('wpBlog_id', $id)->get(); //gets the article data
         $responseX = array('status' => 'OK', 'messageX'=> 'Article found', 'contentX'=> $wpress );	
         return $responseX;		
@@ -48,20 +57,24 @@ class Rest extends Controller
    */
     public function store(Request $request)
     {
-		//validate the input
-		 //validation rules
+		//return WpressRest::create($request->all()); //it was one original Rest line for INSERT, built by default Laravel 
+
+
+
+	
+		//validation rules, validate the input
         $rules = [
+		    'wpBlog_title' => 'required|string|min:3|max:255',
 			'wpBlog_text' => 'required|string|min:3|max:255',  //wpBlog_text is a my name in $.ajax({  data: }) in js/test-rest.js  in {$(document).on("click", '#createArticle', function(e) { }
-			'wpBlog_title' => 'required|string|min:3|max:255',
 			'wpBlog_category' => 'required|integer'
 		];
 		
 		//creating custom error messages. Should pass it as 3rd param in Validator::make()
 	    $mess = [ 
-		    'wpBlog_title.required' => 'You did not provided Title field',
-		    'wpBlog_text.required' => 'You did not provided Description field', //wpBlog_text is a my name in $.ajax({  data: }) in js/test-rest.js  in {$(document).on("click", '#createArticle', function(e) { }
-			'wpBlog_text.min' => 'We need at least 3 letters for description',
-			'wpBlog_category.required' => 'You did not provided Category field',
+		    'wpBlog_title.required' => 'You did not provided article title',
+		    'wpBlog_text.required' => 'You did not provided article description', //wpBlog_text is a my name in $.ajax({  data: }) in js/test-rest.js  in {$(document).on("click", '#createArticle', function(e) { }
+			'wpBlog_text.min' => 'We need at least 3 letters for article description',
+			'wpBlog_category.required' => 'You did not provided category field',
 			'wpBlog_category.integer' => 'Category must be an integer',
 			];
 		
@@ -78,9 +91,13 @@ class Rest extends Controller
 		} else {
 		
 		     //return $request->all(); //mine
-             //return WpressRest::create($request->all()); //original rest line
 		     //return $request->input('wpBlog_title');
-			 $wpress = WpressRest::create($request->all()); //creating an article, i.e INSERT
+			 
+			 //add 'wpBlog_created_at' data to form $request->all()
+			 $dataX = $request->all();
+             $dataX['wpBlog_created_at'] = date('Y-m-d H:i:s');
+			 
+			 $wpress = WpressRest::create($dataX); //creating an article, i.e INSERT
 			 $responseX = array('status' => 'OK', 'messageX'=> 'Article created', 'contentX'=> $wpress );	
 			 return $responseX;
 		}
@@ -100,21 +117,109 @@ class Rest extends Controller
 
 
 
-
+  /**
+   * Update an entry (/PUT)
+   * @return 
+   */
     public function update(Request $request, $id)
-    {
-        $article = WpressRest::findOrFail($id);
+    {   //it was original Rest code for DELETE, built by default Laravel
+        /* $article = WpressRest::findOrFail($id);
         $article->update($request->all());
-
-        return $article;
+        return $article; */
+		
+		
+		
+	
+		//validation rules, validate the input
+        $rules = [
+		    'wpBlog_title' => 'required|string|min:3|max:255',
+			'wpBlog_text' => 'required|string|min:3|max:255',  //wpBlog_text is a my name in $.ajax({  data: }) in js/test-rest.js  in {$(document).on("click", '#createArticle', function(e) { }
+			'wpBlog_category' => 'required|integer'
+		];
+		
+		//creating custom error messages. Should pass it as 3rd param in Validator::make()
+	    $mess = [ 
+		    'wpBlog_title.required' => 'You did not provided article title',
+		    'wpBlog_text.required' => 'You did not provided article description', //wpBlog_text is a my name in $.ajax({  data: }) in js/test-rest.js  in {$(document).on("click", '#createArticle', function(e) { }
+			'wpBlog_text.min' => 'We need at least 3 letters for article description',
+			'wpBlog_category.required' => 'You did not provided category field',
+			'wpBlog_category.integer' => 'Category must be an integer',
+			];
+		
+		$validator = Validator::make($request->all(), $rules, $mess);
+		
+		//if validation fails
+		if ($validator->fails()) {
+			
+			$responseX = array('status' => 'Fail', 'messageX'=> $validator->errors()->first() );
+			return $responseX;
+		//if validation is OK	
+		} else {
+			
+			 //add 'wpBlog_created_at' data to form $request->all()
+			 $dataX = $request->all();
+             $dataX['wpBlog_created_at'] = date('Y-m-d H:i:s');
+			 
+			 
+		     $article = WpressRest::findOrFail($id);
+             if ($article->update($dataX)) {//if ($article->update($request->all())) {
+			     //$wpress = WpressRest::update($request->all()); //creating an article, i.e INSERT
+			     $responseX = array('status' => 'OK', 'messageX'=> 'Article updated', 'contentX'=> $article );	
+			     return $responseX;
+			 } else {
+				 $responseX = array('status' => 'Fail', 'messageX'=> 'Article failed to be updated' );	
+			     return $responseX;
+			 }
+		}
     }
 
-    public function delete(Request $request, $id)
-    {
-        $article = WpressRest::findOrFail($id);
-        $article->delete();
 
-        return 204;
+
+
+
+
+
+
+
+
+
+ /**
+  * Delete an entry (/DELETE)
+  * @return 
+ */
+ /*
+  | 
+  |--------------------------------------------------------------------------
+  | 
+  |--------------------------------------------------------------------------
+  |
+  |
+  */
+    public function delete(Request $request, $id)
+    {   //it was original Rest code for DELETE, built by default Laravel 
+		/*$article = WpressRest::findOrFail($id);
+        $article->delete();
+        return 204; */
+		
+		//Check if Article ID exists at all
+		if (!WpressRest::where('wpBlog_id', $id)->exists()) {
+			$responseX = array('status' => 'Fail', 'messageX'=> 'Article ID does not exist or it was already deleted' );
+			return $responseX;
+		}
+		
+		
+        $article = WpressRest::findOrFail($id); //u can use => WpressRest::firstOrFail($id); if add to model => protected $primaryKey = 'wpBlog_id'; 
+        
+		if ($article->delete()){
+			$responseX = array('status' => 'OK', 'messageX'=> 'Article ' . $id . ' was deleted' );
+			return $responseX;
+			
+		} else {
+			$responseX = array('status' => 'Fail', 'messageX'=> 'Article ' . $id . ' failed to be deleted' );
+			return $responseX;
+		}
+
+        //return 204;
     }
 
 }

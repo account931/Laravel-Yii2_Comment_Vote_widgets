@@ -2,7 +2,7 @@ Laravel Framework 5.4.36 Release (January 24th, 2017), Security Fixes Until (Jan
 OpenServer 5.2.2 Php 7.2 Node-v13.14.0-x86.msi
 Credentials: dimmm931@gmail.com =>  dimax2
 
-  
+NB: CHECK WPRESS MIGRATION (SETTING TIMESTAMP BY DEFAULT)!!!!!!!!!!!!!!!!!!!!!!! 
 
 On HP EliteBook 2530p: Composer -> via Windows cmd, artisan -> via OpenServer (navigate to your project folder first with cd ), 
         git -> via Windows cmd, NPM -> composer
@@ -166,18 +166,24 @@ USAGE
 
 //================================================================================================
 4.Error handling, throw custom exceptions => 
-  see your custom exception => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Exceptions/myException.php
   see docs => https://code.tutsplus.com/ru/tutorials/exception-handling-in-laravel--cms-30210
-  Usage => 
+  
+   Create your custom exception Class =>
+     1. Create your custom exception Class, see example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Exceptions/myException.php
+         You don't need to implement {public function report()} in your custom exception class, as it will log any errors anyway(including when your custom exception fires) to storage/laravel.log. Due to {class myException extends Exception}
+	 2. Add to App\Exceptions\Handler.php to public function render() to render your custom exception view =>
+	        if ($exception instanceof \App\Exceptions\myException)  {
+                return $exception->render($request); }
+  
+   Usage => 
       use Illuminate\Support\Facades\Auth;
       if(!Auth::check()){ throw new \App\Exceptions\myException('Something Went Wrong.'); }
 
 
 --------------------------------------------	  
- #General Error info => on any framework error (not your exception), you'll see a detailed ErrorException (e.g "Trying to get property of non-object. View:/home/..index.blade.php"). 
+ #General Errors Disaplay info => on any framework error (not your exception), you'll see a detailed ErrorException (e.g "Trying to get property of non-object. View:/home/..index.blade.php"). 
  But in production you can set .env file with APP_DEBUG=false and then the browser will just show default built-in Laravel blank "Whoops, looks like something went wrong".
  
- #You don't need to implement {public function report()} in your custom exception class, as it will log any errors anyway(including when your custom exception fires) to storage/laravel.log. Due to {class myException extends Exception}
  
   In brief about what error u'll see =>
     # If u set in .env => APP_DEBUG=true,  on any error(except when u throw your custom exception by yourself), Laravel will show detaled debug, e.g '(1/1) FatalThrowableError. Parse error: syntax error, unexpected 'if' (T_IF)'
@@ -641,7 +647,15 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 //================================================================================================
 13.REST API => see docs at  https://developernotes.ru/laravel-5/rest-restful-api
-   Endpoints:
+
+  #Rest controller example => see https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Rest.php
+  #Rest model example      => see https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/Rest/WpressRest.php
+   
+  #Example => Client working with Rest Endpoint Controller => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/TestRest.php
+  #Example => Client working with Rest Endpoint Js Ajax    => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/test-rest/test-rest.js
+  
+  
+  #Endpoints:
     #routes for REST must be specifies in {routes/api.php} not {routes/web.php}
       get all articles from Db table {wpress_blog_post}  => /GET http://localhost/laravel+Yii2_widgets/blog_Laravel/public/api/articles
       get one article  from Db table {wpress_blog_post}  => /GET http://localhost/laravel+Yii2_widgets/blog_Laravel/public/api/articles/8
@@ -1129,7 +1143,7 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 #image =>           <img class="img-responsive my-cph" src="{{URL::to("/")}}/images/cph.jpg"  alt="a"/>
 #link a href => 	<li><a href="{{ route('register') }}">Gii</a></li>
 #link a href with $_GET => <a href="{{route('profile', ['id' => 1])}}">login here</a>
-#link with helper => $post = App\Models\Post::find(1);  echo url("/posts/{$post->id}");
+#link with helper => $post = App\Models\Post::find(1);  echo url("/posts/{$post->id}");  Use => <a href ="<?php  echo url("/posts/2"); ?>"> link </a>
 
 # Link by route ID => 
    In '/routes/web.php'  => Route::get('/showOneProduct/{id}', 'ShopPayPalSimpleController@showOneProductt')->name('showOneProduct');
@@ -1266,8 +1280,12 @@ composer dump-autoload
     <input id="email" type="email" class="form-control" name="email" value="{{ $mailX ?$mailX : old('email') }}" required>
 
 
+# Blade template with flashMessageX, flashMessageFailX, with block to display form validation errors, with alert-info block => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/tokenGuard/index.blade.php
 
-
+# Add data to the request->all => 
+  $data = $request->all();
+  $data['sector_id'] = whatever you want;
+  Question::create($data);
 
 //================================================================================================
 35.2.Miscellaneous VA HTML/CSS
@@ -1390,6 +1408,8 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 # Makes Grid table to be wide with scroll => <div class="col-sm-12 col-xs-12" style="width:80em;overflow-x: scroll;">
 
 # Swal Sweet Alert not waiting until user clicks ok => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/rbac/my-rbac.js or relevant at at /resources/assets/ . See section => $(document).on("click", '.detach-role', function(e)
+
+#  Convert a JavaScript object into a string =>  alert(JSON.stringify(data, null, 4))  
 //================================ End Move to Yii2 ReadMe =============================
 
 //================================================================================================
@@ -1412,7 +1432,11 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 36. Known Errors
 
 # Error "Unknown Column 'updated_at' => public $timestamps = false; //put in model to override Error "Unknown Column 'updated_at'" that fires when saving new entry
-2 =>     protected $primaryKey = 'shop_id';          // override in model autoincrement column name
+2 =>     /**
+          * The primary key associated with the table.
+          * @var string
+          */
+         protected $primaryKey = 'wpBlog_id'; //to show Laravel what id column is 'wpBlog_id' not 'id'        // override in model autoincrement id column name
          protected $table      = 'wpress_blog_post'; //specify the DB table table
 		 protected $fillable   = ['wpBlog_author', 'wpBlog_title', 'wpBlog_text', 'wpBlog_category']; //specify fields for mass assignment
 

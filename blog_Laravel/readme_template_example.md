@@ -12,11 +12,11 @@
 ### Content
 - [1. Go to My Acnchored Section 1](#1-real-cool-heading1)
 
-- [2. Go to My Acnchored Section 2](#2-real-cool-heading2)
+- [2. Go to My Acnchored Section 2](#2-js-regexp-test) 
 
-- [3. Go to My Acnchored Section 3](#3-real-cool-heading3)
+- [3. Check if user is authenticated](#3-check-if-user-is-authenticated) 
 
-- [3. Render view in Laravel](#4-render-view)
+- [4. Render view in Laravel](#4-render-view)
 
 [My Git link](https://www.google.com "My")
 
@@ -35,20 +35,22 @@ Laravel is accessible, yet powerful, providing tools needed for large, robust ap
 ## 1. Real Cool Heading1
 Some my text
 
-## 2. Real Cool Heading2
-Some my text
+## 2. JS RegExp Test
+Test/check if some string contains word 'e'
 
 ```javascript
-var s = "Подсветка JavaScript";
+var s = "JavaScript";
 alert(s);
+if (new RegExp('e').test(someString)){ }
 ```
 
-## 3. Real Cool Heading3
-Some my text
+ 
+## 3. Check if user is authenticated
+In order to check if user !guest
 
 ```php
-$b = "Подсветка Php";
-echo($b);
+use Illuminate\Support\Facades\Auth;  
+if(!Auth::check()){}
 ```
 
 ## 4. Render view

@@ -103,6 +103,8 @@
 							 <li class="{{ Request::is('testMiddle*') ? 'active' : '' }}"><a href="{{ route('testMiddle') }}">Test Middle</a></li>
                              <li class="{{ Request::is('tokenGuard*') ? 'active' : '' }}"><a href="{{ route('tokenGuard') }}">Rest Api TokenGuard</a></li>
 
+                             <li class="{{ Request::is('appointment*') ? 'active' : '' }}"><a href="{{ route('appointment') }}">Appointment</a></li>
+
 							 <li><a href="{{ route('register') }}">Booking(N/A)</a></li>
 							 <li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>
 							 <li><a href="{{ route('register') }}">Vue JS(N/A)</a></li>

@@ -100,7 +100,7 @@ Route::post('/admin-delete-product',  'ShopPayPalSimple_AdminPanel@deleteProduct
 //});
 
 //Test for middle (just like the one developed in Yii2)
-Route::get('/testMiddle', 'TestMiddleController@index')->name('testMiddle'); 
+Route::get('/testMiddle', 'TestMiddleController@index')->name('testMiddle'); //start page
 Route::post('/checkEmail',  'TestMiddleController@checkMail')->name('/checkEmail');   //route to get <form> data via $_POST from {TestMiddleController@index} page ()) and redirects either to custom login or register. 
 
 Route::get('/customLogin',    'TestMiddleController@customLogin')->name('customLogin');      //my custom login page
@@ -114,6 +114,9 @@ Route::get('/customRegister', 'TestMiddleController@customRegister')->name('cust
 //Rest Api with TokenGuard, access to Rest by token (Bearer authentication  (also called token authentication))
 Route::get('/tokenGuard', 'TokenGuardController@index')->name('tokenGuard'); 
 
+
+//Appointment, client-side
+Route::get('/appointment', 'AppointmentController@index')->name('appointment'); 
 
 
 

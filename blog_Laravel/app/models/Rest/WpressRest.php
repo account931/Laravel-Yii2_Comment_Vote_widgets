@@ -13,10 +13,17 @@ class WpressRest extends Model
    *
    * @var string
    */
-  protected $table = 'wpress_blog_post';
+   protected $table = 'wpress_blog_post';
+  
+  /**
+   * The primary key associated with the table.
+   *
+   * @var string
+   */
+    protected $primaryKey = 'wpBlog_id'; //to show Laravel what id column is 'wpBlog_id' not 'id'. To be able to use in findOrfail($id)
   
   
-  protected $fillable = [ 'wpBlog_title', 'wpBlog_author', 'wpBlog_text', 'wpBlog_author', 'wpBlog_category'];
+  protected $fillable = [ 'wpBlog_title', 'wpBlog_author', 'wpBlog_text', 'wpBlog_author', 'wpBlog_category', 'wpBlog_created_at'];
   public $timestamps = false; //to override Error "Unknown Column 'updated_at'" that fires when saving new entry
 
   //protected $hidden = ['created_at', 'password'];
