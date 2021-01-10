@@ -264,6 +264,27 @@ class WpBlog extends Controller
 	
 	
 	
+	/**
+     * View One Article
+     *
+     * @param  integer $id
+     * @return \Illuminate\Http\Response
+     */
+	public function viewOne($id) {
+	   //additional check in case user directly intentionally navigates to  ../blog_Laravel/public/delete/12 to not his record
+	   try{
+	       $articleOne = wpress_blog_post::where('wpBlog_id',$id)->firstOrFail(); //find the article by id  ->firstOrFail();
+	   } catch (\Exception $e) {
+	   //if(!$articleOne){
+	      throw new \App\Exceptions\myException('Article does not exist');
+	   }
+
+			
+			
+	   $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get();
+	   
+	   return view('wpBlog.viewOne',  compact('articleOne'));
+	}
 	
 	
 }

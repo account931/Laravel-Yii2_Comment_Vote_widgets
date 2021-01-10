@@ -51,14 +51,13 @@
                 @endif
                 <!-- End Display form validation errors var 2 -->				
 					
-					
-                <div class="panel-heading text-warning row">
 				
-				  <div class="col-sm-3 col-xs-6">
-				    TokenGuard <span class="small text-danger">*</span> 
+
+                
+				<div class="panel-heading text-warning col-sm-12 col-xs-12">
+				  <div class="col-sm-12 col-xs-12">
+				    TokenGuard<span class="small text-danger">*</span> 
 				  </div>
-				  
-				  
 				</div>
 
 
@@ -74,10 +73,21 @@
 					
 					<!-- Just info, may delete later -->
 				    <div class="col-sm-12 col-xs-12 alert alert-info small font-italic text-danger  shadowX">
-					    </br> Some notes here.....
+					    <h5><span class='glyphicon glyphicon-flag' style='font-size:38px;'></span> This page is implementation of One view</h5>
+		                </br> Some notes here.....
 						</br> Bearer authentication (also called token authentication) is an HTTP authentication scheme that involves security tokens called bearer tokens.
 				        </br> Rest Api with access by token only
+		                <hr>
+		                <p>Some more text.</p>
 					</div>
+					
+					
+					
+					<!-- Go back link -->
+					<div class="col-sm-12 col-xs-12">
+					    <a href="{{ url('wpBlogg') }}"><i class="fa fa-angle-double-left" style="font-size:49px"></i>    <span style="position:relative; bottom:0.7em;">back to list </span></a><br>
+					</div>
+					<!-- Go back link -->
 					
 				
 				</div> <!-- end .test-middle-x -->

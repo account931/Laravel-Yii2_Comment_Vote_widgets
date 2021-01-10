@@ -1145,10 +1145,10 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 #link a href with $_GET => <a href="{{route('profile', ['id' => 1])}}">login here</a>
 #link with helper => $post = App\Models\Post::find(1);  echo url("/posts/{$post->id}");  Use => <a href ="<?php  echo url("/posts/2"); ?>"> link </a>
 
-# Link by route ID => 
+# Link by route ID => i.e /edit/156
    In '/routes/web.php'  => Route::get('/showOneProduct/{id}', 'ShopPayPalSimpleController@showOneProductt')->name('showOneProduct');
    In view Var_1 => <a href="{{ route('showOneProduct', ['id'=> 3]) }}">  // ..blog_Laravel/public/showOneProduct/3
-   In view Var_2 => <a href="{{ url('/admin-edit-product')}}/{{$productOne[0]->shop_id }}" >
+   In view Var_2(Best) => <a href="{{ url('/admin-edit-product')}}/{{$productOne[0]->shop_id }}" >
    
    
 

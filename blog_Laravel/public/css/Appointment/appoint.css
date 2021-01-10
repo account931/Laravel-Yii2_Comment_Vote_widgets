@@ -1,0 +1,53 @@
+ /*---------------------------  */
+
+.my-img {;}
+ 
+ /* Mobile */
+ @media screen and (max-width: 480px) { 
+  
+ }
+
+ 
+ /* SUBFOLDER => Rooms Month Icons CSS */
+
+/* subfolder icons CSS, used  in  Site/actionFolderGallery(), view=> many-folder-gallery */
+.subfolder a {color:black;}
+.subfolder:hover {background:red; }
+
+/*div that contains folder img and folder name*/
+.subfolder{
+	color:black;
+	border:  1px solid black; border-radius:17%; /*dotted*/
+	padding: 1em;
+	width: 12%;
+	margin-right: 3%;
+	margin-bottom: 1em;
+	float:left;
+	word-break: break-all;
+	background-color: lavender;
+	/*
+	background:  url(../images/folder.png) ; //no-repeat scroll center center 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; // To scale the background image to fit inside the div. Was: cover
+    position: relative;
+	*/
+	/* animate smoothly */
+	cursor:pointer;
+	transition: 1.25s;
+   -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+.subfolder img {width:36%;}
+/* subfolder CSS, used  in  Site/actionFolderGallery(), view=> many-folder-gallery */
+
+.rooms{margin-bottom:3em;}
+
+@media screen and (max-width: 480px) { 
+  .subfolder img {width:76%;}
+  .subfolder{width: 44%; font-size:0.9em;}
+}
+
+/* END SUBFOLDER CSS */
+ 

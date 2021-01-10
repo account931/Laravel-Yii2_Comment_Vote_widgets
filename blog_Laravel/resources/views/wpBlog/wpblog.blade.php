@@ -21,7 +21,7 @@
                 <div class="panel-body">
 				    
 					
-					<a href="{{ route('createNewWpress') }}"><button>Create new</button></a>
+					<p><a href="{{ route('createNewWpress') }}"><button class="btn btn-large btn-success">Create new</button></a></p>
 				
 				
 				    <!-- Display Categories Dropdown with Blade -->
@@ -79,16 +79,17 @@
 					
 		            <!-- Display WP Blogs with Blade (variant 1) -->
 		            @foreach ($articles as $a)
+					   <div class="col-sm-12 col-xs-12 borderX">
 						<p> <img class="img-wpblog" src="{{URL::to('/')}}/images/item.png"  alt=""/> </p>
 					    <p> Article number :{{ $loop->iteration }}  </p> <!-- {{ $loop->iteration }} is Blade equivalentof $i++ -->						
-                        <p> Article number true: {{ $itemNumber++ }}  </p>
-						<p>Title: <b>  {{ $a->wpBlog_title     }}</b></p>
+                        <p> <b> Article number true: {{ $itemNumber++ }}  </b></p>
+						<p><b>Title:   {{ $a->wpBlog_title     }}</b></p>
 						
 						<p class="text-truncated" title="click to expand">  {{ $a->truncateTextProcessor($a->wpBlog_text, 46)    }} </p>  <!-- truncated article text -->
 						<p class="text-hidden">     {{ $a->wpBlog_text    }} </p>  <!-- hidden article text -->
 
-						
-						<p class='small font-italic'>  {{ $a->authorName->name  }}   {{-- $a->authorName['name']   --}}</p> <!-- hasOne relations to show author name --> <!--  " $a->wpBlog_author" returns id, "authorName()" is a model hasOne function    }}</p> --> 
+						<hr class="hrX">
+						<p class='smallX font-italic'> Author: {{ $a->authorName->name  }}   {{-- $a->authorName['name']   --}}</p> <!-- hasOne relations to show author name --> <!--  " $a->wpBlog_author" returns id, "authorName()" is a model hasOne function    }}</p> --> 
 						
 						<!-- END NOT WORKING -->
 						
@@ -103,12 +104,13 @@
 						<!-- END NOT WORKING -->
 						
 		
-						<p class='small font-italic'>Category: {{ $a->categoryNames->wpCategory_name }}</p> <!-- hasMany relations to show category name, "$a->wpBlog_category" returns id of category, "categoryNames" is a model hasMany function  -->
+						<p class='smallX font-italic'>Category: {{ $a->categoryNames->wpCategory_name }}</p> <!-- hasMany relations to show category name, "$a->wpBlog_category" returns id of category, "categoryNames" is a model hasMany function  -->
 						 
 						 
-						<p class='small font-italic'>Status:   {{ $a->getIfPublished($a->wpBlog_status)    }}</p>   <!-- $a->wpBlog_status is DB value Enum (0/1) -->
-						<p class='small font-italic'>Created:   {{ $a->wpBlog_created_at    }}</p>   <!-- Time -->
-                        
+						<p class='smallX'>Status:   {{ $a->getIfPublished($a->wpBlog_status)    }}</p>   <!-- $a->wpBlog_status is DB value Enum (0/1) -->
+						<p class='smallX'>Created:   {{ $a->wpBlog_created_at    }}</p>   <!-- Time -->
+                        <p class='smallX'><a href="{{route('wpBlogOne', ['id' => $a->wpBlog_id])}}">read full article...</a></p>   <!-- link to one article page -->
+
 						
 						
 						<!-- Displays Icon to delete/edit record (only if your are the author and logged)-->
@@ -144,7 +146,7 @@
 
 						
 						<hr> 
-
+                      </div>
                     @endforeach
 					
 					<!-- Display pagination (only if NO $_GET, i.e display all articles) -->

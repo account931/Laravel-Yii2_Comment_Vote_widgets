@@ -36,12 +36,13 @@ Route::post('/formSubmit', 'FormSubmit@index')->name('formsubmit');  //form subm
 
 
 //Wpress Bloq
-Route::get('/wpBlogg', 'WpBlog@index')->name('wpblog');  //WpPress Blog route
+Route::get('/wpBlogg', 'WpBlog@index')->name('wpblog');  //WpPress Blog index route
 Route::get('createNewWpress', 'WpBlog@create')->name('createNewWpress');  //WpPress route for displaying form to create new entry
 Route::post('/storeNewWpress','WpBlog@store'); //Saving form fields via POST
 Route::post('delete/{id}','WpBlog@destroy');
 Route::get('edit/{id}','WpBlog@edit');
 Route::post('update/{id}','WpBlog@update');
+Route::get('/wpBlogOne/{id}', 'WpBlog@viewOne')->name('wpBlogOne');  //WpPress Blog one article view route
 
 
 
