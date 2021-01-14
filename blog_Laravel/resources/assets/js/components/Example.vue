@@ -6,7 +6,7 @@
                     <div class="panel-heading pointer" v-on:click="changeEntry()">Example Vue Component</div>
 
                     <div class="panel-body" :class="cssState? ' text-primary bg-danger' : ''"> <!-- change css based on props -->
-                        I'm a Vue component example </br>
+                        I'm a Vue component example!!! </br>
 						{{ myStateTextX }}
                     </div>
                 </div>

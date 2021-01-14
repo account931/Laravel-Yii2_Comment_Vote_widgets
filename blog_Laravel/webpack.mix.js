@@ -12,7 +12,8 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')  //source-> destination
-/*
+   .js('resources/assets/js/Appointment/appoint-vue-start.js', 'public/js/Appointment')  //source-> destination
+/*  
    .js('resources/assets/js/wpress_blog.js', 'public/js')
    .js('resources/assets/js/test-rest/test-rest.js', 'public/js/test-rest') //test-rest JS
    .sass('resources/assets/sass/app.scss', 'public/css') //SAAS

@@ -160,9 +160,12 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('js/my-js.js') }}"></script>
 	
+	<!-- To register JS file for specific view only (In layout template) (for home '/' only. Loads JS for home Vue component <example>. If is loaded globally will inerfere with Appointmant vue-->
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['/'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
+         <script src="{{ asset('js/app.js') }}"></script>
+    @endif
 	
 	
 	<!-- To register JS file for specific view only (In layout template) (for Wpress asset only) -->
@@ -206,6 +209,11 @@
 	<!-- To register JS/CSS for specific view only (for showOneProduct(page result from SearchBar) asset only) + Some JS/CSS are included in View itself -->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['showOneProduct/{id}'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
 		<script src="{{ asset('js/ShopPaypalSimple/LazyLoad/jquery.lazyload.js')}}"></script> <!--Lazy Load lib JS-->
+    @endif
+
+    <!-- To register JS/CSS for specific view only (for appointment(page) asset only). Vue rejects and won't work if u  added JS in view. Some CSS are included in View itself -->
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['appointment'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
+            <script src="{{ asset('js/Appointment/appoint-vue-start.js')}}"></script> <!-- Vue core -->
     @endif
 
 

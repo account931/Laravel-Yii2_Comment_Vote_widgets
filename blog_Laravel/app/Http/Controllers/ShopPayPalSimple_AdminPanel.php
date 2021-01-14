@@ -13,6 +13,7 @@ use App\models\ShopSimple\ShopQuantity;   //model for DB table with product quan
 use Illuminate\Support\Facades\DB; //???
 use App\Http\Requests\ShopPaypalSimple_AdminPanel\OrderStatusChangeRequest; //my custom Form validation via Request Class (to update status in table {shop_orders_main})
 use App\Http\Requests\ShopPaypalSimple_AdminPanel\SaveNewProductRequest; //my custom Form validation via Request Class (to create a new product in table {shop_simple})
+use Illuminate\Support\Facades\Validator;
 
 
 
@@ -437,6 +438,59 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	}
 	
 	
+	
+	
+	/**
+     *  Add++ quantity to table {shop_quantity}. Gets <form> data from page {'/admin-edit-product/{id}'}) (function editProduct())
+     * @param  
+     * @return \Illuminate\Http\Response
+     */
+	 
+    public function addStockQuantity(Request $request)
+    {
+		
+		//if $_POST['product-quant'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
+		if(!$request->input('product-quant')){
+			throw new \App\Exceptions\myException('Bad request, You are not expected to enter this page.');
+		}
+		
+		
+		$rules = [
+			'product-quant' => ['required', 'integer',  ] , 
+			//'productID'      => [ 'required', 'integer' ] , 
+			
+		];
+		
+	    //creating custom error messages. Should pass it as 3rd param in Validator::make()
+	    $mess = [ 'product-quant.required' => 'We need quantity',
+		          'product-quant.integer' => 'We need quantity to be integer',
+		        ];
+		
+	    $validator = Validator::make($request->all(),$rules, $mess);
+	    if ($validator->fails()) {
+			return redirect()->back()->withInput()->with('flashMessageFailX', 'Validation Failed' )->withErrors($validator);
+	    }
+		
+		//check if ID exists
+		if (!ShopQuantity::where('product_id', $request->input('prod-id'))->exists()) { 
+	      throw new \App\Exceptions\myException('Product ' . $request->input('prod-id') . ' does not exist');
+	    }
+		
+		//gets the Row
+		$q = ShopQuantity::where('product_id', $request->input('prod-id'))->get();
+		$allNewQuantity  = $q[0]->all_quantity  + $request->input('product-quant');
+		$leftNewQuantity = $q[0]->left_quantity + $request->input('product-quant');
+		
+		if (ShopQuantity::where('product_id', $request->input('prod-id'))->update(['all_quantity' => $allNewQuantity, 'left_quantity' => $leftNewQuantity])) {
+		    return redirect()->back()->withInput()->with('flashMessageX', 'Quantity added ' . $request->input('product-quant') . ' to ' . $q[0]->all_quantity . ' id ' .  $q[0]->product_id );
+
+		} else {
+			return redirect()->back()->with('flashMessageFailX', 'Sorry, Adding crashed');
+
+		}
+		
+
+	}
 	//================================== END Products view section =================================================
 	
 	

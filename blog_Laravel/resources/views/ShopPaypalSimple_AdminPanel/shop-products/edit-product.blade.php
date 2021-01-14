@@ -266,37 +266,95 @@
 							<p> Currently left: {{ $productOne[0]->quantityGet->left_quantity }} items</p><!--hasOne relation in '/model/ShopSimple' on table {shop_quantity} -->
 
 
-							<!--------- Form to a edit a quntity   --------------->
-				            <form class="form-horizontal" method="post" action="{{url('/storeNewproduct')}}" enctype="multipart/form-data">
-			
-                            
-                            <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
-							
-							<!-- product quantity (to add to table {}) -->
-                            <div class="form-group{{ $errors->has('product-quant') ? ' has-error' : '' }}">
-                                <label for="product-quant" class="col-md-4 control-label">Quantity</label>
 
-                                <div class="col-md-6">
-                                    <input id="product-quant" type="number" min="0" class="form-control" name="product-quant" value="{{ old('product-quant') }}" required>
+
+							<!--------- Form to a edit a quntity ++   --------------->                            
+							<div class="col-sm-12 col-xs-12"> 
+							    <center>
+								    <h4><i class="fa fa-plus-square-o" ></i> Load in ++ (add to {{ $productOne[0]->quantityGet->all_quantity }} items ) </h4>
+								</center>
+							</div>
+							
+							
+				            <form class="form-horizontal" method="post" action="{{url('/addQuantity')}}" enctype="multipart/form-data">
+			
+                                <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf -->
+								<input type="hidden" value="{{ $productOne[0]->shop_id }}" name="prod-id" /> <!-- product ID -->
+                                                               
+							
+							    <!-- product quantity (to add to table {}) -->
+                                <div class="form-group{{ $errors->has('product-quant') ? ' has-error' : '' }}">
+                                    <label for="product-quant" class="col-md-4 control-label">Quantity++</label>
+
+                                    <div class="col-md-6">
+                                        <input id="product-quant" type="number" min="0" class="form-control" name="product-quant" value="{{ old('product-quant') }}" required>
                                 
-                                    @if ($errors->has('product-quant'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('product-quant') }}</strong>
-                                    </span>
-                                    @endif 
-							     </div>
-                            </div>	
+                                        @if ($errors->has('product-quant'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('product-quant') }}</strong>
+                                        </span>
+                                        @endif 
+							        </div>
+                                </div>	
 							
 							
-							<!-- Button --> 
-                            <div class="form-group">
-                                <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary"> Load </button>
+							    <!-- Button --> 
+                                <div class="form-group">
+                                    <div class="col-md-8 col-md-offset-4">
+                                        <button type="submit" class="btn btn-primary"> Add  <i class="fa fa-plus-square-o" ></i></button>
+                                    </div>
                                 </div>
-                            </div>
 							
                             </form>
-						<!--------- End Form to edit quantity  --------------->  
+						    <!--------- End Form to edit quantity ++  --------------->  
+						
+						
+						
+						
+						
+						    <br>
+						    <!--------- Form to a edit a quntity Minus --   --------------->
+						    <div class="col-sm-12 col-xs-12"> 
+							    <center>
+								    <h4><i class="fa fa-minus-square-o" ></i> Load out -- </h4>
+								</center>
+							</div>
+							
+				            <form class="form-horizontal" method="post" action="{{url('/minusQuantity')}}" enctype="multipart/form-data">
+			
+                                <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
+							    <input type="hidden" value="{{ $productOne[0]->shop_id}}" name="prod-id" /><!-- product ID -->
+
+
+							    <!-- product quantity (to add to table {}) -->
+                                <div class="form-group{{ $errors->has('product-quant') ? ' has-error' : '' }}">
+                                    <label for="product-quant" class="col-md-4 control-label">Quantity--</label>
+
+                                    <div class="col-md-6">
+                                        <input id="product-quant" type="number" min="0" class="form-control" name="product-quant" value="{{ old('product-quant') }}" required>
+                                
+                                        @if ($errors->has('product-quant'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('product-quant') }}</strong>
+                                        </span>
+                                        @endif 
+							        </div>
+                                </div>	
+							
+							
+							    <!-- Minus submit Button --> 
+                                <div class="form-group">
+                                    <div class="col-md-8 col-md-offset-4">
+                                        <button type="submit" class="btn btn-primary"> Minus  <i class="fa fa-minus-square-o" ></i></button>
+                                    </div>
+                                </div>
+							
+                            </form>
+						    <!--------- End Form to edit quantity --  --------------->  
+						
+						
+						
+						
 						
                         </div>
 						<!------------------------ End 2nd tab div (with edit quantity form) ----------------->

@@ -97,6 +97,9 @@ Route::get('/admin-one-product/{id}', 'ShopPayPalSimple_AdminPanel@showOneProduc
 Route::get('admin-edit-product/{id}', 'ShopPayPalSimple_AdminPanel@editProduct')->name('admin-edit-product/{id}'); //display Admin Page to edit an existing product
 Route::post('/admin-delete-product',  'ShopPayPalSimple_AdminPanel@deleteProduct')->name('/admin-delete-product');  //route to method to delete certian product by ID. Sent by POST form
 
+Route::post('/addQuantity',    'ShopPayPalSimple_AdminPanel@addStockQuantity')  ->name('addQuantity');   //route to get <form> data via $_POST from page {'/admin-edit-product/{id}'}) (function editProduct()),      add++ quantity to   table {shop_quantity} and redirects it to back  route {'/admin-edit-product/{id}'}. 
+Route::post('/minusQuantity',  'ShopPayPalSimple_AdminPanel@minusStockQuantity')->name('minusQuantity'); //route to get <form> data via $_POST from page {'/admin-edit-product/{id}'}) (function editProduct()), minus-- quantity from table {shop_quantity} and redirects it to back  route {'/admin-edit-product/{id}'}. 
+
  
 //});
 

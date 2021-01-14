@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 38);
+/******/ 	return __webpack_require__(__webpack_require__.s = 43);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -44903,16 +44903,22 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 38 */
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(39);
+module.exports = __webpack_require__(44);
 
 
 /***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 44 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -44930,22 +44936,42 @@ window.Vue = __webpack_require__(33);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', __webpack_require__(40));
+/* 
+import listOfRooms from './components/generateListOfRooms.vue';
+const app = new Vue({
+    el: '#appZ1',
+    components: { listOfRooms } // Note!!!
+});
+*/
 
-var app = new Vue({
-  el: '#app'
+//Register Components
+Vue.component('test-ajax-component', __webpack_require__(54));
+Vue.component('list-of-rooms', __webpack_require__(48)); //my second component
+
+
+var appSome = new Vue({
+    el: '#appZ'
+});
+
+//it is for <list-o-frooms>
+//is a must to register for each component
+var appSome1 = new Vue({
+    el: '#appZ1'
 });
 
 /***/ }),
-/* 40 */
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(37)
 /* script */
-var __vue_script__ = __webpack_require__(41)
+var __vue_script__ = __webpack_require__(49)
 /* template */
-var __vue_template__ = __webpack_require__(42)
+var __vue_template__ = __webpack_require__(50)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -44962,7 +44988,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/Example.vue"
+Component.options.__file = "resources/assets/js/Appointment/components/generateListOfRooms.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -44971,9 +44997,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-650f2efa", Component.options)
+    hotAPI.createRecord("data-v-c01cfd12", Component.options)
   } else {
-    hotAPI.reload("data-v-650f2efa", Component.options)
+    hotAPI.reload("data-v-c01cfd12", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -44984,11 +45010,317 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 41 */
+/* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+//using other sub-component 
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	//using other sub-component 
+	components: {
+		'rooms-in-loop1': __WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue___default.a
+	},
+
+	//i.e props
+	data: function data() {
+		return {
+			companies: [],
+			myStateTextX: "I am an appoint state",
+			cssState: false,
+			info: {}
+		};
+	},
+
+	mounted: function mounted() {},
+
+
+	//method/functions
+	methods: {
+		changeEntry: function changeEntry() {
+			//if (confirm("Do you really want to proceed?")) {
+
+			var app = this;
+			if (app.myStateTextX != 'Appointment state') {
+				app.myStateTextX = 'Appointment state';
+				app.cssState = true;
+			} else {
+				app.myStateTextX = 'State is changed';
+				app.cssState = false;
+			}
+
+			//}
+		},
+		onClickChild: function onClickChild(value) {
+			alert('ddddd');
+			console.log(value); // someValue
+		}
+	}
+
+});
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("rooms-in-loop1")
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-c01cfd12", module.exports)
+  }
+}
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(37)
+/* script */
+var __vue_script__ = __webpack_require__(52)
+/* template */
+var __vue_template__ = __webpack_require__(53)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/Appointment/components/subcomponents/rooms-in-loop.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-061f83c7", Component.options)
+  } else {
+    hotAPI.reload("data-v-061f83c7", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 52 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__one_room_vue__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__one_room_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__one_room_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__selected_room_vue__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__selected_room_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__selected_room_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+//using other sub-component 
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+				//using other sub-component 
+				components: {
+								'one-room': __WEBPACK_IMPORTED_MODULE_0__one_room_vue___default.a,
+								'selectedRoom': __WEBPACK_IMPORTED_MODULE_1__selected_room_vue___default.a
+				},
+
+				//i.e props
+				data: function data() {
+								return {
+												companies: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+												idClicked: "some default value"
+
+												/*myStateTextX: "I am an appoint state",
+            cssState: false,
+            info: {}, */
+								};
+				},
+
+				mounted: function mounted() {},
+
+
+				created: function created() {},
+
+				//method/functions
+				methods: {
+								changeEntry: function changeEntry() {},
+
+
+								//uplifted to parent from child
+								onClickChild: function onClickChild(value) {
+												console.log(value); // someValue
+												this.idClicked = value;
+								}
+				}
+
+});
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "col-sm-12 col-xs-12 rooms" },
+    [
+      _c("h4", [
+        _vm._v(
+          "Hello from /subcomponents/room-in-loops. Rooms are build with component iteration  "
+        )
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.companies, function(item, index) {
+        return _c("one-room", {
+          key: index,
+          attrs: { itemZ: item },
+          on: { clicked: _vm.onClickChild }
+        })
+      }),
+      _vm._v(" "),
+      _c("selectedRoom", { attrs: { clickedX: this.idClicked } }),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "cc" } })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-061f83c7", module.exports)
+  }
+}
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(37)
+/* script */
+var __vue_script__ = __webpack_require__(55)
+/* template */
+var __vue_template__ = __webpack_require__(56)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/Appointment/components/test-ajax.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-05a1caf8", Component.options)
+  } else {
+    hotAPI.reload("data-v-05a1caf8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -45017,13 +45349,65 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	data: function data() {
 		return {
 			companies: [],
-			myStateTextX: "I am a Vue state",
-			cssState: false
+			myStateTextX: "I am an appoint state",
+			cssState: false,
+			info: {}
 		};
 	},
 
 	mounted: function mounted() {
 		console.log('Component mounted.');
+
+		var thisXCursor = this; //mega fix
+
+		//variant 1
+		$.get('http://account9311.zzz.com.ua/Laravel_CPH/public/api/articles').then(function (dataZ) {
+			// добавляем обработчик при удачном выполнении запроса
+			console.log('Ajax is OK');
+			console.log(dataZ); // выводим в консоль текстовую информацию
+			thisXCursor.info = dataZ; //works
+
+			//works
+			thisXCursor.info = Object.assign({}, thisXCursor.info, {
+				newProperty1: 'myNewValue',
+				newProperty2: 9311
+			});
+			console.log('Main');
+			console.log(thisXCursor.info);
+		});
+
+		//variant 2
+		$.ajax({
+			url: 'http://account9311.zzz.com.ua/Laravel_CPH/public/api/articles',
+			type: 'GET',
+			dataType: 'JSON',
+
+			success: function success(data) {
+				//alert('OK');
+				//console.log(data);
+			}, //end success
+
+			error: function error(_error) {
+				alert('fail');
+			}
+		}).then(function (dataZ) {
+			// добавляем обработчик при удачном выполнении запроса
+			console.log('Ajax is OK 2');
+			console.log(dataZ); // выводим в консоль текстовую информацию
+		}).then(function (dataZ) {
+			console.log('Ajax is OK 3');
+			//var app = this;
+			//thisXCursor.info = dataZ;
+			console.log(thisXCursor.info);
+			//thisXCursor.info = dataZ; //works
+		});
+		//.then(response => (this.info = response))
+		//.then(var app = this console.log(this.info) );
+
+
+		/*axios
+            .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+            .then(response => (this.info = response));*/
 	},
 
 
@@ -45033,8 +45417,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			//if (confirm("Do you really want to proceed?")) {
 
 			var app = this;
-			if (app.myStateTextX != 'Final state') {
-				app.myStateTextX = 'Final state';
+			if (app.myStateTextX != 'Appointment state') {
+				app.myStateTextX = 'Appointment state';
 				app.cssState = true;
 			} else {
 				app.myStateTextX = 'State is changed';
@@ -45048,7 +45432,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 42 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45069,7 +45453,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Example Vue Component")]
+            [_vm._v("Test Ajax Component")]
           ),
           _vm._v(" "),
           _c(
@@ -45079,9 +45463,7 @@ var render = function() {
               class: _vm.cssState ? " text-primary bg-danger" : ""
             },
             [
-              _vm._v(
-                "\n                        I'm a Vue component example!!! "
-              ),
+              _vm._v("\n                        I'm a Vue Appointment "),
               _c("br"),
               _vm._v(
                 "\n\t\t\t\t\t\t" +
@@ -45089,6 +45471,29 @@ var render = function() {
                   "\n                    "
               )
             ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "panel-body" },
+            [
+              _c("p", [_vm._v("Info")]),
+              _vm._v(" "),
+              _vm._l(_vm.info, function(value, name) {
+                return _c("div", [
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(name) +
+                      ": " +
+                      _vm._s(value.wpBlog_id) +
+                      " " +
+                      _vm._s(value.wpBlog_title) +
+                      " \n                        "
+                  )
+                ])
+              })
+            ],
+            2
           )
         ])
       ])
@@ -45101,7 +45506,305 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-650f2efa", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-05a1caf8", module.exports)
+  }
+}
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(37)
+/* script */
+var __vue_script__ = __webpack_require__(58)
+/* template */
+var __vue_template__ = __webpack_require__(59)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/Appointment/components/subcomponents/one-room.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6bf2c37c", Component.options)
+  } else {
+    hotAPI.reload("data-v-6bf2c37c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 58 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['itemZ'], //passed as props from parent </>
+
+	//i.e props
+	data: function data() {
+		return {
+			/*companies: [],
+   myStateTextX: "I am an appoint state",
+   cssState: false,
+   info: {}, */
+		};
+	},
+
+	mounted: function mounted() {},
+
+
+	//method/functions
+	methods: {
+		changeEntry: function changeEntry() {},
+
+
+		greet: function greet(event) {
+			alert(event.currentTarget.getAttribute('data-id'));
+
+			//uplift to parent clicked ID
+			this.$emit('clicked', event.currentTarget.getAttribute('data-id'));
+
+			this.scrollResults("#cc");
+		},
+
+		scrollResults: function scrollResults(divName, parent) {
+			//arg(DivID, levels to go up from DivID)
+			//if 2nd arg is not provided while calling the function with one arg
+			if (typeof parent === 'undefined') {
+
+				$('html, body').animate({
+					scrollTop: $(divName).offset().top
+					//scrollTop: $('.your-class').offset().top
+				}, 'slow');
+				// END Scroll the page to results
+			} else {
+				//if 2nd argument is provided
+				var stringX = "$(divName)" + parent + "offset().top"; //i.e constructs -> $("#divID").parent().parent().offset().top
+				$('html, body').animate({
+					scrollTop: eval(stringX) //eval is must-have, crashes without it
+				}, 'slow');
+			}
+		}
+
+	}
+
+});
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "subfolder shadowX",
+      attrs: { "data-id": this.itemZ },
+      on: { click: _vm.greet }
+    },
+    [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("img", {
+          staticClass: "my-img",
+          attrs: { src: "images/item.png", alt: "" }
+        }),
+        _vm._v(" "),
+        _c("p", [_vm._v(" Room  " + _vm._s(this.itemZ) + " ")]),
+        _vm._v(" "),
+        _c("br")
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6bf2c37c", module.exports)
+  }
+}
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(37)
+/* script */
+var __vue_script__ = __webpack_require__(61)
+/* template */
+var __vue_template__ = __webpack_require__(62)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/Appointment/components/subcomponents/selected-room.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3556311d", Component.options)
+  } else {
+    hotAPI.reload("data-v-3556311d", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+				props: ['clickedX'], //passed as props from parent <rooms-in-loop/>
+
+				//i.e props
+				data: function data() {
+								return {
+												/*companies: [],
+            myStateTextX: "I am an appoint state",
+            cssState: false,
+            info: {}, */
+								};
+				},
+
+				mounted: function mounted() {},
+
+
+				//method/functions
+				methods: {
+								changeEntry: function changeEntry() {}
+				}
+
+});
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "col-sm-12 col-xs-12 shadowX" },
+    [
+      _c("center", [
+        _c("div", { staticClass: "shadowX" }, [
+          _vm._v("\n    You selected \n\t"),
+          _c("a", { attrs: { href: "#" } }, [
+            _c("p", { attrs: { id: "selectedRoom" } }, [
+              _vm._v(" Room " + _vm._s(this.clickedX) + "  ")
+            ]),
+            _vm._v(" "),
+            _c("br")
+          ])
+        ])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3556311d", module.exports)
   }
 }
 

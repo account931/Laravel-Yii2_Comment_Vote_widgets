@@ -9,7 +9,6 @@
 
 
 <!-- Include js/css file for this view only -->
-<!--<script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>-->
 <link href="{{ asset('css/Appointment/appoint.css') }}" rel="stylesheet">
 
 
@@ -115,6 +114,21 @@
 	
 	
 	
+	
+	
+	                <!-- Vue Component (just ajax test comonent) -->
+					<div class="col-sm-12 col-xs-12" id="appZ">
+                       <test-ajax-component></test-ajax-component> <!-- Vue Component -->
+				    </div>
+					
+					
+					
+					<!-- Vue Component (shows the list of rooms) -->
+					<div class="col-sm-12 col-xs-12" id="appZ1">
+                       <list-of-rooms></list-of-rooms> <!-- Vue Component -->
+				    </div>
+					
+					
 					
 					
 					

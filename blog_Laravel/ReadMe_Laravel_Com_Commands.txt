@@ -5,7 +5,7 @@ Credentials: dimmm931@gmail.com =>  dimax2
 NB: CHECK WPRESS MIGRATION (SETTING TIMESTAMP BY DEFAULT)!!!!!!!!!!!!!!!!!!!!!!! 
 
 On HP EliteBook 2530p: Composer -> via Windows cmd, artisan -> via OpenServer (navigate to your project folder first with cd ), 
-        git -> via Windows cmd, NPM -> composer
+        git -> via Windows cmd, NPM -> via Windows cmd
 
 On T42: so far the same, but Composer -> via Openserver, NPM -> via Windows cmd
 
@@ -26,12 +26,12 @@ Table of Content:
 9.Migrations/Seeders
 10.hasOne/hasMany relation
 11.DB SQL Eloquent queries
-12.Laravel Crud
+12.Laravel CRUD
 13.REST API
 13.1  Has Many relation in JSON (REST API)
 14. Laravel Flash messages
 15. Js/Css, minify, Laravel Mix
-16. CRUD
+16. 
 17. RBAC 
 18. Multilanguges (Localization)
 19. Cookie.
@@ -564,7 +564,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	
 	$model = App\Flight::findOrFail(1); $model = App\Flight::where('legs', '>', 100)->firstOrFail();
        findOrFail() is alike of find() function with one extra ability - to throws the Not Found Exceptions. So use it instead of checking if record exists (as u like it to do )
-	
+	   //If model field is not 'id', make sure to add to model => protected $primaryKey = 'wpBlog_id';
+	   
 	$articles->count()
   
   #ћетод get() возвращает объект Illuminate\Support\Collection (дл€ версии 5.2 и ранее Ч массив) c результатами, в котором каждый результат Ч это экземпл€р PHP-объекта StdClass.
@@ -636,9 +637,69 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 
 //================================================================================================
-12.Laravel Crud => see docs at https://appdividend.com/2017/10/15/laravel-5-5-crud-example-tutorial/
+12.Laravel CRUD => see docs at https://appdividend.com/2017/10/15/laravel-5-5-crud-example-tutorial/
+
+--------------------------------------
+12.1 Delete => see example_1 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   =>  public function destroy($id) 
+ #Delete with confirm
+  <a href = 'delete/{{ $a->wpBlog_id }}'> Delete  <img class="deletee" onclick="return confirm('Are you sure?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></a>
+ 
+ 
+ # Delete example_2 => 
+     # View => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/shop-products-list.blade.php
+              <button><a href = 'admin-edit-product/{{ $oneProduct->shop_id }}'>  <span onclick="return confirm('Are you sure to edit?')">Edit via /GET  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>  
+     # Controller => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
+	                 => public function deleteProduct(Request $request){}
+	
+--------------------------------------	
+  12.2 Update 
+	   Update example_1 (Wpress) => 
+	        # View (form) =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/wpBlog/edit.blade.php
+	                    
+            
+			# Controller => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php
+			                => public function edit($id) {)                     (Edit Form)
+							=> public function update(Request $request, $id) {} (Store)
+	                        wpress_blog_post::where('wpBlog_id', $id)->update([  'wpBlog_text' => $data['description'], 'wpBlog_title' => $data['title'], 'wpBlog_category' => $data['category_sel'] ]);
+					
+					
+		Update example_2 (Shop AdminPanel, edit product) => 
+		    # View (Form) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/edit-product.blade.php
+			# Controller =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
+			                 public function editProduct($id){} (Form)
+							                                    (Store)????
+		
+        Example_3 =>
+       //gets the Row
+		$q = ShopQuantity::where('product_id', $request->input('prod-id'))->get();
+		$newQuantity = $q[0]->all_quantity + $request->input('product-quant');
+		
+		if (ShopQuantity::where('product_id', $request->input('prod-id'))->update(['all_quantity' => $newQuantity])) {
+		    return redirect()->back()->withInput()->with('flashMessageX', 'Quantity added ' . $request->input('product-quant') . ' to ' . $q[0]->all_quantity . ' id ' .  $q[0]->product_id );
+		
+---------------------------------------
+
+    12.3 Create	example_1 (Shop AdminPanel, create product) => 
+	        # View (Form) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/add-product.blade.php
+            
+			# Controller  => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
+              public function addProduct(){} (Form)
+			  public function storeProduct(SaveNewProductRequest $request) (Store)
+			  
+--------------------------------------
+    12.4 Read example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
+	                     public function products(){}
 
 //================================================================================================
+
+
+
+
+
+
+
+
+
 
 
 
@@ -777,48 +838,12 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 
 //================================================================================================
-16. CRUD
- 16.1 Delete => see example_1 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   =>  public function destroy($id) 
- #Delete with confirm
-  <a href = 'delete/{{ $a->wpBlog_id }}'> Delete  <img class="deletee" onclick="return confirm('Are you sure?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></a>
+16. 
  
  
- # Delete example_2 => 
-     # View => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/shop-products-list.blade.php
-              <button><a href = 'admin-edit-product/{{ $oneProduct->shop_id }}'>  <span onclick="return confirm('Are you sure to edit?')">Edit via /GET  <img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/></span></a></button>  
-     # Controller => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
-	                 => public function deleteProduct(Request $request){}
-	
---------------------------------------	
-  16.2 Update 
-	   Update example_1 (Wpress) => 
-	        # View (form) =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/wpBlog/edit.blade.php
-	                    
-            
-			# Controller => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php
-			                => public function edit($id) {)                     (Edit Form)
-							=> public function update(Request $request, $id) {} (Store)
-	                        wpress_blog_post::where('wpBlog_id', $id)->update([  'wpBlog_text' => $data['description'], 'wpBlog_title' => $data['title'], 'wpBlog_category' => $data['category_sel'] ]);
-					
-					
-		Update example_2 (Shop AdminPanel, edit product) => 
-		    # View (Form) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/edit-product.blade.php
-			# Controller =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
-			                 public function editProduct($id){} (Form)
-							                                    (Store)????
-																
----------------------------------------
-
-    16.3 Create	example_1 (Shop AdminPanel, create product) => 
-	        # View (Form) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/add-product.blade.php
-            
-			# Controller  => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
-              public function addProduct(){} (Form)
-			  public function storeProduct(SaveNewProductRequest $request) (Store)
-			  
---------------------------------------
-    16.4 Read example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
-	                     public function products(){}
+ 
+ 
+ 
 //================================================================================================
 
 
@@ -1033,8 +1058,141 @@ It is done pretty like the same as for Login, see  example at => https://github.
 
 //================================================================================================
 25. Laravel Vue
- Vue components are updated upon watch or npm run production
- #change css based on props =>  <div class="panel-body" :class="cssState? ' text-danger' : ''"> <!-- change css based on props -->
+ Vue components are updated upon watch or npm run production, see details at => 15. Js/Css, minify, Laravel Mix
+ Table of content:
+   25.1 Change css based on props
+   25.2 Vue ajax
+   25.3 Add values to Object (Object that is from data, i.e equivalent of React State)
+   25.4 Iterate over Object (Object that is from data, i.e equivalent of React State)
+   25.4.2 Iterate over Array (Array that is from data, i.e equivalent of React State)
+   25.5 Register components
+   25.6 Use component in onother component
+   25.7 Click action
+   25.8
+   ------------------------------
+   25.1 Change css based on props =>
+            <div class="panel-body" :class="cssState? ' text-danger' : ''"> <!-- change css based on props -->
+			
+   ------------------------------
+   25.2 Vue ajax => 
+       mounted() {
+            console.log('Component mounted.')
+			
+			var thisXCursor = this; //get context, is a must
+			
+			 $.get( 'http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public/api/articles' ) 
+			 .then(function(dataZ) {  
+	            console.log( dataZ ); 
+				thisXCursor.info = dataZ; //assign ajax result to Object info() (Object that is from  data, i.e equivalent of React State)
+	        });
+			
+	-----------------------------		 
+	 25.3 Add values to Object (Object that is from data, i.e equivalent of React State)) =>		 
+			 
+				thisXCursor.info = Object.assign({}, thisXCursor.info, {
+                   newProperty1: 'myNewValue',
+                   newProperty2: 9311
+                });
+				
+	------------------------------
+	25.4 Iterate over Object (Object info{} that is from data, i.e equivalent of React State)
+	    <div v-for="(value, name) in info">
+            {{ name }}: {{ value.wpBlog_id }} {{ value.wpBlog_title }} {{ value }}
+        </div>
+		
+    ------------------------------
+	
+	25.4.2 Iterate over Array (Array that is from data, i.e equivalent of React State)
+        var_1 => <p v-for="item in companiesArray"> {{ item }} {{ value }}</p>
+		
+		var_2 => 
+		        <!-- iterate over array -->
+		        <div v-for="(item, index) in companies" :key="index">        
+                    <one-room v-for="(item, index) in companies" :key="index" :itemZ="item" /> <!-- sendin props-->
+                </div> 
+				
+	   var_3 iterate with componemt <one-room/>  =>
+	      <one-room v-for="(item, index) in companies" :key="index" :itemZ="item" /> <!-- sendin props-->
+
+    -----------------------------
+	25.5 Register components => \resources\assets\js\Appointment/appoint-vue-start.js
+    25.6 Use component in onother component => \resources\assets\js\Appointment\components\generateListOfRoom.js
+	    <template>
+           <div class="col-sm-12 col-xs-12">
+               <h5>Hello from /subcomponents/room-in-loops</h5>				
+		           <one-room></one-room>		   
+	       </div>
+        </template>
+
+        <script>
+        //using other sub-component 
+        import oneRoom from './one-room.vue';  //import file from same level folder
+	
+        export default {
+	        //using other sub-component 
+	        components: {
+                'one-room': oneRoom 
+            },
+	   
+		    //i.e props
+		    data: function () {
+                return {
+                   companies: [],
+				   myStateTextX: "I am an appoint state",
+				   cssState: false,
+				   info: {}, 
+                }
+            },
+			//...
+		
+		
+		<p v-for="item in companies"> {{ item }}</p>
+		
+		 ------------------------------------------------
+		 25.7 Click action
+		<div class='subfolder shadowX' v-on:click="greet"></div>
+		//...
+		methods: {
+			greet: function (event) {
+                if (event) {
+                  alert(event.target);
+				  console.log(event.target)
+                }
+			}
+		}
+		//......
+		
+		# set data attribute => <div class='subfolder shadowX' v-on:click="greet" v-bind:data-id="this.itemZ" >
+		# get data attribute => greet: function (event) {
+			    alert(event.currentTarget.getAttribute('data-id')); }
+		
+		
+        # pass from parent to child =>
+		in Parent => <selectedRoom :clickedX="this.idClicked"/>
+		in Child =>  
+		export default {
+		    props: ['clickedX',],
+		//.....
+		//in template
+		<p> Room {{  this.clickedX }}  </p>
+		
+		
+		# uplift value from child to parent =>
+		in Child=> 
+		methods: {
+          onClickButton (event) {
+            this.$emit('clicked', 'someValue')
+        }
+		
+		in parent => 
+		 <child @clicked="onClickChild"></child>
+         
+        //...
+        methods: {
+           onClickChild (value) {
+              console.log(value) // someValue
+        }
+  
 //================================================================================================
 
 
