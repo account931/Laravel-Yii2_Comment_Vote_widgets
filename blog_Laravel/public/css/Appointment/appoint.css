@@ -47,7 +47,35 @@
 @media screen and (max-width: 480px) { 
   .subfolder img {width:76%;}
   .subfolder{width: 44%; font-size:0.9em;}
+  .selected-room{width: 82%;}
 }
 
 /* END SUBFOLDER CSS */
  
+ 
+ 
+ 
+ .small-text{font-size: 0.6em;}
+ .selected-room{
+	 color:black;
+	border:  1px solid black; border-radius:17%; /*dotted*/
+	padding: 1em;
+	width: 22%;
+	
+	margin-bottom: 1em;
+	
+	word-break: break-all;
+	background-color: lavender;
+	/*
+	background:  url(../images/folder.png) ; //no-repeat scroll center center 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; // To scale the background image to fit inside the div. Was: cover
+    position: relative;
+	*/
+	/* animate smoothly */
+	cursor:pointer;
+	transition: 1.25s;
+   -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+ }

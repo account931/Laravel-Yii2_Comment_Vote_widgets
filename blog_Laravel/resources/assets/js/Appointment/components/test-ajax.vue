@@ -49,25 +49,38 @@
 			
 			var thisXCursor = this; //mega fix
 			
-			 //variant 1
-			 $.get( 'http://account9311.zzz.com.ua/Laravel_CPH/public/api/articles' ) 
+			
+			//gets url route for ajax
+			var loc = window.location.pathname;
+            var dir = loc.substring(0, loc.lastIndexOf('/'));  ///laravel+Yii2_widgets/blog_Laravel/public    
+            var urlX = dir + '/api/articles';
+	   
+	   
+			
+			 //variant 1, working (Promise variant)
+			 $.get(urlX) 
 			 .then(function(dataZ) {  // добавляем обработчик при удачном выполнении запроса
-			    console.log( 'Ajax is OK' );
+			    console.log( 'Ajax 1 is OK' );
 	            console.log( dataZ ); // выводим в консоль текстовую информацию
 				thisXCursor.info = dataZ; //works
 				
-				//works
+				//works, adds new values to Object info{}. Just for testing
 				thisXCursor.info = Object.assign({}, thisXCursor.info, {
                    newProperty1: 'myNewValue',
                    newProperty2: 9311
                 });
 				console.log('Main');
 				console.log(thisXCursor.info);
-	        });
+	        })
+			.catch(err => alert("Ajax var 1 send failed =>  " + err)); // catch any error
+			
+			
+			
+			
 			 
-			 //variant 2
+			 //variant 2, Working (JQ ajax variant)
 			 $.ajax({
-               url: 'http://account9311.zzz.com.ua/Laravel_CPH/public/api/articles' ,
+               url:  urlX,
                type: 'GET',
 			   dataType: 'JSON',
 			   
@@ -77,7 +90,7 @@
                 },  //end success
 				
 			    error: function (error) {
-                    alert('fail');
+                    alert('failed variant 2');
                 }	
 			})
 			.then(function(dataZ) {  // добавляем обработчик при удачном выполнении запроса

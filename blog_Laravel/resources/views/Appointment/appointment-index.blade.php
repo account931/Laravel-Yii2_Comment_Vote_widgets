@@ -66,7 +66,7 @@
                 <div class="panel-body appointment-x">
 				
 				    <div class="col-sm-12 col-xs-12">
-                        <h1>Appointment</h1>
+                        <h1>Appointment <span class="small">(Vue.js + Rest Api)</span></h1>
 		            </div>	
 				    
 					

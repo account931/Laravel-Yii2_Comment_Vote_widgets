@@ -1,8 +1,9 @@
 <template>
     
-		<div class='subfolder shadowX' v-on:click="greet" v-bind:data-id="this.itemZ" >
+		<div class='subfolder shadowX' v-on:click="greet" v-bind:data-id="this.itemZ.r_id" :title="this.itemZ.r_host_name">
 			<a href="#"> <img class="my-img" src="images/item.png"  alt=""/> 
-			    <p> Room  {{this.itemZ}} </p> <br>   <!--passed as props from parent <rooms-in-loop/>-->
+			    <p> Room  {{this.itemZ.r_room}} <br> 
+				<span class="small-text">{{this.itemZ.r_host_name}}</span> </p> <br>   <!--passed as props from parent <rooms-in-loop/>-->
 			</a>
 		</div>
                    
@@ -44,7 +45,7 @@
 			},
 			
 			greet: function (event) {
-			    alert(event.currentTarget.getAttribute('data-id'));
+			    //alert(event.currentTarget.getAttribute('data-id'));
              
 				//uplift to parent clicked ID
 				this.$emit('clicked', event.currentTarget.getAttribute('data-id'));

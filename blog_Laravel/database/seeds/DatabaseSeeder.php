@@ -27,7 +27,9 @@ class DatabaseSeeder extends Seeder
     	 $this->call('ShopSimpleSeeder');  //fill DB table {shopsimple} with data. SEEDER IS IN SUBFOLDER /SeedersFiles.
 		 
 		 $this->call('Shop_Quantity_Seeder');  //fill DB table {shop_quantity} with data. 
-
+		 
+         $this->call('AppointRoomList_Seeder');  //fill DB table {appoint-room-list} with data.
+         
 		 $this->command->info('Seedering action was successful!');
     }
 	
@@ -149,3 +151,23 @@ class Shop_Quantity_Seeder extends Seeder {
   }
 }
 
+
+
+
+
+//fill DB table {appoint-room-list} with data.
+class AppointRoomList_Seeder extends Seeder {
+  public function run()
+  {
+    DB::table('appoint-room-list')->delete();  //whether to Delete old materials
+
+    DB::table('appoint-room-list')->insert(['r_id' => 1, 'r_host_name' => 'Alex Perez',       'r_room' => 1, 'r_address' => 'Kobenhaven, Gothersgade 93', 'r_phone' => '+380978786565' ]);
+	DB::table('appoint-room-list')->insert(['r_id' => 2, 'r_host_name' => ' Milan Heyboer',   'r_room' => 2, 'r_address' => 'Kobenhaven, Gothersgade 94', 'r_phone' => '+380978786565' ]);
+    DB::table('appoint-room-list')->insert(['r_id' => 3, 'r_host_name' => 'Mark Calvert',     'r_room' => 3, 'r_address' => 'Kobenhaven, Gothersgade 95', 'r_phone' => '+380978744565' ]);
+    DB::table('appoint-room-list')->insert(['r_id' => 4, 'r_host_name' => 'Torgeir Byrknes',  'r_room' => 4, 'r_address' => 'Kobenhaven, Gothersgade 96', 'r_phone' => '+380978786599' ]);
+    DB::table('appoint-room-list')->insert(['r_id' => 5, 'r_host_name' => 'Mark Caro',        'r_room' => 5, 'r_address' => 'Kobenhaven, Gothersgade 97', 'r_phone' => '+380978786538' ]);
+	DB::table('appoint-room-list')->insert(['r_id' => 6, 'r_host_name' => 'Edward Stein',     'r_room' => 6, 'r_address' => 'Kobenhaven, Gothersgade 98', 'r_phone' => '+380978786564' ]);
+
+
+  }
+}

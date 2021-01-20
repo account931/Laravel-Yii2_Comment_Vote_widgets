@@ -786,8 +786,9 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 
 //================================================================================================
-15. Js/Css, minify, Laravel Mix
+15. Js/Css, minify, Laravel Mix CAUSION => read {Alternative (and currently used)}
    File => /webpack.mix.js
+   
    Works so muck like Browserify + Gulp.......
     All Development css/js (js/css u're changing) are located in /resources/assets/. They are not included to index.php (\resources\views\layouts). 
 	Included css/js are in /public. To convert Development assets to Production(to minify, concatenate), run => npm run production
@@ -801,8 +802,9 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
    If is doesnot watch => npm run watch-poll
    If u run {npm run watch}, after any css/js change it rebuilds files in /public (even if they were prev minified), but does not minify them, so in the end run {npm run production} to do that.
    
-   Alternative:
-   can make all css/js edits in /public. When it comes to production< copy all css/js from /public to /resources/assets/, run {npm run production} and get in public all concatenated files
+   #Alternative (and currently used):
+     you can make all css/js edits in /public. When it comes to production< copy all css/js from /public to /resources/assets/, run {npm run production} and get in public all concatenated files. 
+      IMPORTANT: SEE CAREFULLY WHAT JS/CSS TO COPY(OVERWRITE) FROM '/PUBLIC' TO '/resources/assets/' in order not to erase/replace source code with uglified js. See /webpacl.mix for details. Currently don't copy to '/resources/assets/' from 'public/js/Appointment' and 'public/js/app.js' 
    
 
 
@@ -1074,8 +1076,12 @@ It is done pretty like the same as for Login, see  example at => https://github.
             <div class="panel-body" :class="cssState? ' text-danger' : ''"> <!-- change css based on props -->
 			
    ------------------------------
-   25.2 Vue ajax => 
-       mounted() {
+   25.2 Vue ajax =>  
+       see example_1 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/Appointment/components/subcomponents/rooms-in-loop.vue
+       see example_2 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/Appointment/components/test-ajax.vue
+	   
+	   
+	   mounted() {
             console.log('Component mounted.')
 			
 			var thisXCursor = this; //get context, is a must
@@ -1193,6 +1199,9 @@ It is done pretty like the same as for Login, see  example at => https://github.
               console.log(value) // someValue
         }
   
+  
+        # pass props to child on ternary => <selectedRoom :clickedX="this.idClicked" :hostname="typeof(this.idClicked)=== 'string' ? 'No select so far' : this.roomsX[this.idClicked].r_host_name "/>
+
 //================================================================================================
 
 
