@@ -47,7 +47,7 @@
 @media screen and (max-width: 480px) { 
   .subfolder img {width:76%;}
   .subfolder{width: 44%; font-size:0.9em;}
-  .selected-room{width: 82%;}
+  
 }
 
 /* END SUBFOLDER CSS */
@@ -56,6 +56,8 @@
  
  
  .small-text{font-size: 0.6em;}
+ 
+ /* selected room CSS */
  .selected-room{
 	 color:black;
 	border:  1px solid black; border-radius:17%; /*dotted*/
@@ -78,4 +80,115 @@
 	transition: 1.25s;
    -webkit-animation: fadeIn 1s;
     animation: fadeIn 1s;
+ }
+ 
+ 
+ 
+ @media screen and (max-width: 480px) { 
+  .selected-room{width: 88%;}
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+/* PURE CSS LOADER, no code in index.php, just in loader.js -----------------------------------------------*/
+/* LOADER, we make body hidden by default, gets visible in 2 sec in JS */
+/* Center the loader */
+#loaderX {
+  display:none;
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  z-index: 1;
+  width: 250px;
+  height: 250px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  border-bottom: 16px solid #3498db;
+  /* border-right: 16px solid red;*/
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" to appear smoothly from bottom */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+  from{ bottom:-100px; opacity:0 } 
+  to{ bottom:0; opacity:1 }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Creating CSS overlay over Div with delivery status text -> imitation of  $(".del-st").stop().fadeOut("slow",function(){ $(this).html(finalText) }).fadeIn(3000); */
+/* Parent div that contains Delivery status text */
+.parent-div {
+  /*background-color: red;*/
+  height: 100%;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Overlay to show when running Delivery check function, invisible by default */
+.child-div {
+  background-color: yellow;
+  height: 100%;
+  position: absolute; top:0px;left:0px;
+  width: 100%;
+  z-index: 999;
+  border-radius:1em;
+  opacity:0;
+  -webkit-transition:  0.5s linear; transition:  0.5s linear;
+}
+
+/* show/hide All response/answer block, works based on this.state.ifUserClickedSendSms, set in <TextArea/. and passes as props to <ResultFromTextbeltApi/> */
+.hide-div{  display:none; height:0;      -webkit-transition:  4.5s linear;  transition:  4.5s linear; border-radius:1em;}
+.show-div{  display:block; height:auto;  -webkit-transition:  4.5s linear; transition:  4.5s linear; border-radius:1em;}
+
+/* image inside yellow overlay */
+.loader-child{position:absolute; top:-7em; left:18em;}
+
+ /* Mobile */
+ @media screen and (max-width: 480px) { 
+  .loader-child{position:absolute; top:-8em; left:-4em;}
  }

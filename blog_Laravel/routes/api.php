@@ -28,4 +28,5 @@ Route::delete('articles/{id}', 'Rest@delete');
 
 
 //AppointmentRoom List Rest Api
-Route::get('/rooms', 'AppointmentRest@index');      // http://localhost/laravel+Yii2_widgets/blog_Laravel/public/rooms
+Route::get('/rooms',       'AppointmentRest@index');      // http://localhost/laravel+Yii2_widgets/blog_Laravel/public/rooms
+Route::get('/getCalendar', 'AppointmentRest@getCalendar');      // http://localhost/laravel+Yii2_widgets/blog_Laravel/public/rooms

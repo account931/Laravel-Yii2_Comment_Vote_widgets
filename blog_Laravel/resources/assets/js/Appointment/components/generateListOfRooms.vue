@@ -1,8 +1,5 @@
-<template>
-    
+<template> 
         <rooms-in-loop1></rooms-in-loop1>
-    
-	
 </template>
 
 

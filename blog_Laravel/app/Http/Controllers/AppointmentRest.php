@@ -19,6 +19,16 @@ class AppointmentRest extends Controller
     }
  
  
+    
+	
+  /**
+   * returns 6 month calendar
+   * @return string
+   */
+	public function getCalendar()
+    {
+        return 'Calendar ajax response time is ' . date('Y-m-d H:i:s');
+    }
  
 
 }

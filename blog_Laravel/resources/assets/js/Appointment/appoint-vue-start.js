@@ -1,4 +1,4 @@
-
+//Start point to mount Vue components (so far mount 2 components => test-ajax-component + list-of-rooms)
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when

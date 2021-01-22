@@ -44918,7 +44918,7 @@ module.exports = __webpack_require__(44);
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-
+//Start point to mount Vue components (so far mount 2 components => test-ajax-component + list-of-rooms)
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -45011,6 +45011,10 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //
@@ -45164,7 +45168,11 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Test Ajax Component")]
+            [
+              _vm._v(
+                "Test Ajax Component, load ajax data via controller/TestRest and models/WpressRest"
+              )
+            ]
           ),
           _vm._v(" "),
           _c(
@@ -45174,7 +45182,9 @@ var render = function() {
               class: _vm.cssState ? " text-primary bg-danger" : ""
             },
             [
-              _vm._v("\n                        I'm a Vue Appointment "),
+              _vm._v(
+                "\n                        I'm a Vue Appointment to load REST API from  table {wpress_blog_post}"
+              ),
               _c("br"),
               _vm._v(
                 "\n\t\t\t\t\t\t" +
@@ -45185,8 +45195,23 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
+            "button",
+            {
+              staticClass: "btn",
+              attrs: {
+                "data-toggle": "collapse",
+                "data-target": "#wpressRestResults"
+              }
+            },
+            [_vm._v("Show Collapsible REST Api")]
+          ),
+          _vm._v(" "),
+          _c(
             "div",
-            { staticClass: "panel-body" },
+            {
+              staticClass: "panel-body collapse",
+              attrs: { id: "wpressRestResults" }
+            },
             [
               _c("p", [_vm._v("Info")]),
               _vm._v(" "),
@@ -45276,9 +45301,6 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue__);
-//
-//
-//
 //
 //
 //
@@ -45418,6 +45440,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 //using other sub-component 
 
@@ -45426,7 +45465,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 									//using other sub-component 
 									components: {
-																		'one-room': __WEBPACK_IMPORTED_MODULE_0__one_room_vue___default.a,
+																		'OneRoomX': __WEBPACK_IMPORTED_MODULE_0__one_room_vue___default.a,
 																		'selectedRoom': __WEBPACK_IMPORTED_MODULE_1__selected_room_vue___default.a
 									},
 
@@ -45435,7 +45474,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 																		return {
 																											roomsX: [], //to contain ajax results from api/rooms
 																											companies: [1, 2, 3, 4, 5, 6, 7, 8, 9], //was used just for testing in v-for
-																											idClicked: "nothing selected"
+																											idClicked: "nothing selected",
+																											calendarData: ' Calendar ajax data goes here'
 
 																											/*myStateTextX: "I am an appoint state",
                            cssState: false,
@@ -45486,10 +45526,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 																		changeEntry: function changeEntry() {},
 
 
-																		//uplifted to parent from child
+																		//get uplifted value from child to this parent component
 																		onClickChild: function onClickChild(value) {
 																											console.log(value); // someValue
 																											this.idClicked = parseInt(value);
+																		},
+
+
+																		//get uplifted value from child to this parent component
+																		calendarGet: function calendarGet(value) {
+																											this.calendarData = value;
 																		}
 									}
 
@@ -45548,6 +45594,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__my_functions_scroll_function_js__ = __webpack_require__(60);
 //
 //
 //
@@ -45565,58 +45612,96 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
+
+//import function from other external file
+ //name in {} i.e 'ScrollExternalFile' must be cooherent to name in "export const ScrollExternalFile" in '/scroll_function.js'
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['itemZ'], //passed as props from parent </>
+			props: ['itemZ'], //passed as props from parent </>
 
-	//i.e props
-	data: function data() {
-		return {
-			/*companies: [],
-   myStateTextX: "I am an appoint state",
-   cssState: false,
-   info: {}, */
-		};
-	},
+			//i.e props
+			data: function data() {
+						return {
+									/* calendar: "Cal";
+                  companies: [],
+         myStateTextX: "I am an appoint state",
+         cssState: false,
+         info: {}, */
+						};
+			},
 
-	mounted: function mounted() {},
-
-
-	//method/functions
-	methods: {
-		changeEntry: function changeEntry() {},
+			mounted: function mounted() {},
 
 
-		greet: function greet(event) {
-			//alert(event.currentTarget.getAttribute('data-id'));
+			//method/functions
+			methods: {
+						changeEntry: function changeEntry() {},
 
-			//uplift to parent clicked ID
-			this.$emit('clicked', event.currentTarget.getAttribute('data-id'));
 
-			this.scrollResults("#cc");
-		},
+						greet: function greet(event) {
+									//alert(event.currentTarget.getAttribute('data-id'));
 
-		scrollResults: function scrollResults(divName, parent) {
-			//arg(DivID, levels to go up from DivID)
-			//if 2nd arg is not provided while calling the function with one arg
-			if (typeof parent === 'undefined') {
 
-				$('html, body').animate({
-					scrollTop: $(divName).offset().top
-					//scrollTop: $('.your-class').offset().top
-				}, 'slow');
-				// END Scroll the page to results
-			} else {
-				//if 2nd argument is provided
-				var stringX = "$(divName)" + parent + "offset().top"; //i.e constructs -> $("#divID").parent().parent().offset().top
-				$('html, body').animate({
-					scrollTop: eval(stringX) //eval is must-have, crashes without it
-				}, 'slow');
+									//uplift to parent clicked ID
+									var idClicked = event.currentTarget.getAttribute('data-id');
+									this.$emit('clickedChild', idClicked);
+
+									//show and hide loader
+									$("#loaderX").show(400);
+
+									setTimeout(function () {
+												$("#loaderX").fadeOut(800);
+												//$("#loaderX").css('opacity', '0'); 
+									}, 2000);
+
+									//Creating overlay while changing content of selected room. The one used in React Sms
+									$(".child-div").css('opacity', '1');
+
+									setTimeout(function () {
+												$(".child-div").css('opacity', '0'); //hides yellow overlay div -> react imitation of animation, analogue of $(".del-st").stop().fadeOut("slow",function(){ $(this).html(finalText) }).fadeIn(3000);
+									}, 3000);
+
+									//alert('sends calendar ajax');
+									this.sendCalendarRequest();
+
+									//Scroll to results in Mobile only
+									if (screen.width <= 640) {
+												__WEBPACK_IMPORTED_MODULE_0__my_functions_scroll_function_js__["a" /* ScrollExternalFile */].scrollResults(".selected-room"); //calling function from external file '/my_functions/scroll_function.js'
+									}
+						},
+
+						//send ajax to calendar
+						sendCalendarRequest: function sendCalendarRequest() {
+
+									var self = this; //mega fix
+
+									//gets url route for ajax
+									var loc = window.location.pathname;
+									var dir = loc.substring(0, loc.lastIndexOf('/')); ///laravel+Yii2_widgets/blog_Laravel/public    
+									var urlX = dir + '/api/getCalendar';
+
+									//working ajax variant (Promise variant)
+
+									$.get(urlX, {
+												method: 'get',
+												headers: { 'Content-Type': 'application/json' }
+									}).then(function (dataZ) {
+												// 
+												console.log('Ajax Rooms is OK');
+												console.log(dataZ); // 
+												//self.calendar = dataZ; //works
+
+												//uplift to parent ajax results
+												self.$emit('passCalendarAjax', dataZ);
+									}).catch(function (err) {
+												return alert("Ajax Calendar Loading failed =>  " + err);
+									}); // catch any error
+						}
+
 			}
-		}
-
-	}
 
 });
 
@@ -45632,8 +45717,15 @@ var render = function() {
     "div",
     {
       staticClass: "subfolder shadowX",
-      attrs: { "data-id": this.itemZ.r_id, title: this.itemZ.r_host_name },
-      on: { click: _vm.greet }
+      attrs: {
+        "data-id": this.itemZ.r_id,
+        title: this.itemZ.r_host_name + this.itemZ.r_address
+      },
+      on: {
+        click: function($event) {
+          return _vm.greet($event)
+        }
+      }
     },
     [
       _c("a", { attrs: { href: "#" } }, [
@@ -45740,6 +45832,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -45778,18 +45880,29 @@ var render = function() {
     { staticClass: "col-sm-12 col-xs-12 shadowX" },
     [
       _c("center", [
-        _c("div", { staticClass: "shadowX selected-room" }, [
-          _vm._v("\n        You selected \n\t    "),
-          _c("a", { attrs: { href: "#" } }, [
-            _c("p", { attrs: { id: "selectedRoom" } }, [
-              _vm._v(" Room " + _vm._s(this.clickedX) + "  "),
-              _c("br"),
-              _vm._v(" " + _vm._s(this.hostname) + " ")
+        _c(
+          "div",
+          { staticClass: "shadowX selected-room parent-div show-div" },
+          [
+            _c("div", { staticClass: "child-div" }, [
+              _c("p", [_vm._v("This should be over the parent")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "loader-child" }, [
+                _c("img", { attrs: { src: "images/loader.gif", alt: "" } })
+              ])
             ]),
-            _vm._v(" "),
-            _c("br")
-          ])
-        ])
+            _vm._v("\n\t\t\t\n\t\t\t\n\t\t        You selected \n\t\t\t    "),
+            _c("a", { attrs: { href: "#" } }, [
+              _c("p", { attrs: { id: "selectedRoom" } }, [
+                _vm._v(" Room " + _vm._s(this.clickedX) + "  "),
+                _c("br"),
+                _vm._v(" " + _vm._s(this.hostname) + " ")
+              ]),
+              _vm._v(" "),
+              _c("br")
+            ])
+          ]
+        )
       ])
     ],
     1
@@ -45819,11 +45932,16 @@ var render = function() {
     [
       _vm._m(0),
       _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
       _vm._l(_vm.roomsX, function(item, index) {
-        return _c("one-room", {
+        return _c("OneRoomX", {
           key: index,
           attrs: { itemZ: item },
-          on: { clicked: _vm.onClickChild }
+          on: {
+            clickedChild: _vm.onClickChild,
+            passCalendarAjax: _vm.calendarGet
+          }
         })
       }),
       _vm._v(" "),
@@ -45833,23 +45951,18 @@ var render = function() {
           hostname:
             typeof this.idClicked === "string"
               ? "No select so far"
-              : this.roomsX[this.idClicked].r_host_name
+              : this.roomsX[this.idClicked - 1].r_host_name
         }
       }),
       _vm._v(" "),
-      _c("div", { attrs: { id: "cc" } }),
+      _c("div", {
+        staticClass: "col-sm-12 col-xs-12",
+        attrs: { id: "loaderX" }
+      }),
       _vm._v(" "),
-      _vm._l(_vm.roomsX, function(value, name) {
-        return _c("div", { staticClass: "col-sm-12 col-xs-12" }, [
-          _vm._v(
-            "\n            " +
-              _vm._s(value.r_host_name) +
-              " " +
-              _vm._s(value.r_address) +
-              " \n        "
-          )
-        ])
-      })
+      _c("div", { staticClass: "col-sm-12 col-xs-12 calendar" }, [
+        _vm._v("\n\t\t   " + _vm._s(this.calendarData) + "\n\t\t")
+      ])
     ],
     2
   )
@@ -45859,7 +45972,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h4", [
+    return _c("h3", [
       _vm._v("Hello from /subcomponents/room-in-loops. "),
       _c("br"),
       _vm._v(
@@ -45896,6 +46009,55 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-c01cfd12", module.exports)
   }
 }
+
+/***/ }),
+/* 60 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ScrollExternalFile; });
+
+//(function(){ //START IIFE (Immediately Invoked Function Expression)
+
+
+//$(document).ready(function(){
+
+
+var ScrollExternalFile = {
+
+  // **************************************************************************************
+  // **************************************************************************************
+  //                                                                                     **
+  scrollResults: function scrollResults(divName, parent) {
+    //arg(DivID, levels to go up from DivID)
+    //if 2nd arg is not provided while calling the function with one arg
+    if (typeof parent === 'undefined') {
+
+      $('html, body').animate({
+        scrollTop: $(divName).offset().top
+        //scrollTop: $('.your-class').offset().top
+      }, 'slow');
+      // END Scroll the page to results
+    } else {
+      //if 2nd argument is provided
+      var stringX = "$(divName)" + parent + "offset().top"; //i.e constructs -> $("#divID").parent().parent().offset().top
+      $('html, body').animate({
+        scrollTop: eval(stringX) //eval is must-have, crashes without it
+      }, 'slow');
+    }
+  }
+
+  // **                                                                                  **
+  // **************************************************************************************
+  // **************************************************************************************
+
+};
+
+//});
+// end ready	
+
+
+//}()); //END IIFE (Immediately Invoked Function Expression)
 
 /***/ })
 /******/ ]);

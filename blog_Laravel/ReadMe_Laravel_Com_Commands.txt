@@ -1070,7 +1070,8 @@ It is done pretty like the same as for Login, see  example at => https://github.
    25.5 Register components
    25.6 Use component in onother component
    25.7 Click action
-   25.8
+   25.8 Call function from another file
+   26. Unsorted (uplift to parent, pass to child, etc)
    ------------------------------
    25.1 Change css based on props =>
             <div class="panel-body" :class="cssState? ' text-danger' : ''"> <!-- change css based on props -->
@@ -1154,7 +1155,8 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		
 		<p v-for="item in companies"> {{ item }}</p>
 		
-		 ------------------------------------------------
+		
+		-------------------------
 		 25.7 Click action
 		<div class='subfolder shadowX' v-on:click="greet"></div>
 		//...
@@ -1168,39 +1170,64 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		}
 		//......
 		
+		
+		-------------------------------------------------
+		25.8 Call function from another external file, see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/Appointment/components/subcomponents/one-room.vue
+	       1. Create external file, e.g '/my_functions/scroll_function.js'
+		         export const ScrollExternalFile = {
+				     
+					  scrollResults: function(divName, parent){}
+				 };
+			2. In targetted component => 
+			    <script>
+	            //import function from other external file
+	            import {ScrollExternalFile} from '../my_functions/scroll_function.js';  //name in {} i.e 'ScrollExternalFile' must be cooherent to name in "export const ScrollExternalFile" in '/scroll_function.js'
+				//.........
+				
+			3. Call the function in targetted component =>
+			    ScrollExternalFile.scrollResults(".selected-room");
+       
+    
+	
+		-------------------------------------------------
+		26. Unsorted
+		------------------------------------------------
+		--------------------
 		# set data attribute => <div class='subfolder shadowX' v-on:click="greet" v-bind:data-id="this.itemZ" >
 		# get data attribute => greet: function (event) {
 			    alert(event.currentTarget.getAttribute('data-id')); }
 		
-		
+		-----------------
         # pass from parent to child =>
-		in Parent => <selectedRoom :clickedX="this.idClicked"/>
-		in Child =>  
-		export default {
-		    props: ['clickedX',],
-		//.....
-		//in template
-		<p> Room {{  this.clickedX }}  </p>
+		    in Parent => <selectedRoom :clickedX="this.idClicked"/>
+		    in Child =>  
+		        export default {
+		            props: ['clickedX',],
+		         //.....
+		     in template =>
+		         <p> Room {{  this.clickedX }}  </p>
 		
+		-------------------
+		# uplift value from child to parent => see 2 examples at child => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/Appointment/components/subcomponents/one-room.vue
+		                                       parent is => /rooms-in-loop.js
+		    in Child=> 
+		        methods: {
+                     onClickButton (event) {
+                         this.$emit('clicked', 'someValue')
+                     }
 		
-		# uplift value from child to parent =>
-		in Child=> 
-		methods: {
-          onClickButton (event) {
-            this.$emit('clicked', 'someValue')
-        }
-		
-		in parent => 
-		 <child @clicked="onClickChild"></child>
+		    in parent => 
+		        <child @clicked="onClickChild"></child>
          
-        //...
-        methods: {
-           onClickChild (value) {
-              console.log(value) // someValue
-        }
+                //...
+                methods: {
+                   onClickChild (value) {
+                       console.log(value) // someValue
+                    }
   
-  
-        # pass props to child on ternary => <selectedRoom :clickedX="this.idClicked" :hostname="typeof(this.idClicked)=== 'string' ? 'No select so far' : this.roomsX[this.idClicked].r_host_name "/>
+        -------------------
+        # pass props to child on ternary => 
+		     <selectedRoom :clickedX="this.idClicked" :hostname="typeof(this.idClicked)=== 'string' ? 'No select so far' : this.roomsX[this.idClicked].r_host_name "/>
 
 //================================================================================================
 

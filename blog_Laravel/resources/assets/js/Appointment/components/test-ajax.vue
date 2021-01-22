@@ -1,25 +1,29 @@
+>!-- Just a test component to load ajax data from db table {wpress_blog_post} via controller/TestRest.php and models/WpressRest -->
 <template>
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
 				
-                    <div class="panel-heading pointer" v-on:click="changeEntry()">Test Ajax Component</div>
+                    <div class="panel-heading pointer" v-on:click="changeEntry()">Test Ajax Component, load ajax data via controller/TestRest and models/WpressRest</div>
 
                     <div class="panel-body" :class="cssState? ' text-primary bg-danger' : ''"> <!-- change css based on props -->
-                        I'm a Vue Appointment </br>
+                        I'm a Vue Appointment to load REST API from  table {wpress_blog_post}</br>
 						{{ myStateTextX }}
                     </div>
 					
+					<!--  BOOTSTRAP COLLAPSED -->
+					<button class="btn" data-toggle="collapse" data-target="#wpressRestResults">Show Collapsible REST Api</button>
+					
 					<!-- Iterate over Object (Object that is from data, i.e equivalent of React State) {{ value }}-->
-					<div class="panel-body">
+					<div id="wpressRestResults" class="panel-body collapse">
 					    <p>Info</p>
 				        <div v-for="(value, name) in info">
                             {{ name }}: {{ value.wpBlog_id }} {{ value.wpBlog_title }} 
                         </div>
 					</div>
 					<!-- End Iterate over Object (Object that is from data, i.e equivalent of React State) -->
-					
+					<!--  END BOOTSTRAP COLLAPSED -->
 					
                 </div>
             </div>

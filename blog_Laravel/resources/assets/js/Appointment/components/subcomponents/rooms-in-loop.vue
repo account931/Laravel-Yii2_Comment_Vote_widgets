@@ -1,21 +1,38 @@
+<!-- Contains <OneRoomX component in loop based on ajax + selected room component + loader +  Calendar ajax response component --> 
 <template>
     <div class="col-sm-12 col-xs-12 rooms">
-        <h4>Hello from /subcomponents/room-in-loops. <br>Rooms are build with component iteration and by ajax load from Db table {appoint-room-list}  </h4>
+        <h3>Hello from /subcomponents/room-in-loops. <br>Rooms are build with component iteration and by ajax load from Db table {appoint-room-list}  </h3>
+		<hr>
+		
 		
 		<!-- iterate over array creating components <one-room/> according to length of this.companies array -->
-        <one-room  @clicked="onClickChild" v-for="(item, index) in roomsX" :key="index" :itemZ="item"  /> <!-- sendin props-->
+        <OneRoomX  @clickedChild="onClickChild" @passCalendarAjax="calendarGet" v-for="(item, index) in roomsX" :key="index" :itemZ="item"  /> <!-- sendin props-->
         <!-- iterate over array -->
 		
+		<!-- Selected room appearance -->
+		<selectedRoom :clickedX="this.idClicked" :hostname="typeof(this.idClicked)=== 'string' ? 'No select so far' : this.roomsX[this.idClicked-1].r_host_name "/>
 		
-		<selectedRoom :clickedX="this.idClicked" :hostname="typeof(this.idClicked)=== 'string' ? 'No select so far' : this.roomsX[this.idClicked].r_host_name "/>
 		
 		
-	   	<div id="cc"></div>
 		
-		<!-- testing this data.roomsX-->
+		<!-- testing ITERATION FOR this data.roomsX-->
+		<!--
 		<div v-for="(value, name) in roomsX" class="col-sm-12 col-xs-12">
             {{ value.r_host_name }} {{ value.r_address }} 
-        </div>
+        </div> 
+		-->
+		
+		
+		<!-- Loader -->
+		<div id="loaderX" class='col-sm-12 col-xs-12'>
+		</div>
+			
+		
+		<!-- Calendar ajax goes here -->
+		<div class='col-sm-12 col-xs-12 calendar'>
+		   {{ this.calendarData}}
+		</div>
+		
 		
 		
 	</div>
@@ -33,7 +50,7 @@
     export default {
 	    //using other sub-component 
 	    components: {
-          'one-room': oneRoom,
+          'OneRoomX': oneRoom,
 		  'selectedRoom': selRoom 
        },
 	   
@@ -43,6 +60,7 @@
 			    roomsX: [], //to contain ajax results from api/rooms
                 companies: [1,2,3,4,5,6,7,8,9], //was used just for testing in v-for
 				idClicked: "nothing selected",
+				calendarData : ' Calendar ajax data goes here',
 				
 				
 				/*myStateTextX: "I am an appoint state",
@@ -102,13 +120,19 @@
             changeEntry() {
 			},
 		
-		//uplifted to parent from child
+		//get uplifted value from child to this parent component
 		onClickChild (value) { 
-          console.log(value) // someValue
-		  this.idClicked = parseInt(value);
-		  
+            console.log(value) // someValue
+		    this.idClicked = parseInt(value); 
+        },
 		
-        }
+		//get uplifted value from child to this parent component
+		calendarGet(value){
+		   this.calendarData = value;
+		},
+		
+		
+
 	
 		}
                     

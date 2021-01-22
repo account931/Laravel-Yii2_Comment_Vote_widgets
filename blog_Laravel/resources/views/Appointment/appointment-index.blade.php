@@ -87,9 +87,11 @@
 					</div>
 					
 					
-					<!----------------------- START all Rooms  ----------------------------->
+					<!----------------------- START all Rooms, just php  ----------------------------->
+					
 	                <div class="col-sm-12 col-xs-12 rooms">
 	                <?php
+					/*
 		            $rooms = 6;
 		            for($i = 0; $i < $rooms; $i++){ 
 		                $roomID = $i + 1;
@@ -101,6 +103,7 @@
 						    '<a href="#"> ' .  $folderImage . '<p>' . $folderName . '</p><br>  </a>' .
 						 "</div>";
                    }
+				   */
 		           ?>
 	                </div>
 	 
@@ -109,6 +112,7 @@
 	                    <div class="col-sm-7 col-xs-6 shadowX" id="selectedRoom"><span id="roomNumber"></span></div>
 		                <div class="col-sm-3 col-xs-3"></div>
 	                </div>
+					
 	               <!----------------------- End all Rooms   ----------------------------->
 	
 	
