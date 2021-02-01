@@ -104,6 +104,9 @@
                              <li class="{{ Request::is('tokenGuard*') ? 'active' : '' }}"><a href="{{ route('tokenGuard') }}">Rest Api TokenGuard</a></li>
 
                              <li class="{{ Request::is('appointment*') ? 'active' : '' }}"><a href="{{ route('appointment') }}">Appointment</a></li>
+                             <li class="{{ Request::is('adminlte*') ? 'active' : '' }}"><a href="{{ route('/adminlte') }}">Admin LT3</a></li>
+                             
+							 <li class="{{ Request::is('yajradt2*') ? 'active' : '' }}"><a href="{{ route('/yajradt2') }}">Yajra DataTables Crud-2</a></li>
 
 							 <li><a href="{{ route('register') }}">Booking(N/A)</a></li>
 							 <li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>

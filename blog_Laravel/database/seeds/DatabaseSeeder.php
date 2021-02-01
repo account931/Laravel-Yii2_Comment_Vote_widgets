@@ -3,6 +3,8 @@
 
 use Illuminate\Database\Seeder;
 //use App\database\seeds\SeedersFiles\ShopSimpleSeeder;
+//use Illuminate\Support\Facades\DB;
+use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,7 +31,8 @@ class DatabaseSeeder extends Seeder
 		 $this->call('Shop_Quantity_Seeder');  //fill DB table {shop_quantity} with data. 
 		 
          $this->call('AppointRoomList_Seeder');  //fill DB table {appoint-room-list} with data.
-         
+         $this->call('Students_Seeder');  //fill DB table {appoint-room-list} with data.
+		 
 		 $this->command->info('Seedering action was successful!');
     }
 	
@@ -171,3 +174,38 @@ class AppointRoomList_Seeder extends Seeder {
 
   }
 }
+
+
+
+
+//fill DB table {students} with data.
+class Students_Seeder extends Seeder {
+  public function run()
+  {
+    
+	    DB::table('students')->delete();  //whether to Delete old materials
+		 
+        $faker = Faker::create();
+
+        $gender = $faker->randomElement(['male', 'female']);
+
+    	foreach (range(1,20) as $index) {
+		
+	
+            DB::table('students')->insert([
+                'name' => $faker->name($gender),
+                'email' => $faker->email,
+                'username' => $faker->username,
+                'phone' => $faker->phoneNumber,
+                'dob' => $faker->date($format = 'Y-m-d', $max = 'now'),
+				'image' => $faker->image(public_path('images/students'),400,300, null, false), //saving images to 'public/images/students. Takes much time
+
+
+            ]);
+        }
+
+  }
+}
+
+
+

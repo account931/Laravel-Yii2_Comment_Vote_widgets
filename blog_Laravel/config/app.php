@@ -164,6 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 		//Collective\Html\HtmlServiceProvider::class,//my
 		Zizaco\Entrust\EntrustServiceProvider::class, // Entrust RBAC package
+		
 
         /*
          * Package Service Providers...
@@ -231,6 +232,7 @@ return [
         //'Html' => Collective\Html\HtmlFacade::class, //my
 		'Entrust'   => Zizaco\Entrust\EntrustFacade::class,  // Entrust RBAC package
 		//'MyHelper' => App\Http\Helperss\Rbac\Helper_Rbac::class, //my helper
+		
 
     ],
 

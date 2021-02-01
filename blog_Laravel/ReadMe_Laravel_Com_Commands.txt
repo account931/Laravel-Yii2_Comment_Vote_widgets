@@ -45,7 +45,8 @@ Table of Content:
 26. PayPal
 27. CLI command => call controller via command line
 28. PhpUnit tests vs Laravel Dusk
-
+29. Laravel 6 LTS
+30. Yajra DataTables
 
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
@@ -246,7 +247,7 @@ USAGE
   public function assignRole(Request $request){
 		
     $rules = [
-			'role_sel' => ['required', 'string', 'min:3', Rule::in( ['admin', 'owner'] ) ] , 
+			'role_sel' => ['required', 'string', 'min:3', Rule::in( ['admin', 'owner'] ) ],  // 'role_sel' is input name not DB field
 			'rDescr' => [ 'required', 'string' ] , 
 			
 		];
@@ -342,7 +343,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 		$RegExp_Phone = '/^[+]380[\d]{1,4}[0-9]+$/';
 		
         return [
-            'u_name' => ['required', 'string', 'min:3'], 
+            'u_name' => ['required', 'string', 'min:3'], // 'u_name' is input name not DB field
 			'u_address'  => [ 'required',  'string', 'min:8'],
             'u_email'  => [ 'required', 'email' ] ,
             'u_phone'  => [ 'required', "regex: $RegExp_Phone" ],
@@ -811,7 +812,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 ------------------------------------------------------
  #Loading CSS and JS files on specific views in Laravel 5.2
 
-  Variant 1 (most working)(use/include in main layout, i.e /views/layout/blade.php)!!! =>
+  #Variant 1 (most working)(use/include in main layout, i.e /views/layout/blade.php)!!! =>
     <!-- To register JS/CSS file for specific view only (In layout template) -->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['testRest', 'register', 'showOneProduct/{id}']))
         <script src="{{ asset('js/test-rest/test-rest.js') }}"></script>
@@ -820,13 +821,42 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	
 	
 	
-	Variant 2 (working) (use/include in any child view before {@endsection}, i.e /views/auth/login). OR right after @section('content') (if u don't want to encounter div loads for 1 sec without css styling) =>
+	#Variant 2 (working) (use/include in any child view before {@endsection}, i.e /views/auth/login). OR right after @section('content') (if u don't want to encounter div loads for 1 sec without css styling) =>
 	    <!-- Include js/css file for this view only -->
         <script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>
         <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
         @endsection	
+    ---------
+ 
+    #Varinat 3, in Blade =>
+	    @section('content')
+	        some content
+	    @endsection
+	
+	    @section('js')
+           <script>//...........inject your js here 
+	    @stop
+		
+	------------
+	
+	
+	#Varinat 4, in main layout using @stack =>
+	    In main layout, before  </body> =>
+		          <!-- Bootstrap JavaScript -->
+                  <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+                  <!-- My App scripts -->
+                  @stack('scripts')
+                 </body>
+				 
+		In view =>
+		        @section('content')
+                   Some content
+                @stop
 
-
+                @push('scripts')
+                    <script>
+                    $(function() { //.....inject your js here 
+				@endpush
 //================================================================================================
 
 
@@ -1306,6 +1336,97 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 
 
 
+//================================================================================================
+29. Laravel 6 LTS
+
+#Install =>  composer create-project --prefer-dist laravel/laravel blog "6.*"
+#Make Auth => 
+      composer require laravel/ui "^1.0" --dev
+	  php artisan ui vue --auth    (if this requires, do ia Win cmd => npm install && npm run dev )
+	  php artisan migrate
+
+
+# Yajra Datatables =>  https://www.positronx.io/laravel-datatables-example/
+                 https://datatables.yajrabox.com/starter
+
+
+#Yajra Datatables-2 with CRUD (working) => https://www.webslesson.info/2019/10/laravel-6-crud-application-using-yajra-datatables-and-ajax.html
+
+
+# Admin LTE + datatables => https://github.com/jeroennoten/Laravel-AdminLTE
+                            https://www.codeandtuts.com/create-admin-panel-using-laravel-adminlte-package/
+			                https://www.google.com/search?q=https%3A%2F%2Fwww.codeandtuts.com+yajra+admin+lte&oq=https%3A%2F%2Fwww.codeandtuts.com+yajra+admin+lte&aqs=chrome..69i57j69i58.15029j0j4&sourceid=chrome&ie=UTF-8
+
+
+
+
+
+
+
+//================================================================================================
+
+30. Yajra DataTables
+By default datatables comes with built-in pagination, sorting, searching but without CRUD operation. You have to implement it.
+
+#In Controller =>  see CRUD example at => YajraDataTablesCrudController.php
+    public function index(Request $request)
+    {
+        if($request->ajax())
+        {
+            $data = Student::latest()->get();
+            return DataTables::of($data)
+                    ->addColumn('action', function($data){
+                        $button = '<button type="button" name="edit" id="'.$data->id.'" class="edit btn btn-primary btn-sm">Edit</button>';
+                        $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="edit" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Delete</button>';
+                        return $button;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('yajra-data-tables-crud2.sample_data');
+    }
+	
+#In View => see example at => /views/yajra-data-tables-crud2/sample_data.blade
+     <table id="user_table" class="table table-bordered table-striped">
+     <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+			<th>Dob</th>
+			<th>Image</th>
+            <th>Action</th>
+        </tr>
+     </thead>
+    </table>
+	
+	<script>
+    $(document).ready(function(){
+
+        $('#user_table').DataTable({
+           processing: true,
+           serverSide: true,
+           ajax: {
+           url: "{{ route('sample.index') }}",
+        },
+        columns: [
+            { data: 'name', name: 'name'},
+            { data: 'email', name: 'email' },
+            { data: 'dob', name: 'dob' },
+   
+             //image column
+            { data: 'image', name: 'image',
+                render: function( data, type, full, meta ) {
+                    return "<img src=\"images/students/" + data + "\" height=\"50\"/>";
+                }
+            },
+   
+            { data: 'action', name: 'action',orderable: false } //delete/edit column
+        ]
+        });
+
+
+
+
 
 
 
@@ -1480,6 +1601,15 @@ composer dump-autoload
   $data = $request->all();
   $data['sector_id'] = whatever you want;
   Question::create($data);
+  
+# Faker => see class Students_Seeder in database/seeder/DataBaseSeeder
+
+
+
+
+
+
+
 
 //================================================================================================
 35.2.Miscellaneous VA HTML/CSS
@@ -1664,6 +1794,11 @@ If you don't have .env copy from .env.example: =>   $ cp .env.example .env
 
 # Laravel does not show images on production server => causes the same folder /bootstrap/cache. Run on local {php artisan cache:clear} then {php artisan optimize} and  re-upload /bootstrap/cache to server. {php artisan optimize} will optimize command which will re-build your configuration cache, bootstrap file cache and route
 
+# Faker won't produce image in seeder => upgrade Faker to version 1.9.1 in composer.json =>
+    "require-dev": {
+        "fakerphp/faker": "^1.9.1",
+		
+# 'unserialize(): Error at offset 0 of 40 bytes Error' => php artisan config:clear   php artisan view:clear   php artisan key:generate
 =============================
 
 если токен не принимается обработчиком, то варианта существует по сути два – либо он не отправляется в запросе (отсутствует csrf_field() в форме, или нет нужного значения в аякс-запросе – там он может передаваться как в данных так и в заголовках запроса), либо на стороне сервера не загружается сессия – именно в ней сохраняется токен на стороне сервера, чтобы было с чем сравнить то что пришло в запросе.

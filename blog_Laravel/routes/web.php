@@ -123,6 +123,21 @@ Route::get('/tokenGuard', 'TokenGuardController@index')->name('tokenGuard');
 Route::get('/appointment', 'AppointmentController@index')->name('appointment'); 
 
 
+//Admin LTE, Inject from ABZ-Laravel_6
+Route::get('adminlte',       'AdminLTEController@adminlte')->name('/adminlte');
+Route::get('/country-list',  'AdminLTEController@getList');
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
