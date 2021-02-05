@@ -165,7 +165,8 @@ return [
 		//Collective\Html\HtmlServiceProvider::class,//my
 		Zizaco\Entrust\EntrustServiceProvider::class, // Entrust RBAC package
 		
-
+        //Yajra\Datatables\DatatablesServiceProvider::class, //Yajra DataTables, use non-capital '...table'
+		 
         /*
          * Package Service Providers...
          */
@@ -232,7 +233,7 @@ return [
         //'Html' => Collective\Html\HtmlFacade::class, //my
 		'Entrust'   => Zizaco\Entrust\EntrustFacade::class,  // Entrust RBAC package
 		//'MyHelper' => App\Http\Helperss\Rbac\Helper_Rbac::class, //my helper
-		
+		//'Datatables' => 'Yajra\Datatables\Facades\Datatables', ////Yajra DataTables
 
     ],
 

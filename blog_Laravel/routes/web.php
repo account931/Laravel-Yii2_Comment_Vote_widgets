@@ -139,8 +139,6 @@ Route::get('/country-list',  'AdminLTEController@getList');
 
 
 
-
-
 //test route to call controller via command-line. Actually does not need any Route as called via CLI Tinker just to check it works. Controller function just saves current time to log.
 Route::get('/cli', 'CliCommandController@index')->name('cli'); //
 

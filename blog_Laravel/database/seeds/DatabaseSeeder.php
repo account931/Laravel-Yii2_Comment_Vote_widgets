@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
 		 $this->call('Shop_Quantity_Seeder');  //fill DB table {shop_quantity} with data. 
 		 
          $this->call('AppointRoomList_Seeder');  //fill DB table {appoint-room-list} with data.
-         $this->call('Students_Seeder');  //fill DB table {appoint-room-list} with data.
+         //$this->call('Students_Seeder');  //fill DB table {appoint-room-list} with data.
 		 
 		 $this->command->info('Seedering action was successful!');
     }
@@ -179,6 +179,7 @@ class AppointRoomList_Seeder extends Seeder {
 
 
 //fill DB table {students} with data.
+/*
 class Students_Seeder extends Seeder {
   public function run()
   {
@@ -204,7 +205,7 @@ class Students_Seeder extends Seeder {
             ]);
         }
 
-  }
+  } */
 }
 
 

@@ -469,9 +469,23 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
     php artisan make:migration create_wpress_blog_post_table --create=wpress_blog_post
   
  
- If migration error (Specified key was too long; max key length is 767 bytes)=> 
-     SET @@global.innodb_large_prefix = 1;  => run this query before your query:, this will increase limit to 3072 bytes. SET @@global.innodb_large_prefix = 1;
-  
+ If migration error (Specified key was too long; max key length is 767 bytes)=> it happens if you don't have at least MySQL 5.7.8 or MariaDB 10.2.2 installed
+     #var_1 =>  SET @@global.innodb_large_prefix = 1;  => run this query before your query:, this will increase limit to 3072 bytes. SET @@global.innodb_large_prefix = 1;
+     #var_2 => drop the new tables if there have been any created and change the charset/collation setting in ./config/database.php to these values:
+        'connections' => [
+            'mysql' => [
+                // ...
+                'charset' => 'utf8',
+                'collation' => 'utf8_unicode_ci',
+                // ...
+            ] ]
+			
+	  #var_3 =>  all you have to do is edit your AppServiceProvider.php file and inside the boot method set a default string length:
+                use Illuminate\Support\Facades\Schema;
+                public function boot(){
+                    Schema::defaultStringLength(191);
+                }
+	 
   # php artisan migrate:refresh
   
   #Create Foreign key in migration, e.g for table {shop_categories}	=> see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/migrations/2020_11_21_165700_create_shop_simple_table.php
@@ -1366,7 +1380,14 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 //================================================================================================
 
 30. Yajra DataTables
-By default datatables comes with built-in pagination, sorting, searching but without CRUD operation. You have to implement it.
+ #By default datatables comes with built-in pagination, sorting, searching but without CRUD operation. You have to implement it.
+
+ #IF an error when installing via composer in Laravel < 6, add to composer :
+          "require": {
+               "yajra/laravel-datatables-oracle": "~6.0"
+          }
+ After run composer update
+--------------------------
 
 #In Controller =>  see CRUD example at => YajraDataTablesCrudController.php
     public function index(Request $request)
