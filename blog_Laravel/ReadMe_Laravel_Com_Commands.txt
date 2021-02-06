@@ -480,7 +480,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
                 // ...
             ] ]
 			
-	  #var_3 =>  all you have to do is edit your AppServiceProvider.php file and inside the boot method set a default string length:
+	  #var_3(Working & Tested) =>  all you have to do is edit your /app/Providers/AppServiceProvider.php file and inside the boot method set a default string length:
                 use Illuminate\Support\Facades\Schema;
                 public function boot(){
                     Schema::defaultStringLength(191);
@@ -763,7 +763,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
         return WpressRest::with('authorName', 'categoryNames')->where('wpBlog_id', $id)->get(); //return WpressRest::with('authorName')->where('wpBlog_id', $id)->get();
 
 3. Read in JS ajax success (while DB field name is {wpBlog_author}), author_name is model hasOne function, {name} is DB field)
-     data[i].author_name.name 
+     data[i].author_name.name  //it is correct, {authorName} to {author_name}
 	 
 	 
 #to exclude PASSWORD from returning JSON add to XXX->select(array('id', 'name')) otherwise it returns all fields from table {user}. protected $hidden = ['created_at', 'password']; works for non-relational fields
@@ -1352,6 +1352,7 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 
 //================================================================================================
 29. Laravel 6 LTS
+# IMPLEMENTED IN {abz_Laravel_6_LTS}
 
 #Install =>  composer create-project --prefer-dist laravel/laravel blog "6.*"
 #Make Auth => 
@@ -1380,6 +1381,8 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 //================================================================================================
 
 30. Yajra DataTables
+# IMPLEMENTED IN {abz_Laravel_6_LTS}
+
  #By default datatables comes with built-in pagination, sorting, searching but without CRUD operation. You have to implement it.
 
  #IF an error when installing via composer in Laravel < 6, add to composer :
@@ -1389,7 +1392,7 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
  After run composer update
 --------------------------
 
-#In Controller =>  see CRUD example at => YajraDataTablesCrudController.php
+#My working example. In Controller =>  see CRUD example at => YajraDataTablesCrudController.php => https://github.com/account931/abz_Laravel_6_LTS/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
     public function index(Request $request)
     {
         if($request->ajax())

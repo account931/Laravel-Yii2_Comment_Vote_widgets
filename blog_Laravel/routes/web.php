@@ -123,8 +123,8 @@ Route::get('/tokenGuard', 'TokenGuardController@index')->name('tokenGuard');
 Route::get('/appointment', 'AppointmentController@index')->name('appointment'); 
 
 
-//Admin LTE, Inject from ABZ-Laravel_6
-Route::get('adminlte',       'AdminLTEController@adminlte')->name('/adminlte');
+//Admin LTE, Inject from ABZ-Laravel_6 //JUST FACADE, as Admin LTE won't work on Laravel 5.2 ()
+Route::get('/adminlte',       'AdminLTEController@index')->name('adminlte');
 Route::get('/country-list',  'AdminLTEController@getList');
 
 

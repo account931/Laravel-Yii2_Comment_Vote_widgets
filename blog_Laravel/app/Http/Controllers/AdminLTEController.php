@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\AdminLte\Student;
+//use App\Models\AdminLte\Student;
 use DataTables;
 use App\User;
 
