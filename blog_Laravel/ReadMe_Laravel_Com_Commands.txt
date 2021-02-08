@@ -47,6 +47,7 @@ Table of Content:
 28. PhpUnit tests vs Laravel Dusk
 29. Laravel 6 LTS
 30. Yajra DataTables
+30.1 Yajra Datatables. How it works.
 
 34.Highlight active menu item
 35.Miscellaneous VA Laravel
@@ -539,16 +540,23 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
       public function authorName(){return $this->hasOne('App\users', 'id', 'wpBlog_author')->withDefault(['name' => 'Unknown']);      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
       //->withDefault(['name' => 'Unknown']) this prevents the crash if this author id does not exist in table User (for example after fresh install and u forget to add users to user table)
       arg -> (foreign_key', 'local_key');
-	  
-  2.Use in view =>
+	
+  2. In controller for DB optimization use Eager loading (::with('')) instead of simple (->get()) => 
+         $articles = Book::with('authorName', 'otherHasOne')->get();
+		 
+  3.Use in view =>
       @foreach ($articles as $a){ 	p>Author:   {{ $a->authorName->name   }}</p> <!--   --> 
+	  
+----------------------------
 
 10.2 hasMany relation, see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/orders.blade.php
    1.Specify hasMany method in parent model  => 
        public function categoryNames(){ return $this->hasMany('App\models\ShopSimple\ShopOrdersItems', 'fk_order_id', 'order_id');//->withDefault(['fk_order_id' => 'Unknown']); //arg -> (foreign_key', 'local_key');
        WRONG => //public function categoryNames(){ return $this->belongsTo('App\models\wpress_category', 'wpBlog_category','wpCategory_id');  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');}
-     
-   2.Use in view =>
+    
+   2. In controller for DB optimization use Eager loading (::with('')) instead of simple (->get())
+   
+   3.Use in view =>
 	  @foreach ($dbResulta as $v)
 	      @foreach ($v->categoryNames as $x) //hasMany must be inside second foreach
 		    {{$x->columnName}}
@@ -582,10 +590,14 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	   //If model field is not 'id', make sure to add to model => protected $primaryKey = 'wpBlog_id';
 	   
 	$articles->count()
+	
+	$books = Book::with('author', 'categories')->get(); => Eager loading for hasOne/hasMany relations (use instead of simple (->get()) for DB oprimaization), 'author', 'categories' are models' hasOne/hasMany relations.
+  
   
   #ћетод get() возвращает объект Illuminate\Support\Collection (дл€ версии 5.2 и ранее Ч массив) c результатами, в котором каждый результат Ч это экземпл€р PHP-объекта StdClass.
   use Illuminate\Support\Facades\DB;  $users = $articles = DB::table('wpress_blog_post')->get();
   use Illuminate\Support\Facades\DB; $articles = DB::table('wpress_blog_post')->where('wpBlog_status', '1')->get();
+
 
 
   //Check if record exists-1, if not throw custom exception, traditional way like followingdoes not work =>  $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get(); if ($articleOne){exception}
@@ -603,6 +615,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
     if (!User::where('id', $id)->exists()) { 
 	      throw new \App\Exceptions\myException('User ' . $id . ' does not exist');
 	}
+
+
 
 
    #Eloquent object to array ->  $articleOne = wpress_blog_post::where('wpBlog_id',$id)->get(); $articleOne->toArray(); 
@@ -756,7 +770,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
        {return $this->hasOne('App\users', 'id', 'wpBlog_author');      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
     
 	public function categoryNames(){ //hasMany
-    return $this->belongsTo('App\models\wpress_category', 'wpBlog_category','wpCategory_id');  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');}
+    return $this->belongsTo('App\models\wpress_category', 'wpBlog_category','wpCategory_id');  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');} Eager loading.
 	  
 2. In controller:
     public function show($id)
@@ -1392,7 +1406,8 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
  After run composer update
 --------------------------
 
-#My working example. In Controller =>  see CRUD example at => YajraDataTablesCrudController.php => https://github.com/account931/abz_Laravel_6_LTS/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
+#My working example. 
+  In Controller =>  see CRUD example at => YajraDataTablesCrudController.php => https://github.com/account931/abz_Laravel_6_LTS/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
     public function index(Request $request)
     {
         if($request->ajax())
@@ -1449,6 +1464,47 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
         });
 
 
+
+
+   -----------------------------------
+   
+30.1 Yajra Datatables. How it works. # IMPLEMENTED IN {abz_Laravel_6_LTS}
+Controller: YajraDataTablesCrudController.
+Models: Abz_Employees, Abz_Ranks.
+All js is included in view.
+
+#Display Datatables.
+Works as SPA(one page for all CRUD).
+On load, main and the only view /views/yajra-data-tables-crud2/sample_data.php sends ajax to YajraDataTablesCrudController/ function index(Request $request). This function handles either return view or return DataTables.
+
+$('#user_table').DataTable({ processing: true, serverSide: true, ajax: { url: "{{ route('sample.index') }}", },//,,,,
+
+
+#Displaying Superior name column uses hasOne relation (for that we have defined hasOne function in modelsAbz_Employees, then use this function in Controller query ( Abz_Employees::with('getRank', 'getSuperior'), then use it in js =>
+        $('#user_table').DataTable({ //...
+          columns: [ //....
+          { data: 'get_superior.name', name:     'superior_id' },
+
+#If u want add a new column to datatable, add new <th> to table + add  new data in js (to columns: [ {data:"new ", name:"new "}//....]
+
+ #On Edit: js shows hidden modal (the same as for Create), sends ajax to function getFormVal($id) and on success html () values to edit form. Uses hasOne relation to get values to edit form.
+On cliking submit sends $_Post ajax to
+
+#On Create: js showd hidden modal (the same as for Edit)
+
+#On Delete: js shows modal window to confirm delete, then sends ajax to......
+
+
+
+# HOW to add (implement) new input fileds to form to create new / edit existing record=>
+  1. Add input to html folr itself
+  2. Add SQL column name to model to protected $fillable = []. Considering it already exists in SQl, u just want to be able to edit/store it.
+  3. In Controller in relevantvant function (function store(Request $request) or function update(Request $request)) 
+      add this form input name to  {$rules = []} and it to 
+	   $form_data = array(
+            'name'   =>  $request->first_name, //DB column => input name
+  4. For edit case, in order to load this field value from SQL to input), add to JS (in ajax success)=> 
+        $('#user_rank').val(data.result.get_rank.rank_name); //hasOne realtion
 
 
 
@@ -1758,6 +1814,8 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 # Swal Sweet Alert not waiting until user clicks ok => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/rbac/my-rbac.js or relevant at at /resources/assets/ . See section => $(document).on("click", '.detach-role', function(e)
 
 #  Convert a JavaScript object into a string =>  alert(JSON.stringify(data, null, 4))  
+
+# Fix to load image via ajax, serialize() wont't work =>  var formData = new FormData(this);  see example => https://github.com/account931/abz_Laravel_6_LTS/blob/main/resources/views/yajra-data-tables-crud2/sample_data.blade.php
 //================================ End Move to Yii2 ReadMe =============================
 
 //================================================================================================
