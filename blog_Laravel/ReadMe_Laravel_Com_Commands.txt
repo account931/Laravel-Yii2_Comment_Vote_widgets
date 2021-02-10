@@ -7,7 +7,7 @@ NB: CHECK WPRESS MIGRATION (SETTING TIMESTAMP BY DEFAULT)!!!!!!!!!!!!!!!!!!!!!!!
 On HP EliteBook 2530p: Composer -> via Windows cmd, artisan -> via OpenServer (navigate to your project folder first with cd ), 
         git -> via Windows cmd, NPM -> via Windows cmd
 
-On T42: so far the same, but Composer -> via Openserver, NPM -> via Windows cmd
+On T42: so far the same, but Composer -> via Openserver (if troubles => go to folder, LMClick -> "Git Bash here"), NPM -> via Windows cmd
 
 Table of Content:
 1.How to install Laravel
@@ -45,18 +45,26 @@ Table of Content:
 26. PayPal
 27. CLI command => call controller via command line
 28. PhpUnit tests vs Laravel Dusk
-29. Laravel 6 LTS
-30. Yajra DataTables
-30.1 Yajra Datatables. How it works.
-
+29. Events/Listeners
 34.Highlight active menu item
-35.Miscellaneous VA Laravel
-35.2.Miscellaneous VA HTML/CSS
-35.3 Miscellaneous to move to Yii2 ReadMe
-36. Known Errors
+
+
+201. Laravel 6 LTS        => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+202. Yajra DataTables     => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+203. Yajra Datatables. How it works => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+204. Laravel Intervention => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+205. Laravel Voyager      => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+
+
+355.Miscellaneous VA Laravel
+356.Miscellaneous VA HTML/CSS
+357.Miscellaneous to move to Yii2 ReadMe
+358.Known Errors
+
+
 
 //================================================
-1.How to inst
+1.How to install Laravel
 http://laravel.su/docs/5.4/installation
 
 1. If first time ever, install global installer=>  composer global require "laravel/installer"
@@ -349,11 +357,13 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
             'u_email'  => [ 'required', 'email' ] ,
             'u_phone'  => [ 'required', "regex: $RegExp_Phone" ],
 			'product-price' => ['required', 'numeric'], //numeric to accept float
+			'user_salary' => ['required',  'numeric', 'between:1, 500.00'], //numeric to accept float, range between
 			'product-quant' =>  ['required', 'integer', 'min:1' ],
 
-			'product-category' => ['required', 'string', Rule::in(['admin', 'second-zone']) ] , //integer];
+			'product-category' => ['required', 'string', Rule::in(['admin', 'second-zone']) ] , //in range //integer];
 			'product-name' =>  ['required', 'string', 'min:3', 'unique:shop_simple,shop_title'],  //unique:tableName, columnName
-
+            'user_hired_at'   => ['required', 'date'], //date validation
+			
 			'image' => ['required', /*'image',*/ 'mimes:jpeg,png,jpg,gif,svg', 'max:2048' ], // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',,
 			
 
@@ -1364,8 +1374,72 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 
 
 
+
+
+
+
 //================================================================================================
-29. Laravel 6 LTS
+29. Events/Listeners
+  See my implementation at => Controller/EventsListenersController.php
+  
+ # Example => https://code.tutsplus.com/ru/tutorials/custom-events-in-laravel--cms-30331
+ # Complete List Of Laravel Built-inCore Events => https://mettle.io/blog/complete-list-of-laravel-5-events
+
+# How to: 
+
+1. Go to "app/Providers/EventServiceProvider.php" and define your pairs of Events => Listeners in {protected $listen = []}
+   protected $listen = [
+		 //here is mine defined Events => Listeners
+		 'App\Events\SomeEventX'        => ['App\Listeners\EventListenerX', ], //on my SomeEventX run EventListenerX
+		 'Illuminate\Auth\Events\Login' => ['App\Listeners\WriteCredentialsToLog',], //on login run WriteCredentialsToLog (event Login is a built Laravel event, we don't have to define it)
+    ];
+2. Run => php artisan event:generate
+   It will generate Event files in folder "/app/Events" and Listeners files in "/app/Listeners". If Event is a built in framework, e.g 'Illuminate\Auth\Events\Login', it won't be generated in  folder "/app/Events"
+
+
+3. Define in "/app/Listeners/EventListenerX" what u want to do =>
+    public function handle(SomeEventX $event) { 
+	    dd('Event SomeEventX was fired. Code of action to happen is located in /app/Listeners/EventListenerX');}
+
+3.1 The same way define other Listeners if there are, like "/app/Listeners/WriteCredentialsToLog" (on Login saves username to Log)=> 
+     public function handle(Login $event){
+         // get logged in user's email and username
+        $username = $event->user->name;
+		//writing to /storage/log
+		Log::info("Listerner WriteCredentialsToLog says: Login at " . date('Y-m-d H:i:s') . " with username " . $username);
+    
+     
+4. In Cotroller trigger the event (if it has to be triggered manually, i.e 'Illuminate\Auth\Events\Login' DOESN'T need manual triggering, it happen on LOGIN itself) =>
+      use App\Events\SomeEventX; //event
+	  public function triggerEvent()
+      {
+	    .......
+        // here we trigger an event 'App\Events\SomeEventX'
+        event(new SomeEventX());
+
+ 
+
+
+
+
+//================================================================================================ 
+34.Highlight active menu item
+ #Highlight active menu item =>  (OR https://medium.com/@rizkhallamaau/create-a-helper-for-active-link-in-laravel-5-6-30827a760593)
+     <li class="{{ Request::is('showProfile*') ? 'active' : '' }}">     <a href="{{ url('/showProfile') }}">ShowProfile    </a> </li>
+	 <li class="{{ Request::is('EloquentExample*') ? 'active' : '' }}"> <a href="{{ url('/EloquentExample') }}">DB Eloquent </a></li>
+
+
+	 
+	 
+	
+	
+	
+	
+	
+
+//================================================================================================
+201. Laravel 6 LTS        => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+
 # IMPLEMENTED IN {abz_Laravel_6_LTS}
 
 #Install =>  composer create-project --prefer-dist laravel/laravel blog "6.*"
@@ -1392,9 +1466,12 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 
 
 
+
+
 //================================================================================================
 
-30. Yajra DataTables
+202. Yajra DataTables     => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+
 # IMPLEMENTED IN {abz_Laravel_6_LTS}
 
  #By default datatables comes with built-in pagination, sorting, searching but without CRUD operation. You have to implement it.
@@ -1468,7 +1545,7 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 
    -----------------------------------
    
-30.1 Yajra Datatables. How it works. # IMPLEMENTED IN {abz_Laravel_6_LTS}
+203. Yajra Datatables. How it works => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 Controller: YajraDataTablesCrudController.
 Models: Abz_Employees, Abz_Ranks.
 All js is included in view.
@@ -1510,19 +1587,53 @@ On cliking submit sends $_Post ajax to
 
 
 
-//================================================================================================ 
-34.Highlight active menu item
- #Highlight active menu item =>  (OR https://medium.com/@rizkhallamaau/create-a-helper-for-active-link-in-laravel-5-6-30827a760593)
-     <li class="{{ Request::is('showProfile*') ? 'active' : '' }}">     <a href="{{ url('/showProfile') }}">ShowProfile    </a> </li>
-	 <li class="{{ Request::is('EloquentExample*') ? 'active' : '' }}"> <a href="{{ url('/EloquentExample') }}">DB Eloquent </a></li>
+
+//================================================================================================
+
+204. Laravel Intervention => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+
+  #See example (upload image, resize and move to folder + save to DB) => https://github.com/account931/abz_Laravel_6_LTS/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php at public function update(Request $request)
+  # All Intervention methods => http://image.intervention.io/
+  
+  #Install => composer require intervention/image
+  #SetUp   => go to config/app.php .
+      return [   
+          ......
+          $provides => [
+              ......
+              ......,
+              'Intervention\Image\ImageServiceProvider'
+          ],
+          $aliases => [
+              .....
+              .....,
+              'Image' => 'Intervention\Image\Facades\Image'
+         ] ]
 
 
-	 
-	 
-	 
+
+
+
+
+
+
+
+
+//================================================================================================ 
+205. Laravel Voyager      => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+
+
+
+
+
+
+
+
+ 
 	 
 //================================================================================================ 
-35.Miscellaneous VA Laravel
+355.Miscellaneous VA Laravel
+
 # bootstrap => <div class="col-lg-3 col-md-3 col-sm-4">  <div class="col-sm-4 col-xs-4"> => Pc/mobile
     .xs (phones), .sm (tablets), .md (desktops), and .lg (larger desktops) 
     .col- (extra small devices - screen width less than 576px)
@@ -1692,7 +1803,7 @@ composer dump-autoload
 
 
 //================================================================================================
-35.2.Miscellaneous VA HTML/CSS
+356.Miscellaneous VA HTML/CSS
 # Line => <hr>
 
 #Panel Styling =>
@@ -1717,7 +1828,8 @@ composer dump-autoload
 
 
 //================================================================================================
-35.3 Miscellaneous to move to Yii2 ReadMe
+357.Miscellaneous to move to Yii2 ReadMe
+
 //================================Move to Yii2 ReadMe =============================
 
 ---------------------- PHP ----------
@@ -1835,7 +1947,7 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 
 
 //================================================================================================
-36. Known Errors
+358.Known Errors
 
 # Error "Unknown Column 'updated_at' => public $timestamps = false; //put in model to override Error "Unknown Column 'updated_at'" that fires when saving new entry
 2 =>     /**
@@ -1881,6 +1993,10 @@ If you don't have .env copy from .env.example: =>   $ cp .env.example .env
         "fakerphp/faker": "^1.9.1",
 		
 # 'unserialize(): Error at offset 0 of 40 bytes Error' => php artisan config:clear   php artisan view:clear   php artisan key:generate
+
+# Collapsed Bootstrap main toggle menu won't open on click => 
+   move Bootstrap script from <head> to bottom (after  @yield('content')</div>)(in views/layouts/app.blade.php) =>
+          <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->  
 =============================
 
 если токен не принимается обработчиком, то варианта существует по сути два – либо он не отправляется в запросе (отсутствует csrf_field() в форме, или нет нужного значения в аякс-запросе – там он может передаваться как в данных так и в заголовках запроса), либо на стороне сервера не загружается сессия – именно в ней сохраняется токен на стороне сервера, чтобы было с чем сравнить то что пришло в запросе.

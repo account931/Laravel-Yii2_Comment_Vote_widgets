@@ -123,12 +123,16 @@ Route::get('/tokenGuard', 'TokenGuardController@index')->name('tokenGuard');
 Route::get('/appointment', 'AppointmentController@index')->name('appointment'); 
 
 
-//Admin LTE, Inject from ABZ-Laravel_6 //JUST FACADE, as Admin LTE won't work on Laravel 5.2 ()
+//Admin LTE, Inject from ABZ-Laravel_6 //JUST FACADE, as Admin LTE won't work on Laravel 5.2 (). Implemented in => (IMPLEMENTED IN abz_Laravel_6_LTS)
 Route::get('/adminlte',       'AdminLTEController@index')->name('adminlte');
 Route::get('/country-list',  'AdminLTEController@getList');
 
 
+//Events/Listeners example
+Route::get('/eventListenersX', 'EventsListenersController@index')->name('eventListenersX'); //show a button to trigger
+Route::get('/runEventX',       'EventsListenersController@triggerEvent')->name('runEventX'); //run an event
 
+ 
 
 
 

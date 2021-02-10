@@ -21,7 +21,7 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <!-- Latest compiled and minified JavaScript -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>   
+    <!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->  
 	<!-- Bootsrap -->
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -103,9 +103,10 @@
 							 <li class="{{ Request::is('testMiddle*') ? 'active' : '' }}"><a href="{{ route('testMiddle') }}">Test Middle</a></li>
                              <li class="{{ Request::is('tokenGuard*') ? 'active' : '' }}"><a href="{{ route('tokenGuard') }}">Rest Api TokenGuard</a></li>
 
-                             <li class="{{ Request::is('appointment*') ? 'active' : '' }}"><a href="{{ route('appointment') }}">Appointment</a></li>
-                             <li class="{{ Request::is('adminlte*') ? 'active' : '' }}"><a href="{{ route('adminlte') }}">Admin LT3/Yajra DataTables</a></li>
-                             
+                             <li class="{{ Request::is('appointment*') ? 'active' : '' }}"> <a href="{{ route('appointment') }}"> Appointment  </a></li>
+                             <li class="{{ Request::is('adminlte*') ? 'active' : '' }}"> <a href="{{ route('adminlte') }}">   Admin LT3/Yajra DataTables </a></li>
+                             <li class="{{ Request::is('eventListenersX*') ? 'active' : '' }}"> <a href="{{ route('eventListenersX')}}"> Events/Listeners           </a></li>
+
 
 							 <li><a href="{{ route('register') }}">Booking(N/A)</a></li>
 							 <li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>
@@ -162,11 +163,12 @@
     </div>
 
     <!-- Scripts -->
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> <!-- Mega Fix (collapsed main menu won't open)-->
 	<script src="{{ asset('js/my-js.js') }}"></script>
 	
 	<!-- To register JS file for specific view only (In layout template) (for home '/' only. Loads JS for home Vue component <example>. If is loaded globally will inerfere with Appointmant vue-->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['/'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
-         <script src="{{ asset('js/app.js') }}"></script>
+         <!--<script src="{{ asset('js/app.js') }}"></script>--> <!-- as included always -->
     @endif
 	
 	
