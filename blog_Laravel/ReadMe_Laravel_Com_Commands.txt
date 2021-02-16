@@ -545,6 +545,12 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 //================================================================================================
 10.hasOne/hasMany relation
 
+#Main difference between hasOne/hasMany vs belongsTo: (if table 'X' primary ID is used in other table as ordinary table, then 'X' model hasOne/hasMany)
+  belongsTo and belongsToMany - you're telling Laravel that this table holds the foreign key that connects it to the other table.
+  hasOne and hasMany - you're telling Laravel that this table does not have the foreign key.
+
+
+
 10.1 hasOne relation
   1.Specify hasOne method in parent model  => 
       public function authorName(){return $this->hasOne('App\users', 'id', 'wpBlog_author')->withDefault(['name' => 'Unknown']);      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
@@ -576,6 +582,17 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
  # Check if relation exists (example for hasMany), see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/orders.blade.php
   @if( $v->orderDetail->isEmpty() )
+  
+  
+ ---------------------------- 
+ 
+ 10.3 belongsTo relation (The Inverse Of The Relationship)
+ 
+  public function getRank() 
+        return $this->belongsTo('App\Models\Abz\Abz_Ranks', 'rank_id', 'id');   //'foreign_key', 'owner_key' i.e 'this TableColumn', 'that TableColumn'
+	}
+
+ 
 //================================================================================================
 
 
@@ -587,7 +604,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 11.DB SQL Eloquent queries
   #For Eloquent ORM:
     $articles = wpress_blog_post::all();
-    $articles =  wpress_blog_post::where('wpBlog_status', '1')->get();
+    $articles =  wpress_blog_post::where('wpBlog_status', '1')->get();  INSIDE MODEL =>   $articles = $this->where('wpBlog_status', '1')->get();
 	$articles = wpress_blog_post::where('wpBlog_status', '1')->where('wpBlog_category', 1)->get();
     
 	$user = User::where('username', '=', 'michele')->first();
@@ -595,7 +612,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	
 	wpress_blog_post::where('wpBlog_id',$id)->delete(); //Delete
 	
-	$model = App\Flight::findOrFail(1); $model = App\Flight::where('legs', '>', 100)->firstOrFail();
+	$model = App\Flight::findOrFail(1); $model = App\Flight::where('legs', '>', 100)->firstOrFail();  //To get in view:  $model->property
        findOrFail() is alike of find() function with one extra ability - to throws the Not Found Exceptions. So use it instead of checking if record exists (as u like it to do )
 	   //If model field is not 'id', make sure to add to model => protected $primaryKey = 'wpBlog_id';
 	   
@@ -1380,12 +1397,16 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 
 //================================================================================================
 29. Events/Listeners
-  See my implementation at => Controller/EventsListenersController.php
+  # You can define your custom Events or use a built-in Laravek Event (like login, logout).
+  # Custom made Events must be triggered manually (somewhere in Controller). In Listeners u define what to do when Event happens.
   
- # Example => https://code.tutsplus.com/ru/tutorials/custom-events-in-laravel--cms-30331
+  # See my working example => Controller/EventsListenersController.php
+  
+ # Inet Example => https://code.tutsplus.com/ru/tutorials/custom-events-in-laravel--cms-30331
  # Complete List Of Laravel Built-inCore Events => https://mettle.io/blog/complete-list-of-laravel-5-events
 
-# How to: 
+ 
+# How to implement Events/Listeners: 
 
 1. Go to "app/Providers/EventServiceProvider.php" and define your pairs of Events => Listeners in {protected $listen = []}
    protected $listen = [
@@ -1562,7 +1583,14 @@ $('#user_table').DataTable({ processing: true, serverSide: true, ajax: { url: "{
           columns: [ //....
           { data: 'get_superior.name', name:     'superior_id' },
 
-#If u want add a new column to datatable, add new <th> to table + add  new data in js (to columns: [ {data:"new ", name:"new "}//....]
+#If u want add a new column (from SQL results) to datatable:  add new <th> to table + add  new data in js (to columns: [ {data:"new ", name:"new "}//....]
+
+#If u want to add additional action button, e.g "View", do:
+   1. Add to controller => return DataTables::of($data)->addColumn('action', function($data){ //..add View button,see exampleat  YajraDataTablesCrudController-> function index()
+   2. Add to js,   in views/data_sample.php code to add column (not necessary, if u added prev other action fields for "Upadate", "Delete", etc and agree that new action "View" button will be in one column with "Upadate", "Delete", etc (i.e several action buttons in one Yajra column))
+   3. Add to html, in views/data_sample.php a hidden modal, that will represent "View"
+   3. Add to js, in views/data_sample.php code that will react on View click, get ajax data, html() ajax success results and show hidden modal
+
 
  #On Edit: js shows hidden modal (the same as for Create), sends ajax to function getFormVal($id) and on success html () values to edit form. Uses hasOne relation to get values to edit form.
 On cliking submit sends $_Post ajax to
@@ -1621,10 +1649,12 @@ On cliking submit sends $_Post ajax to
 
 //================================================================================================ 
 205. Laravel Voyager      => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+   https://voyager-docs.devdojo.com/getting-started/installation
+   
+  # While installing Voyager (without dummy data), it will add (via migration) to existing table {users} fileds 'avatar', 'role_id' + several new tables
+    But migration files won't be added to /datatables/migrations/. If u wish, u can copy migrations files from GitHub and run migration in CLI => https://github.com/the-control-group/voyager/tree/1.4/migrations
 
-
-
-
+  # To change views of Voyager, go to => \vendor\tcg\voyager\resources\views
 
 
 
@@ -1793,10 +1823,16 @@ composer dump-autoload
   $data['sector_id'] = whatever you want;
   Question::create($data);
   
-# Faker => see class Students_Seeder in database/seeder/DataBaseSeeder
+# Faker => see class Students_Seeder in database/seeder/DataBaseSeeder //In this project. Used in {abz_Laravel_6_LTS} as Abz_Employees_Seeder
 
-
-
+# ElasticSearch equivalent => https://github.com/ErickTamayo/laravel-scout-elastic
+    if ($request->has('searcher')) { // equivalent if (isset($search_data) && !empty($search_data) )
+        $results = $product->whereRaw(
+            "MATCH(product_name,product_id,description) AGAINST(? IN BOOLEAN MODE)",
+            [$request->searcher]
+        )->get();
+        return view('products/search')->with('results', $results);
+    } 
 
 
 

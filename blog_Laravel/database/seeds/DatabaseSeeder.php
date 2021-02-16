@@ -31,7 +31,12 @@ class DatabaseSeeder extends Seeder
 		 $this->call('Shop_Quantity_Seeder');  //fill DB table {shop_quantity} with data. 
 		 
          $this->call('AppointRoomList_Seeder');  //fill DB table {appoint-room-list} with data.
-         //$this->call('Students_Seeder');  //fill DB table {appoint-room-list} with data.
+         //$this->call('Students_Seeder');  //fill DB table {appoint-room-list} with data. //Not used here. Used in {abz_Laravel_6_LTS} as Abz_Employees_Seeder
+		 
+		 $this->call('Wpressimage_category_Seeder');    //fill DB table {wpressimage_category} with data
+		 $this->call('WpressImages_blog_Post_Seeder');  //fill DB table {	wpressimages_blog_post} with data
+
+		 
 		 
 		 $this->command->info('Seedering action was successful!');
     }
@@ -177,7 +182,7 @@ class AppointRoomList_Seeder extends Seeder {
 
 
 
-
+//Not used here. Used in {abz_Laravel_6_LTS} as Abz_Employees_Seeder
 //fill DB table {students} with data.
 /*
 class Students_Seeder extends Seeder {
@@ -200,13 +205,69 @@ class Students_Seeder extends Seeder {
                 'phone' => $faker->phoneNumber,
                 'dob' => $faker->date($format = 'Y-m-d', $max = 'now'),
 				'image' => $faker->image(public_path('images/students'),400,300, null, false), //saving images to 'public/images/students. Takes much time
-
+                //'image' => 'http://loremflickr.com/400/300?random='.rand(1, 100),
 
             ]);
         }
 
-  } */
+  } 
+} */
+
+
+
+//fill DB table {wpressimage_category} with data.
+
+class Wpressimage_category_Seeder extends Seeder {
+  public function run()
+  {
+    
+	    DB::table('wpressimage_category')->delete();  //whether to Delete old materials
+		
+        DB::table('wpressimage_category')->insert(['wpCategory_id' => 1, 'wpCategory_name' => 'News' ]);
+		DB::table('wpressimage_category')->insert(['wpCategory_id' => 2, 'wpCategory_name' => 'Art' ]);
+		DB::table('wpressimage_category')->insert(['wpCategory_id' => 3, 'wpCategory_name' => 'Sport' ]);
+		DB::table('wpressimage_category')->insert(['wpCategory_id' => 4, 'wpCategory_name' => 'Geeks' ]);
+		DB::table('wpressimage_category')->insert(['wpCategory_id' => 5, 'wpCategory_name' => 'Drops' ]);
+		
+        
+
+  } 
+} 
+
+
+
+
+
+
+//fill DB table {	wpressimages_blog_post} with data.
+
+class WpressImages_blog_Post_Seeder extends Seeder {
+  public function run()
+  {
+    
+	    DB::table('wpressimages_blog_post')->delete();  //whether to Delete old materials
+		$NUMBER_OF_CATEGORIES = 5;
+        $faker = Faker::create();
+
+        $gender = $faker->randomElement(['male', 'female']);
+
+    	foreach (range(1,20) as $index) {
+		
+	
+            DB::table('wpressimages_blog_post')->insert([
+                'wpBlog_title' => $faker->name, //$faker->name($gender),
+                'wpBlog_text' =>  $faker->realText($maxNbChars = 200, $indexSize = 2), //$faker->text,
+                'wpBlog_author' => 1, //$faker->username,
+				'wpBlog_category' => rand(1, $NUMBER_OF_CATEGORIES), //random string between min and max numbe
+                //'wpBlog_status' => $faker->date($format = 'Y-m-d', $max = 'now'),
+				
+				//'image' => $faker->image(public_path('images/students'),400,300, null, false), //saving images to 'public/images/students. Takes much time
+                //'image' => 'http://loremflickr.com/400/300?random='.rand(1, 100),
+
+            ]);
+        }
+		
+        
+
+  } 
 }
-
-
-

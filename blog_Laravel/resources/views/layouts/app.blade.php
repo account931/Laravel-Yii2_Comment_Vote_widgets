@@ -100,12 +100,16 @@
                              <li class="{{ Request::is('shopSimple*') ? 'active' : '' }}"> <a href="{{ route('shopSimple') }}">E-shop</a></li>
 							 <li class="{{ Request::is('shopAdminPanel*') ? 'active' : '' }}"><a href="{{ route('shopAdminPanel') }}">E-shop AdminP</a></li>
 							 
-							 <li class="{{ Request::is('testMiddle*') ? 'active' : '' }}"><a href="{{ route('testMiddle') }}">Test Middle</a></li>
-                             <li class="{{ Request::is('tokenGuard*') ? 'active' : '' }}"><a href="{{ route('tokenGuard') }}">Rest Api TokenGuard</a></li>
+							 <li class="{{ Request::is('testMiddle*') ? 'active' : '' }}"><a href="{{ route('testMiddle') }}"> Test Middle</a></li>
+                             <li class="{{ Request::is('tokenGuard*') ? 'active' : '' }}"><a href="{{ route('tokenGuard') }}"> Rest Api TokenGuard</a></li>
 
-                             <li class="{{ Request::is('appointment*') ? 'active' : '' }}"> <a href="{{ route('appointment') }}"> Appointment  </a></li>
-                             <li class="{{ Request::is('adminlte*') ? 'active' : '' }}"> <a href="{{ route('adminlte') }}">   Admin LT3/Yajra DataTables </a></li>
+                             <li class="{{ Request::is('appointment*') ? 'active' : '' }}">     <a href="{{ route('appointment') }}">    Appointment  </a></li>
+                             <li class="{{ Request::is('adminlte*') ? 'active' : '' }}">        <a href="{{ route('adminlte') }}">       Admin LT3/Yajra DataTables </a></li>
                              <li class="{{ Request::is('eventListenersX*') ? 'active' : '' }}"> <a href="{{ route('eventListenersX')}}"> Events/Listeners           </a></li>
+                             
+							 <!-- WPressImages -->
+							 <li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPressImages      </a> </li> <!-- NOTE: name vs route -->
+                             <li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPressImages Admin </a> </li> <!-- NOTE: name vs route -->
 
 
 							 <li><a href="{{ route('register') }}">Booking(N/A)</a></li>
@@ -176,6 +180,12 @@
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['wpBlogg'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
         <script src="{{ asset('js/wpress_blog.js') }}"></script> <!-- wpress_blog JS -->
     @endif
+	
+	<!-- To register JS file for specific view only (In layout template) (for WpressImage asset only) -->
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['wpBlogImages'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
+        <script src="{{ asset('js/Wpress_ImagesBlog/wpress_blog.js') }}"></script> <!-- wpress_blog JS -->
+    @endif
+	
 	
     <!-- To register JS file for specific view only (In layout template) -->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['testRest', 'register'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
