@@ -51,7 +51,7 @@ Table of Content:
 
 201. Laravel 6 LTS        => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 202. Yajra DataTables     => (IMPLEMENTED IN {abz_Laravel_6_LTS})
-203. Yajra Datatables. How it works => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+203. Yajra Datatables with CRUD. How it works => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 204. Laravel Intervention => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 205. Laravel Voyager      => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 
@@ -883,7 +883,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
         @endsection	
     ---------
  
-    #Varinat 3, in Blade =>
+    #Variant 3, in Blade =>
 	    @section('content')
 	        some content
 	    @endsection
@@ -895,7 +895,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	------------
 	
 	
-	#Varinat 4, in main layout using @stack =>
+	#Variant 4, in main layout using @stack =>
 	    In main layout, before  </body> =>
 		          <!-- Bootstrap JavaScript -->
                   <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -1471,7 +1471,7 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 
 
 # Yajra Datatables =>  https://www.positronx.io/laravel-datatables-example/
-                 https://datatables.yajrabox.com/starter
+                   =>  https://datatables.yajrabox.com/starter
 
 
 #Yajra Datatables-2 with CRUD (working) => https://www.webslesson.info/2019/10/laravel-6-crud-application-using-yajra-datatables-and-ajax.html
@@ -1501,10 +1501,15 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
           "require": {
                "yajra/laravel-datatables-oracle": "~6.0"
           }
- After run composer update
+    After run composer update
+	
+ # You can implement simple DataTable (with built-in pagination, sorting, searching but without CRUD operation) just in a few lines, see https://github.com/account931/abz_Laravel_6_LTS/blob/main/app/Http/Controllers/AdminLTEController.php => function adminlte() (example of table {users}) + in /views/admin-lte/admin-lte.blade.php  => $('#laravel_datatable').DataTable();
+    or you can implement Yajra DataTables with CRUD (that's more complicated, see how to do it in next 202.1 & 203 Chapters)
+
+
 --------------------------
 
-#My working example. 
+202.1 My working example of Yajra DataTables with CRUD. 
   In Controller =>  see CRUD example at => YajraDataTablesCrudController.php => https://github.com/account931/abz_Laravel_6_LTS/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
     public function index(Request $request)
     {
@@ -1566,7 +1571,9 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 
    -----------------------------------
    
-203. Yajra Datatables. How it works => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+203. Yajra Datatables with CRUD. How it works => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+Detailed explaination of Chapter => 202.1 My working example of Yajra DataTables with CRUD
+
 Controller: YajraDataTablesCrudController.
 Models: Abz_Employees, Abz_Ranks.
 All js is included in view.
@@ -1712,7 +1719,7 @@ On cliking submit sends $_Post ajax to
 	$name = auth()->user()->name;  $id = auth()->user()->id; 
 
 
-# Turn on debugger => go to .env => APP_DEBUG=true
+# Turn on debugger => go to .env => APP_DEBUG=true  Variant 2 => in /config/app.php set debug=>true
 
 # js confirm to delete =>  
      <button><a href = 'delete/{{ $a->wpBlog_id }}'> Delete  <img class="deletee" onclick="return confirm('Are you sure to delete?')" src="{{URL::to("/")}}/images/delete.png"  alt="del"/></a></button>
@@ -1823,7 +1830,7 @@ composer dump-autoload
   $data['sector_id'] = whatever you want;
   Question::create($data);
   
-# Faker => see class Students_Seeder in database/seeder/DataBaseSeeder //In this project. Used in {abz_Laravel_6_LTS} as Abz_Employees_Seeder
+# Faker => see class Students_Seeder in database/seeder/DataBaseSeeder //In this project. Or example of usage in {abz_Laravel_6_LTS} as Abz_Employees_Seeder
 
 # ElasticSearch equivalent => https://github.com/ErickTamayo/laravel-scout-elastic
     if ($request->has('searcher')) { // equivalent if (isset($search_data) && !empty($search_data) )
@@ -2002,7 +2009,7 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 # Error after install & migrate new Laravel 
 "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths. laravel 5.3
 
-You need to have .env on your appication folder then run: => $ php artisan key:generate
+You need to have .env on your appication  then run: => $ php artisan key:generate
 If you don't have .env copy from .env.example: =>   $ cp .env.example .env
 
 # If can not type in form input => add to form CSS rule {z-index: 9999;}

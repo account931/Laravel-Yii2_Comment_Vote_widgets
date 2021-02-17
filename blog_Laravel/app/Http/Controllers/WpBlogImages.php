@@ -33,8 +33,8 @@ class WpBlogImages extends Controller
 		//if no GET find all articles with pagination
 	    if (!isset($_GET['category'])){ 
 		    //found articles with pagination
-		    $articles = Wpress_images_Posts::where('wpBlog_status', '1')->paginate(4); //object(Illuminate\Database\Eloquent\Collection
-		    //count found articles
+		    $articles = Wpress_images_Posts::where('wpBlog_status', '1')->with('getImages')->paginate(4); //object(Illuminate\Database\Eloquent\Collection
+			//count found articles
 			$countArticles = Wpress_images_Posts::where('wpBlog_status', '1')->get();
 		}
 		

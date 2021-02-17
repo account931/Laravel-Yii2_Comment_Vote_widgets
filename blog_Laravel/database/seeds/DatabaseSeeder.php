@@ -33,9 +33,9 @@ class DatabaseSeeder extends Seeder
          $this->call('AppointRoomList_Seeder');  //fill DB table {appoint-room-list} with data.
          //$this->call('Students_Seeder');  //fill DB table {appoint-room-list} with data. //Not used here. Used in {abz_Laravel_6_LTS} as Abz_Employees_Seeder
 		 
-		 $this->call('Wpressimage_category_Seeder');    //fill DB table {wpressimage_category} with data
-		 $this->call('WpressImages_blog_Post_Seeder');  //fill DB table {	wpressimages_blog_post} with data
-
+		 $this->call('Wpressimage_category_Seeder');      //fill DB table { wpressimage_category} with data
+		 $this->call('WpressImages_blog_Post_Seeder');    //fill DB table {	wpressimages_blog_post} with data
+         $this->call('WpressImages_ImagesStock_Seeder');  //fill DB table {	wpressimage_imagesstock} with data
 		 
 		 
 		 $this->command->info('Seedering action was successful!');
@@ -214,6 +214,7 @@ class Students_Seeder extends Seeder {
 } */
 
 
+//Wpress with Images====================================
 
 //fill DB table {wpressimage_category} with data.
 
@@ -240,7 +241,6 @@ class Wpressimage_category_Seeder extends Seeder {
 
 
 //fill DB table {	wpressimages_blog_post} with data.
-
 class WpressImages_blog_Post_Seeder extends Seeder {
   public function run()
   {
@@ -265,9 +265,37 @@ class WpressImages_blog_Post_Seeder extends Seeder {
                 //'image' => 'http://loremflickr.com/400/300?random='.rand(1, 100),
 
             ]);
-        }
-		
-        
+        }   
+  } 
+}
 
+
+
+
+
+
+
+//fill DB table {wpressimage_imagesstock} with data.
+class WpressImages_ImagesStock_Seeder extends Seeder {
+  public function run()
+  {
+    
+	    DB::table('wpressimage_imagesstock')->delete();  //whether to Delete old materials
+		$NUMBER_OF_ARTICLES = 20;
+        $faker = Faker::create();
+
+        $gender = $faker->randomElement(['male', 'female']);
+
+    	foreach (range(1,20) as $index) {
+		
+            DB::table('wpressimage_imagesstock')->insert([
+                'wpImStock_name'   => $faker->image(public_path('images/wpressImages'),400,300, null, false), //saving images to 'public/images/students. Takes much time
+                'wpImStock_postID' =>  rand(1, $NUMBER_OF_ARTICLES), //random string between min and max number
+				
+				//'image' => $faker->image(public_path('images/students'),400,300, null, false), //saving images to 'public/images/students. Takes much time
+                //'image' => 'http://loremflickr.com/400/300?random='.rand(1, 100),
+
+            ]);
+        }   
   } 
 }

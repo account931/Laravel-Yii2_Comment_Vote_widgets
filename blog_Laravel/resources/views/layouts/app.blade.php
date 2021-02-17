@@ -104,7 +104,7 @@
                              <li class="{{ Request::is('tokenGuard*') ? 'active' : '' }}"><a href="{{ route('tokenGuard') }}"> Rest Api TokenGuard</a></li>
 
                              <li class="{{ Request::is('appointment*') ? 'active' : '' }}">     <a href="{{ route('appointment') }}">    Appointment  </a></li>
-                             <li class="{{ Request::is('adminlte*') ? 'active' : '' }}">        <a href="{{ route('adminlte') }}">       Admin LT3/Yajra DataTables </a></li>
+                             <li class="{{ Request::is('adminlte*') ? 'active' : '' }}">        <a href="{{ route('adminlte') }}">       Admin LT3/Yajra DataTables Snowy </a></li>
                              <li class="{{ Request::is('eventListenersX*') ? 'active' : '' }}"> <a href="{{ route('eventListenersX')}}"> Events/Listeners           </a></li>
                              
 							 <!-- WPressImages -->
@@ -183,8 +183,11 @@
 	
 	<!-- To register JS file for specific view only (In layout template) (for WpressImage asset only) -->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['wpBlogImages'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
-        <script src="{{ asset('js/Wpress_ImagesBlog/wpress_blog.js') }}"></script> <!-- wpress_blog JS -->
+        <link href="{{ asset('css/Wpress_Images/wpImages_css.css') }}" rel="stylesheet">
+		<script src="{{ asset('js/Wpress_ImagesBlog/wpress_blog.js') }}"></script> <!-- wpress_blog JS -->
     @endif
+	
+	
 	
 	
     <!-- To register JS file for specific view only (In layout template) -->
@@ -229,7 +232,13 @@
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['appointment'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
             <script src="{{ asset('js/Appointment/appoint-vue-start.js')}}"></script> <!-- Vue core -->
     @endif
-
+    
+	<!-- To register JS/CSS for specific view only (for adminlte asset only). Vue rejects and won't work if u  added JS in view. Some CSS are included in View itself -->
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['adminlte'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
+        <script type="text/javascript" src="https://unpkg.com/jquery-snowfall@1.7.4/dist/snowfall.jquery.min.js"></script>  <!--Snow lib JS-->
+		<script src="{{ asset('js/AdminLTE/my-snow.js')}}"></script> <!--My code to start snow-->
+	@endif
+	
 
 	<!-- ALL OTHER/SOME OTHER CSS/JS SCRIPT ARE LOADED IN EVERY SPECIFIC VIEW (before {endsection}) -->
 

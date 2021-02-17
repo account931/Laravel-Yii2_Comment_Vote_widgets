@@ -50,6 +50,21 @@ class Wpress_images_Posts extends Model
   
   
   
+  
+   /**
+   * hasOne and hasMany - you're telling Laravel that this table does not have the foreign key.
+   * hasMany => get category name from table {Wpress_images_Category} based on column {wpBlog_category} in table {wpress_blog_post} .
+   * hasMany
+   */
+  public function getImages(){
+        return $this->hasMany('App\Models\wpBlogImages\Wpress_images_ImagesStock', 'wpImStock_postID', 'wpBlog_id'); //->withDefault(['wpImStock_name' => 'Unknown']);  //'foreign_key', 'owner_key' i.e 'this TableColumn', 'that TableColumn'
+	}
+	
+	
+	
+	
+	
+  
   /**
     * Laravel getter NOT WORKING
     *
