@@ -108,8 +108,8 @@
                              <li class="{{ Request::is('eventListenersX*') ? 'active' : '' }}"> <a href="{{ route('eventListenersX')}}"> Events/Listeners           </a></li>
                              
 							 <!-- WPressImages -->
-							 <li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPressImages      </a> </li> <!-- NOTE: name vs route -->
-                             <li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPressImages Admin </a> </li> <!-- NOTE: name vs route -->
+							 <li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPress-Images      </a> </li> <!-- NOTE: name vs route -->
+                             <li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPress-Images Admin </a> </li> <!-- NOTE: name vs route -->
 
 
 							 <li><a href="{{ route('register') }}">Booking(N/A)</a></li>
@@ -182,9 +182,13 @@
     @endif
 	
 	<!-- To register JS file for specific view only (In layout template) (for WpressImage asset only) -->
-    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['wpBlogImages'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
-        <link href="{{ asset('css/Wpress_Images/wpImages_css.css') }}" rel="stylesheet">
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['wpBlogImages', 'wpBlogImagesOne/{id}', 'createNewWpressImg'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
+        <link  href="{{ asset('css/Wpress_Images/wpImages_css.css') }}" rel="stylesheet">
 		<script src="{{ asset('js/Wpress_ImagesBlog/wpress_blog.js') }}"></script> <!-- wpress_blog JS -->
+		
+		<script src="{{ asset('js/Wpress_ImagesBlog/LightBox/lightbox.js') }}"></script>       <!-- LightBox Lib JS  -->
+        <link  href="{{ asset('css/Wpress_Images/LightBox/lightbox.css') }}" rel="stylesheet"> <!-- LightBox Lib CSS -->
+
     @endif
 	
 	

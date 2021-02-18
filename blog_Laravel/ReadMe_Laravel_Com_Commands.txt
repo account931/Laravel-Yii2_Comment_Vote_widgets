@@ -295,9 +295,17 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
  #If LaravelCollective forms fields is cleared after failed validation:
  You need to use Input::old or you could bind a model to the form https://laravel.com/docs/4.2/html#form-model-binding
-    <input type="text" class="form-control" name="title" value="{{old('title','')}}"/>
+    
+	<input type="text" class="form-control" name="title" value="{{old('title','')}}"/>
     <textarea cols="5" rows="5" class="form-control" name="description">{{old('description','')}}</textarea>
-	
+	#For <select> => 
+	     <select name="product-category" class="mdb-select md-form"> <!-- Saves the old value of select if submit failed due to Validation -->
+			<option  disabled="disabled"  selected="selected">Choose category</option>
+		        @foreach ($allCategories as $a)
+				    <option value={{ $a->categ_id }} {{ old('product-category')!=null && old('product-category') == $a->categ_id  ?  ' selected="selected"' : '' }} > {{ $a->categ_name}} </option>
+				@endforeach
+		</select>
+		
 	+ (isNeeded????) =>if ($validator->fails()) {return redirect('/createNewWpress')->withInput()->withErrors($validator);
 //================================================================================================
 
@@ -412,6 +420,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 //================================================================================================
 8.1.2 Image Upload and validation
 
+
+
  # Image Validation rules example (via Request Class) see at =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Requests/ShopPaypalSimple_AdminPanel/SaveNewProductRequest.php
  # Upload image example (Controller) => see {public function storeProduct(SaveNewProductRequest $request)}  =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
  # Delete image example (Controller) => see {public function deleteProduct(Request $request)} =>   https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
@@ -422,7 +432,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 # get file size =>      $request->image->getSize()
 # get file name =>      $request->image->getClientOriginalName()
 
-
+ #Dont forget to add to form enctype="multipart/form-data" =>  <form method="post" action="{{url('/storeNewWpressImg')}}"  enctype="multipart/form-data">
 
 
 
@@ -527,9 +537,12 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	  $this->call('ShopSimpleSeeder');  //call your subfolder without subfolder prefix
 	  
   If u just created this subfolder, run {composer dump-autoload}
-  
-  
-  #
+ 
+  # Way to set auto increment back to 1 before seeding a table. Go to seeder Class => 
+      Instead of   DB::table('products')->delete(); use =>
+	  
+	  DB::statement('SET FOREIGN_KEY_CHECKS=0');
+      DB::table('products')->truncate();
   
   
 //================================================================================================
@@ -1671,17 +1684,7 @@ On cliking submit sends $_Post ajax to
 //================================================================================================ 
 355.Miscellaneous VA Laravel
 
-# bootstrap => <div class="col-lg-3 col-md-3 col-sm-4">  <div class="col-sm-4 col-xs-4"> => Pc/mobile
-    .xs (phones), .sm (tablets), .md (desktops), and .lg (larger desktops) 
-    .col- (extra small devices - screen width less than 576px)
-	.col-sm- (small devices - screen width equal to or greater than 576px)
-    .col-md- (medium devices - screen width equal to or greater than 768px)
-    .col-lg- (large devices - screen width equal to or greater than 992px)
-    .col-xl- (xlarge devices - screen width equal to or greater than 1200px)
-	
-# bootstrap 3 hidden/visible on mobile  => .hidden-xs	visible-xs
-# bootstrap 3 hidden/visible on desktop  => .hidden-sm	visible-sm  
-                                           .visible-inline-xs is used to display on the same line not next 
+
 
 #image =>           <img class="img-responsive my-cph" src="{{URL::to("/")}}/images/cph.jpg"  alt="a"/>
 #link a href => 	<li><a href="{{ route('register') }}">Gii</a></li>
@@ -1758,7 +1761,7 @@ In Blade (in-line) => <p> You have <b> {{$yourArticles->count()}} </b>  {{($your
 # ternary CSS class=>
      <li class="{{ (isset($_GET['admOrderStatus']) && $_GET['admOrderStatus'] == 'Shipped') ? 'hidden':''}}">
 
-# ternary <select> <option selected="selected">  =>
+# ternary <select> <option selected="selected"> (see "If LaravelCollective forms fields is cleared after failed validation" =>
 	<option value={{ $a->categ_id }} {{ old('product-category')!=null && old('product-category') == $a->categ_id  ?  ' selected="selected"' : '' }} > {{ $a->categ_name}} </option>
 
 
@@ -1820,8 +1823,10 @@ composer dump-autoload
 
 
 # Edit form input field, show either old input or value from DB/Session => 
-    <input id="email" type="email" class="form-control" name="email" value="{{ $mailX ?$mailX : old('email') }}" required>
-
+    #Lar built-in way => see "#If LaravelCollective forms fields is cleared after failed validation"
+    #Manual way       => <input id="email" type="email" class="form-control" name="email" value="{{ $mailX ? $mailX : old('email') }}" required>
+    
+    
 
 # Blade template with flashMessageX, flashMessageFailX, with block to display form validation errors, with alert-info block => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/tokenGuard/index.blade.php
 
@@ -1847,6 +1852,19 @@ composer dump-autoload
 
 //================================================================================================
 356.Miscellaneous VA HTML/CSS
+
+# bootstrap => <div class="col-lg-3 col-md-3 col-sm-4">  <div class="col-sm-4 col-xs-4"> => Pc/mobile
+    .xs (phones), .sm (tablets), .md (desktops), and .lg (larger desktops) 
+    .col- (extra small devices - screen width less than 576px)
+	.col-sm- (small devices - screen width equal to or greater than 576px)
+    .col-md- (medium devices - screen width equal to or greater than 768px)
+    .col-lg- (large devices - screen width equal to or greater than 992px)
+    .col-xl- (xlarge devices - screen width equal to or greater than 1200px)
+	
+# bootstrap 3 hidden/visible on mobile  => .hidden-xs	visible-xs
+# bootstrap 3 hidden/visible on desktop  => .hidden-sm	visible-sm  
+                                           .visible-inline-xs is used to display on the same line not next 
+										   
 # Line => <hr>
 
 #Panel Styling =>
@@ -1971,6 +1989,12 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 #  Convert a JavaScript object into a string =>  alert(JSON.stringify(data, null, 4))  
 
 # Fix to load image via ajax, serialize() wont't work =>  var formData = new FormData(this);  see example => https://github.com/account931/abz_Laravel_6_LTS/blob/main/resources/views/yajra-data-tables-crud2/sample_data.blade.php
+
+# If LightBox Controls are not visible, make sure to load folder image from GitHub LightBox ->src->images. Insert it in CSS folder connected to your page.
+
+# to populate <input type="file"> with JS, (on click "+", adds/creates a new <input> => example https://appdividend.com/2018/02/05/laravel-multiple-images-upload-tutorial/
+     => see \blog_Laravel\resources\views\wpBlog_Images\create.blade.php + \blog_Laravel\public\js\Wpress_ImagesBlog\wpress_blog.js
+     => consider adding to html <div class="increment"> and <div class="increment"> + 4 lines of js
 //================================ End Move to Yii2 ReadMe =============================
 
 //================================================================================================
@@ -2009,7 +2033,7 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 # Error after install & migrate new Laravel 
 "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths. laravel 5.3
 
-You need to have .env on your appication  then run: => $ php artisan key:generate
+You need to have .env on your appication then run: => $ php artisan key:generate
 If you don't have .env copy from .env.example: =>   $ cp .env.example .env
 
 # If can not type in form input => add to form CSS rule {z-index: 9999;}

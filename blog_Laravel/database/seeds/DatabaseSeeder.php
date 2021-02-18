@@ -245,7 +245,10 @@ class WpressImages_blog_Post_Seeder extends Seeder {
   public function run()
   {
     
-	    DB::table('wpressimages_blog_post')->delete();  //whether to Delete old materials
+	    //DB::table('wpressimages_blog_post')->delete();  //whether to Delete old materials
+		DB::statement('SET FOREIGN_KEY_CHECKS=0');       //way to set auto increment back to 1 before seeding a table (instead of ->delete())
+        DB::table('wpressimages_blog_post')->truncate(); //way to set auto increment back to 1 before seeding a table
+
 		$NUMBER_OF_CATEGORIES = 5;
         $faker = Faker::create();
 

@@ -62,6 +62,42 @@ $(document).ready(function(){
 	
 	
 	
+	//LightBox init
+	// **************************************************************************************
+    // **************************************************************************************
+    //                                                                                     ** 
+	
+	 lightbox.option({
+      'resizeDuration': 200,
+	  'fadeDuration': 600,
+      'wrapAround': true,
+	  'fitImagesInViewport':true, //img fit the screen
+	  'alwaysShowNavOnTouchDevices': true
+    });
+
+     // **                                                                                  **
+    // **************************************************************************************
+    // **************************************************************************************
+
+
+
+
+
+	//code to populate the input file/image field (+/-) (to copy and paste new input on ++/--)
+	//to populate <input type="file"> with JS (on click "+", adds a new <input>
+	// **************************************************************************************
+    // **************************************************************************************
+    //                                                                                     ** 
+	
+	$(".btn-populate-x").click(function(){  
+          var html = $(".clone").html();
+          $(".increment").after(html);
+      });
+
+      $("body").on("click",".btn-danger",function(){ 
+          $(this).parents(".control-group").remove();
+      });
+	
 });
 // end ready	
 	

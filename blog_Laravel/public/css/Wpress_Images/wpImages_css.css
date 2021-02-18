@@ -2,3 +2,10 @@
 .image-main  {width:20%; border: 1px solid black;}
 .image-others{width:10%;}
 
+
+/* ---------------------------------------- Mobile */
+@media screen and (max-width: 480px) { 
+    .NOTbtn-style {font-size:4em;} /* */
+}
+ 
+

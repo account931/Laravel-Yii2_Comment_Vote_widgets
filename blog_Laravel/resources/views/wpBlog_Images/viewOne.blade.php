@@ -11,10 +11,6 @@
 
 
 
-
-
-
-
 <div  class="container ">
     <div class="row">
         <div class="col-sm-12 col-xs-12">
@@ -74,7 +70,7 @@
 					
 					<!-- Just info, may delete later -->
 				    <div class="col-sm-12 col-xs-12 alert alert-info small font-italic text-danger  shadowX">
-					    <h5><span class='glyphicon glyphicon-flag' style='font-size:38px;'></span> This page is implementation of One view</h5>
+					    <h5><span class='glyphicon glyphicon-flag' style='font-size:38px;'></span> This page is implementation of One Article view for WPres-Images</h5>
 		                <p><b>See docs at .....</b></p>
 		                <hr>
 		                <p>Some more text.</p>
@@ -82,25 +78,74 @@
 					
 					<!-- Go back link -->
 					<div class="col-sm-12 col-xs-12">
-					    <a href="{{ url('wpBlogg') }}"><i class="fa fa-angle-double-left" style="font-size:49px"></i>    <span style="position:relative; bottom:0.7em;">back to list </span></a><br>
+					    <a href="{{ url('wpBlogImages') }}"><i class="fa fa-angle-double-left" style="font-size:49px"></i>    <span style="position:relative; bottom:0.7em;">back to list </span></a><br>
 					</div>
 					<!-- Go back link -->
+					
+					
+					
 					
 					<!----------- Dispaly one article ---------------->
 					<div class="col-sm-12 col-xs-12 borderX">
 						<p> <img class="img-wpblog" src="{{URL::to('/')}}/images/item.png"  alt=""/> </p>
-
-                        <p> <b> Article id: {{ $articleOne[0]->wpBlog_id }}  </b></p>
-						<p><b>Title:   {{ $articleOne[0]->wpBlog_title     }}</b></p>
+                        
 						
-						<p class="text-truncated" title="click to expand">  {{ $articleOne[0]->wpBlog_text }} </p>  
+						
+						<!-- hasMany Relation, Displays 1st Photo as main. Images from table {wpressimage_imagesstock}. -->
+						<p> Main Image </p>
+						<?php $i = 0; ?>
+						{{-- Check if relation Does not exist --}}
+						@if( $articleOne[0]->getImages->isEmpty() )
+					        <p><img class="image-main" src="{{URL::to("/")}}/images/no-image-found.png"  alt="a"/><p>
+						
+						{{-- Check if relation exists, if True, foreach it --}}
+						@else
+                      							
+					        @foreach ($articleOne[0]->getImages as $x) {{--hasMany must be inside second foreach--}}
+						        {{-- If it is first image --}}
+								@if($i == 0)
+							        <p><img class="image-main" src="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  alt="a"/><p>
+						        @endif
+						        <?php $i++; ?>
+	                       @endforeach
+						@endif
+                        <!-- End hasMany Relation, Displays 1st Photo as main. Images from table {wpressimage_imagesstock}. -->
+						
+						
+						
+                        <p><b>Article id: {{ $articleOne[0]->wpBlog_id    }}</b></p>
+						<p><b>Title:      {{ $articleOne[0]->wpBlog_title }}</b></p>
+						
+						<p title="full text">  {{ $articleOne[0]->wpBlog_text }} </p>  
 
+                        
+						<!-- hasMany Relation. Displays all the rest images, except for the 1st Photo. Images from table {wpressimage_imagesstock}. -->
+						<p> Others minor images </p>
+						<?php $i = 0; ?>
+						{{-- Check if relation Does not exist --}}
+						@if( $articleOne[0]->getImages->isEmpty() )
+					        <!--<p><img class="image-main" src="{{URL::to("/")}}/images/no-image-found.png"  alt="a"/><p>-->
+						
+						{{-- Check if relation exists, if True, foreach it --}}
+						@else
+                      							
+					        @foreach ($articleOne[0]->getImages as $x) {{--hasMany must be inside second foreach--}}
+						        {{-- If it is first image --}}
+								@if($i > 0)
+						            <p><img class="image-others" src="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  alt="a"/><p>
+						        @endif
+		                   
+						        <?php $i++; ?>
+	                       @endforeach
+						@endif
+						<!-- End hasMany Relation. Displays all the rest images, except for the 1st Photo. Images from table {wpressimage_imagesstock}. -->
+						
+						
+						
+						<!-- Blog info: category, author, status-->
 						<hr class="hrX">
 						<p class='smallX font-italic'> Author: {{ $articleOne[0]->authorName->name  }}   {{-- $a->authorName['name']   --}}</p> <!-- hasOne relations to show author name --> <!--  " $a->wpBlog_author" returns id, "authorName()" is a model hasOne function    }}</p> --> 
 						
-					
-						
-		
 						<p class='smallX font-italic'>Category: {{ $articleOne[0]->categoryNames->wpCategory_name }}</p> <!-- hasMany relations to show category name, "$a->wpBlog_category" returns id of category, "categoryNames" is a model hasMany function  -->
 						 
 						 

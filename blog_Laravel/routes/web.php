@@ -47,15 +47,16 @@ Route::get('/wpBlogOne/{id}', 'WpBlog@viewOne')->name('wpBlogOne');  //WpPress B
 
 
 //Wpress with Images Bloq
-Route::get('/wpBlogImages', 'WpBlogImages@index')->name('wpBlogImages');  //WpPress with Images Blog index route
+Route::get('/wpBlogImages',         'WpBlogImagesContoller@index')  ->name('wpBlogImages');  //WpPress with Images Blog index route
+Route::get('/wpBlogImagesOne/{id}', 'WpBlogImagesContoller@viewOne')->name('wpBlogImagesOne');     //WpPress with Images Blog one article view route
+Route::get('createNewWpressImg',    'WpBlogImagesContoller@create') ->name('createNewWpressImg');  //WpPress with Images route for displaying form to create new entry
+Route::post('/storeNewWpressImg',   'WpBlogImagesContoller@store'); //Saving form fields via POST
+
 //not proceeded
 /*
-Route::get('createNewWpress', 'WpBlog@create')->name('createNewWpress');  //WpPress with Images route for displaying form to create new entry
-Route::post('/storeNewWpress','WpBlog@store'); //Saving form fields via POST
 Route::post('delete/{id}','WpBlog@destroy');
 Route::get('edit/{id}','WpBlog@edit');
 Route::post('update/{id}','WpBlog@update');
-Route::get('/wpBlogOne/{id}', 'WpBlog@viewOne')->name('wpBlogOne');  //WpPress with Images Blog one article view route
 */
 
 

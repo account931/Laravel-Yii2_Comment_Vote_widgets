@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB; //not used
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Wpress_Images\SaveNewWpressImagesRequest; //my custom Form validation via Request Class (to create new blog & images in tables {wpressimages_blog_post} & {wpressimage_imagesstock})
 
 
 
-class WpBlogImages extends Controller
+class WpBlogImagesContoller extends Controller
 {
     //public function __construct(){$this->middleware('auth');}
 	
@@ -33,7 +34,7 @@ class WpBlogImages extends Controller
 		//if no GET find all articles with pagination
 	    if (!isset($_GET['category'])){ 
 		    //found articles with pagination
-		    $articles = Wpress_images_Posts::where('wpBlog_status', '1')->with('getImages')->paginate(4); //object(Illuminate\Database\Eloquent\Collection
+		    $articles = Wpress_images_Posts::where('wpBlog_status', '1')->with('getImages')->paginate(4); //object(Illuminate\Database\Eloquent\Collection //->with('getImages') => hasMany Eager Loading
 			//count found articles
 			$countArticles = Wpress_images_Posts::where('wpBlog_status', '1')->get();
 		}
@@ -41,7 +42,7 @@ class WpBlogImages extends Controller
 		//if isset GET, found by category, no pagination
 		if(isset($_GET['category'])){
 			//found articles without pagination
-			$articles = Wpress_images_Posts::where('wpBlog_status', '1')->where('wpBlog_category', $_GET['category'] )->get();
+			$articles = Wpress_images_Posts::where('wpBlog_status', '1')->with('getImages')->where('wpBlog_category', $_GET['category'] )->get(); //->with('getImages') => hasMany Eager Loading
 		    //count found articles
 			$countArticles = Wpress_images_Posts::where('wpBlog_status', '1')->where('wpBlog_category', $_GET['category'] )->get();
 
@@ -75,41 +76,33 @@ class WpBlogImages extends Controller
 	
 	
 	/**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in storage. Validation via request Class
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaveNewWpressImagesRequest $request)
     {
 		//dd(Input::all()); return false;
-		
-		
-		//variant prev
+	    
 		/*
-        $ticket = new Wpress_images_Posts();
-		
-        $data = $this->validate($request, [
-            'description'=>'required',
-            'title'=> 'required',
-	        'category_sel' => 'required|integer'
-        ]);
-       
-	   
-		//dd($data);
-	    //var_dump(Input::get('description'));
-		//dd(Input::all());
-		//return; 
-		
-        if ($ticket->saveTicket(Input::all() )) { //if ($ticket->saveTicket($data))
-            return redirect('/createNewWpress')->with('success', 'New support ticket has been created! Wait sometime to get resolved');
-		} else {
-			return redirect('/createNewWpress')->with('success', 'Failed');
-
+	    if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
+           throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
 		}
-    }
-	*/
-	
+		
+		//if $_POST['productID'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
+		if(!$request->input('product-desr')){
+			throw new \App\Exceptions\myException('Bad request, You are not expected to enter this page.');
+		}
+		*/
+		
+		/*
+		if (empty($request->filename)) {
+            return redirect()->back()->withErrors(['msg', 'The Message']);
+        } */
+		
+		//dd('Validated');
+		dd($request->filename); //(DONT USE $request->input('filename') as IT WON"T WORK)
 	
 	    //validation rules
         $rules = [

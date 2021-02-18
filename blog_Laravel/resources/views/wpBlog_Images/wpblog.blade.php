@@ -21,7 +21,7 @@
                 <div class="panel-body">
 				    
 					
-					<p><a href="{{ route('createNewWpress') }}"><button class="btn btn-large btn-success">Create new</button></a></p>
+					<p><a href="{{ route('createNewWpressImg') }}"><button class="btn btn-large btn-success">Create new</button></a></p>
 				
 				
 				    <!-- Display Categories Dropdown with Blade -->
@@ -98,8 +98,14 @@
 					        @foreach ($a->getImages as $x) {{--hasMany must be inside second foreach--}}
 						        {{-- If it is first image --}}
 								@if($i == 0)
-							        <p><img class="image-main" src="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  alt="a"/><p>
-						        @endif
+									
+									<!-- Image with LightBox -->
+						            <a href="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  title="" data-lightbox="roadtrip{{$a->wpBlog_id}}"> <!-- roadtrip + currentID, to create a unique data-lightbox name, so in modal LightBox will show images related to this article only, not all -->
+								        <img class="image-others" src="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  alt="img"/>
+									</a>
+									<!-- End Image with LightBox -->
+									
+								@endif
 						        <?php $i++; ?>
 	                       @endforeach
 						@endif
@@ -127,19 +133,28 @@
 						
 						{{-- Check if relation exists, if True, foreach it --}}
 						@else
-                      							
+                      		
+						    						
 					        @foreach ($a->getImages as $x) {{--hasMany must be inside second foreach--}}
 						        {{-- If it is first image --}}
 								@if($i > 0)
-						            <p><img class="image-others" src="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  alt="a"/><p>
+							        
+	                                <!-- Image with LightBox -->
+						            <a href="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  title="" data-lightbox="roadtrip{{$a->wpBlog_id}}"> <!-- roadtrip + currentID, to create a unique data-lightbox name, so in modal LightBox will show images related to this article only, not all -->
+								        <img class="image-others" src="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  alt="img"/>
+									</a>
+									<!-- End Image with LightBox -->
+									
 						        @endif
 		                   
 						        <?php $i++; ?>
 	                       @endforeach
+						   
+						   
 						@endif
 						<!-- End hasMany Relation. Displays all the rest images, except for the 1st Photo. Images from table {wpressimage_imagesstock}. -->
 						
-						
+						   
 						
 						
 						
@@ -149,7 +164,7 @@
 						<p class='smallX font-italic'>Category: {{ $a->categoryNames->wpCategory_name }}</p> <!-- hasMany relations to show category name, "$a->wpBlog_category" returns id of category, "categoryNames" is a model hasMany function  -->
 						<p class='smallX'>Status:   {{ $a->getIfPublished($a->wpBlog_status)    }}</p>   <!-- $a->wpBlog_status is DB value Enum (0/1) -->
 						<p class='smallX'>Created:   {{ $a->wpBlog_created_at    }}</p>   <!-- Time -->
-                        <p class='smallX'><a href="{{route('wpBlogOne', ['id' => $a->wpBlog_id])}}">read full article...</a></p>   <!-- link to one article page -->
+                        <p class='smallX'><a href="{{route('wpBlogImagesOne', ['id' => $a->wpBlog_id])}}">read full article...</a></p>   <!-- link to one article page -->
                         <!-- End Blog info: category, author, status, read full article -->
 
  
