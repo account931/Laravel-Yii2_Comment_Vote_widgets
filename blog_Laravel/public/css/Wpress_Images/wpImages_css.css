@@ -2,6 +2,8 @@
 .image-main  {width:20%; border: 1px solid black;}
 .image-others{width:10%;}
 
+/* Preview an image before it is uploaded */
+.preview-x{width:7%;}
 
 /* ---------------------------------------- Mobile */
 @media screen and (max-width: 480px) { 

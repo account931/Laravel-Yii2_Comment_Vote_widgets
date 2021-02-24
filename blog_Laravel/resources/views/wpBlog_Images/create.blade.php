@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12 col-xs-8 col-md-8 col-md-offset-2 panel panel-default"> <!-- col-md-offset-2 -->
-            <div class="panel-heading alert-success">Create new WpBlog with Images </div>
+            <div class="panel-heading alert-success"><i class="fa fa-book" style="font-size:26px"></i> Create new WpBlog with Images </div>
 			    <p><br><a href="{{ route('wpBlogImages') }}"><button class="btn btn-large btn-success">Back to blogs</button></a></p>
 				
 				
@@ -81,7 +81,7 @@
 								
 								<!-- Images upload -->
 								<div class="input-group control-group increment" > <!-- .increment is crucial for  populating <input type="file">-->
-                                    <input type="file" name="filename[]" class="form-control">
+                                    <input type="file" name="filename[]" class="form-control my-img-input-x" id="imgPrimary">
                                     <div class="input-group-btn"> 
                                         <button class="btn btn-success btn-style btn-populate-x" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
                                     </div>
@@ -93,12 +93,12 @@
 							   <!-- Hidden Div to populate <input type="file"> with JS (on click "+", adds a new <input> -->
 		                       <div class="clone hide" style="display:none;">
                                    <div class="control-group input-group" style="margin-top:10px">
-                                       <input type="file" name="filename[]" class="form-control">
+                                       <input type="file" name="filename[]" class="form-control my-img-input-x">
 									   
                                        <!--<div class="col-xs-12 visible-xs"> </div>--><!-- Fix, in mobile there is a div between up and below div -->
 									   
 									   <div class="input-group-btn"> <!-- col-sm-2 col-xs-12 -->
-                                           <button class="btn btn-danger btn-style" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                           <button class="btn btn-danger btn-style remove-populated" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                                         
 									   </div>
                                     </div>
@@ -106,6 +106,11 @@
 								<!-- Hidden Div with Image/file input to copy and generate on ++/-- -->
 								
 								
+								<!-- Shows Preview of an image before it is uploaded (when u select image in <input type="file">). Images are JQ appended -->
+								<div id="previewDiv">
+								</div>
+								 
+								 
                                 <button type="submit" class="btn btn-primary">Create</button>
 								{{-- Form::close() --}}
                              </form>

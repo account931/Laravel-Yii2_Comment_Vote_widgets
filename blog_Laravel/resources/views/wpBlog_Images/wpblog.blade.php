@@ -16,7 +16,10 @@
 						
 						
 						
-                <div class="panel-heading text-warning">WpBlog with Images <span class="small text-danger">(u can delete/edit only your own posts.Log in to have this option. Pagination is set  if NO $_GET, i.e if it displays all articles)</span> </div>
+                <div class="panel-heading text-warning">
+				    <button style="font-size:24px">Wpress <i class="fa fa-book"></i></button><br>
+				    WpBlog with Images <span class="small text-danger">(It is very much like Wpress, but utilizes blog article with one or more images. Images are LightBox-ed. This Wpress Image Blog uses it's own 3-table DB. Pagination is set  if NO $_GET, i.e if it displays all articles)</span> 
+			    </div>
 
                 <div class="panel-body">
 				    

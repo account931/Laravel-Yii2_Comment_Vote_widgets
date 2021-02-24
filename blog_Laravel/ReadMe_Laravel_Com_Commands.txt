@@ -421,11 +421,16 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 8.1.2 Image Upload and validation
 
 
-
- # Image Validation rules example (via Request Class) see at =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Requests/ShopPaypalSimple_AdminPanel/SaveNewProductRequest.php
- # Upload image example (Controller) => see {public function storeProduct(SaveNewProductRequest $request)}  =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
- # Delete image example (Controller) => see {public function deleteProduct(Request $request)} =>   https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
+ #Example_1 => 
+   # Image Validation rules example (via Request Class) see at =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Requests/ShopPaypalSimple_AdminPanel/SaveNewProductRequest.php
+   # Upload image example (Controller) => see {public function storeProduct(SaveNewProductRequest $request)}  =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
+   # Delete image example (Controller) => see {public function deleteProduct(Request $request)} =>   https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
  
+ #Example_2 (upload multiple images as array + form with input population) =>
+   # Image Validation rules example (via Request Class) see at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Requests/Wpress_Images/SaveNewWpressImagesRequest.php
+   # Upload image example (Controller) => see function store() => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlogImagesContoller.php
+   # Upload form => see https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/wpBlog_Images/create.blade.php
+   # Js to populate => \blog_Laravel\public\js\Wpress_ImagesBlog\wpress_blog.js
 ---------------------------------------
 #u can get image via request =>  $request->image (DONT USE $request->input('image') as IT WON"T WORK)
 # get file extension => $request->image->getClientOriginalExtension();
@@ -1992,9 +1997,13 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 
 # If LightBox Controls are not visible, make sure to load folder image from GitHub LightBox ->src->images. Insert it in CSS folder connected to your page.
 
-# to populate <input type="file"> with JS, (on click "+", adds/creates a new <input> => example https://appdividend.com/2018/02/05/laravel-multiple-images-upload-tutorial/
+# to populate <input type="file"> with JS, (on click "+", adds/creates a new <input> => see #Example_2 (upload multiple images as array + form with input population)
+Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-upload-tutorial/
      => see \blog_Laravel\resources\views\wpBlog_Images\create.blade.php + \blog_Laravel\public\js\Wpress_ImagesBlog\wpress_blog.js
      => consider adding to html <div class="increment"> and <div class="increment"> + 4 lines of js
+
+	 
+# Preview an image before it is uploaded (when u select image in <input type="file">) =>  \blog_Laravel\public\js\Wpress_ImagesBlog\wpress_blog.js
 //================================ End Move to Yii2 ReadMe =============================
 
 //================================================================================================
@@ -2033,7 +2042,7 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 # Error after install & migrate new Laravel 
 "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths. laravel 5.3
 
-You need to have .env on your appication then run: => $ php artisan key:generate
+You need to have .env on your appication then run: => $ php artisan key:generate  +  $  php artisan confg:cache
 If you don't have .env copy from .env.example: =>   $ cp .env.example .env
 
 # If can not type in form input => add to form CSS rule {z-index: 9999;}
