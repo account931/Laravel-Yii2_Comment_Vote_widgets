@@ -3,6 +3,7 @@
 namespace App\models\wpBlogImages;
 
 use Illuminate\Database\Eloquent\Model;
+use App\models\wpBlogImages\Wpress_ImagesStock; //table for images
 
 class Wpress_images_Posts extends Model
 {
@@ -27,6 +28,7 @@ class Wpress_images_Posts extends Model
   public $timestamps = false; //to override Error "Unknown Column 'updated_at'" that fires when saving new entry
 
   
+  //CHANGE TO BELONGTO!!!!!
   /**
    * hasOne => get user name from table {users} based on column {wpBlog_author} in table {wpress_blog_post} .
    * hasOne
@@ -38,7 +40,7 @@ class Wpress_images_Posts extends Model
     //->withDefault(['name' => 'Unknown']) this prevents the crash if this author id does not exist in table User (for example after fresh install and u forget to add users to user table)
   }
   
-  
+   //CHANGE TO BELONGTO!!!!!
   /**
    * hasMany => get category name from table {Wpress_images_Category} based on column {wpBlog_category} in table {wpress_blog_post} .
    * hasMany
@@ -57,7 +59,8 @@ class Wpress_images_Posts extends Model
    * hasMany
    */
   public function getImages(){
-        return $this->hasMany('App\Models\wpBlogImages\Wpress_images_ImagesStock', 'wpImStock_postID', 'wpBlog_id'); //->withDefault(['wpImStock_name' => 'Unknown']);  //'foreign_key', 'owner_key' i.e 'this TableColumn', 'that TableColumn'
+	    
+        return $this->hasMany('App\models\wpBlogImages\Wpress_ImagesStock', 'wpImStock_postID', 'wpBlog_id'); //->withDefault(['wpImStock_name' => 'Unknown']);  //'foreign_key', 'owner_key' i.e 'this TableColumn', 'that TableColumn'
 	}
 	
 	
@@ -112,24 +115,6 @@ class Wpress_images_Posts extends Model
 	
 	
 	
-	
-	/**
-    * saves form inputs to DB (NOT USED)
-    *
-    * @param  
-    * @return 
-    */
-	public function saveTicket($data)
-    {   
-        //dd($data['title']); return;
-        $this->wpBlog_author = auth()->user()->id;
-        $this->	wpBlog_title = $data['title'];
-        $this->	wpBlog_text = $data['description'];
-		$this->	wpBlog_category = $data['category_sel'];
-        $this-> wpBlog_created_at = date('Y-m-d H:i:s');
-        $this->save();
-        return 1;
-    }
 
 
     
@@ -139,12 +124,36 @@ class Wpress_images_Posts extends Model
     * @param  
     * @return 
     */
-	public function saveFields($data){
+	public function saveFields($data, $imagesData){
+		
 		$this->wpBlog_author = auth()->user()->id;
-        $this->wpBlog_text = $data['description'];
-        $this->wpBlog_title = $data['title'];
+        $this->wpBlog_text     = $data['description'];
+        $this->wpBlog_title    = $data['title'];
 		$this->wpBlog_category = $data['category_sel'];
 		$this->save();
+		$idX = $this->id;
+		
+		if($this->save()){
+		    //saving images
+		    $model = new Wpress_ImagesStock();
+		    foreach ($imagesData as $fileImageX){
+			
+			    //getting Image info for Flash Message
+		        $imageName = time(). '_' . $fileImageX->getClientOriginalName();
+		        $sizeInByte =     $fileImageX->getSize() . ' byte';
+		        $sizeInKiloByte = round( ($fileImageX->getSize() / 1024), 2 ). ' kilobyte'; //round 10.55364364 to 10.5
+		        $fileExtens =     $fileImageX->getClientOriginalExtension();
+		        //getting Image info for Flash Message
+		
+		
+		        //Move uploaded image to the specified folder 
+		        $fileImageX->move(public_path('images/wpressImages'), $imageName);
+			    $model->wpImStock_name    = $imageName; //image
+			    $model->wpImStock_postID  = $idX; // just saved article ID
+				$model->save();
+			
+		    }
+		}
 	}
 
   

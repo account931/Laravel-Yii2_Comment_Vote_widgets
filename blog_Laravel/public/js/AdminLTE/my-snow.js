@@ -3,7 +3,7 @@
 $(document).ready(function(){
 	
 	
-	// Init snow fall
+	// Init snow fall //scrips are attached in view/layout/app.php
 	// **************************************************************************************
     // **************************************************************************************
     //                                                                                     ** 
@@ -11,8 +11,8 @@ $(document).ready(function(){
            $(document).snowfall({
 			   //image :"images/flake.png",
 			   flakeCount : 100, 
-			   minSize:1, maxSize:4, 
-			   round: 4, 
+			   minSize:1, maxSize:7, 
+			   round: true, 
 			   flakeColor: "blue", 
 			   //maxSpeed, minSpeed
 			}); 
@@ -21,6 +21,28 @@ $(document).ready(function(){
 	//                                                                                     **
     // **************************************************************************************
     // **************************************************************************************	 
+	
+	
+	//stop snow
+	$("#clear").click(function(){
+        $(document).snowfall('clear'); // How you clear
+    });
+     
+    //snow with white color	 
+    $("#round").click(function(){
+        document.body.className  = "darkBg";
+        $(document).snowfall('clear');
+        $(document).snowfall({round : true, minSize: 5, maxSize:8}); // add rounded
+    });
+	
+	
+	
+	//snow ad by default	 
+    $("#snowDef").click(function(){
+        $(document).snowfall('clear');
+        $(document).snowfall({flakeCount : 100,  minSize:1, maxSize:7, round: true, flakeColor: "blue", }); // add rounded
+    });
+	
 	
 });
 // end ready	

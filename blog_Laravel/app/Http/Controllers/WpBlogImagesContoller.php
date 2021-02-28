@@ -34,7 +34,7 @@ class WpBlogImagesContoller extends Controller
 		//if no GET find all articles with pagination
 	    if (!isset($_GET['category'])){ 
 		    //found articles with pagination
-		    $articles = Wpress_images_Posts::where('wpBlog_status', '1')->with('getImages')->paginate(4); //object(Illuminate\Database\Eloquent\Collection //->with('getImages') => hasMany Eager Loading
+		    $articles = Wpress_images_Posts::where('wpBlog_status', '1')->with('getImages')->orderBy('wpBlog_id', 'desc')->paginate(4); //object(Illuminate\Database\Eloquent\Collection //->with('getImages') => hasMany Eager Loading
 			//count found articles
 			$countArticles = Wpress_images_Posts::where('wpBlog_status', '1')->get();
 		}
@@ -42,7 +42,7 @@ class WpBlogImagesContoller extends Controller
 		//if isset GET, found by category, no pagination
 		if(isset($_GET['category'])){
 			//found articles without pagination
-			$articles = Wpress_images_Posts::where('wpBlog_status', '1')->with('getImages')->where('wpBlog_category', $_GET['category'] )->get(); //->with('getImages') => hasMany Eager Loading
+			$articles = Wpress_images_Posts::where('wpBlog_status', '1')->with('getImages')->where('wpBlog_category', $_GET['category'] )->orderBy('wpBlog_id', 'desc')->get(); //->with('getImages') => hasMany Eager Loading
 		    //count found articles
 			$countArticles = Wpress_images_Posts::where('wpBlog_status', '1')->where('wpBlog_category', $_GET['category'] )->get();
 
@@ -64,7 +64,8 @@ class WpBlogImagesContoller extends Controller
     public function create()
     {    
 	    if(!Auth::check()){
-		    throw new \App\Exceptions\myException('Login first.'); 
+			$text = 'You are not logged, <a href="'. route('login') . '"> click here  </a>  to Login first';
+		    throw new \App\Exceptions\myException($text); 
 		}
 	    $categories = Wpress_images_Category::all(); //for dropdown
 		return view('wpBlog_Images.create',  compact('categories'));
@@ -101,33 +102,23 @@ class WpBlogImagesContoller extends Controller
             return redirect()->back()->withErrors(['msg', 'The Message']);
         } */
 		
-		//dd('Validated');
-		dd($request->filename); //(DONT USE $request->input('filename') as IT WON"T WORK)
-	
-	    //validation rules
-        $rules = [
-			'description' => 'required|string|min:3|max:255',
-			'title' => 'required|string|min:3|max:255',
-			'category_sel' => 'required|integer'
-		];
 		
-		$validator = Validator::make($request->all(),$rules);
-		if ($validator->fails()) {
-			return redirect('/createNewWpress')
-			->withInput()
-			->withErrors($validator);
+		//dd($request->filename); //(DONT USE $request->input('filename') as IT WON"T WORK)
+	
+	    
+	    
+        $data       = $request->input();
+		$imagesData = $request->filename; //uploaded images
+		
+	    try{
+			$ticket = new Wpress_images_Posts();
+			$ticket->saveFields($data, $imagesData);
+			return redirect('/wpBlogImages')->with('flashMessage',"Created successfully");
+			
+		} catch(Exception $e){
+			return redirect('/createNewWpressImg')->with('success',"Operation failed");
 		}
-		else{
-            $data = $request->input();
-			try{
-				$ticket = new Wpress_images_Posts();
-				$ticket->saveFields($data);
-				return redirect('/createNewWpress')->with('success',"Insert successfully");
-			}
-			catch(Exception $e){
-				return redirect('/createNewWpress')->with('success',"operation failed");
-			}
-		}
+		
     }
 	
 	

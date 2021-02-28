@@ -237,7 +237,7 @@
             <script src="{{ asset('js/Appointment/appoint-vue-start.js')}}"></script> <!-- Vue core -->
     @endif
     
-	<!-- To register JS/CSS for specific view only (for adminlte asset only). Vue rejects and won't work if u  added JS in view. Some CSS are included in View itself -->
+	<!-- To register JS/CSS for specific view only (for adminlte asset only). -->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['adminlte'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
         <script type="text/javascript" src="https://unpkg.com/jquery-snowfall@1.7.4/dist/snowfall.jquery.min.js"></script>  <!--Snow lib JS-->
 		<script src="{{ asset('js/AdminLTE/my-snow.js')}}"></script> <!--My code to start snow-->

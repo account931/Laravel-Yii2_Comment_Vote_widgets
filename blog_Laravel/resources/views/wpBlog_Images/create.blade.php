@@ -49,24 +49,44 @@
                             </div>
                         @endif
 						
+						
                         <div class="row">
                             <form method="post" action="{{url('/storeNewWpressImg')}}"  enctype="multipart/form-data">
 							{{-- Form::open(array('url' => 'storeNewWpressImg')) --}}
 
-							
-                                <div class="form-group">
-                                    <input type="hidden" value="{{csrf_token()}}" name="_token" />
+							    <input type="hidden" value="{{csrf_token()}}" name="_token" />
+								
+								
+                                <div class="form-group {{ $errors->has('title') ? ' has-error' : '' }}">
 
                                     <label for="title">Article Title:</label>
                                     <input type="text" class="form-control" name="title" value="{{old('title','')}}"/>
+									
+									@if ($errors->has('title'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('title') }}</strong>
+                                    </span>
+                                    @endif
+									
                                 </div>
 								
-                                <div class="form-group">
+								
+								
+								<!-- description -->
+                                <div class="form-group {{ $errors->has('description') ? ' has-error' : '' }}">
                                    <label for="description">Article Text:</label>
                                    <textarea cols="5" rows="5" class="form-control" name="description">{{old('description','')}}</textarea>
-                                </div>
+                                   
+								   @if ($errors->has('description'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('description') }}</strong>
+                                    </span>
+                                    @endif
+									
+								</div>
 								
-								<div class="form-group">
+								
+								<div class="form-group {{ $errors->has('category_sel') ? ' has-error' : '' }}">
                                    <select name="category_sel" class="mdb-select md-form">
 						              <option  disabled="disabled"  selected="selected">Choose category</option>
 		                              @foreach ($categories as $a)
@@ -75,12 +95,18 @@
 
 									  @endforeach
 						            </select>
+									
+									 @if ($errors->has('category_sel'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('category_sel') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
 								
 								
 								
 								<!-- Images upload -->
-								<div class="input-group control-group increment" > <!-- .increment is crucial for  populating <input type="file">-->
+								<div class="form-group input-group control-group increment {{ $errors->has('filename') ? ' has-error' : '' }}" > <!-- .increment is crucial for  populating <input type="file">-->
                                     <input type="file" name="filename[]" class="form-control my-img-input-x" id="imgPrimary">
                                     <div class="input-group-btn"> 
                                         <button class="btn btn-success btn-style btn-populate-x" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>

@@ -70,10 +70,10 @@
 					
 					<!-- Just info, may delete later -->
 				    <div class="col-sm-12 col-xs-12 alert alert-info small font-italic text-danger  shadowX">
-					    <h5><span class='glyphicon glyphicon-flag' style='font-size:38px;'></span> This page is implementation of One Article view for WPres-Images</h5>
-		                <p><b>See docs at .....</b></p>
+					    <h5><span class='glyphicon glyphicon-flag' style='font-size:38px;'></span> This page is implementation of One Article view for WPres-Images, uses LightBox</h5>
+		                <!--<p><b>See docs at .....</b></p>-->
 		                <hr>
-		                <p>Some more text.</p>
+		                <!--<p>Some more text.</p>-->
 					</div>
 					
 					<!-- Go back link -->
@@ -104,7 +104,13 @@
 					        @foreach ($articleOne[0]->getImages as $x) {{--hasMany must be inside second foreach--}}
 						        {{-- If it is first image --}}
 								@if($i == 0)
-							        <p><img class="image-main" src="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  alt="a"/><p>
+									
+									<!-- Image with LightBox -->
+						            <a href="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  title="" data-lightbox="roadtrip{{$x->wpBlog_id}}"> <!-- roadtrip + currentID, to create a unique data-lightbox name, so in modal LightBox will show images related to this article only, not all -->
+								        <img class="image-main" src="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  alt="img"/>
+									</a>
+									<!-- End Image with LightBox -->
+									
 						        @endif
 						        <?php $i++; ?>
 	                       @endforeach
@@ -132,7 +138,13 @@
 					        @foreach ($articleOne[0]->getImages as $x) {{--hasMany must be inside second foreach--}}
 						        {{-- If it is first image --}}
 								@if($i > 0)
-						            <p><img class="image-others" src="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  alt="a"/><p>
+									
+								    <!-- Image with LightBox -->
+						            <a href="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  title="" data-lightbox="roadtrip{{$x->wpBlog_id}}"> <!-- roadtrip + currentID, to create a unique data-lightbox name, so in modal LightBox will show images related to this article only, not all -->
+								        <img class="image-others" src="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  alt="img"/>
+									</a>
+									<!-- End Image with LightBox -->
+									
 						        @endif
 		                   
 						        <?php $i++; ?>

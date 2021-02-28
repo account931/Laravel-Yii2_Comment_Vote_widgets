@@ -1,6 +1,6 @@
 /*--------- WPRESS Blog Images    */
 .image-main  {width:20%; border: 1px solid black;}
-.image-others{width:10%;}
+.image-others{width:10%; border: 1px solid black;}
 
 /* Preview an image before it is uploaded */
 .preview-x{width:7%;}
@@ -11,3 +11,18 @@
 }
  
 
+
+/* ---- Shadow CSS */
+.shadowX {
+	box-shadow: 0 1px 4px rgba(0, 0, 0, .3),
+            -23px 0 20px -23px rgba(0, 0, 0, .6),
+            23px 0 20px -23px rgba(0, 0, 0, .6),
+            inset 0 0 40px rgba(0, 0, 0, .1);
+			border-radius:15px;
+}
+
+.shadowX-2 {-moz-box-shadow: inset 0px 0px 47px 3px #4c3f37; -webkit-box-shadow: inset 0px 0px 47px 3px #4c3f37; box-shadow: inset 0px 0px 277px 3px #4c3f37; }
+.shadowX-3 {box-shadow: 0 1px 4px rgba(0, 0, 0, .3), -23px 0 20px -23px rgba(0, 0, 0, .6), 23px 0 20px -23px rgba(0, 0, 0, .6), inset 0 0 40px rgba(0, 0, 0, .1); }
+
+
+.img-wpblog{ width:7%;}

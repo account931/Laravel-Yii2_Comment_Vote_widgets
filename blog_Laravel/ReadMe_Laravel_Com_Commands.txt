@@ -27,6 +27,7 @@ Table of Content:
 10.hasOne/hasMany relation
 11.DB SQL Eloquent queries
 12.Laravel CRUD
+12.24. Save to DB (SQL INSERT) via model function
 13.REST API
 13.1  Has Many relation in JSON (REST API)
 14. Laravel Flash messages
@@ -40,7 +41,7 @@ Table of Content:
 22. Laravel production
 23. After Login redirect to previous page
 23.2 After Registration redirect to previous page 
-24. Save to DB (SQL INSERT) via model function
+24.
 25. Laravel Vue
 26. PayPal
 27. CLI command => call controller via command line
@@ -753,14 +754,27 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 		
 ---------------------------------------
 
-    12.3 Create	example_1 (Shop AdminPanel, create product) => 
+    12.3 Create (Save) example_1 (Shop AdminPanel, create product) => 
 	        # View (Form) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/add-product.blade.php
             
 			# Controller  => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
               public function addProduct(){} (Form)
 			  public function storeProduct(SaveNewProductRequest $request) (Store)
+			
+ 
+          # Example_2 Create (Save via ::create()) =>  => https://github.com/account931/abz_Laravel_6_LTS/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php			
+            function store(Request $request){
+		      $form_data = array(
+                  'name'        =>  $request->first_name, //DB column => input name
+				  'image'       =>  $imageName, //$request->image,
+              );
+
+              if ( Abz_Employees::create($form_data)) {
+                  return response()->json(['success' => 'Data Added successfully']);
+		      } else {} }
 			  
 --------------------------------------
+
     12.4 Read example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
 	                     public function products(){}
 
@@ -769,6 +783,30 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 
 
+
+
+
+//================================================================================================
+12.24. Save to DB (SQL INSERT) via model function, see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/ShopSimple/ShopOrdersMain.php
+  1. In Cotroller =>
+       public function pay1(ShopShippingRequest $request){
+	     //save Order to DB tables {shop_orders_main} and {shop_order_item}
+		$shopOrdersMain = new ShopOrdersMain();
+		if($shopOrdersMain->saveFields($request->all())){ //all form inputs
+			return redirect('payPage2')->with(compact('input'));
+		} else {
+		    return redirect('/checkOut2')->with('flashMessageFailX', "Error saving to DB. Try Later" );
+        }
+  2. In model =>
+      public function saveFields($data){
+		$this->ord_uuid =        $data['u_uuid']; //auth()->user()->id;
+		$this->ord_sum =         $data['u_sum'];
+		$this->ord_phone =       $data['u_phone'];
+		//$this->ord_placed =      date('Y-m-d H:i:s');
+		$this->save();
+		return true;
+	}
+//================================================================================================
 
 
 
@@ -1130,30 +1168,6 @@ It is done pretty like the same as for Login, see  example at => https://github.
 
 
 
-
-
-
-//================================================================================================
-24. Save to DB (SQL INSERT) via model function, see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/ShopSimple/ShopOrdersMain.php
-  1. In Cotroller =>
-       public function pay1(ShopShippingRequest $request){
-	     //save Order to DB tables {shop_orders_main} and {shop_order_item}
-		$shopOrdersMain = new ShopOrdersMain();
-		if($shopOrdersMain->saveFields($request->all())){ //all form inputs
-			return redirect('payPage2')->with(compact('input'));
-		} else {
-		    return redirect('/checkOut2')->with('flashMessageFailX', "Error saving to DB. Try Later" );
-        }
-  2. In model =>
-      public function saveFields($data){
-		$this->ord_uuid =        $data['u_uuid']; //auth()->user()->id;
-		$this->ord_sum =         $data['u_sum'];
-		$this->ord_phone =       $data['u_phone'];
-		//$this->ord_placed =      date('Y-m-d H:i:s');
-		$this->save();
-		return true;
-	}
-//================================================================================================
 
 
 
@@ -1974,10 +1988,6 @@ $(document).on("click", '.sbmBtn', function() {   // this  click  is  used  to  
 # test/check if someString contains word 'e'
  if( new RegExp('text').test(someString) ){ 
  
-# Sweet alerts with html tags => see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/rbac/my-rbac.js or at /resources/assets/		       
-swal({html:true, title:'Attention!', text:'User has already selected role <b> ' + selectedRoleText + ' </b>.</br>  Back-end validation is also available.', type: 'error'});
-
-# Prevent and send form with Sweet alerts confirm dialogue => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/rbac/my-rbac.js  or if it was Gulp Webpacked =>  at /resources/assets/
 
 #//How to Toggle Password Visibility =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/login/login.js  or if it was Gulp Webpacked =>  at /resources/assets/
 
@@ -1988,6 +1998,12 @@ swal({html:true, title:'Attention!', text:'User has already selected role <b> ' 
 # Check if not null => if($value->master && $value->master !== null)
 
 # Makes Grid table to be wide with scroll => <div class="col-sm-12 col-xs-12" style="width:80em;overflow-x: scroll;">
+
+# Sweet alerts with html tags => see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/rbac/my-rbac.js or at /resources/assets/		       
+swal({html:true, title:'Attention!', text:'User has already selected role <b> ' + selectedRoleText + ' </b>.</br>  Back-end validation is also available.', type: 'error'});
+
+# Prevent and send form with Sweet alerts confirm dialogue => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/rbac/my-rbac.js  or if it was Gulp Webpacked =>  at /resources/assets/
+
 
 # Swal Sweet Alert not waiting until user clicks ok => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/rbac/my-rbac.js or relevant at at /resources/assets/ . See section => $(document).on("click", '.detach-role', function(e)
 
@@ -2042,8 +2058,21 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 # Error after install & migrate new Laravel 
 "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths. laravel 5.3
 
-You need to have .env on your appication then run: => $ php artisan key:generate  +  $  php artisan confg:cache
-If you don't have .env copy from .env.example: =>   $ cp .env.example .env
+  You need to have .env on your appication then run: => $ php artisan key:generate  +  $  php artisan confg:cache
+  If you don't have .env copy from .env.example: =>   $ cp .env.example .env
+
+# If u incounter this error on hosting "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths => 
+   go /config/app.php re-set .env APP_KEY value =>
+   'key' => env('APP_KEY', 'base64:BSaw42CbRqRLo19TWc9ICD7XZzuhfqzf5lxwVzpTztQ='), //instead of 'key' => env('APP_KEY'),  // 'base64:BSaw42CbRqRLo19TWc9ICD7XZzuhfqzf5lxwVzpTztQ=' is a {APP_KEY} from .env
+
+# If error on hosting "SQLSTATE[HY000] [2002] Connection refused within Laravel homestead" => 
+  go /config/database.php and re-set .env DB values =>
+      'host' => env('DB_HOST', 'localhost'),
+      'port' => env('DB_PORT', '3306'),
+      'database' => env('DB_DATABASE', 'id1611*******'),
+      'username' => env('DB_USERNAME', 'id161********'),
+      'password' => env('DB_PASSWORD', 'fghdgf********),
+  
 
 # If can not type in form input => add to form CSS rule {z-index: 9999;}
 
