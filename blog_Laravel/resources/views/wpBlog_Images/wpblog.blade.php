@@ -18,7 +18,8 @@
 						
                 <div class="panel-heading text-warning borderX" style="border:1px solid black;">
 				    <button style="font-size:24px">Wpress <i class="fa fa-book"></i></button><br>
-				    WpBlog with Images <span class="small text-danger">(It is very much like Wpress, but utilizes blog article with one or more images. Images are LightBox-ed. This Wpress Image Blog uses it's own 3-table DB. Pagination is set  if NO $_GET, i.e if it displays all articles)</span> 
+				    WpBlog with Images <span class="small text-danger">(It is very much like Wpress, but utilizes blog article with one or more images. 
+					Images are LightBox-ed. This Wpress Image Blog uses it's own 3-table DB. Pagination is set by $_GET['page'], i.e if there is NO $_GET['page'] in URL, it displays first n articles)</span> 
 			    </div>
 
                 <div class="panel-body">
@@ -102,11 +103,17 @@
 						        {{-- If it is first image --}}
 								@if($i == 0)
 									
-									<!-- Image with LightBox -->
-						            <a href="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  title="" data-lightbox="roadtrip{{$a->wpBlog_id}}"> <!-- roadtrip + currentID, to create a unique data-lightbox name, so in modal LightBox will show images related to this article only, not all -->
-								        <img class="image-main" src="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  alt="img"/>
-									</a>
-									<!-- End Image with LightBox -->
+								    @if(!file_exists(public_path('images/wpressImages/' . $x->wpImStock_name))){{-- check if image exists --}}
+								    
+									   {!! "<span class='small'>image was likely deleted or missing</span>" !!} {{-- with html unescapped tags --}}
+									@else 
+									
+									    <!-- Image with LightBox -->
+						                <a href="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  title="" data-lightbox="roadtrip{{$a->wpBlog_id}}"> <!-- roadtrip + currentID, to create a unique data-lightbox name, so in modal LightBox will show images related to this article only, not all -->
+				                            <img class="image-main" src="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  alt="img"/>
+									    </a>
+									    <!-- End Image with LightBox -->
+									@endif 
 									
 								@endif
 						        <?php $i++; ?>

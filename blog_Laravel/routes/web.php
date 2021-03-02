@@ -52,6 +52,17 @@ Route::get('/wpBlogImagesOne/{id}', 'WpBlogImagesContoller@viewOne')->name('wpBl
 Route::get('createNewWpressImg',    'WpBlogImagesContoller@create') ->name('createNewWpressImg');  //WpPress with Images route for displaying form to create new entry
 Route::post('/storeNewWpressImg',   'WpBlogImagesContoller@store'); //Saving form fields via POST
 
+
+//Wpress Blog on Vue Framework
+Route::get('/wpBlogVueFrameWork',   'WpBlog_VueContoller@index')  ->name('wpBlogVueFrameWork');  //WpPress on Vue Framework Blog index route
+
+Route::group(['middleware' => 'auth', 'prefix' => 'post'], function () { //url must contain /post/, i.e /post/get_all
+    Route::get('get_all',      'WpBlog_VueContoller@getAllPosts')->name('fetch_all');
+    Route::post('create_post', 'WpBlog_VueContoller@createPost')->name('create_post');
+});
+
+
+
 //not proceeded
 /*
 Route::post('delete/{id}','WpBlog@destroy');

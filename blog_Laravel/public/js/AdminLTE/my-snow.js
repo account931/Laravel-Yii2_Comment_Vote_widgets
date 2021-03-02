@@ -36,6 +36,15 @@ $(document).ready(function(){
     });
 	
 	
+	//snow with image
+	$("#imgbut").click(function(){
+        //$('.collectonme').hide();
+        $(document).snowfall('clear');
+        //document.body.className  = "darkBg";
+		//$('body').css("background-color", "grey");
+        $(document).snowfall({image :"images/flake.png", minSize: 10, maxSize:52});
+    });
+			
 	
 	//snow ad by default	 
     $("#snowDef").click(function(){

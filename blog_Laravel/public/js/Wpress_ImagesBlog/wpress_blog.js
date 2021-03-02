@@ -88,13 +88,13 @@ $(document).ready(function(){
 	// **************************************************************************************
     // **************************************************************************************
     //                                                                                     ** 
-	
+	//user clicks ++ 
 	$(".btn-populate-x").click(function(){  
           var html = $(".clone").html();
           $(".increment").after(html);
       });
 
-      //When u click "Remove" to remove last populated <input type="file"> 
+      //When u click "Remove" -- to remove last populated <input type="file"> 
       $("body").on("click", ".remove-populated",function(){ 
           $(this).parents(".control-group").remove(); //removes last populated <input type="file"> 
 		  

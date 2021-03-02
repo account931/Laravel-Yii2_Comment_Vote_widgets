@@ -103,13 +103,16 @@
 							 <li class="{{ Request::is('testMiddle*') ? 'active' : '' }}"><a href="{{ route('testMiddle') }}"> Test Middle</a></li>
                              <li class="{{ Request::is('tokenGuard*') ? 'active' : '' }}"><a href="{{ route('tokenGuard') }}"> Rest Api TokenGuard</a></li>
 
-                             <li class="{{ Request::is('appointment*') ? 'active' : '' }}">     <a href="{{ route('appointment') }}">    Appointment  </a></li>
+                             <li class="{{ Request::is('appointment*') ? 'active' : '' }}">     <a href="{{ route('appointment') }}">    Appointment Vue.js  </a></li>
                              <li class="{{ Request::is('adminlte*') ? 'active' : '' }}">        <a href="{{ route('adminlte') }}">       Admin LT3/Yajra DataTables Snowy </a></li>
                              <li class="{{ Request::is('eventListenersX*') ? 'active' : '' }}"> <a href="{{ route('eventListenersX')}}"> Events/Listeners           </a></li>
                              
 							 <!-- WPressImages -->
 							 <li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPress-Images      </a> </li> <!-- NOTE: name vs route -->
                              <li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPress-Images Admin </a> </li> <!-- NOTE: name vs route -->
+
+                             <!-- WPress on Vue Framework -->
+							 <li class="{{ Request::is('wpBlogVueFrameWork*') ? 'active' : '' }}"> <a href="{{ route('wpBlogVueFrameWork') }}" > WPress Vue.js + Vuex Store     </a> </li> <!-- NOTE: name vs route -->
 
 
 							 <li><a href="{{ route('register') }}">Booking(N/A)</a></li>
@@ -170,9 +173,10 @@
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> <!-- Mega Fix (collapsed main menu won't open)-->
 	<script src="{{ asset('js/my-js.js') }}"></script>
 	
+	
 	<!-- To register JS file for specific view only (In layout template) (for home '/' only. Loads JS for home Vue component <example>. If is loaded globally will inerfere with Appointmant vue-->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['/'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
-         <!--<script src="{{ asset('js/app.js') }}"></script>--> <!-- as included always -->
+         <script src="{{ asset('js/app.js') }}"></script> <!-- as included always -->
     @endif
 	
 	
@@ -185,6 +189,18 @@
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['wpBlogImages', 'wpBlogImagesOne/{id}', 'createNewWpressImg'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
         <link  href="{{ asset('css/Wpress_Images/wpImages_css.css') }}" rel="stylesheet">
 		<script src="{{ asset('js/Wpress_ImagesBlog/wpress_blog.js') }}"></script> <!-- wpress_blog JS -->
+		
+		<script src="{{ asset('js/Wpress_ImagesBlog/LightBox/lightbox.js') }}"></script>       <!-- LightBox Lib JS  -->
+        <link  href="{{ asset('css/Wpress_Images/LightBox/lightbox.css') }}" rel="stylesheet"> <!-- LightBox Lib CSS -->
+    @endif
+	
+	
+	<!-- (for Wpress Vue.js + Vuex Framework asset only -->
+	<!-- To register JS file for specific view only (In layout template) (for Wpress Vue.js + Vuex Framework asset only) -->
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['wpBlogVueFrameWork'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
+        <link  href="{{ asset('css/Wpress_Vue_JS/wpVue_css.css') }}" rel="stylesheet">
+		<script src="{{ asset('js/Wpress_Vue_JS/wpblog-vue-start.js') }}"></script> <!-- wpress Vue JS -->
+		
 		
 		<script src="{{ asset('js/Wpress_ImagesBlog/LightBox/lightbox.js') }}"></script>       <!-- LightBox Lib JS  -->
         <link  href="{{ asset('css/Wpress_Images/LightBox/lightbox.css') }}" rel="stylesheet"> <!-- LightBox Lib CSS -->

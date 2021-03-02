@@ -2,7 +2,7 @@ Laravel Framework 5.4.36 Release (January 24th, 2017), Security Fixes Until (Jan
 OpenServer 5.2.2 Php 7.2 Node-v13.14.0-x86.msi
 Credentials: dimmm931@gmail.com =>  dimax2
 
-NB: CHECK WPRESS MIGRATION (SETTING TIMESTAMP BY DEFAULT)!!!!!!!!!!!!!!!!!!!!!!! 
+NB: CHECK WPRESS MIGRATION (SETTING TIMESTAMP BY DEFAULT) (as varinat add to migration $table->timestamps(); but column name will change)!!!!!!!!!!!!!!!!!!!!!!! 
 
 On HP EliteBook 2530p: Composer -> via Windows cmd, artisan -> via OpenServer (navigate to your project folder first with cd ), 
         git -> via Windows cmd, NPM -> via Windows cmd
@@ -523,7 +523,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
   # To add a new column to existing table => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/migrations/2020_11_21_171640_add_2_columns_to_shop_simple_table.php
      1. php artisan make:migration add_2_columns_to_shop_simple_table
 	 2. see content in example
-  
+	 
+  # Add automatic timestamps =>  $table->timestamps();
   //----------------------------
   
   #SEEDER
@@ -1188,6 +1189,7 @@ It is done pretty like the same as for Login, see  example at => https://github.
    25.6 Use component in onother component
    25.7 Click action
    25.8 Call function from another file
+   25.9 Vue store Vuex
    26. Unsorted (uplift to parent, pass to child, etc)
    ------------------------------
    25.1 Change css based on props =>
@@ -1303,9 +1305,17 @@ It is done pretty like the same as for Login, see  example at => https://github.
 				
 			3. Call the function in targetted component =>
 			    ScrollExternalFile.scrollResults(".selected-room");
+				
        
-    
-	
+	   
+	   
+	   
+        -------------------------------------------------
+	    25.9 Vue store Vuex
+		
+		
+		
+		
 		-------------------------------------------------
 		26. Unsorted
 		------------------------------------------------
@@ -1345,6 +1355,8 @@ It is done pretty like the same as for Login, see  example at => https://github.
         -------------------
         # pass props to child on ternary => 
 		     <selectedRoom :clickedX="this.idClicked" :hostname="typeof(this.idClicked)=== 'string' ? 'No select so far' : this.roomsX[this.idClicked].r_host_name "/>
+        
+		# Image in Vue =>    <img v-if="post.get_images.length" class="card-img-top" :src="`images/wpressImages/${post.get_images[0].wpImStock_name}`" />
 
 //================================================================================================
 
@@ -1765,6 +1777,12 @@ On cliking submit sends $_Post ajax to
 #routing =>
 In route/web => Route::get('/multilanguage', 'MultiLanguage@index')->name('multilanguage'); 
 In View => <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
+
+//example of Middleware and Prefix Group Routing=>
+Route::group(['middleware' => 'auth', 'prefix' => 'post'], function () { //url must contain /post/, i.e /post/get_all
+    Route::get('get_all',      'WpBlog_VueContoller@getAllPosts')->name('fetch_all');
+}
+
 
 #routing with $_GET['id']=>
 When u use url like  => /showOneUser/3

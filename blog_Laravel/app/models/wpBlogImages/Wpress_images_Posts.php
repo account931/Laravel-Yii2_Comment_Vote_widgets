@@ -121,21 +121,25 @@ class Wpress_images_Posts extends Model
     /**
     * saves form inputs to DB (FINAL)
     *
-    * @param  
+    * @param array $data, contains all form input 
+	* @param array $imagesData, contains all form images
     * @return 
     */
 	public function saveFields($data, $imagesData){
 		
-		$this->wpBlog_author = auth()->user()->id;
-        $this->wpBlog_text     = $data['description'];
-        $this->wpBlog_title    = $data['title'];
-		$this->wpBlog_category = $data['category_sel'];
+		//dd(gettype ($data));
+		//dd($imagesData);
+		
+		$this->wpBlog_author     = auth()->user()->id;
+        $this->wpBlog_text       = $data['description'];
+        $this->wpBlog_title      = $data['title'];
+		$this->wpBlog_category   = $data['category_sel'];
+		$this->wpBlog_created_at = date('Y-m-d H:i:s');
 		$this->save();
 		$idX = $this->id;
 		
 		if($this->save()){
-		    //saving images
-		    $model = new Wpress_ImagesStock();
+		    
 		    foreach ($imagesData as $fileImageX){
 			
 			    //getting Image info for Flash Message
@@ -148,6 +152,8 @@ class Wpress_images_Posts extends Model
 		
 		        //Move uploaded image to the specified folder 
 		        $fileImageX->move(public_path('images/wpressImages'), $imageName);
+				//saving images
+		        $model = new Wpress_ImagesStock();
 			    $model->wpImStock_name    = $imageName; //image
 			    $model->wpImStock_postID  = $idX; // just saved article ID
 				$model->save();

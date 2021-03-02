@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 col-xs-8 col-md-8 col-md-offset-2 panel panel-default"> <!-- col-md-offset-2 -->
+        <div class="col-sm-12 col-xs-12 col-md-8 col-md-offset-2 panel panel-default"> <!-- col-md-offset-2 -->
             <div class="panel-heading alert-success"><i class="fa fa-book" style="font-size:26px"></i> Create new WpBlog with Images </div>
 			    <p><br><a href="{{ route('wpBlogImages') }}"><button class="btn btn-large btn-success">Back to blogs</button></a></p>
 				

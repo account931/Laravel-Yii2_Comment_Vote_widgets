@@ -28,7 +28,7 @@ class WpBlogImagesContoller extends Controller
     {
 		//$articles = Wpress_images_Posts::all(); //Eloquent ORM
 		//$articles = Wpress_images_Posts::where('wpBlog_status', '1')->all(); //NOT ORM ELOQUENT, QueryBuilder, wont work with $articles->count()
-		$categories = Wpress_images_Category::all();//for dropdown select
+		$categories = Wpress_images_Category::all();//gets categories for dropdown select
 		//$countArticles = Wpress_images_Posts::where('wpBlog_status', '1')->get();
 		
 		//if no GET find all articles with pagination

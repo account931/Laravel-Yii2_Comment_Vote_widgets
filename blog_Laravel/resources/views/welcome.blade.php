@@ -100,10 +100,10 @@
 			    
 				
                 <div class="title m-b-md my-title">
-                   <center> <h1>Laravel CPH 2019</h1> </center> 
+                   <center> <h1>Laravel CPH 2019</h1></center> 
                 </div>
 				
-				<div class="col-sm-12 col-xs-12">
+				<div id="app" class="col-sm-12 col-xs-12">
                     <example></example> <!-- Vue Component -->
 				</div>
 				
