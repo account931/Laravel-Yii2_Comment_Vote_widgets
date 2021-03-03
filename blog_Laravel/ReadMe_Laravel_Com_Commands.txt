@@ -565,6 +565,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 //================================================================================================
 10.hasOne/hasMany relation
 
+#For Rest API see => 13.1  Has Many relation in JSON (REST API)
+
 #Main difference between hasOne/hasMany vs belongsTo: (if table 'X' primary ID is used in other table as ordinary table, then 'X' model hasOne/hasMany)
   belongsTo and belongsToMany - you're telling Laravel that this table holds the foreign key that connects it to the other table.
   hasOne and hasMany - you're telling Laravel that this table does not have the foreign key.
@@ -623,6 +625,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 //================================================================================================
 11.DB SQL Eloquent queries
   #For Eloquent ORM:
+    User::all() and User::get() will do the exact same thing. get() is a method on the Eloquent\Builder object. If you need to modify the query, such as adding a where clause, then you have to use get().
+	
     $articles = wpress_blog_post::all();
     $articles =  wpress_blog_post::where('wpBlog_status', '1')->get();  INSIDE MODEL =>   $articles = $this->where('wpBlog_status', '1')->get();
 	$articles = wpress_blog_post::where('wpBlog_status', '1')->where('wpBlog_category', 1)->get();
@@ -1178,7 +1182,14 @@ It is done pretty like the same as for Login, see  example at => https://github.
 
 //================================================================================================
 25. Laravel Vue
- Vue components are updated upon watch or npm run production, see details at => 15. Js/Css, minify, Laravel Mix
+ Vue components are updated upon {npm run watch}  or {npm run production}, see details at => 15. Js/Css, minify, Laravel Mix
+ Vue.js start source code file is in /resources/asset/js/someOneFile.js. For Example => \resources\assets\js\WpBlog_Vue\wpblog-vue-start
+ You have to include this file in webpack.mix as source file and specify the output folder, concatenated file will be saved in that folder with the same name. U have to add this file (public/js/Wpress_Vue_JS/wpblog-vue-start.js) in html =>
+       .js('resources/assets/js/WpBlog_Vue/wpblog-vue-start.js',   'public/js/Wpress_Vue_JS')  //Vue.js; Source-> Destination
+ 
+ #Example of a start Vue file see =>  /resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
+                                  =>  /resources/assets/js/Appointment/appoint-vue-start.js
+ 
  Table of content:
    25.1 Change css based on props
    25.2 Vue ajax
@@ -1313,6 +1324,13 @@ It is done pretty like the same as for Login, see  example at => https://github.
         -------------------------------------------------
 	    25.9 Vue store Vuex
 		
+		Main difference between Redux and Vuex - while Redux uses reducers Vuex uses mutations. In Redux state is always immutable, while in Vuex committing mutation by the store is the only way to change data
+		
+		see example of Vuex store => 
+		   Vuex store itself                            => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/store/index.js
+		   Store connected/initiated in main entry file => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
+		   Store used/displayed in component            => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/AllPosts.vue
+		
 		
 		
 		
@@ -1358,6 +1376,22 @@ It is done pretty like the same as for Login, see  example at => https://github.
         
 		# Image in Vue =>    <img v-if="post.get_images.length" class="card-img-top" :src="`images/wpressImages/${post.get_images[0].wpImStock_name}`" />
 
+        # Import/include a file at same folder level => import store from './store/index'; , to import file one level up => import store from '../store/index';
+        
+		# LightBox Library on Vue vs Blade php =>
+		
+		    <!----- Blade php Image with LightBox -->
+			<a href="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  title="" data-lightbox="roadtrip{{$a->wpBlog_id}}"> <!-- roadtrip + currentID, to create a unique data-lightbox name, so in modal LightBox will show images related to this article only, not all -->
+			   <img class="image-main" src="{{URL::to("/")}}/images/wpressImages/{{$x->wpImStock_name}}"  alt="img"/>
+			</a>
+		    <!-- End Blade php Image with LightBox -->
+		
+		
+            <!------ VUE Image with LightBox -->
+	        <a v-if="post.get_images.length" :href="`images/wpressImages/${post.get_images[0].wpImStock_name}`"   title="some" :data-lightbox="`roadtrip${post.wpBlog_id}`" > <!-- roadtrip + currentID, to create a unique data-lightbox name, so in modal LightBox will show images related to this article only, not all -->
+               <img v-if="post.get_images.length" class="card-img-top my-img" :src="`images/wpressImages/${post.get_images[0].wpImStock_name}`" />
+	        </a>
+            <!-- End VUE Image with LightBox -->
 //================================================================================================
 
 
@@ -1778,7 +1812,7 @@ On cliking submit sends $_Post ajax to
 In route/web => Route::get('/multilanguage', 'MultiLanguage@index')->name('multilanguage'); 
 In View => <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
 
-//example of Middleware and Prefix Group Routing=>
+//example of usage of Middleware and Prefix Group Routing=>
 Route::group(['middleware' => 'auth', 'prefix' => 'post'], function () { //url must contain /post/, i.e /post/get_all
     Route::get('get_all',      'WpBlog_VueContoller@getAllPosts')->name('fetch_all');
 }

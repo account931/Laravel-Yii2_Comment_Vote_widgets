@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-//require('./bootstrap'); //otherwise Bootstrap collapsed menu won't work (bootstrap.js included 2 times)
+//require('./bootstrap'); //alerady included in views/layout/app.php. Otherwise Bootstrap collapsed menu won't work (bootstrap.js included 2 times)
 
 window.Vue = require('vue');
 
@@ -13,16 +13,17 @@ window.Vue = require('vue');
 
 // Blog
 //window.Vue = require('vue');
-import store from '../store/index';
-import ElementUI from 'element-ui';
+import store from '../store/index'; //import Vuex Store
+import ElementUI from 'element-ui'; //import ElementUI pop-up modal window
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
 
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('create-post', require('./components/CreatePost.vue').default);
-Vue.component('all-posts', require('./components/AllPosts.vue')/*.default*/);
+Vue.component('show-quantity-of-posts', require('./components/Div_with_Quantity.vue')); //register component dispalying qunatity
+Vue.component('create-post',            require('./components/CreatePost.vue')/*.default*/);
+Vue.component('all-posts',              require('./components/AllPosts.vue')/*.default*/); //register component dispalying all posts
 
 // Blog
 
@@ -36,10 +37,15 @@ Vue.component('all-posts', require('./components/AllPosts.vue')/*.default*/);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+//Show quantity
+const appQuant = new Vue({
+	store, //connect Vuex store, must-have
+    el: '#quant'
+});
 
 //Form
 const app = new Vue({
-	store,
+	store, //connect Vuex store
     el: '#createPost'
 });
 
@@ -47,6 +53,6 @@ const app = new Vue({
 
 //Blog, Dispaly all posts
 const app2 = new Vue({
-	store, //must-have
+	store, //connect Vuex store, must-have
     el: '#app2'
 });

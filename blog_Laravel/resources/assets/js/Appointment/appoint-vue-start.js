@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('../bootstrap');
+//require('../bootstrap'); //alerady included in views/layout/app.php. Otherwise Bootstrap collapsed menu won't work (bootstrap.js included 2 times)
 
 window.Vue = require('vue');
 
@@ -29,7 +29,7 @@ const app = new Vue({
 
 //Register Components
 Vue.component('test-ajax-component',   require('./components/test-ajax.vue'));
-Vue.component('list-of-rooms',       require('./components/generateListOfRooms.vue')); //my second component
+Vue.component('list-of-rooms',         require('./components/generateListOfRooms.vue')); //my second component
 
 
 const appSome = new Vue({

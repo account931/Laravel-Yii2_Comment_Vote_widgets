@@ -38,7 +38,7 @@ class WpBlog_VueContoller extends Controller
 	
 	public function getAllPosts() //http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public/post/get_all
     {   
-        $posts = Wpress_images_Posts::with('getImages')->orderBy('wpBlog_created_at', 'desc')->get();
+        $posts = Wpress_images_Posts::with('getImages', 'authorName', 'categoryNames')->orderBy('wpBlog_created_at', 'desc')->get(); //->with('getImages', 'authorName', 'categoryNames') => hasMany/belongTo Eager Loading
         return response()->json(['error' => false, 'data' => $posts]);
     }
 }

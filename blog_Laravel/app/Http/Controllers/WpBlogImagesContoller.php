@@ -34,7 +34,7 @@ class WpBlogImagesContoller extends Controller
 		//if no GET find all articles with pagination
 	    if (!isset($_GET['category'])){ 
 		    //found articles with pagination
-		    $articles = Wpress_images_Posts::where('wpBlog_status', '1')->with('getImages')->orderBy('wpBlog_id', 'desc')->paginate(4); //object(Illuminate\Database\Eloquent\Collection //->with('getImages') => hasMany Eager Loading
+		    $articles = Wpress_images_Posts::where('wpBlog_status', '1')->with('getImages', 'authorName', 'categoryNames')->orderBy('wpBlog_id', 'desc')->paginate(4); //object(Illuminate\Database\Eloquent\Collection //->with('getImages') => hasMany Eager Loading
 			//count found articles
 			$countArticles = Wpress_images_Posts::where('wpBlog_status', '1')->get();
 		}
@@ -42,7 +42,7 @@ class WpBlogImagesContoller extends Controller
 		//if isset GET, found by category, no pagination
 		if(isset($_GET['category'])){
 			//found articles without pagination
-			$articles = Wpress_images_Posts::where('wpBlog_status', '1')->with('getImages')->where('wpBlog_category', $_GET['category'] )->orderBy('wpBlog_id', 'desc')->get(); //->with('getImages') => hasMany Eager Loading
+			$articles = Wpress_images_Posts::where('wpBlog_status', '1')->with('getImages', 'authorName', 'categoryNames')->where('wpBlog_category', $_GET['category'] )->orderBy('wpBlog_id', 'desc')->get(); //->with('getImages') => hasMany Eager Loading
 		    //count found articles
 			$countArticles = Wpress_images_Posts::where('wpBlog_status', '1')->where('wpBlog_category', $_GET['category'] )->get();
 

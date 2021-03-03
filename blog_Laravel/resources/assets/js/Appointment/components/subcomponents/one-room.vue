@@ -2,7 +2,7 @@
 <template>
     
 		<div class="subfolder shadowX" v-on:click="greet($event)" v-bind:data-id="this.itemZ.r_id" :title="this.itemZ.r_host_name + this.itemZ.r_address">
-			<a href="#"> <img class="my-img" src="images/item.png"  alt=""/> 
+			<a href="javascript:void(0)"> <img class="my-img" src="images/item.png"  alt=""/> 
 			    <p> Room  {{this.itemZ.r_room}} <br> 
 				<span class="small-text">{{this.itemZ.r_host_name}}</span> </p> <br>   <!--passed as props from parent <rooms-in-loop/>-->
 			</a>

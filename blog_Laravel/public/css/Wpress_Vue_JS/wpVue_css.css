@@ -3,9 +3,14 @@
 .vue-logo{width:12%; border: 1px solid black;}
 .my-img  {width:40%;} /* blog main image */
 
+/* -- Loader */
+.loader-x  {position:absolute; top:16em; left:30em;width:99%; display:none;}
+.loader-x img {width:13%;}
+
 /* ---------------------------------------- Mobile */
 @media screen and (max-width: 480px) { 
-    .NOTbtn-style {font-size:4em;} /* */
+  .loader-x  {position:absolute; top:16em; left:8em; width:99%;}
+  .loader-x img {width:43%;}  
 }
  
 

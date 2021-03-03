@@ -28,26 +28,30 @@ class Wpress_images_Posts extends Model
   public $timestamps = false; //to override Error "Unknown Column 'updated_at'" that fires when saving new entry
 
   
-  //CHANGE TO BELONGTO!!!!!
+  
   /**
+   * BelongsTo Relationship
+   * changed from  hasMany to belongsTo  - you're telling Laravel that this table holds the foreign key that connects it to the other table.
    * hasOne => get user name from table {users} based on column {wpBlog_author} in table {wpress_blog_post} .
    * hasOne
    */
   public function authorName()
   {
-    //return $this->belongsTo('App\users', 'id', 'wpBlog_author'); //return $this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');
-	return $this->hasOne('App\users', 'id', 'wpBlog_author')->withDefault(['name' => 'Unknown']);     //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');
+    return $this->belongsTo('App\users', 'wpBlog_author', 'id'); //return $this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');
+	//return $this->hasOne('App\users', 'id', 'wpBlog_author')->withDefault(['name' => 'Unknown']);     //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');
     //->withDefault(['name' => 'Unknown']) this prevents the crash if this author id does not exist in table User (for example after fresh install and u forget to add users to user table)
   }
   
-   //CHANGE TO BELONGTO!!!!!
+  
   /**
+   * BelongsTo Relationship
+   * changed from  hasMany to belongsTo  - you're telling Laravel that this table holds the foreign key that connects it to the other table.
    * hasMany => get category name from table {Wpress_images_Category} based on column {wpBlog_category} in table {wpress_blog_post} .
    * hasMany
    */
   public function categoryNames()
   {
-    return $this->belongsTo('App\models\wpBlogImages\Wpress_images_Category', 'wpBlog_category','wpCategory_id');  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');
+	return $this->belongsTo('App\models\wpBlogImages\Wpress_images_Category', 'wpBlog_category','wpCategory_id');  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');
   }
   
   

@@ -1,7 +1,7 @@
 <?php
 //shows 1 product from SearchBar autocomplete result
 //+ aditionally simply show 1 product by href (when u click 'open in new page') in hidden modal pop-up window
-//USES RENDER PARTIAL
+//USES RENDER PARTIAL 
 ?>
 
 @extends('layouts.app')

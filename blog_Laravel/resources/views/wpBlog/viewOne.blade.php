@@ -53,12 +53,9 @@
 					
 					
                 <div class="panel-heading text-warning col-sm-12 col-xs-12">
-				
 				  <div class="col-sm-12 col-xs-12">
 				    View one article<span class="small text-danger">*</span> 
 				  </div>
-				  
-				  
 				</div>
 
 
@@ -73,7 +70,7 @@
 				    
 					
 					<!-- Just info, may delete later -->
-				    <div class="col-sm-12 col-xs-12 alert alert-info small font-italic text-danger  shadowX">
+				    <div class="col-sm-12 col-xs-12 alert alert-info small font-italic text-danger shadowX">
 					    <h5><span class='glyphicon glyphicon-flag' style='font-size:38px;'></span> This page is implementation of One view</h5>
 		                <p><b>See docs at .....</b></p>
 		                <hr>

@@ -160,7 +160,7 @@
 						
 						<!-- Category -->
 						<div class="col-sm-12 col-xs-12  list-group-item bg-success cursorX shadowX">
-						    Category: {{ $productOne[0]->categoryName->categ_name }} <!--hasMany relation -->
+						    Category: {{ $productOne[0]->categoryName->categ_name }} <!--hasOne(NOT hasMany) relation in '/model/ShopSimple' on table {shop_categories} -->
 						</div>
 						
 						<!-- Device type -->
@@ -170,15 +170,15 @@
 						
 						<!-- Quantity All-->
 						<div class="col-sm-12 col-xs-12  list-group-item bg-success cursorX shadowX">
-						    Initial Quantity in stock:<b> {{ $productOne[0]->quantityGet->all_quantity }} </b>items <!--hasMany relation on table {shop_quantity} -->
+						    Initial Quantity in stock:<b> {{ $productOne[0]->quantityGet->all_quantity }} </b>items <!--hasOne relation in '/model/ShopSimple' on table {shop_quantity} -->
 						</div>
 						
 						
 						<!-- Quantity Left -->
 						<div class="col-sm-12 col-xs-12  list-group-item bg-success cursorX shadowX">
-						    Quantity left:<b> {{ $productOne[0]->quantityGet->left_quantity }} </b>items <!--hasMany relation on table {shop_quantity} -->
+						    Quantity left:<b> {{ $productOne[0]->quantityGet->left_quantity }} </b>items <!--hasOne relation in '/model/ShopSimple' on table {shop_quantity} -->
 						    @if($productOne[0]->quantityGet->left_updated != null)
-							    <p class="small font-italic text-danger">(last purchase: {{ $productOne[0]->quantityGet->left_updated }})</p>
+							    <p class="small font-italic text-danger">(last purchase: {{ $productOne[0]->quantityGet->left_updated }})</p>  <!--hasOne relation in '/model/ShopSimple' on table {shop_quantity} -->
 							@else
 								<p class="small font-italic text-danger">(last purchase: was never purchased)</p>
 						    @endif

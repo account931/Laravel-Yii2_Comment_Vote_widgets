@@ -54,7 +54,7 @@ Route::post('/storeNewWpressImg',   'WpBlogImagesContoller@store'); //Saving for
 
 
 //Wpress Blog on Vue Framework
-Route::get('/wpBlogVueFrameWork',   'WpBlog_VueContoller@index')  ->name('wpBlogVueFrameWork');  //WpPress on Vue Framework Blog index route
+Route::get('/wpBlogVueFrameWork',   'WpBlog_VueContoller@index')  ->name('wpBlogVueFrameWork')->middleware('auth');  //WpPress on Vue Framework Blog index route
 
 Route::group(['middleware' => 'auth', 'prefix' => 'post'], function () { //url must contain /post/, i.e /post/get_all
     Route::get('get_all',      'WpBlog_VueContoller@getAllPosts')->name('fetch_all');

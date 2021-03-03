@@ -36,7 +36,7 @@
 				
 				
 
-					
+					<!-- Not used, reassigned to Vue component -->
                     <div class="alert alert-info borderX">
 					    Aricles found: {{-- $countArticles->count() --}}
 					</div>
@@ -67,19 +67,26 @@
 				 
 				 
 					
-				<!----------- Vue.js VUEX ------------>	 
-				<div class="row" >
-				    <p> Vue </p>
+				<!----------- Vue.js Componenet + VUEX ------------>	 
+				<div class="col-sm-12 col-xs-12" >
+				    <h3><b> Vue </b></h3>
 					
-                    <div id="createPost" class="col-md-6">
-                        <create-post/> 
+					<!-- Show blogs quantity component -->
+					<div id="quant" class="col-sm-12 col-xs-12">
+					    <show-quantity-of-posts/> <!-- Vue component -->
                     </div>
 					
-                    <div id="app2" class="col-md-6 posts-container" style="height: 35rem; overflow-y: scroll">
-                        <all-posts />
+					<!-- Form component -->
+                    <div id="createPost" class="col-md-6">
+                        <create-post/> <!-- Vue component -->
+                    </div>
+					
+					<!-- Show all posts component -->
+                    <div id="app2" class="col-md-6 posts-container" style="height: 45em; overflow-y: scroll">
+                        <all-posts /> <!-- Vue component -->
                     </div>
                 </div>		
-				<!----------- End Vue.js VUEX ------------>	 		
+				<!----------- Vue.js Componenet + VUEX ------------>	 		
 					
 					
 					
@@ -89,4 +96,13 @@
         </div>
     </div>
 </div>
+
+
+<!--------- Loader (for ajax, hidden by default) ----------------->
+<div class="loader-x">
+    <img src="{{URL::to("/")}}/images/loader-black.gif"  alt="a"/>
+</div>
+<!--------- Loader (for ajax, hidden by default)  ----------------->
+
+
 @endsection
