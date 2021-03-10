@@ -1,6 +1,8 @@
 Laravel Framework 5.4.36 Release (January 24th, 2017), Security Fixes Until (January 24th, 2018)
 OpenServer 5.2.2 Php 7.2 Node-v13.14.0-x86.msi
 Credentials: dimmm931@gmail.com =>  dimax2
+PhpMyAdmin => http://localhost/openserver/phpmyadmin/
+
 
 NB: CHECK WPRESS MIGRATION (SETTING TIMESTAMP BY DEFAULT) (as varinat add to migration $table->timestamps(); but column name will change)!!!!!!!!!!!!!!!!!!!!!!! 
 
@@ -8,6 +10,8 @@ On HP EliteBook 2530p: Composer -> via Windows cmd, artisan -> via OpenServer (n
         git -> via Windows cmd, NPM -> via Windows cmd
 
 On T42: so far the same, but Composer -> via Openserver (if troubles => go to folder, LMClick -> "Git Bash here"), NPM -> via Windows cmd
+
+
 
 Table of Content:
 1.How to install Laravel
@@ -1183,12 +1187,24 @@ It is done pretty like the same as for Login, see  example at => https://github.
 //================================================================================================
 25. Laravel Vue
  Vue components are updated upon {npm run watch}  or {npm run production}, see details at => 15. Js/Css, minify, Laravel Mix
- Vue.js start source code file is in /resources/asset/js/someOneFile.js. For Example => \resources\assets\js\WpBlog_Vue\wpblog-vue-start
- You have to include this file in webpack.mix as source file and specify the output folder, concatenated file will be saved in that folder with the same name. U have to add this file (public/js/Wpress_Vue_JS/wpblog-vue-start.js) in html =>
-       .js('resources/assets/js/WpBlog_Vue/wpblog-vue-start.js',   'public/js/Wpress_Vue_JS')  //Vue.js; Source-> Destination
  
- #Example of a start Vue file see =>  /resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
+ # Roadmap to start vue.js implement =>
+    #1. Create one start source code core Vue.js file in "/resources/asset/js/someOneFile.js".
+        For Example => \resources\assets\js\WpBlog_Vue\wpblog-vue-start
+    #2. You have to include this file in webpack.mix as source file and specify the output folder, concatenated file will be saved in that folder with the same name. U have to add this file (public/js/Wpress_Vue_JS/wpblog-vue-start.js) in html =>
+       .js('resources/assets/js/WpBlog_Vue/wpblog-vue-start.js',   'public/js/Wpress_Vue_JS')  //Vue.js; Source-> Destination
+    #3. Include js file "public/js/Wpress_Vue_JS/wpblog-vue-start.js" in html
+	#4. Init some components in \resources\assets\js\WpBlog_Vue\wpblog-vue-start.js, then put this Vue components where u need in /views/../some_view_file
+	    Example => Vue.component('create-post',  require('./components/CreatePost.vue')); => in html => <create-post/>
+	#5. Run {npm run watch} to watch changes
+
+	
+ #Examples of a start Vue file see =>  /resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
                                   =>  /resources/assets/js/Appointment/appoint-vue-start.js
+								  
+
+   
+    
  
  Table of content:
    25.1 Change css based on props
@@ -1332,6 +1348,9 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		   Store used/displayed in component            => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/AllPosts.vue
 		
 		
+		#working example how to change Vuex store from child component => see changeVuexStoreFromChild in  => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/AllPosts.vue
+		
+		
 		
 		
 		-------------------------------------------------
@@ -1393,6 +1412,15 @@ It is done pretty like the same as for Login, see  example at => https://github.
 	        </a>
             <!-- End VUE Image with LightBox -->
 //================================================================================================
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1918,6 +1946,15 @@ composer dump-autoload
     } 
 
 
+# Slug URL via 'cviebrock/eloquent-sluggable' => https://cleverman.org/post/laravel-5-5-i-slug-chto-takoe-slagi-i-zachem-oni-nuzhny
+# Docker in 15 min => https://laravel.demiart.ru/dockerizing-laravel-in-15-minutes/
+
+
+
+
+
+
+
 
 
 
@@ -2154,6 +2191,19 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 # Collapsed Bootstrap main toggle menu won't open on click => 
    move Bootstrap script from <head> to bottom (after  @yield('content')</div>)(in views/layouts/app.blade.php) =>
           <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->  
+		  
+# Error 'In PackageManifest.php line 122: Undefined index: name' =>
+     go to vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php
+     Find this line and comment it:
+         $packages = json_decode($this->files->get($path), true);
+     Add two new lines after the above commented line:
+         $installed = json_decode($this->files->get($path), true);
+         $packages = $installed['packages'] ?? $installed;
+		 
+# Error when 'Element-UI' used in Vue does not show icons, even though main CSS is imported in start Vue.js file, e.g{import 'element-ui/lib/theme-chalk/index.css';} => 
+    add css manually in '/layout.app.css' or in view directly =>
+	    <link  href="{{ asset('../node_modules/element-ui/lib/theme-chalk/index.css') }}" rel="stylesheet"> <!-- Elememt UI icons  -->
+
 =============================
 
 если токен не принимается обработчиком, то варианта существует по сути два – либо он не отправляется в запросе (отсутствует csrf_field() в форме, или нет нужного значения в аякс-запросе – там он может передаваться как в данных так и в заголовках запроса), либо на стороне сервера не загружается сессия – именно в ней сохраняется токен на стороне сервера, чтобы было с чем сравнить то что пришло в запросе.

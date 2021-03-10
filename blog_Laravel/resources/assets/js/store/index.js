@@ -35,10 +35,19 @@ export default new Vuex.Store({
           }).then(dataZ => {
               console.log(dataZ);
 		      //core rewritten async getAllPosts, trigger mutation setPosts()
-	          return commit('setPosts', dataZ );
+	          return commit('setPosts', dataZ ); //sets ajax results to store via mutation
           })
 	      .catch(err => alert("Getting articles failed ( in store/index.js). Check if ure logged =>  " + err)); // catch any error
-      }
+      },
+	  
+	  //working example how to change Vuex store from child component
+	  /*
+	  changeVuexStoreFromChild({ commit }, dataTestX) { 
+	      //var dataTest = {"error":false,"data":[{"wpBlog_id":1,"wpBlog_title":"Dima", "wpBlog_text":"Store 1", "get_images":[]}, {"wpBlog_id":2,"wpBlog_title":"Dima 2", "wpBlog_text":"Store 2", "get_images":[]}]};
+	      console.log(dataTestX);
+		  return commit('setPosts', dataTestX ); //sets dataTestX to store via mutation
+	  } 
+	  */
 	},
 
 
@@ -46,7 +55,7 @@ export default new Vuex.Store({
   mutations: {
     setPosts(state, response) { 
       state.posts = response.data/*.data*/;
-	  console.log('setPosts executed in store');
+	  console.log('setPosts executed in store' + response);
     },
   },
   strict: debug

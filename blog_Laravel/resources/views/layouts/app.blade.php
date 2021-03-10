@@ -204,9 +204,11 @@
 		
 		<script src="{{ asset('js/Wpress_ImagesBlog/LightBox/lightbox.js') }}"></script>       <!-- LightBox Lib JS  -->
         <link  href="{{ asset('css/Wpress_Images/LightBox/lightbox.css') }}" rel="stylesheet"> <!-- LightBox Lib CSS -->
-
-    @endif
-	
+        
+        <link  href="{{ asset('../node_modules/element-ui/lib/theme-chalk/index.css') }}" rel="stylesheet"> <!-- Elememt UI icons  -->
+                        
+	@endif
+	 
 	
 	
 	

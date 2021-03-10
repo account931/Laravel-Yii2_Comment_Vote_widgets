@@ -9,7 +9,8 @@
   
   
     <!------ Mine, Just to check if Store is working and connected --------->
-    <div>
+    <div> 
+	     <p class="visible-xs" style="margin-top:5em;"></p> <!-- visible in mobile only, for margin -->
          <p>My Store-2 (display all Vuex store, works OK, just commented)</p> 
 		  {{ /* checkStore */ }} 
     </div>
@@ -96,9 +97,9 @@ export default {
   
   //computed property is used to declaratively describe a value that depends on other values. When you data-bind to a computed property inside the template, Vue knows when to update the DOM when any of the values depended upon by the computed property has changed.
   computed: {
-    ...mapState(['posts']),
+    ...mapState(['posts']), //works without it????
 	
-	//mine
+	//mine test
 	checkStore() {
         console.log(this.$store.state.posts);
 		return this.$store.state.posts;
@@ -106,9 +107,17 @@ export default {
       },
 	//mine  
   },
+  
+  //before mount
   beforeMount() {
-    //let that = this;
-    this.$store.dispatch('getAllPosts');
+    ////run ajax in Vuex store
+    this.$store.dispatch('getAllPosts'); //trigger ajax function getAllPosts(), which is executed in Vuex store
+	
+   /*
+    //working example how to change Vuex store from child component   
+	var dataTest = {"error":false,"data":[{"wpBlog_id":1,"wpBlog_title":"Dima", "wpBlog_text":"Store 1", "get_images":[]}, {"wpBlog_id":2,"wpBlog_title":"Dima 2", "wpBlog_text":"Store 2", "get_images":[]}]};
+	this.$store.dispatch('changeVuexStoreFromChild', dataTest); //working example how to change Vuex store from child component
+   */
   },
   methods: {
     truncateText(text) {

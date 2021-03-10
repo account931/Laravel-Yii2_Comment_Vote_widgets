@@ -51,7 +51,7 @@ const app = new Vue({
 
 
 
-//Blog, Dispaly all posts
+//Blog, Displays all posts, ajax to get POST API is triggered in AllPosts.vue, executed in Vuex store
 const app2 = new Vue({
 	store, //connect Vuex store, must-have
     el: '#app2'

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 90);
+/******/ 	return __webpack_require__(__webpack_require__.s = 83);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -71,1300 +71,13 @@
 if (false) {
   module.exports = require('./vue.common.prod.js')
 } else {
-  module.exports = __webpack_require__(17)
+  module.exports = __webpack_require__(15)
 }
 
 
 /***/ }),
 
-/***/ 116:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(5)
-/* script */
-var __vue_script__ = __webpack_require__(117)
-/* template */
-var __vue_template__ = __webpack_require__(118)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/Appointment/components/test-ajax.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-05a1caf8", Component.options)
-  } else {
-    hotAPI.reload("data-v-05a1caf8", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 117:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-
-	//i.e props
-	data: function data() {
-		return {
-			companies: [],
-			myStateTextX: "I am an appoint state",
-			cssState: false,
-			info: {}
-		};
-	},
-
-	mounted: function mounted() {
-		console.log('Component mounted.');
-
-		var thisXCursor = this; //mega fix
-
-
-		//gets url route for ajax
-		var loc = window.location.pathname;
-		var dir = loc.substring(0, loc.lastIndexOf('/')); ///laravel+Yii2_widgets/blog_Laravel/public    
-		var urlX = dir + '/api/articles';
-
-		//variant 1, working (Promise variant)
-		$.get(urlX).then(function (dataZ) {
-			// добавляем обработчик при удачном выполнении запроса
-			console.log('Ajax 1 is OK');
-			console.log(dataZ); // выводим в консоль текстовую информацию
-			thisXCursor.info = dataZ; //works
-
-			//works, adds new values to Object info{}. Just for testing
-			thisXCursor.info = Object.assign({}, thisXCursor.info, {
-				newProperty1: 'myNewValue',
-				newProperty2: 9311
-			});
-			console.log('Main');
-			console.log(thisXCursor.info);
-		}).catch(function (err) {
-			return alert("Ajax var 1 send failed =>  " + err);
-		}); // catch any error
-
-
-		//variant 2, Working (JQ ajax variant)
-		$.ajax({
-			url: urlX,
-			type: 'GET',
-			dataType: 'JSON',
-
-			success: function success(data) {
-				//alert('OK');
-				//console.log(data);
-			}, //end success
-
-			error: function error(_error) {
-				alert('failed variant 2');
-			}
-		}).then(function (dataZ) {
-			// добавляем обработчик при удачном выполнении запроса
-			console.log('Ajax is OK 2');
-			console.log(dataZ); // выводим в консоль текстовую информацию
-		}).then(function (dataZ) {
-			console.log('Ajax is OK 3');
-			//var app = this;
-			//thisXCursor.info = dataZ;
-			console.log(thisXCursor.info);
-			//thisXCursor.info = dataZ; //works
-		});
-		//.then(response => (this.info = response))
-		//.then(var app = this console.log(this.info) );
-
-
-		/*axios
-            .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-            .then(response => (this.info = response));*/
-	},
-
-
-	//method/functions
-	methods: {
-		changeEntry: function changeEntry() {
-			//if (confirm("Do you really want to proceed?")) {
-
-			var app = this;
-			if (app.myStateTextX != 'Appointment state') {
-				app.myStateTextX = 'Appointment state';
-				app.cssState = true;
-			} else {
-				app.myStateTextX = 'State is changed';
-				app.cssState = false;
-			}
-
-			//}
-		}
-	}
-
-});
-
-/***/ }),
-
-/***/ 118:
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
-        _c("div", { staticClass: "panel panel-default" }, [
-          _c(
-            "div",
-            {
-              staticClass: "panel-heading pointer",
-              on: {
-                click: function($event) {
-                  return _vm.changeEntry()
-                }
-              }
-            },
-            [
-              _vm._v(
-                "Test Ajax Component, load ajax data via controller/TestRest and models/WpressRest"
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "panel-body",
-              class: _vm.cssState ? " text-primary bg-danger" : ""
-            },
-            [
-              _vm._v(
-                "\n                        I'm a Vue Appointment to load REST API from  table {wpress_blog_post}"
-              ),
-              _c("br"),
-              _vm._v(
-                "\n\t\t\t\t\t\t" +
-                  _vm._s(_vm.myStateTextX) +
-                  "\n                    "
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn",
-              attrs: {
-                "data-toggle": "collapse",
-                "data-target": "#wpressRestResults"
-              }
-            },
-            [_vm._v("Show Collapsible REST Api")]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "panel-body collapse",
-              attrs: { id: "wpressRestResults" }
-            },
-            [
-              _c("p", [_vm._v("Info")]),
-              _vm._v(" "),
-              _vm._l(_vm.info, function(value, name) {
-                return _c("div", [
-                  _vm._v(
-                    "\n                            " +
-                      _vm._s(name) +
-                      ": " +
-                      _vm._s(value.wpBlog_id) +
-                      " " +
-                      _vm._s(value.wpBlog_title) +
-                      " \n                        "
-                  )
-                ])
-              })
-            ],
-            2
-          )
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-05a1caf8", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 119:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(5)
-/* script */
-var __vue_script__ = __webpack_require__(120)
-/* template */
-var __vue_template__ = __webpack_require__(131)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/Appointment/components/generateListOfRooms.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-c01cfd12", Component.options)
-  } else {
-    hotAPI.reload("data-v-c01cfd12", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 12:
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-
-/***/ 120:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-
-//using other sub-component 
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-	//using other sub-component 
-	components: {
-		'rooms-in-loop1': __WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue___default.a
-	},
-
-	//i.e props
-	data: function data() {
-		return {
-			companies: [],
-			myStateTextX: "I am an appoint state",
-			cssState: false,
-			info: {}
-		};
-	},
-
-	mounted: function mounted() {},
-
-
-	//method/functions
-	methods: {
-		changeEntry: function changeEntry() {
-			//if (confirm("Do you really want to proceed?")) {
-
-			var app = this;
-			if (app.myStateTextX != 'Appointment state') {
-				app.myStateTextX = 'Appointment state';
-				app.cssState = true;
-			} else {
-				app.myStateTextX = 'State is changed';
-				app.cssState = false;
-			}
-
-			//}
-		},
-		onClickChild: function onClickChild(value) {
-			alert('ddddd');
-			console.log(value); // someValue
-		}
-	}
-
-});
-
-/***/ }),
-
-/***/ 121:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(5)
-/* script */
-var __vue_script__ = __webpack_require__(122)
-/* template */
-var __vue_template__ = __webpack_require__(130)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/Appointment/components/subcomponents/rooms-in-loop.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-061f83c7", Component.options)
-  } else {
-    hotAPI.reload("data-v-061f83c7", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 122:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__one_room_vue__ = __webpack_require__(123);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__one_room_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__one_room_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__selected_room_vue__ = __webpack_require__(127);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__selected_room_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__selected_room_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-//using other sub-component 
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-									//using other sub-component 
-									components: {
-																		'OneRoomX': __WEBPACK_IMPORTED_MODULE_0__one_room_vue___default.a,
-																		'selectedRoom': __WEBPACK_IMPORTED_MODULE_1__selected_room_vue___default.a
-									},
-
-									//i.e props
-									data: function data() {
-																		return {
-																											roomsX: [], //to contain ajax results from api/rooms
-																											companies: [1, 2, 3, 4, 5, 6, 7, 8, 9], //was used just for testing in v-for
-																											idClicked: "nothing selected",
-																											calendarData: ' Calendar ajax data goes here'
-
-																											/*myStateTextX: "I am an appoint state",
-                           cssState: false,
-                           info: {}, */
-																		};
-									},
-
-									//---------------------------
-									mounted: function mounted() {
-
-																		//getting Rest data with rooms
-																		console.log('Component mounted Rooms.');
-
-																		var self = this; //mega fix
-
-
-																		//gets url route for ajax
-																		var loc = window.location.pathname;
-																		var dir = loc.substring(0, loc.lastIndexOf('/')); ///laravel+Yii2_widgets/blog_Laravel/public    
-																		var urlX = dir + '/api/rooms';
-
-																		//working ajax variant (Promise variant)
-																		//$.get(urlX) 
-
-																		$.get(urlX, {
-																											method: 'get',
-																											headers: { 'Content-Type': 'application/json' }
-																		}).then(function (dataZ) {
-																											// 
-																											console.log('Ajax Rooms is OK');
-																											console.log(dataZ); // 
-																											self.roomsX = dataZ; //works
-
-
-																											console.log(self.roomsX);
-																		}).catch(function (err) {
-																											return alert("Ajax Rooms Loading failed =>  " + err);
-																		}); // catch any error
-
-									},
-
-									//---------------------------
-
-									created: function created() {},
-
-									//method/functions
-									methods: {
-																		changeEntry: function changeEntry() {},
-
-
-																		//get uplifted value from child to this parent component
-																		onClickChild: function onClickChild(value) {
-																											console.log(value); // someValue
-																											this.idClicked = parseInt(value);
-																		},
-
-
-																		//get uplifted value from child to this parent component
-																		calendarGet: function calendarGet(value) {
-																											this.calendarData = value;
-																		}
-									}
-
-});
-
-/***/ }),
-
-/***/ 123:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(5)
-/* script */
-var __vue_script__ = __webpack_require__(124)
-/* template */
-var __vue_template__ = __webpack_require__(126)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/Appointment/components/subcomponents/one-room.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6bf2c37c", Component.options)
-  } else {
-    hotAPI.reload("data-v-6bf2c37c", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 124:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__my_functions_scroll_function_js__ = __webpack_require__(125);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-//import function from other external file
- //name in {} i.e 'ScrollExternalFile' must be cooherent to name in "export const ScrollExternalFile" in '/scroll_function.js'
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-			props: ['itemZ'], //passed as props from parent </>
-
-			//i.e props
-			data: function data() {
-						return {
-									/* calendar: "Cal";
-                  companies: [],
-         myStateTextX: "I am an appoint state",
-         cssState: false,
-         info: {}, */
-						};
-			},
-
-			mounted: function mounted() {},
-
-
-			//method/functions
-			methods: {
-						changeEntry: function changeEntry() {},
-
-
-						greet: function greet(event) {
-									//alert(event.currentTarget.getAttribute('data-id'));
-
-
-									//uplift to parent clicked ID
-									var idClicked = event.currentTarget.getAttribute('data-id');
-									this.$emit('clickedChild', idClicked);
-
-									//show and hide loader
-									$("#loaderX").show(400);
-
-									setTimeout(function () {
-												$("#loaderX").fadeOut(800);
-												//$("#loaderX").css('opacity', '0'); 
-									}, 2000);
-
-									//Creating overlay while changing content of selected room. The one used in React Sms
-									$(".child-div").css('opacity', '1');
-
-									setTimeout(function () {
-												$(".child-div").css('opacity', '0'); //hides yellow overlay div -> react imitation of animation, analogue of $(".del-st").stop().fadeOut("slow",function(){ $(this).html(finalText) }).fadeIn(3000);
-									}, 3000);
-
-									//alert('sends calendar ajax');
-									this.sendCalendarRequest();
-
-									//Scroll to results in Mobile only
-									if (screen.width <= 640) {
-												__WEBPACK_IMPORTED_MODULE_0__my_functions_scroll_function_js__["a" /* ScrollExternalFile */].scrollResults(".selected-room"); //calling function from external file '/my_functions/scroll_function.js'
-									}
-						},
-
-						//send ajax to calendar
-						sendCalendarRequest: function sendCalendarRequest() {
-
-									var self = this; //mega fix
-
-									//gets url route for ajax
-									var loc = window.location.pathname;
-									var dir = loc.substring(0, loc.lastIndexOf('/')); ///laravel+Yii2_widgets/blog_Laravel/public    
-									var urlX = dir + '/api/getCalendar';
-
-									//working ajax variant (Promise variant)
-
-									$.get(urlX, {
-												method: 'get',
-												headers: { 'Content-Type': 'application/json' }
-									}).then(function (dataZ) {
-												// 
-												console.log('Ajax Rooms is OK');
-												console.log(dataZ); // 
-												//self.calendar = dataZ; //works
-
-												//uplift to parent ajax results
-												self.$emit('passCalendarAjax', dataZ);
-									}).catch(function (err) {
-												return alert("Ajax Calendar Loading failed =>  " + err);
-									}); // catch any error
-						}
-
-			}
-
-});
-
-/***/ }),
-
-/***/ 125:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ScrollExternalFile; });
-
-//(function(){ //START IIFE (Immediately Invoked Function Expression)
-
-
-//$(document).ready(function(){
-
-
-var ScrollExternalFile = {
-
-  // **************************************************************************************
-  // **************************************************************************************
-  //                                                                                     **
-  scrollResults: function scrollResults(divName, parent) {
-    //arg(DivID, levels to go up from DivID)
-    //if 2nd arg is not provided while calling the function with one arg
-    if (typeof parent === 'undefined') {
-
-      $('html, body').animate({
-        scrollTop: $(divName).offset().top
-        //scrollTop: $('.your-class').offset().top
-      }, 'slow');
-      // END Scroll the page to results
-    } else {
-      //if 2nd argument is provided
-      var stringX = "$(divName)" + parent + "offset().top"; //i.e constructs -> $("#divID").parent().parent().offset().top
-      $('html, body').animate({
-        scrollTop: eval(stringX) //eval is must-have, crashes without it
-      }, 'slow');
-    }
-  }
-
-  // **                                                                                  **
-  // **************************************************************************************
-  // **************************************************************************************
-
-};
-
-//});
-// end ready	
-
-
-//}()); //END IIFE (Immediately Invoked Function Expression)
-
-/***/ }),
-
-/***/ 126:
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "subfolder shadowX",
-      attrs: {
-        "data-id": this.itemZ.r_id,
-        title: this.itemZ.r_host_name + this.itemZ.r_address
-      },
-      on: {
-        click: function($event) {
-          return _vm.greet($event)
-        }
-      }
-    },
-    [
-      _c("a", { attrs: { href: "javascript:void(0)" } }, [
-        _c("img", {
-          staticClass: "my-img",
-          attrs: { src: "images/item.png", alt: "" }
-        }),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(" Room  " + _vm._s(this.itemZ.r_room) + " "),
-          _c("br"),
-          _vm._v(" "),
-          _c("span", { staticClass: "small-text" }, [
-            _vm._v(_vm._s(this.itemZ.r_host_name))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("br")
-      ])
-    ]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6bf2c37c", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 127:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(5)
-/* script */
-var __vue_script__ = __webpack_require__(128)
-/* template */
-var __vue_template__ = __webpack_require__(129)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/Appointment/components/subcomponents/selected-room.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3556311d", Component.options)
-  } else {
-    hotAPI.reload("data-v-3556311d", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 128:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-				props: ['clickedX', 'hostname'], //passed as props from parent <rooms-in-loop/>
-
-				//i.e props
-				data: function data() {
-								return {
-												/*companies: [],
-            myStateTextX: "I am an appoint state",
-            cssState: false,
-            info: {}, */
-								};
-				},
-
-				mounted: function mounted() {},
-
-
-				//method/functions
-				methods: {
-								changeEntry: function changeEntry() {}
-				}
-
-});
-
-/***/ }),
-
-/***/ 129:
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "col-sm-12 col-xs-12 shadowX" },
-    [
-      _c("center", [
-        _c(
-          "div",
-          { staticClass: "shadowX selected-room parent-div show-div" },
-          [
-            _c("div", { staticClass: "child-div" }, [
-              _c("p", [_vm._v("This should be over the parent")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "loader-child" }, [
-                _c("img", { attrs: { src: "images/loader.gif", alt: "" } })
-              ])
-            ]),
-            _vm._v("\n\t\t\t\n\t\t\t\n\t\t        You selected \n\t\t\t    "),
-            _c("a", { attrs: { href: "#" } }, [
-              _c("p", { attrs: { id: "selectedRoom" } }, [
-                _vm._v(" Room " + _vm._s(this.clickedX) + "  "),
-                _c("br"),
-                _vm._v(" " + _vm._s(this.hostname) + " ")
-              ]),
-              _vm._v(" "),
-              _c("br")
-            ])
-          ]
-        )
-      ])
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3556311d", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 130:
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "col-sm-12 col-xs-12 rooms" },
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _vm._l(_vm.roomsX, function(item, index) {
-        return _c("OneRoomX", {
-          key: index,
-          attrs: { itemZ: item },
-          on: {
-            clickedChild: _vm.onClickChild,
-            passCalendarAjax: _vm.calendarGet
-          }
-        })
-      }),
-      _vm._v(" "),
-      _c("selectedRoom", {
-        attrs: {
-          clickedX: this.idClicked,
-          hostname:
-            typeof this.idClicked === "string"
-              ? "No select so far"
-              : this.roomsX[this.idClicked - 1].r_host_name
-        }
-      }),
-      _vm._v(" "),
-      _c("div", {
-        staticClass: "col-sm-12 col-xs-12",
-        attrs: { id: "loaderX" }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-12 col-xs-12 calendar" }, [
-        _vm._v("\n\t\t   " + _vm._s(this.calendarData) + "\n\t\t")
-      ])
-    ],
-    2
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h3", [
-      _vm._v("Hello from /subcomponents/room-in-loops. "),
-      _c("br"),
-      _vm._v(
-        "Rooms are build with component iteration and by ajax load from Db table {appoint-room-list}  "
-      )
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-061f83c7", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 131:
+/***/ 100:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1385,7 +98,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 17:
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13349,11 +12062,11 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(18).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(16).setImmediate))
 
 /***/ }),
 
-/***/ 18:
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -13409,7 +12122,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(19);
+__webpack_require__(17);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -13420,11 +12133,11 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 
-/***/ 19:
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -13614,11 +12327,202 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(12)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(18)))
 
 /***/ }),
 
-/***/ 2:
+/***/ 18:
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+
+/***/ 3:
 /***/ (function(module, exports) {
 
 var g;
@@ -13646,7 +12550,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 5:
+/***/ 4:
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -13756,15 +12660,15 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 90:
+/***/ 83:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(91);
+module.exports = __webpack_require__(84);
 
 
 /***/ }),
 
-/***/ 91:
+/***/ 84:
 /***/ (function(module, exports, __webpack_require__) {
 
 //Start point to mount Vue components (so far mount 2 components => test-ajax-component + list-of-rooms)
@@ -13793,8 +12697,8 @@ const app = new Vue({
 */
 
 //Register Components
-Vue.component('test-ajax-component', __webpack_require__(116));
-Vue.component('list-of-rooms', __webpack_require__(119)); //my second component
+Vue.component('test-ajax-component', __webpack_require__(85));
+Vue.component('list-of-rooms', __webpack_require__(88)); //my second component
 
 
 var appSome = new Vue({
@@ -13806,6 +12710,1102 @@ var appSome = new Vue({
 var appSome1 = new Vue({
     el: '#appZ1'
 });
+
+/***/ }),
+
+/***/ 85:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(86)
+/* template */
+var __vue_template__ = __webpack_require__(87)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/Appointment/components/test-ajax.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-05a1caf8", Component.options)
+  } else {
+    hotAPI.reload("data-v-05a1caf8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 86:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+	//i.e props
+	data: function data() {
+		return {
+			companies: [],
+			myStateTextX: "I am an appoint state",
+			cssState: false,
+			info: {}
+		};
+	},
+
+	mounted: function mounted() {
+		console.log('Component mounted.');
+
+		var thisXCursor = this; //mega fix
+
+
+		//gets url route for ajax
+		var loc = window.location.pathname;
+		var dir = loc.substring(0, loc.lastIndexOf('/')); ///laravel+Yii2_widgets/blog_Laravel/public    
+		var urlX = dir + '/api/articles';
+
+		//variant 1, working (Promise variant)
+		$.get(urlX).then(function (dataZ) {
+			// добавляем обработчик при удачном выполнении запроса
+			console.log('Ajax 1 is OK');
+			console.log(dataZ); // выводим в консоль текстовую информацию
+			thisXCursor.info = dataZ; //works
+
+			//works, adds new values to Object info{}. Just for testing
+			thisXCursor.info = Object.assign({}, thisXCursor.info, {
+				newProperty1: 'myNewValue',
+				newProperty2: 9311
+			});
+			console.log('Main');
+			console.log(thisXCursor.info);
+		}).catch(function (err) {
+			return alert("Ajax var 1 send failed =>  " + err);
+		}); // catch any error
+
+
+		//variant 2, Working (JQ ajax variant)
+		$.ajax({
+			url: urlX,
+			type: 'GET',
+			dataType: 'JSON',
+
+			success: function success(data) {
+				//alert('OK');
+				//console.log(data);
+			}, //end success
+
+			error: function error(_error) {
+				alert('failed variant 2');
+			}
+		}).then(function (dataZ) {
+			// добавляем обработчик при удачном выполнении запроса
+			console.log('Ajax is OK 2');
+			console.log(dataZ); // выводим в консоль текстовую информацию
+		}).then(function (dataZ) {
+			console.log('Ajax is OK 3');
+			//var app = this;
+			//thisXCursor.info = dataZ;
+			console.log(thisXCursor.info);
+			//thisXCursor.info = dataZ; //works
+		});
+		//.then(response => (this.info = response))
+		//.then(var app = this console.log(this.info) );
+
+
+		/*axios
+            .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+            .then(response => (this.info = response));*/
+	},
+
+
+	//method/functions
+	methods: {
+		changeEntry: function changeEntry() {
+			//if (confirm("Do you really want to proceed?")) {
+
+			var app = this;
+			if (app.myStateTextX != 'Appointment state') {
+				app.myStateTextX = 'Appointment state';
+				app.cssState = true;
+			} else {
+				app.myStateTextX = 'State is changed';
+				app.cssState = false;
+			}
+
+			//}
+		}
+	}
+
+});
+
+/***/ }),
+
+/***/ 87:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
+        _c("div", { staticClass: "panel panel-default" }, [
+          _c(
+            "div",
+            {
+              staticClass: "panel-heading pointer",
+              on: {
+                click: function($event) {
+                  return _vm.changeEntry()
+                }
+              }
+            },
+            [
+              _vm._v(
+                "Test Ajax Component, load ajax data via controller/TestRest and models/WpressRest"
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "panel-body",
+              class: _vm.cssState ? " text-primary bg-danger" : ""
+            },
+            [
+              _vm._v(
+                "\n                        I'm a Vue Appointment to load REST API from  table {wpress_blog_post}"
+              ),
+              _c("br"),
+              _vm._v(
+                "\n\t\t\t\t\t\t" +
+                  _vm._s(_vm.myStateTextX) +
+                  "\n                    "
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn",
+              attrs: {
+                "data-toggle": "collapse",
+                "data-target": "#wpressRestResults"
+              }
+            },
+            [_vm._v("Show Collapsible REST Api")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "panel-body collapse",
+              attrs: { id: "wpressRestResults" }
+            },
+            [
+              _c("p", [_vm._v("Info")]),
+              _vm._v(" "),
+              _vm._l(_vm.info, function(value, name) {
+                return _c("div", [
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(name) +
+                      ": " +
+                      _vm._s(value.wpBlog_id) +
+                      " " +
+                      _vm._s(value.wpBlog_title) +
+                      " \n                        "
+                  )
+                ])
+              })
+            ],
+            2
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-05a1caf8", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 88:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(89)
+/* template */
+var __vue_template__ = __webpack_require__(100)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/Appointment/components/generateListOfRooms.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c01cfd12", Component.options)
+  } else {
+    hotAPI.reload("data-v-c01cfd12", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 89:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+
+//using other sub-component 
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	//using other sub-component 
+	components: {
+		'rooms-in-loop1': __WEBPACK_IMPORTED_MODULE_0__subcomponents_rooms_in_loop_vue___default.a
+	},
+
+	//i.e props
+	data: function data() {
+		return {
+			companies: [],
+			myStateTextX: "I am an appoint state",
+			cssState: false,
+			info: {}
+		};
+	},
+
+	mounted: function mounted() {},
+
+
+	//method/functions
+	methods: {
+		changeEntry: function changeEntry() {
+			//if (confirm("Do you really want to proceed?")) {
+
+			var app = this;
+			if (app.myStateTextX != 'Appointment state') {
+				app.myStateTextX = 'Appointment state';
+				app.cssState = true;
+			} else {
+				app.myStateTextX = 'State is changed';
+				app.cssState = false;
+			}
+
+			//}
+		},
+		onClickChild: function onClickChild(value) {
+			alert('ddddd');
+			console.log(value); // someValue
+		}
+	}
+
+});
+
+/***/ }),
+
+/***/ 90:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(91)
+/* template */
+var __vue_template__ = __webpack_require__(99)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/Appointment/components/subcomponents/rooms-in-loop.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-061f83c7", Component.options)
+  } else {
+    hotAPI.reload("data-v-061f83c7", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 91:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__one_room_vue__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__one_room_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__one_room_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__selected_room_vue__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__selected_room_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__selected_room_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+//using other sub-component 
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+									//using other sub-component 
+									components: {
+																		'OneRoomX': __WEBPACK_IMPORTED_MODULE_0__one_room_vue___default.a,
+																		'selectedRoom': __WEBPACK_IMPORTED_MODULE_1__selected_room_vue___default.a
+									},
+
+									//i.e props
+									data: function data() {
+																		return {
+																											roomsX: [], //to contain ajax results from api/rooms
+																											companies: [1, 2, 3, 4, 5, 6, 7, 8, 9], //was used just for testing in v-for
+																											idClicked: "nothing selected",
+																											calendarData: ' Calendar ajax data goes here'
+
+																											/*myStateTextX: "I am an appoint state",
+                           cssState: false,
+                           info: {}, */
+																		};
+									},
+
+									//---------------------------
+									mounted: function mounted() {
+
+																		//getting Rest data with rooms
+																		console.log('Component mounted Rooms.');
+
+																		var self = this; //mega fix
+
+
+																		//gets url route for ajax
+																		var loc = window.location.pathname;
+																		var dir = loc.substring(0, loc.lastIndexOf('/')); ///laravel+Yii2_widgets/blog_Laravel/public    
+																		var urlX = dir + '/api/rooms';
+
+																		//working ajax variant (Promise variant)
+																		//$.get(urlX) 
+
+																		$.get(urlX, {
+																											method: 'get',
+																											headers: { 'Content-Type': 'application/json' }
+																		}).then(function (dataZ) {
+																											// 
+																											console.log('Ajax Rooms is OK');
+																											console.log(dataZ); // 
+																											self.roomsX = dataZ; //works
+
+
+																											console.log(self.roomsX);
+																		}).catch(function (err) {
+																											return alert("Ajax Rooms Loading failed =>  " + err);
+																		}); // catch any error
+
+									},
+
+									//---------------------------
+
+									created: function created() {},
+
+									//method/functions
+									methods: {
+																		changeEntry: function changeEntry() {},
+
+
+																		//get uplifted value from child to this parent component
+																		onClickChild: function onClickChild(value) {
+																											console.log(value); // someValue
+																											this.idClicked = parseInt(value);
+																		},
+
+
+																		//get uplifted value from child to this parent component
+																		calendarGet: function calendarGet(value) {
+																											this.calendarData = value;
+																		}
+									}
+
+});
+
+/***/ }),
+
+/***/ 92:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(93)
+/* template */
+var __vue_template__ = __webpack_require__(95)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/Appointment/components/subcomponents/one-room.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6bf2c37c", Component.options)
+  } else {
+    hotAPI.reload("data-v-6bf2c37c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 93:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__my_functions_scroll_function_js__ = __webpack_require__(94);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+//import function from other external file
+ //name in {} i.e 'ScrollExternalFile' must be cooherent to name in "export const ScrollExternalFile" in '/scroll_function.js'
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+			props: ['itemZ'], //passed as props from parent </>
+
+			//i.e props
+			data: function data() {
+						return {
+									/* calendar: "Cal";
+                  companies: [],
+         myStateTextX: "I am an appoint state",
+         cssState: false,
+         info: {}, */
+						};
+			},
+
+			mounted: function mounted() {},
+
+
+			//method/functions
+			methods: {
+						changeEntry: function changeEntry() {},
+
+
+						greet: function greet(event) {
+									//alert(event.currentTarget.getAttribute('data-id'));
+
+
+									//uplift to parent clicked ID
+									var idClicked = event.currentTarget.getAttribute('data-id');
+									this.$emit('clickedChild', idClicked);
+
+									//show and hide loader
+									$("#loaderX").show(400);
+
+									setTimeout(function () {
+												$("#loaderX").fadeOut(800);
+												//$("#loaderX").css('opacity', '0'); 
+									}, 2000);
+
+									//Creating overlay while changing content of selected room. The one used in React Sms
+									$(".child-div").css('opacity', '1');
+
+									setTimeout(function () {
+												$(".child-div").css('opacity', '0'); //hides yellow overlay div -> react imitation of animation, analogue of $(".del-st").stop().fadeOut("slow",function(){ $(this).html(finalText) }).fadeIn(3000);
+									}, 3000);
+
+									//alert('sends calendar ajax');
+									this.sendCalendarRequest();
+
+									//Scroll to results in Mobile only
+									if (screen.width <= 640) {
+												__WEBPACK_IMPORTED_MODULE_0__my_functions_scroll_function_js__["a" /* ScrollExternalFile */].scrollResults(".selected-room"); //calling function from external file '/my_functions/scroll_function.js'
+									}
+						},
+
+						//send ajax to calendar
+						sendCalendarRequest: function sendCalendarRequest() {
+
+									var self = this; //mega fix
+
+									//gets url route for ajax
+									var loc = window.location.pathname;
+									var dir = loc.substring(0, loc.lastIndexOf('/')); ///laravel+Yii2_widgets/blog_Laravel/public    
+									var urlX = dir + '/api/getCalendar';
+
+									//working ajax variant (Promise variant)
+
+									$.get(urlX, {
+												method: 'get',
+												headers: { 'Content-Type': 'application/json' }
+									}).then(function (dataZ) {
+												// 
+												console.log('Ajax Rooms is OK');
+												console.log(dataZ); // 
+												//self.calendar = dataZ; //works
+
+												//uplift to parent ajax results
+												self.$emit('passCalendarAjax', dataZ);
+									}).catch(function (err) {
+												return alert("Ajax Calendar Loading failed =>  " + err);
+									}); // catch any error
+						}
+
+			}
+
+});
+
+/***/ }),
+
+/***/ 94:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ScrollExternalFile; });
+
+//(function(){ //START IIFE (Immediately Invoked Function Expression)
+
+
+//$(document).ready(function(){
+
+
+var ScrollExternalFile = {
+
+  // **************************************************************************************
+  // **************************************************************************************
+  //                                                                                     **
+  scrollResults: function scrollResults(divName, parent) {
+    //arg(DivID, levels to go up from DivID)
+    //if 2nd arg is not provided while calling the function with one arg
+    if (typeof parent === 'undefined') {
+
+      $('html, body').animate({
+        scrollTop: $(divName).offset().top
+        //scrollTop: $('.your-class').offset().top
+      }, 'slow');
+      // END Scroll the page to results
+    } else {
+      //if 2nd argument is provided
+      var stringX = "$(divName)" + parent + "offset().top"; //i.e constructs -> $("#divID").parent().parent().offset().top
+      $('html, body').animate({
+        scrollTop: eval(stringX) //eval is must-have, crashes without it
+      }, 'slow');
+    }
+  }
+
+  // **                                                                                  **
+  // **************************************************************************************
+  // **************************************************************************************
+
+};
+
+//});
+// end ready	
+
+
+//}()); //END IIFE (Immediately Invoked Function Expression)
+
+/***/ }),
+
+/***/ 95:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "subfolder shadowX",
+      attrs: {
+        "data-id": this.itemZ.r_id,
+        title: this.itemZ.r_host_name + this.itemZ.r_address
+      },
+      on: {
+        click: function($event) {
+          return _vm.greet($event)
+        }
+      }
+    },
+    [
+      _c("a", { attrs: { href: "javascript:void(0)" } }, [
+        _c("img", {
+          staticClass: "my-img",
+          attrs: { src: "images/item.png", alt: "" }
+        }),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(" Room  " + _vm._s(this.itemZ.r_room) + " "),
+          _c("br"),
+          _vm._v(" "),
+          _c("span", { staticClass: "small-text" }, [
+            _vm._v(_vm._s(this.itemZ.r_host_name))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("br")
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6bf2c37c", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 96:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(97)
+/* template */
+var __vue_template__ = __webpack_require__(98)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/Appointment/components/subcomponents/selected-room.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3556311d", Component.options)
+  } else {
+    hotAPI.reload("data-v-3556311d", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 97:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+				props: ['clickedX', 'hostname'], //passed as props from parent <rooms-in-loop/>
+
+				//i.e props
+				data: function data() {
+								return {
+												/*companies: [],
+            myStateTextX: "I am an appoint state",
+            cssState: false,
+            info: {}, */
+								};
+				},
+
+				mounted: function mounted() {},
+
+
+				//method/functions
+				methods: {
+								changeEntry: function changeEntry() {}
+				}
+
+});
+
+/***/ }),
+
+/***/ 98:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "col-sm-12 col-xs-12 shadowX" },
+    [
+      _c("center", [
+        _c(
+          "div",
+          { staticClass: "shadowX selected-room parent-div show-div" },
+          [
+            _c("div", { staticClass: "child-div" }, [
+              _c("p", [_vm._v("This should be over the parent")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "loader-child" }, [
+                _c("img", { attrs: { src: "images/loader.gif", alt: "" } })
+              ])
+            ]),
+            _vm._v("\n\t\t\t\n\t\t\t\n\t\t        You selected \n\t\t\t    "),
+            _c("a", { attrs: { href: "#" } }, [
+              _c("p", { attrs: { id: "selectedRoom" } }, [
+                _vm._v(" Room " + _vm._s(this.clickedX) + "  "),
+                _c("br"),
+                _vm._v(" " + _vm._s(this.hostname) + " ")
+              ]),
+              _vm._v(" "),
+              _c("br")
+            ])
+          ]
+        )
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3556311d", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 99:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "col-sm-12 col-xs-12 rooms" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _vm._l(_vm.roomsX, function(item, index) {
+        return _c("OneRoomX", {
+          key: index,
+          attrs: { itemZ: item },
+          on: {
+            clickedChild: _vm.onClickChild,
+            passCalendarAjax: _vm.calendarGet
+          }
+        })
+      }),
+      _vm._v(" "),
+      _c("selectedRoom", {
+        attrs: {
+          clickedX: this.idClicked,
+          hostname:
+            typeof this.idClicked === "string"
+              ? "No select so far"
+              : this.roomsX[this.idClicked - 1].r_host_name
+        }
+      }),
+      _vm._v(" "),
+      _c("div", {
+        staticClass: "col-sm-12 col-xs-12",
+        attrs: { id: "loaderX" }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-12 col-xs-12 calendar" }, [
+        _vm._v("\n\t\t   " + _vm._s(this.calendarData) + "\n\t\t")
+      ])
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", [
+      _vm._v("Hello from /subcomponents/room-in-loops. "),
+      _c("br"),
+      _vm._v(
+        "Rooms are build with component iteration and by ajax load from Db table {appoint-room-list}  "
+      )
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-061f83c7", module.exports)
+  }
+}
 
 /***/ })
 
