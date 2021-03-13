@@ -71,6 +71,12 @@
 				<div class="col-sm-12 col-xs-12" >
 				    <h3><b> Vue </b></h3>
 					
+					<!-- Vue route menu -->
+					<div  id="vue-menu" class="col-sm-12 col-xs-12"> <!--  id="vue-menu" --> 
+					    Menu
+					    <vue-router-menu-with-link-content-display/> <!-- My Vue component with Menu Links -->
+                    </div>
+					
 					<!-- Show blogs quantity component -->
 					<div id="quant" class="col-sm-12 col-xs-12">
 					    <show-quantity-of-posts/> <!-- Vue component -->

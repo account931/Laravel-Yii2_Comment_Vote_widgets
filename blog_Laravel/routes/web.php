@@ -53,12 +53,12 @@ Route::get('createNewWpressImg',    'WpBlogImagesContoller@create') ->name('crea
 Route::post('/storeNewWpressImg',   'WpBlogImagesContoller@store'); //Saving form fields via POST
 
 
+
 //Wpress Blog on Vue Framework
 Route::get('/wpBlogVueFrameWork',   'WpBlog_VueContoller@index')  ->name('wpBlogVueFrameWork')->middleware('auth');  //WpPress on Vue Framework Blog index route
-
 Route::group(['middleware' => 'auth', 'prefix' => 'post'], function () { //url must contain /post/, i.e /post/get_all
-    Route::get('get_all',      'WpBlog_VueContoller@getAllPosts')->name('fetch_all');
-    Route::post('create_post', 'WpBlog_VueContoller@createPost')->name('create_post');
+    Route::get('get_all',          'WpBlog_VueContoller@getAllPosts')->name('fetch_all');  //REST API to /GET all posts
+    Route::post('create_post_vue', 'WpBlog_VueContoller@createPost')->name('create_post_vue'); //REST API to /POST (create) a new blog
 });
 
 

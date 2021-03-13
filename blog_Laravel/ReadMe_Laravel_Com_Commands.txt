@@ -37,7 +37,8 @@ Table of Content:
 14. Laravel Flash messages
 15. Js/Css, minify, Laravel Mix
 16. 
-17. RBAC 
+17.  RBAC on Zizaco/Entrust
+17.2 RBAC on Gates
 18. Multilanguges (Localization)
 19. Cookie.
 20. How to create Helper
@@ -52,6 +53,7 @@ Table of Content:
 28. PhpUnit tests vs Laravel Dusk
 29. Events/Listeners
 34.Highlight active menu item
+35. Middleware (CORS example)
 
 
 201. Laravel 6 LTS        => (IMPLEMENTED IN {abz_Laravel_6_LTS})
@@ -844,8 +846,10 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	  
 	#If u mistakenly put routes in {routes/web.php}, REST Api endpoints will be => 
             http://localhost/laravel+Yii2_widgets/blog_Laravel/public/articles     http://localhost/laravel+Yii2_widgets/blog_Laravel/public/articles/8
-	  
 	
+	
+   # Form must have csrf_token =>  <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
+     Html must contain         =>  <meta name="csrf-token" content="{{ csrf_token() }}">
 //================================================================================================
 
 
@@ -1006,11 +1010,11 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 
 
-
 //================================================================================================
 
-17. RBAC 
+17.  RBAC on Zizaco/Entrust
 https://github.com/Zizaco/entrust
+Requires composer installing package Zizaco/Entrust
 
 #Entrust creates 4 tables in DB: permission_role, permissions, role_user, roles
 #Mega Error "Cannot declare class App\Role, because the name is already in use" was caused by wrong namespace in /config/entrust.php
@@ -1044,11 +1048,42 @@ https://github.com/Zizaco/entrust
 # Detach/remove role from user (not in Entrusr readme) => $userModel = User::find(1); $userModel->detachRoles($role);
 
 # How make Self-made Rbac  => https://laravel.demiart.ru/guide-to-roles-and-permissions/
+
 //================================================================================================
 
 
 
 
+
+
+
+
+//================================================================================================
+
+17.2 RBAC on Gates
+Built-in Laravel RBAC 
+https://laravel.demiart.ru/laravel-gates/
+
+#Gates are defined in closures in 'app/Providers/AuthServiceProvider.php' in public function boot()=> see example => https://github.com/account931/Laravel_LaraAppointments/blob/main/app/Providers/AuthServiceProvider.php
+     
+	 use Illuminate\Support\Facades\Gate;
+	 Gate::define('user_management_access', function ($user) {
+         return in_array($user->role_id, [1]);  //users having column 'role_id' == 1 (in table Users)
+	     //return $user->id == 1; //only for user with ID == 1
+      });
+	
+	
+# Use in Controller => see example at => https://github.com/account931/Laravel_LaraAppointments/blob/main/app/Http/Controllers/Admin/AppointmentsController.php
+    use Illuminate\Support\Facades\Gate;
+	if (! Gate::allows('user_management_access')) {
+            return abort(401);
+    }
+	
+	
+# Use in Blade => see example at => https://github.com/account931/Laravel_LaraAppointments/blob/main/resources/views/partials/sidebar.blade.php
+              @can('user_management_access')
+			  <!-- content -->
+			  @endcan
 
 
 
@@ -1217,6 +1252,7 @@ It is done pretty like the same as for Login, see  example at => https://github.
    25.7 Click action
    25.8 Call function from another file
    25.9 Vue store Vuex
+   25.9.1 Vue Router
    26. Unsorted (uplift to parent, pass to child, etc)
    ------------------------------
    25.1 Change css based on props =>
@@ -1353,6 +1389,18 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		
 		
 		
+		
+		
+		
+		-------------------------------------------------
+		25.9.1 Vue Router
+		npm install vue-router --save
+		
+		
+		
+		
+		
+		
 		-------------------------------------------------
 		26. Unsorted
 		------------------------------------------------
@@ -1411,6 +1459,21 @@ It is done pretty like the same as for Login, see  example at => https://github.
                <img v-if="post.get_images.length" class="card-img-top my-img" :src="`images/wpressImages/${post.get_images[0].wpImStock_name}`" />
 	        </a>
             <!-- End VUE Image with LightBox -->
+			
+			
+		# How to refer laravel csrf field inside a vue template =>
+		     <input type="hidden" name="_token" :value="tokenXX" /> <!-- csfr token -->
+			 //...
+			 data () {
+                 return {
+	                 tokenXX:'',
+                 }
+             },
+			 //......
+			 mounted () {
+                 let token = document.head.querySelector('meta[name="csrf-token"]'); //gets meta
+	             this.tokenXX = token.content; //gets token and set to data.tokenXX
+            },
 //================================================================================================
 
 
@@ -1556,8 +1619,23 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 	 <li class="{{ Request::is('EloquentExample*') ? 'active' : '' }}"> <a href="{{ url('/EloquentExample') }}">DB Eloquent </a></li>
 
 
+
+
+
+
 	 
-	 
+//================================================================================================	 
+35. Middleware (CORS example)
+For CORS speicifically, see => # Cors in Ajax (Cross-origin resource sharing)(Same-Origin-Policy) => see https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/README_MY.txt
+
+CORS middleware => https://stackoverflow.com/questions/34748981/laravel-5-2-cors-get-not-working-with-preflight-options
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -1803,8 +1881,14 @@ On cliking submit sends $_Post ajax to
 	  
 #pass several vars => return view('showprofile')->with(compact('id', 'name'));
 	  
-#isGuest var 1 =>    use Illuminate\Support\Facades\Auth;  if(!Auth::check()){)
-#isGuest var 2  =>   public function __construct(){$this->middleware('auth');}
+#isGuest var 1 (in Controller) =>   use Illuminate\Support\Facades\Auth;  if(!Auth::check()){)
+#isGuest var 2 (in Controller) =>   public function __construct(){$this->middleware('auth');}
+#isGuest var 3 (in routes/web) =>   Route::get('/wpBlogVueFrameWork', 'WpBlog_VueContoller@index') ->name('wpBlogVueFrameWork')->middleware('auth'); 
+#isGuest var 4 (in routes/web) => 
+    Route::group(['middleware' => 'auth', 'prefix' => 'post'], function () { //url must contain /post/, i.e /post/get_all
+        //rotes here....
+    });
+
 
 #check if user is not guest =>  use Illuminate\Support\Facades\Auth; if (Auth::check()) {} => if (Auth::guest()
 #ACF Yii2 equivalent, let only logged users, use in Controller =>   public function __construct(){$this->middleware('auth');}
@@ -1827,29 +1911,41 @@ On cliking submit sends $_Post ajax to
   return redirect('/wpBlogg')->with('flashMessage',"Record deleted successfully");
   
 #Redirect with view with data =>  
-  In controller:  return redirect('payPage2')->with(compact('input'));
-  get in view:    $input = session()->get('input');  
+    In controller:  return redirect('payPage2')->with(compact('input'));
+    get in view:    $input = session()->get('input');  
 
 
 # Get current route path (returns part after last slash, i.e "testRest")
-  use Illuminate\Support\Facades\Route;
-  $currentPath= Route::getFacadeRoot()->current()->uri();
+    use Illuminate\Support\Facades\Route;
+    $currentPath= Route::getFacadeRoot()->current()->uri();
 
 
 #routing =>
-In route/web => Route::get('/multilanguage', 'MultiLanguage@index')->name('multilanguage'); 
-In View => <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
+    In route/web => Route::get('/multilanguage', 'MultiLanguage@index')->name('multilanguage'); 
+    In View => <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
 
-//example of usage of Middleware and Prefix Group Routing=>
-Route::group(['middleware' => 'auth', 'prefix' => 'post'], function () { //url must contain /post/, i.e /post/get_all
-    Route::get('get_all',      'WpBlog_VueContoller@getAllPosts')->name('fetch_all');
-}
+    //example of usage of Middleware and Prefix Group Routing=>
+    Route::group(['middleware' => 'auth', 'prefix' => 'post'], function () { //url must contain /post/, i.e /post/get_all
+      Route::get('get_all',      'WpBlog_VueContoller@getAllPosts')->name('fetch_all');
+    }
 
 
 #routing with $_GET['id']=>
-When u use url like  => /showOneUser/3
-In route/web => Route::get('/showOneUser/{id}', 'AllUsersEloquent@showOne')->name('showOneUser');
-In controller => function showOne($id){}
+     When u use url like  => /showOneUser/3
+     In route/web => Route::get('/showOneUser/{id}', 'AllUsersEloquent@showOne')->name('showOneUser');
+     In controller => function showOne($id){}
+
+
+# routing with Resource variant =>
+    Route::resource('article', ArticleController::class); will generate =>
+        Verb        Path                    Action  Route Name
+        GET         /article                index   article.index
+        GET         /article/create         create  article.create
+        POST        /article                store   article.store
+        GET         /article/{article}      show    article.show
+        GET         /article/{article}/edit edit    article.edit
+        PUT/PATCH   /article/{article}      update  article.update
+        DELETE      /article/{article}      destroy article.destroy
 
 
 # ternary =>
@@ -2200,10 +2296,18 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
          $installed = json_decode($this->files->get($path), true);
          $packages = $installed['packages'] ?? $installed;
 		 
-# Error when 'Element-UI' used in Vue does not show icons, even though main CSS is imported in start Vue.js file, e.g{import 'element-ui/lib/theme-chalk/index.css';} => 
-    add css manually in '/layout.app.css' or in view directly =>
-	    <link  href="{{ asset('../node_modules/element-ui/lib/theme-chalk/index.css') }}" rel="stylesheet"> <!-- Elememt UI icons  -->
+# Error when 'Element-UI' (Vue 2.0 based component library) is used in Vue, but does not show icons, even though main CSS is imported in start Vue.js file, e.g{import 'element-ui/lib/theme-chalk/index.css';} => 
+    1.Copy folder '/theme-chalk' (which contains index.css and other files) from '/node_modules/element-ui/lib/theme-chalk/' to some your css folder, e.g to 'css/Wpress_Vue_JS/Element_UI/theme-chalk'
+	2.Add this css manually in '/layout.app.css' or in view directly =>
+         <link  href="{{ asset('css/Wpress_Vue_JS/Element_UI/theme-chalk/index.css') }}" rel="stylesheet"> <!-- Elememt UI icons  -->
 
+
+# Two Laravel applications Login Conflict => when u log in to 1st Laravel app, the 2nd automatically log out & vice versa
+  I.e synonyms: "Session conflicts with multiple Laravel projects on one server" or "Multiple laravel project in the same server session auth conflict"
+  To fix add to config/session.php and set Unique cookie name => 
+      'cookie' => 'laravel_session_SOME_UNIQUE_NAME',
+	  
+	  
 =============================
 
 если токен не принимается обработчиком, то варианта существует по сути два – либо он не отправляется в запросе (отсутствует csrf_field() в форме, или нет нужного значения в аякс-запросе – там он может передаваться как в данных так и в заголовках запроса), либо на стороне сервера не загружается сессия – именно в ней сохраняется токен на стороне сервера, чтобы было с чем сравнить то что пришло в запросе.

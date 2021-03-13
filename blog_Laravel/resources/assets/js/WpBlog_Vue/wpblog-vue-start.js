@@ -1,3 +1,4 @@
+//https://medium.com/js-dojo/build-a-simple-blog-with-multiple-image-upload-using-laravel-vue-5517de920796
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -9,6 +10,11 @@
 
 window.Vue = require('vue');
 
+//include Vue Router
+//var VueRouter = require('vue-router');
+//import Router from 'vue-router';
+//import homeZ from './components/VueRouterMenu';
+import router from './router/index.js'
 
 
 // Blog
@@ -17,7 +23,8 @@ import store from '../store/index'; //import Vuex Store
 import ElementUI from 'element-ui'; //import ElementUI pop-up modal window
 import 'element-ui/lib/theme-chalk/index.css';
 
-Vue.use(ElementUI);
+Vue.use(ElementUI); //connect Vue to use with ElementUI
+//Vue.use(Router); //connect Vue to use with VueRouter
 
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
@@ -25,7 +32,9 @@ Vue.component('show-quantity-of-posts', require('./components/Div_with_Quantity.
 Vue.component('create-post',            require('./components/CreatePost.vue')/*.default*/);
 Vue.component('all-posts',              require('./components/AllPosts.vue')/*.default*/); //register component dispalying all posts
 
-// Blog
+//vue-router-menu
+Vue.component('vue-router-menu-with-link-content-display',  require('./components/VueRouterMenu.vue')); //register component dispalying vue-router-menu
+
 
 
 
@@ -37,13 +46,13 @@ Vue.component('all-posts',              require('./components/AllPosts.vue')/*.d
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-//Show quantity
+//Component to Show div with Blogs' quantity
 const appQuant = new Vue({
 	store, //connect Vuex store, must-have
     el: '#quant'
 });
 
-//Form
+//Component with Form to add a new blog
 const app = new Vue({
 	store, //connect Vuex store
     el: '#createPost'
@@ -51,8 +60,22 @@ const app = new Vue({
 
 
 
-//Blog, Displays all posts, ajax to get POST API is triggered in AllPosts.vue, executed in Vuex store
+//Component => Blog, Displays all Blog posts, ajax to get POST API is triggered in AllPosts.vue, executed in Vuex store
 const app2 = new Vue({
 	store, //connect Vuex store, must-have
     el: '#app2'
 });
+
+
+
+  
+  
+//Component => Div with Vue route menu and area to dispaly selected menu    
+const appMenu = new Vue({
+	//store, //connect Vuex store, must-have
+	router, //must-have for Vue routing
+    el: '#vue-menu'
+});
+
+
+

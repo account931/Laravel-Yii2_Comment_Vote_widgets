@@ -34,11 +34,63 @@ class WpBlog_VueContoller extends Controller
 	
 	
 	
-	//All the rest is REST API
+	//All the rest is REST API ======================================
 	
+	 /**
+     * REST API to /GET all posts
+     *
+     * @return json
+     */
 	public function getAllPosts() //http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public/post/get_all
     {   
         $posts = Wpress_images_Posts::with('getImages', 'authorName', 'categoryNames')->orderBy('wpBlog_created_at', 'desc')->get(); //->with('getImages', 'authorName', 'categoryNames') => hasMany/belongTo Eager Loading
         return response()->json(['error' => false, 'data' => $posts]);
     }
+	
+	
+	
+	
+	 /**
+     * REST API to /POST (create) a new blog. NOT IMPLEMENTED. REWRITE WITHOUT TRANSACTION
+     *
+     * @return json
+     */
+	public function createPost(Request $request)
+    {
+		return "NNNNNN";
+		//return response()->json("GOO-O-OOD");
+		
+		
+		/*
+        DB::transaction(function () use ($request) {
+            $user = Auth::user();
+            $title = $request->title;
+            $body = $request->body;
+            $images = $request->images;
+
+            $post = Wpress_images_Posts::create([
+                'title' => $title,
+                'body' => $body,
+                'user_id' => $user->id,
+            ]);
+            // store each image
+            foreach($images as $image) {
+                $imagePath = Storage::disk('uploads')->put($user->email . '/posts/' . $post->id, $image);
+                PostImage::create([
+                    'post_image_caption' => $title,
+                    'post_image_path' => '/uploads/' . $imagePath,
+                    'post_id' => $post->id
+                ]);
+            }
+        });
+        return response()->json(200);
+		*/
+    }
+	
+	
+	
+	
+	
+	
+	
 }

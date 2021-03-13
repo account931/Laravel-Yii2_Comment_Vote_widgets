@@ -33,7 +33,7 @@ export default new Vuex.Store({
 			  setTimeout(function(){ $('.loader-x').fadeOut(800); }, 1000); //hide loader
               return response.json();
           }).then(dataZ => {
-              console.log(dataZ);
+              //console.log(dataZ);
 		      //core rewritten async getAllPosts, trigger mutation setPosts()
 	          return commit('setPosts', dataZ ); //sets ajax results to store via mutation
           })
