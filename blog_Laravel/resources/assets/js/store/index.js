@@ -9,10 +9,22 @@ const debug = process.env.NODE_ENV !== 'production';
 //Vuex store itself
 export default new Vuex.Store({
   state: {
+	  //posts used in Vue blog
 	  posts: [],
-    //posts: [{"wpBlog_id":1,"wpBlog_title":"Guadalupe Runolfsdottir", "wpBlog_text":"Store text 1"}, {"wpBlog_id":2,"wpBlog_title":"New", "wpBlog_text":"Store text 2"}],
+      //posts: [{"wpBlog_id":1,"wpBlog_title":"Guadalupe Runolfsdottir", "wpBlog_text":"Store text 1"}, {"wpBlog_id":2,"wpBlog_title":"New", "wpBlog_text":"Store text 2"}],
+      
+	  //products are used in Router example
+	  products:[
+	      {productTitle:"ABCN", image: 'product1.png', productId:1},
+          {productTitle:"KARMA",image: 'product2.png', productId:2},
+          {productTitle:"Tino", image: 'product3.png', productId:3},
+          {productTitle:"EFG",  image: 'product4.png', productId:4},
+          {productTitle:"MLI",  image: 'product5.png', productId:5},
+          {productTitle:"Banan",image: 'product6.png', productId:6}
+        ],
   },
   
+
 
   
     actions: {

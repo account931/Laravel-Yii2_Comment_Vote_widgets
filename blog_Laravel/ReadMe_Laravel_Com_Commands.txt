@@ -1253,7 +1253,7 @@ It is done pretty like the same as for Login, see  example at => https://github.
    25.8 Call function from another file
    25.9 Vue store Vuex
    25.9.1 Vue Router
-   26. Unsorted (uplift to parent, pass to child, etc)
+   26. Unsorted Vue (uplift to parent, pass to child, etc)
    ------------------------------
    25.1 Change css based on props =>
             <div class="panel-body" :class="cssState? ' text-danger' : ''"> <!-- change css based on props -->
@@ -1396,13 +1396,15 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		25.9.1 Vue Router
 		npm install vue-router --save
 		
-		
-		
+		# Router example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/router/index.js
+	    # Component with Menu Vue-Router is inited here => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
+		# Component with Menu Vue-Router Links and with view area <router-view/> => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/VueRouterMenu.vue
+		# Vue-Router Menu's pages are in => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/tree/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/pages
 		
 		
 		
 		-------------------------------------------------
-		26. Unsorted
+		26. Unsorted Vue
 		------------------------------------------------
 		--------------------
 		# set data attribute => <div class='subfolder shadowX' v-on:click="greet" v-bind:data-id="this.itemZ" >
@@ -1474,6 +1476,9 @@ It is done pretty like the same as for Login, see  example at => https://github.
                  let token = document.head.querySelector('meta[name="csrf-token"]'); //gets meta
 	             this.tokenXX = token.content; //gets token and set to data.tokenXX
             },
+			
+		# How to get route ID => e.g "wpBlogVueFrameWork#/details/2", gets 2. See example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/pages/details.vue
+	       var ID = this.$route.params.Pid; //gets 2  //{Pid} is set in 'pages/home' in => this.$router.push({name:'details',params:{Pid:proId}})
 //================================================================================================
 
 
@@ -2085,6 +2090,7 @@ composer dump-autoload
 }
  
 
+# To close bootstrap collapsed responsive menu on menuItem click => Simply add the properties on main div as such, like on the MENU button => <div class="nav-collapse collapse" data-toggle="collapse"  data-target=".nav-collapse">
 
 
 
@@ -2307,7 +2313,12 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
   To fix add to config/session.php and set Unique cookie name => 
       'cookie' => 'laravel_session_SOME_UNIQUE_NAME',
 	  
-	  
+# 405 Method is not allowed            => pending......
+
+# Click does not work in mobile  => 
+    Solution 1 => style="position:relative; z-index:9999999999;"
+	Solution 2 => on IOS, safari JS click fix => add empty {onClick}  => <span onClick="" id="someID"></span>   OR => cursor: pointer;
+	
 =============================
 
 если токен не принимается обработчиком, то варианта существует по сути два – либо он не отправляется в запросе (отсутствует csrf_field() в форме, или нет нужного значения в аякс-запросе – там он может передаваться как в данных так и в заголовках запроса), либо на стороне сервера не загружается сессия – именно в ней сохраняется токен на стороне сервера, чтобы было с чем сравнить то что пришло в запросе.

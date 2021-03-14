@@ -1,13 +1,18 @@
 /*--------- WPRESS Blog on Vue.JS    */
 
 
+/* Fix => Class with z-index is a fix for non-working click in mobile  */
+.fix-for-non-working-click-in-mobile {
+	position:relative; z-index:9999;
+}
+	
 
 
 /* icon font path, required */
+/*
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
-
 @import "~element-ui/packages/theme-chalk/src/index";
-
+*/
 
 
 

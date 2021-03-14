@@ -2,11 +2,13 @@
   <div class="home">
     <h1>{{title}}</h1>
 	
-    <div class="row">
+    <div class="row fix-for-non-working-click-in-mobile"> <!-- .fix-for-non-working-click-in-mobile is a fix for non-working click in mobile -->
+	
       <div class="col-md-4 col-lg4" v-for="(data,index) in products" :key="index">
          <img :src="`images/${data.image}`" class="img-fluid">
          <h3 @click="goTodetail(data.productId)" >{{data.productTitle}}</h3>
       </div>
+	  
     </div>
   </div>
 </template>
