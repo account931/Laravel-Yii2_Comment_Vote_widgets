@@ -4,7 +4,7 @@
 <template>
   <div id="appDemo">
   
-      <!-- navbar -->
+      <!-- navbar menu -->
       <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
 	  
         <div class="container fix-for-non-working-click-in-mobile" > <!-- .fix-for-non-working-click-in-mobile is a fix for non-working click in mobile -->
@@ -34,7 +34,7 @@
 		
         </div>
       </div>
-	  <!-- End navbar -->
+	  <!-- End navbar menu -->
 	  
 
 
@@ -132,7 +132,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 20px;
 }
 .moveInUp-enter-active{
   animation: fadeIn 2s ease-in;

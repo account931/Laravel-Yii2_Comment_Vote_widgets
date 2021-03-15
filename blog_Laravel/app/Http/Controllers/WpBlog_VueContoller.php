@@ -17,7 +17,10 @@ use App\models\wpBlogImages\Wpress_images_Category; //model for all Wpress_image
 
 class WpBlog_VueContoller extends Controller
 {
-    //public function __construct(){$this->middleware('auth');}
+    public function __construct(){
+		   //$this->middleware('auth');
+		   
+	}
 	
 	
 	
@@ -57,9 +60,13 @@ class WpBlog_VueContoller extends Controller
      */
 	public function createPost(Request $request)
     {
-		return "NNNNNN";
-		//return response()->json("GOO-O-OOD");
-		
+		/*
+		header('Access-Control-Allow-Origin:  *');
+        header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
+        header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Authorization');
+	    */
+		return response()->json("Too Good, but process image : " . $request->title .  " / " .  $request->body);
+		//dd($request->all());
 		
 		/*
         DB::transaction(function () use ($request) {

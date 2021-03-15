@@ -56,7 +56,7 @@ export default {
   methods:{
   goTodetail(prodId) {
     let proId=prodId
-    this.$router.push({name:'details',params:{Pid:proId}})
+    this.$router.push({name:'details',params:{Pid:proId}}) //creates route like "/wpBlogVueFrameWork#/details/3"
   }
   }
 }

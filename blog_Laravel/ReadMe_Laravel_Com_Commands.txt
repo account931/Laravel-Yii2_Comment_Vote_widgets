@@ -836,8 +836,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
   #Rest model example      => see https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/Rest/WpressRest.php
    
   #Example => Client working with Rest Endpoint Controller => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/TestRest.php
-  #Example => Client working with Rest Endpoint Js Ajax    => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/test-rest/test-rest.js
-  
+  #Example => Client working with Rest Endpoint Js Ajax    => var_1 => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/test-rest/test-rest.js
+                                                           => var_2 => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/CreatePost.vue
   
   #Endpoints:
     #routes for REST must be specifies in {routes/api.php} not {routes/web.php}
@@ -1381,17 +1381,57 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		see example of Vuex store => 
 		   Vuex store itself                            => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/store/index.js
 		   Store connected/initiated in main entry file => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
-		   Store used/displayed in component            => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/AllPosts.vue
-		
+		   Store used/displayed in component =>           
+		              example_1 (with ajax) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/AllPosts.vue
+		              example_2             => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/pages/details.vue
 		
 		#working example how to change Vuex store from child component => see changeVuexStoreFromChild in  => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/AllPosts.vue
 		
 		
+		//-------------------------------------------------------------------------------------
+		# How To use Vuex store (brief roadmap):
+		   # create store/index.js
+		   # import {Store} in main js => 
+		          import store from '../store/index'; //import Vuex Store
+				  const app2 = new Vue({
+	                 store, //connect Vuex store, must-have
+                     el: '#app2'
+                  });
+		   # in needed component you may address Vuex store value as for example => this.$store.state.products[0].productId
+           Or u can use ......mapState() and address Vuex store value by it's Stores's name, e.g "products".     
+		   //...mapState(['products']) is needed for Vuex store, after it u may address Vuex Store value as {products} instead of {this.$store.state.products}
+   
+		        <script>
+                    import { mapState } from 'vuex';
+			        computed: {
+	                    ...mapState(['products']), //{products} is from Vuex store
+						//...................................
+	 
+		   #And u can address Vuex store value in template in diffrent ways  => 
+		      1.if didn't use {...mapState()} => {{ this.$store.state.products[0].productId }}
+			  2.if used {...mapState()}       => {{ products[0].productId }}  + like in 1st variant
+		      3.if used computed: {checkStore() {return this.$store.state.products;} }, ) =>  {{  checkStore[0].productId }} 
+
+		   
+		   
+
+		//-------------------------------------------------------------------------------------
 		
 		
+		# How To use Vuex store with Ajax (brief roadmap), see example Link above at =>  example_1 (with ajax)
+		  1. Mind the prev chapter "How To use Vuex store (brief roadmap)"
+		  2. In needed child component trigger firing an ajax method "getAllPosts" => 
+		         beforeMount() {
+                    //run ajax in Vuex store
+                    this.$store.dispatch('getAllPosts'); //trigger ajax function getAllPosts(), which is executed in Vuex store
+	
+		  3. In Vuex store (resorces/assets/js/store/index.js) specify method {getAllPosts} => in {getAllPosts} first run ajax to REST Controller, then in success run mutation method {setPosts} => return commit('setPosts', dataZ );
 		
 		
+		//-------------------------------------------------------------------------------------
+
 		
+  
 		-------------------------------------------------
 		25.9.1 Vue Router
 		npm install vue-router --save
@@ -1400,7 +1440,6 @@ It is done pretty like the same as for Login, see  example at => https://github.
 	    # Component with Menu Vue-Router is inited here => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
 		# Component with Menu Vue-Router Links and with view area <router-view/> => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/VueRouterMenu.vue
 		# Vue-Router Menu's pages are in => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/tree/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/pages
-		
 		
 		
 		-------------------------------------------------
@@ -1635,7 +1674,9 @@ For CORS speicifically, see => # Cors in Ajax (Cross-origin resource sharing)(Sa
 
 CORS middleware => https://stackoverflow.com/questions/34748981/laravel-5-2-cors-get-not-working-with-preflight-options
 	
-	
+	header('Access-Control-Allow-Origin:  *');
+    header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
+    header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Authorization');
 	
 	
 	
@@ -2157,6 +2198,10 @@ Some my text
      * @param array $attributeNames list of attribute names that need to be saved.
      * @return boolean whether the saving succeeded (i.e. no validation errors occurred).
      */
+	 
+# View POST in Chrome => Network" tab => refresh => select POST in left =>  Choose "Headers" tab
+
+
 ---------------------- JS ----------
 
 //Check if <select> is selected (not empty) (when multiple forms are generated in loop )=> 
@@ -2313,7 +2358,9 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
   To fix add to config/session.php and set Unique cookie name => 
       'cookie' => 'laravel_session_SOME_UNIQUE_NAME',
 	  
-# 405 Method is not allowed            => pending......
+# 405 Method is not allowed, 500 (Internal Server Error) on ajax POST  => 
+     CORS issue, to fix didn't required adding HEADERS to REST Controller, just a correct ajax request, including csrf-token in data{}, see example in =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/CreatePost.vue
+
 
 # Click does not work in mobile  => 
     Solution 1 => style="position:relative; z-index:9999999999;"

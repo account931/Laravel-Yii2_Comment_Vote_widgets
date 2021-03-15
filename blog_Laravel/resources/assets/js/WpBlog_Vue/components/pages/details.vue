@@ -1,29 +1,29 @@
 <template>
 	<div class="contact">
-		Details
-		<p>Not implemented</p>
+		
+		<p>Details</p>
 		
 		
 		
 		<!------ Mine, Just to check if Store is working and connected --------->
 		<!-- Gets Vuex store from store/index.js -->
 		<!-- Foreach -->	
-		<div v-for="products in checkStore" :key="products.productId"> 
-        {{  products.productId }} {{ products.productTitle }}
-        </div>
+		<span v-for="productX in checkStore" :key="productX.productId"> 
+        {{  productX.productId }} {{ productX.productTitle }}  
+        </span>
 		<!------ Mine, Just to check if Store is working and connected --------->
 	    
 		
 		
 		
 		
-		<!-- Show one product, based on URL ID -->
-		<!-- Gets values from Vuex store in "/store/index.js" -->
+		<!-- Show one product, based on URL ID. Gets values from Vuex store in "/store/index.js" -->
+		<!-- {{  this.$store.state.products[this.currentDetailID].productId }} == same ==> {{  checkStore[this.currentDetailID].productId }} == same as(if used {...mapState(['products']),}) ==> products[this.currentDetailID].productId-->
 		<div>
 		    <hr>
 		    <p> One product </p>
-		    <p>{{  products[this.currentDetailID].productId }} {{ products[this.currentDetailID].productTitle }}</p>
-            <img :src="`images/${products[this.currentDetailID].image}`" class="card-img-top my-img">
+		    <p>{{  this.$store.state.products[this.currentDetailID].productId }} {{ this.$store.state.products[this.currentDetailID].productTitle }}</p>
+            <img :src="`images/${this.$store.state.products[this.currentDetailID].image}`" class="card-img-top my-img">
 		</div>
 		<!-- Show one product, based on URL ID -->
 	    
@@ -45,7 +45,8 @@ export default {
   
   //computed property is used to declaratively describe a value that depends on other values. When you data-bind to a computed property inside the template, Vue knows when to update the DOM when any of the values depended upon by the computed property has changed.
   computed: {
-	 ...mapState(['products']), //works without it???? => FALSE
+	 ...mapState(['products']), //works without it???? => FALSE.//is needed for Vuex store, after it u may address Vuex Store value as {products} instead of {this.$store.state.products}
+
 	 
 	//mine test
 	checkStore() {

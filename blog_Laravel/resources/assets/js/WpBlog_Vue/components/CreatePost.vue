@@ -131,17 +131,19 @@ export default {
       if (!this.validateForm()) {
         return false;
       }
-	  /*
+	  
+	  //Form //PROBLEM HERE
       const that = this;
       this.isCreatingPost = true;
       const formData = new FormData();
       formData.append('title', this.title);
       formData.append('body', this.body);
-      $.each(this.imageList, function (key, image) {
+      /*$.each(this.imageList, function (key, image) {
         formData.append(`images[${key}]`, image);
-      })
-	  */
+      }); */
 	  
+	   console.log(formData);
+	   
 	  //SENDING AJAX 
       /* api
         .post('/post/create_post', formData, {
@@ -149,24 +151,27 @@ export default {
         }) 
 		*/
 		
-		
-		
-		
 		$.ajax({
                           
 		    url: 'post/create_post_vue', 
             type: 'POST', //POST is to create a new user
 			//crossDomain: true,
-			contentType: "application/json; charset=utf-8",
-			dataType: 'text', //In Laravel causes crash!!!!!// without this it returned string(that can be alerted), now it returns object
-						  
-			//headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            //contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+			
+			contentType:"application/json; charset=utf-8",						  
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            contentType: 'application/x-www-form-urlencoded; charset=utf-8',	  
+            
+			//contentType: false,
+            //processData: false,
+
+			//dataType: 'json', //In Laravel causes crash!!!!!// without this it returned string(that can be alerted), now it returns object
 						   
 			//passing the data
             data: //dataX//JSON.stringify(dataX)  ('#createNew').serialize()
-		    {   //username and password_reset_token musr be UNIQUE!!!
-				title: 'bbb',			 
+		    {   
+                _token: this.tokenXX, //csrf token	
+                title: this.title,	
+                body: this.body,				
 			},
             success: function(data) {
                             
