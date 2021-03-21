@@ -38,7 +38,8 @@ Table of Content:
 15. Js/Css, minify, Laravel Mix
 16. 
 17.  RBAC on Zizaco/Entrust
-17.2 RBAC on Gates
+17.2 Gates (variant of built-in Laravel RBAC)
+17.3 Policy in Laravel
 18. Multilanguges (Localization)
 19. Cookie.
 20. How to create Helper
@@ -67,7 +68,8 @@ Table of Content:
 356.Miscellaneous VA HTML/CSS
 357.Miscellaneous to move to Yii2 ReadMe
 358.Known Errors
-
+400.SOLID principles
+401.Design Patterns
 
 
 //================================================
@@ -1060,7 +1062,7 @@ Requires composer installing package Zizaco/Entrust
 
 //================================================================================================
 
-17.2 RBAC on Gates
+17.2 Gates (variant of built-in Laravel RBAC)
 Built-in Laravel RBAC 
 https://laravel.demiart.ru/laravel-gates/
 
@@ -1087,6 +1089,23 @@ https://laravel.demiart.ru/laravel-gates/
 
 
 
+
+
+
+//================================================================================================
+17.3 Policy in Laravel
+Read => https://laravel.demiart.ru/laravel-policy/
+Policies are in => app/Policies + must be registered  in AuthServiceProvider => protected $policies = [Post::class => PostPolicy::class,];
+
+//Example of policy => user can edit only his own articles
+public function edit (User $user, Post $post) {
+        return $user->id == $post->user_id;
+    }
+	
+	
+	
+	
+	
 //================================================================================================
 18. Multilanguges (Localization). See example at => 
 use Illuminate\Support\Facades\App;
@@ -1390,24 +1409,30 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		
 		//-------------------------------------------------------------------------------------
 		# How To use Vuex store (brief roadmap):
-		   # create store/index.js
+		   # create store/index.js (see example link above)
+		   
 		   # import {Store} in main js => 
 		          import store from '../store/index'; //import Vuex Store
 				  const app2 = new Vue({
 	                 store, //connect Vuex store, must-have
                      el: '#app2'
                   });
-		   # in needed component you may address Vuex store value as for example => this.$store.state.products[0].productId
-           Or u can use ......mapState() and address Vuex store value by it's Stores's name, e.g "products".     
-		   //...mapState(['products']) is needed for Vuex store, after it u may address Vuex Store value as {products} instead of {this.$store.state.products}
+			
+		   # Then use Vuex store in your component, 3 diffrent ways are avialble =>
+		   
+		    1. In needed component you may address Vuex store value as for example => this.$store.state.products[0].productId
+            2. Or u can use ......mapState() and address Vuex store value by it's Stores's name, e.g "products".     
+		       //...mapState(['products']) is needed for Vuex store, after it u may address Vuex Store value as {products} instead of {this.$store.state.products}
+			   //mapState() gets Vuex Store data to local data, so u can address it like local {products} 
    
 		        <script>
                     import { mapState } from 'vuex';
 			        computed: {
 	                    ...mapState(['products']), //{products} is from Vuex store
-						//...................................
+			 			//...................................
+			3. Use computed, => see "3" next paragraph 
 	 
-		   #And u can address Vuex store value in template in diffrent ways  => 
+		   #So actually u can address Vuex store value in template in three different ways  => 
 		      1.if didn't use {...mapState()} => {{ this.$store.state.products[0].productId }}
 			  2.if used {...mapState()}       => {{ products[0].productId }}  + like in 1st variant
 		      3.if used computed: {checkStore() {return this.$store.state.products;} }, ) =>  {{  checkStore[0].productId }} 
@@ -1442,10 +1467,19 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		# Vue-Router Menu's pages are in => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/tree/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/pages
 		
 		
+		
 		-------------------------------------------------
 		26. Unsorted Vue
 		------------------------------------------------
-		--------------------
+		# how to use data (equivalent of React state)=>
+		     <template> {{count}} </template>
+			 <script>
+			 //..
+			 data()  { return{ count: 0 } },
+			 methods:{ increment(){this.count +=1;} },
+		  
+		  
+		  
 		# set data attribute => <div class='subfolder shadowX' v-on:click="greet" v-bind:data-id="this.itemZ" >
 		# get data attribute => greet: function (event) {
 			    alert(event.currentTarget.getAttribute('data-id')); }
@@ -1544,6 +1578,8 @@ It is done pretty like the same as for Login, see  example at => https://github.
 For SandBox use:
   Facilitator/Business Account
   Buyer Account
+  
+Ready solution => https://laravel.demiart.ru/paypal-into-laravel/
   
   
 //================================================================================================
@@ -2091,7 +2127,7 @@ composer dump-autoload
 # Slug URL via 'cviebrock/eloquent-sluggable' => https://cleverman.org/post/laravel-5-5-i-slug-chto-takoe-slagi-i-zachem-oni-nuzhny
 # Docker in 15 min => https://laravel.demiart.ru/dockerizing-laravel-in-15-minutes/
 
-
+# Change default home route => Route::get('/', ['uses'=>'BandController@index']);
 
 
 
@@ -2170,10 +2206,14 @@ $listOfLanguages = array(
 
 # Authentication(login/pass) vs authorization (Rbac)
 
-#Github Readme.md => Markdown is a lightweight markup language. Craete Anchor =>  - [1. Go to My Acnchored Section 1](#1-real-cool-heading1)    ## 1. Real Cool Heading1
-Some my text
+#Github Readme.md => Markdown is a lightweight markup language => See example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/readme_template_example.md
+Create Anchor => 
+    - [1. Go to My Acnchored Section 1](#1-real-cool-heading1)    ## 1. Real Cool Heading1
+   Some my text
  to test what my readme.md file will look like before committing to github => http://tmpvar.com/markdown.html
  see my example => /root/readme_template_example.md
+
+# Add image to Readme.md =>  ![Screenshot](folderName/screenshot.png)
 
 # Conventional Commits (git-flow) => 
    example=>
@@ -2197,6 +2237,7 @@ Some my text
      * @param boolean $runValidation whether to perform validation before saving the record.
      * @param array $attributeNames list of attribute names that need to be saved.
      * @return boolean whether the saving succeeded (i.e. no validation errors occurred).
+	 * @return void
      */
 	 
 # View POST in Chrome => Network" tab => refresh => select POST in left =>  Choose "Headers" tab
@@ -2381,6 +2422,244 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 а) сессии должны корректно сохран€тьс€ и восстанавливатьс€. за выбор способа работы с сесси€ми отвечает SESSION_DRIVER в .env а конкретные настройки лежат в config/session.php. по умолчанию стоит file Ц провер€ем права доступа к storage/framework/sessions. если драйвер database Ц должна быть создана таблица сессий и настроено подключение к базе. дл€ memcached и redis должны быть запущены и настроен доступ к соответствующим демонам. драйвера null и array не поддерживают сохранение данных никуда вообще Ц с ними CSRF-проверка работать не будет в любом случае. драйвер cookie не требует настроек так как передаЄт все данные сразу в куках в шифрованном виде Ц неэффективно но просто и дл€ того чтобы быстро что-то потестировать вполне подходит
 б) если сессии настроены и работают Ц провер€ем что сесси€ реально сохран€етс€ и восстанавливаетс€ при запросах, за это отвечает миддлварь Illuminate\Session\Middleware\StartSession котора€ входит в группу миддлварей web. в версии 5.3 эта группа применена на маршрутах заданных в routes/web.php. в более ранних верси€х оно задаЄтс€ €вно в app\Http\routes.php с помощью группы Route::group(['middleware' => ['web']], function () { /* ... */ }); маршруты, которым не назначена группа web или €вно миддлварь StartSession не получают сессии и соответственно не могут прочитать сохранЄнный токен
 в) если сессии настроены, миддлвари прикреплены к маршрутам, где отображаетс€ и куда сабмититс€ форма, а токен всЄ равно нет тот Ц остаЄтс€ только установить xdebug и погул€ть по коду, провер€€ где токены создаютс€ и сравниваютс€, потому что на этом месте у мен€ закончилась фантази€ как ещЄ можно сломать простой и надЄжный как валенок механизм работы с CSRF-токенами smile
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//================================================================================================
+
+400.SOLID principles
+S - Single-responsiblity Principle => 
+    A class should have one and only one reason to change, meaning that a class should have only one job.
+
+    #BEFORE SOLID =>
+
+    class Order
+    {
+	    public function calculateTotalSum(){/*...*/}  public function getItems(){/*...*/}
+	    public function addItem($item){/*...*/}       public function deleteItem($item){/*...*/}
+
+	    public function printOrder(){/*...*/}         public function showOrder(){/*...*/}
+
+	    public function load(){/*...*/} public function save(){/*...*/} public function update(){/*...*/} public function delete(){/*...*/}
+    }
+
+  #AFTER SOLID =>
+
+    class Order
+    {
+	    public function calculateTotalSum(){/*...*/}
+	    public function getItems(){/*...*/}      public function getItemCount(){/*...*/}
+	    public function addItem($item){/*...*/}  public function deleteItem($item){/*...*/}
+    }
+
+    class OrderRepository
+    {
+	    public function load($orderID){/*...*/} public function save($order){/*...*/}
+	    public function update($order){/*...*/} public function delete($order){/*...*/}
+    }
+
+    class OrderViewer
+    {
+	    public function printOrder($order){/*...*/} public function showOrder($order){/*...*/}
+    }
+	
+-------------------------
+O - Open-closed Principle => 
+    Objects or entities should be open for extension but closed for modification (engages to Dependency injection)
+    #BEFORE SOLID =>
+	    class OrderRepository
+        {
+	        public function load($orderID) {
+		        $pdo = new PDO($this->config->getDsn(), $this->config->getDBUser(), $this->config->getDBPassword());
+		        $statement = $pdo->prepare('SELECT * FROM `orders` WHERE id=:id');
+		        $statement->execute(array(':id' => $orderID));
+		        return $query->fetchObject('Order');	
+	        }
+	        public function save($order){/*...*/}
+	        public function update($order){/*...*/}
+	        public function delete($order){/*...*/}
+        }
+		
+	#AFTER SOLID =>
+	    class OrderRepository
+        {
+	        private $source;
+	        public function setSource(IOrderSource $source){ $this->source = $source; }
+	        public function load($orderID){ return $this->source->load($orderID); }
+	        public function save($order){/*...*/}
+	        public function update($order){/*...*/}
+        }
+
+        interface IOrderSource
+        {
+	        public function load($orderID);  public function save($order);
+	        public function update($order);  public function delete($order);
+        }
+
+        class MySQLOrderSource implements IOrderSource
+        {
+	        public function load($orderID);          public function save($order){/*...*/}
+	        public function update($order){/*...*/}  public function delete($order){/*...*/}
+        }
+
+        class ApiOrderSource implements IOrderSource
+        {
+	         public function load($orderID);         public function save($order){/*...*/} 
+			 public function update($order){/*...*/} public function delete($order){/*...*/}
+        }
+-------------------------
+L - Liskov Substitution Principle => 
+    Every subclass or derived class should be substitutable for their base or parent class.
+-------------------------
+I - Interface Segregation Principle => 
+    A client should never be forced to implement an interface that it doesnТt use, or clients shouldnТt be forced to depend on methods they do not use.
+-------------------------
+D - Dependency Inversion Principle => 
+    Entities must depend on abstractions, not on concretions. It states that the high-level module must not depend on the low-level module, but they should depend on abstractions.
+    (Abstraction should not depend on details, details must depend on abstractions)
+	
+	
+	
+	
+	
+	
+	
+//================================================================================================
+401.Design Patterns
+Creational(to create objects while hiding the creation logic) => Builder, Singleton, Factory, Prototype
+Structural(concern class and object composition) => Adapter, Bridge, Facade, Decorator 
+Behavioral(communication between objects) Patterns  => Chain of responsibility, Observer, Strategy, Iterator, Visitor
+ѕорождающие, —труктурные, ѕоведенческие 
+
+401.1 Singleton
+     class Singleton
+     { // object instance
+         protected static $instance;
+ 
+         private function __construct(){
+		      try {
+			      $conn = new PDO("mysql:host=$servername;dbname=myDB", $username, $password);
+                  // set the PDO error mode to exception
+                  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); echo "Connected successfully";
+              } catch(PDOException $e) { echo "Connection failed: " . $e->getMessage();}
+		 }
+         private function __clone(){}
+         private function __wakeup(){}
+
+         public static function getInstance(){
+             if (is_null(self::$instance)) {
+                 self::$instance = new self;
+             }
+            return self::$instance;
+         }
+
+         public function doAction(){/* ... */) }
+		 
+		 Singleton::getInstance()->doAction();
+------------------------------------------------
+402.2 Strategy => поведенческий шаблон, similar to Dependency injection
+
+------------------------------------------------
+402.3 Factory method
+    class Position{
+        public $x; public $y;
+    }
+    class ShapeFactory{
+        public function create($class, $position){
+            return new $class($position);
+        }
+    }
+    $pos = new Position;
+    $pos->x = 34;
+    $pos->y = 55;
+    $shape = new ShapeFactory;
+    $rect = $shape->create("Rectangle", $pos);
+    var_dump($rect);
+	
+------------------------------------------------
+402.4 Abstract Factory
+    class MySQLConn {
+        public function __construct() { echo "MySQL Database Connection" . PHP_EOL;}
+        public function select() { echo "Your mysql select query execute here" . PHP_EOL;}
+    }
+
+    class OracleConn {
+        public function __construct() { echo "Oracle Database Connection" . PHP_EOL; }
+        public function select() { echo "Your oracle select query execute here" . PHP_EOL; }
+    }
+	
+	class DBFactory {
+        public static function getConn($dbtype) {
+                switch($dbtype) {
+                        case "MySQL":  $dbobj = new MySQLConn();  break;
+                        case "Oracle": $dbobj = new OracleConn(); break;
+                        default:       $dbobj = new MySQLConn();  break;
+                }
+                return $dbobj;
+        } }
+        //Usage=> User just need to pass the name of the database type
+        $dbconn1 = DBFactory::getConn("MySQL");
+        $dbconn1->select();
+		
+------------------------------------------------
+402.5 Dependency injection => pattern uses principle of IoC (Inversion Of Control). 
+Can be done via constructor => function __construct($service){$this->service = $service;} Or via setter => function setService($service){$this->service = $service;}
+    #BEFORE Dependency injection
+	    class Service{ 
+		    private $data; private $key;
+            function __construct ($key) {$this->key = $key;}
+		}
+		class App{    
+			function __construct(){$this->service = new Service();
+		}
+		
+	    $app = new App('789');
+		
+	#AFTER Dependency injection
+	class App{
+        protected $service;
+        function __construct(Service $service){ $this->service = $service; }
+        // ...
+    }
+
+    $service = new Service('777');
+    $app = new App($service);
+
+
+------------------------------------------------
+402.6 Facade => is used to hide complecated realisation in one class. If we have 10 classes and 10 methods to run, just create one Facade to run them all 
+    class Controller  // (this is Facade)
+    {
+        function __construct(){
+	        $this->model = new Model(); // create onw Class
+	        $this->view = new View();   // create other
+        }
+ 
+        function run(){  
+		    $this->model->getData();  $this->view->render();
+        }
+    }
+------------------------------------------------
+402.7 Observer, Adopter, Decorator => https://medium.com/@ivorobioff/the-5-most-common-design-patterns-in-php-applications-7f33b6b7d8d6
+
+
+
+
+
+
+//================================================================================================
+
 
 
   /*
