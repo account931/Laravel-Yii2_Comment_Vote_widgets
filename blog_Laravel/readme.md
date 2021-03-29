@@ -1,3 +1,116 @@
+## Miscellaneous Laravel application.
+
+- <p>Application utilizes miscellaneous aspects. See screenshots .</p>
+
+
+## Brief overview of the application
+
+![Screenshot](public/images/Screenshots/1.png)
+
+## User's profile page
+
+![Screenshot](public/images/Screenshots/2.png)
+
+## View all users
+
+![Screenshot](public/images/Screenshots/3.png)
+
+![Screenshot](public/images/Screenshots/4.png)
+
+## Rest Rest Api
+
+![Screenshot](public/images/Screenshots/5.png)
+
+![Screenshot](public/images/Screenshots/6.png)
+
+![Screenshot](public/images/Screenshots/7.png)
+
+## Laravel Blog
+
+![Screenshot](public/images/Screenshots/8.png)
+
+![Screenshot](public/images/Screenshots/9.png)
+
+## Multilanguages
+
+![Screenshot](public/images/Screenshots/10.png)
+
+## Rbac on Entrust
+
+![Screenshot](public/images/Screenshots/11.png)
+
+![Screenshot](public/images/Screenshots/12.png)
+
+## E-shop
+
+![Screenshot](public/images/Screenshots/13.png)
+
+![Screenshot](public/images/Screenshots/14.png)
+
+![Screenshot](public/images/Screenshots/15.png)
+
+![Screenshot](public/images/Screenshots/16.png)
+
+![Screenshot](public/images/Screenshots/17.png)
+
+![Screenshot](public/images/Screenshots/18.png)
+
+![Screenshot](public/images/Screenshots/19.png)
+
+## E-shop Admin Panel
+
+![Screenshot](public/images/Screenshots/20.png)
+
+![Screenshot](public/images/Screenshots/21.png)
+
+![Screenshot](public/images/Screenshots/22.png)
+
+![Screenshot](public/images/Screenshots/23.png)
+
+![Screenshot](public/images/Screenshots/24.png)
+
+## Snow JS
+
+![Screenshot](public/images/Screenshots/25.png)
+
+## Blog with multiple images
+
+![Screenshot](public/images/Screenshots/26.png)
+
+![Screenshot](public/images/Screenshots/27.png)
+
+## Vue JS
+
+![Screenshot](public/images/Screenshots/28.png)
+
+## Blog on Vue JS
+
+![Screenshot](public/images/Screenshots/29.png)
+
+![Screenshot](public/images/Screenshots/30.png)
+
+![Screenshot](public/images/Screenshots/31.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">

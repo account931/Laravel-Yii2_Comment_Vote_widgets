@@ -2242,6 +2242,12 @@ Create Anchor =>
 	 
 # View POST in Chrome => Network" tab => refresh => select POST in left =>  Choose "Headers" tab
 
+# Github tab/space/indentation problem => create a file in the project root named “.editorconfig” and give it the following contents (or ?ts=4) => 
+  [*]
+  indent_style = tab
+  indent_size = 4
+
+#
 
 ---------------------- JS ----------
 
