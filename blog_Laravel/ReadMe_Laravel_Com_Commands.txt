@@ -81,7 +81,7 @@ http://laravel.su/docs/5.4/installation
 3. To add authentication (login/register) (or read manual => https://vegibit.com/how-to-create-user-registration-in-laravel/ )=>
        CLI=> php artisan make:auth
 
-Ýòó êîìàíäó íàäî èñïîëüçîâàòü íà ñâåæåì ïðèëîæåíèè, îíà óñòàíîâèò øàáëîíû äëÿ ðåãèñòðàöèè è âõîäà, à òàêæå ðîóòû äëÿ âñåõ êîíå÷íûõ òî÷åê àóòåíòèôèêàöèè. Òàêæå áóäåò ñãåíåðèðîâàí HomeController, êîòîðûé îáñëóæèâàåò çàïðîñû ê ïàíåëè íàñòðîåê âàøåãî ïðèëîæåíèÿ ïîñëå âõîäà. Íî âû ìîæåòå èçìåíèòü èëè äàæå óäàëèòü ýòî êîíòðîëëåð, åñëè ýòî íåîáõîäèìî äëÿ âàøåãî ïðèëîæåíèÿ.
+Ð­Ñ‚Ñƒ ÐºÐ¾Ð¼Ð°Ð½Ð´Ñƒ Ð½Ð°Ð´Ð¾ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÑŒ Ð½Ð° ÑÐ²ÐµÐ¶ÐµÐ¼ Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ð¸, Ð¾Ð½Ð° ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ ÑˆÐ°Ð±Ð»Ð¾Ð½Ñ‹ Ð´Ð»Ñ Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ð¸ Ð¸ Ð²Ñ…Ð¾Ð´Ð°, Ð° Ñ‚Ð°ÐºÐ¶Ðµ Ñ€Ð¾ÑƒÑ‚Ñ‹ Ð´Ð»Ñ Ð²ÑÐµÑ… ÐºÐ¾Ð½ÐµÑ‡Ð½Ñ‹Ñ… Ñ‚Ð¾Ñ‡ÐµÐº Ð°ÑƒÑ‚ÐµÐ½Ñ‚Ð¸Ñ„Ð¸ÐºÐ°Ñ†Ð¸Ð¸. Ð¢Ð°ÐºÐ¶Ðµ Ð±ÑƒÐ´ÐµÑ‚ ÑÐ³ÐµÐ½ÐµÑ€Ð¸Ñ€Ð¾Ð²Ð°Ð½ HomeController, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¹ Ð¾Ð±ÑÐ»ÑƒÐ¶Ð¸Ð²Ð°ÐµÑ‚ Ð·Ð°Ð¿Ñ€Ð¾ÑÑ‹ Ðº Ð¿Ð°Ð½ÐµÐ»Ð¸ Ð½Ð°ÑÑ‚Ñ€Ð¾ÐµÐº Ð²Ð°ÑˆÐµÐ³Ð¾ Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ Ð¿Ð¾ÑÐ»Ðµ Ð²Ñ…Ð¾Ð´Ð°. ÐÐ¾ Ð²Ñ‹ Ð¼Ð¾Ð¶ÐµÑ‚Ðµ Ð¸Ð·Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ Ð¸Ð»Ð¸ Ð´Ð°Ð¶Ðµ ÑƒÐ´Ð°Ð»Ð¸Ñ‚ÑŒ ÑÑ‚Ð¾ ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ð»ÐµÑ€, ÐµÑÐ»Ð¸ ÑÑ‚Ð¾ Ð½ÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼Ð¾ Ð´Ð»Ñ Ð²Ð°ÑˆÐµÐ³Ð¾ Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ.
 
 
 https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
@@ -103,21 +103,21 @@ https://developernotes.ru/laravel-5/modeli-i-baza-dannih-v-laravel-5
 1.1 How to copy/clone existing Laravel project and run
 credits => https://si-dev.com/ru/portfolio/larablog
 
-Êëîíèðîâàòü èëè çàãðóçèòü ðåïîçèòîðèé (ññûëêà íà ãèòõàá íèæå)
-Ïåðåéòè â äèðåêòîðèþ ïðîåêòà è âûïîëíèòü composer install
-Â êîðíå ïðîåêòà íà îñíîâå .env.example ñîçäàòü ôàéë .env ñ Âàøèìè íàñòðîéêàìè (ïàðàìåòðû ïîäêëþ÷åíèÿ ê ÁÄ è ò.ä.)
-Âûïîëíèòü php artisan key:generate
-Âûïîëíèòü php artisan migrate
-Åñëè åñòü íåîáõîäèìîñòü çàïîëíåíèÿ áàçû äàííûõ ôåéêîâûìè äàííûìè, âûïîëíèòü php artisan db:seed 
-Âûïîëíèòü php artisan passport:install
+ÐšÐ»Ð¾Ð½Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¸Ð»Ð¸ Ð·Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ Ñ€ÐµÐ¿Ð¾Ð·Ð¸Ñ‚Ð¾Ñ€Ð¸Ð¹ (ÑÑÑ‹Ð»ÐºÐ° Ð½Ð° Ð³Ð¸Ñ‚Ñ…Ð°Ð± Ð½Ð¸Ð¶Ðµ)
+ÐŸÐµÑ€ÐµÐ¹Ñ‚Ð¸ Ð² Ð´Ð¸Ñ€ÐµÐºÑ‚Ð¾Ñ€Ð¸ÑŽ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð° Ð¸ Ð²Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ composer install
+Ð’ ÐºÐ¾Ñ€Ð½Ðµ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð° Ð½Ð° Ð¾ÑÐ½Ð¾Ð²Ðµ .env.example ÑÐ¾Ð·Ð´Ð°Ñ‚ÑŒ Ñ„Ð°Ð¹Ð» .env Ñ Ð’Ð°ÑˆÐ¸Ð¼Ð¸ Ð½Ð°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ°Ð¼Ð¸ (Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿Ð¾Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ñ Ðº Ð‘Ð” Ð¸ Ñ‚.Ð´.)
+Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ php artisan key:generate
+Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ php artisan migrate
+Ð•ÑÐ»Ð¸ ÐµÑÑ‚ÑŒ Ð½ÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼Ð¾ÑÑ‚ÑŒ Ð·Ð°Ð¿Ð¾Ð»Ð½ÐµÐ½Ð¸Ñ Ð±Ð°Ð·Ñ‹ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ñ„ÐµÐ¹ÐºÐ¾Ð²Ñ‹Ð¼Ð¸ Ð´Ð°Ð½Ð½Ñ‹Ð¼Ð¸, Ð²Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ php artisan db:seed 
+Ð’Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ php artisan passport:install
 -------------------------
 Bonus => set-up for React
-Ïîñëå ñáîðêè ïðîåêòà â êîðíå ïîÿâèòñÿ äèðåêòîðèÿ public ñ ôàéëîì index.html è ïîääèðåêòîðèÿìè js, css è images ñ ñîîòâåòñòâóþùèìè ôàéëàìè
+ÐŸÐ¾ÑÐ»Ðµ ÑÐ±Ð¾Ñ€ÐºÐ¸ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð° Ð² ÐºÐ¾Ñ€Ð½Ðµ Ð¿Ð¾ÑÐ²Ð¸Ñ‚ÑÑ Ð´Ð¸Ñ€ÐµÐºÑ‚Ð¾Ñ€Ð¸Ñ public Ñ Ñ„Ð°Ð¹Ð»Ð¾Ð¼ index.html Ð¸ Ð¿Ð¾Ð´Ð´Ð¸Ñ€ÐµÐºÑ‚Ð¾Ñ€Ð¸ÑÐ¼Ð¸ js, css Ð¸ images Ñ ÑÐ¾Ð¾Ñ‚Ð²ÐµÑ‚ÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¼Ð¸ Ñ„Ð°Ð¹Ð»Ð°Ð¼Ð¸
 USAGE
-Êëîíèðóéòå èëè çàãðóçèòå ðåïîçèòîðèé (íèæå ññûëêà íà ãèòõàá)
-Çàéäèòå â äèðåêòîðèþ ïðîåêòà è óñòíîâèòå çàâèñèìîñòè âûïîëíèâ êîìàíäó npm install
-Çàïóñòèòü ïðîåêòà â ðåæèìå ðàçðàáîòêè: npm run start
-Ñîáðàòü ïðîåêò: npm run build
+ÐšÐ»Ð¾Ð½Ð¸Ñ€ÑƒÐ¹Ñ‚Ðµ Ð¸Ð»Ð¸ Ð·Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚Ðµ Ñ€ÐµÐ¿Ð¾Ð·Ð¸Ñ‚Ð¾Ñ€Ð¸Ð¹ (Ð½Ð¸Ð¶Ðµ ÑÑÑ‹Ð»ÐºÐ° Ð½Ð° Ð³Ð¸Ñ‚Ñ…Ð°Ð±)
+Ð—Ð°Ð¹Ð´Ð¸Ñ‚Ðµ Ð² Ð´Ð¸Ñ€ÐµÐºÑ‚Ð¾Ñ€Ð¸ÑŽ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð° Ð¸ ÑƒÑÑ‚Ð½Ð¾Ð²Ð¸Ñ‚Ðµ Ð·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑ‚Ð¸ Ð²Ñ‹Ð¿Ð¾Ð»Ð½Ð¸Ð² ÐºÐ¾Ð¼Ð°Ð½Ð´Ñƒ npm install
+Ð—Ð°Ð¿ÑƒÑÑ‚Ð¸Ñ‚ÑŒ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð° Ð² Ñ€ÐµÐ¶Ð¸Ð¼Ðµ Ñ€Ð°Ð·Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ¸: npm run start
+Ð¡Ð¾Ð±Ñ€Ð°Ñ‚ÑŒ Ð¿Ñ€Ð¾ÐµÐºÑ‚: npm run build
 
 //============================================	
 
@@ -500,7 +500,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
   #create migration   =>   php artisan make:migration create_users_table
   #run all migrations =>   php artisan migrate
   
-  Ìîæíî òàêæå èñïîëüçîâàòü ïàðàìåòðû --table è --create äëÿ óêàçàíèÿ èìåíè òàáëèöû è òîãî ôàêòà, ÷òî ìèãðàöèÿ áóäåò ñîçäàâàòü íîâóþ òàáëèöó (à íå èçìåíÿòü ñóùåñòâóþùóþ — ïðèì. ïåð.). =>
+  ÐœÐ¾Ð¶Ð½Ð¾ Ñ‚Ð°ÐºÐ¶Ðµ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÑŒ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ --table Ð¸ --create Ð´Ð»Ñ ÑƒÐºÐ°Ð·Ð°Ð½Ð¸Ñ Ð¸Ð¼ÐµÐ½Ð¸ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñ‹ Ð¸ Ñ‚Ð¾Ð³Ð¾ Ñ„Ð°ÐºÑ‚Ð°, Ñ‡Ñ‚Ð¾ Ð¼Ð¸Ð³Ñ€Ð°Ñ†Ð¸Ñ Ð±ÑƒÐ´ÐµÑ‚ ÑÐ¾Ð·Ð´Ð°Ð²Ð°Ñ‚ÑŒ Ð½Ð¾Ð²ÑƒÑŽ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñƒ (Ð° Ð½Ðµ Ð¸Ð·Ð¼ÐµÐ½ÑÑ‚ÑŒ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰ÑƒÑŽ â€” Ð¿Ñ€Ð¸Ð¼. Ð¿ÐµÑ€.). =>
     php artisan make:migration create_wpress_blog_post_table --create=wpress_blog_post
   
  
@@ -540,7 +540,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
   	NB!!!! => If one table contains ID that used as Forein Keys in other table, first table must be seeded first or seeding will crash. Example: first seed {shop_categories_table}, then {shop_simple_table}
 
 
-  //Çàãðóçêà íà÷àëüíûõ äàííûõ â ÁÄ
+  //Ð—Ð°Ð³Ñ€ÑƒÐ·ÐºÐ° Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ñ‹Ñ… Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð² Ð‘Ð”
   To seed all =>   php artisan db:seed   //By default, the db:seed command runs the DatabaseSeeder class, which may be used to call other seed classes
   # if u run seeder command and Seeder Class contain {DB::table('users')->delete()}, it will overwrite all data, if it doesnot, then it will add Seeder column data to existing values in DB 
 
@@ -653,7 +653,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	$books = Book::with('author', 'categories')->get(); => Eager loading for hasOne/hasMany relations (use instead of simple (->get()) for DB oprimaization), 'author', 'categories' are models' hasOne/hasMany relations.
   
   
-  #Ìåòîä get() âîçâðàùàåò îáúåêò Illuminate\Support\Collection (äëÿ âåðñèè 5.2 è ðàíåå — ìàññèâ) c ðåçóëüòàòàìè, â êîòîðîì êàæäûé ðåçóëüòàò — ýòî ýêçåìïëÿð PHP-îáúåêòà StdClass.
+  #ÐœÐµÑ‚Ð¾Ð´ get() Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ð¾Ð±ÑŠÐµÐºÑ‚ Illuminate\Support\Collection (Ð´Ð»Ñ Ð²ÐµÑ€ÑÐ¸Ð¸ 5.2 Ð¸ Ñ€Ð°Ð½ÐµÐµ â€” Ð¼Ð°ÑÑÐ¸Ð²) c Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚Ð°Ð¼Ð¸, Ð² ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¼ ÐºÐ°Ð¶Ð´Ñ‹Ð¹ Ñ€ÐµÐ·ÑƒÐ»ÑŒÑ‚Ð°Ñ‚ â€” ÑÑ‚Ð¾ ÑÐºÐ·ÐµÐ¼Ð¿Ð»ÑÑ€ PHP-Ð¾Ð±ÑŠÐµÐºÑ‚Ð° StdClass.
   use Illuminate\Support\Facades\DB;  $users = $articles = DB::table('wpress_blog_post')->get();
   use Illuminate\Support\Facades\DB; $articles = DB::table('wpress_blog_post')->where('wpBlog_status', '1')->get();
 
@@ -919,9 +919,9 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
    Works so muck like Browserify + Gulp.......
     All Development css/js (js/css u're changing) are located in /resources/assets/. They are not included to index.php (\resources\views\layouts). 
 	Included css/js are in /public. To convert Development assets to Production(to minify, concatenate), run => npm run production
-    # npm run production  => Çàïóñòèòü âñå çàäà÷è Mix è ìèíèôèöèðîâàòü âûâîä => go to cmd => 
+    # npm run production  => Ð—Ð°Ð¿ÑƒÑÑ‚Ð¸Ñ‚ÑŒ Ð²ÑÐµ Ð·Ð°Ð´Ð°Ñ‡Ð¸ Mix Ð¸ Ð¼Ð¸Ð½Ð¸Ñ„Ð¸Ñ†Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð²Ñ‹Ð²Ð¾Ð´ => go to cmd => 
    
-   if error {"cross-env" íå ÿâëÿåòñÿ âíóòðåííåé èëè âíåøíåé êîìàíäîé} (in project folder)  =>   npm i cross-env --save
+   if error {"cross-env" Ð½Ðµ ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð²Ð½ÑƒÑ‚Ñ€ÐµÐ½Ð½ÐµÐ¹ Ð¸Ð»Ð¸ Ð²Ð½ÐµÑˆÐ½ÐµÐ¹ ÐºÐ¾Ð¼Ð°Ð½Ð´Ð¾Ð¹} (in project folder)  =>   npm i cross-env --save
    if error {"Node events.js:167 throw er; // Unhandled 'error' event"} =>  Removing the node_modules directory and reinstalling again using npm install should solve the problem.
 
    
@@ -2217,15 +2217,15 @@ Create Anchor =>
 
 # Conventional Commits (git-flow) => 
    example=>
-   fix(products): ïîïðàâèòü äëèíó ñòðîêè ñ öåíîé
-   ×àñòü çàãîëîâêîâ íåïðàâèëüíî îòîáðàæàåòñÿ â ìîáèëüíîé âåðñèè èç-çà îøèáîêâ ïðîåêòèðîâàíèè óíèâåðñàëüíûõ êîìïîíåíòîâ.
+   fix(products): Ð¿Ð¾Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÑŒ Ð´Ð»Ð¸Ð½Ñƒ ÑÑ‚Ñ€Ð¾ÐºÐ¸ Ñ Ñ†ÐµÐ½Ð¾Ð¹
+   Ð§Ð°ÑÑ‚ÑŒ Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²ÐºÐ¾Ð² Ð½ÐµÐ¿Ñ€Ð°Ð²Ð¸Ð»ÑŒÐ½Ð¾ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÑ‚ÑÑ Ð² Ð¼Ð¾Ð±Ð¸Ð»ÑŒÐ½Ð¾Ð¹ Ð²ÐµÑ€ÑÐ¸Ð¸ Ð¸Ð·-Ð·Ð° Ð¾ÑˆÐ¸Ð±Ð¾ÐºÐ² Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ð¸ ÑƒÐ½Ð¸Ð²ÐµÑ€ÑÐ°Ð»ÑŒÐ½Ñ‹Ñ… ÐºÐ¾Ð¼Ð¿Ð¾Ð½ÐµÐ½Ñ‚Ð¾Ð².
 
  type=>
-  build	 => Ñáîðêà ïðîåêòà èëè èçìåíåíèÿ âíåøíèõ çàâèñèìîñòåé    ci	 => Íàñòðîéêà CI è ðàáîòà ñî ñêðèïòàìè
-  feat  =>Äîáàâëåíèå íîâîãî ôóíêöèîíàëà     fix  => Èñïðàâëåíèå îøèáîê
-  docs  => Îáíîâëåíèå äîêóìåíòàöèè          perf => Èçìåíåíèÿ íàïðàâëåííûå íà óëó÷øåíèå ïðîèçâîäèòåëüíîñòè  
-  refactor => Ïðàâêè êîäà áåç èñïðàâëåíèÿ îøèáîê èëè äîáàâëåíèÿ íîâûõ ôóíêöèé  revert  => Îòêàò íà ïðåäûäóùèå êîììèòû
-  style	=> Ïðàâêè ïî êîäñòàéëó (òàáû, îòñòóïû, òî÷êè, çàïÿòûå è ò.ä.)             test => Äîáàâëåíèå òåñòîâ
+  build	 => Ð¡Ð±Ð¾Ñ€ÐºÐ° Ð¿Ñ€Ð¾ÐµÐºÑ‚Ð° Ð¸Ð»Ð¸ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ Ð²Ð½ÐµÑˆÐ½Ð¸Ñ… Ð·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑ‚ÐµÐ¹    ci	 => ÐÐ°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ° CI Ð¸ Ñ€Ð°Ð±Ð¾Ñ‚Ð° ÑÐ¾ ÑÐºÑ€Ð¸Ð¿Ñ‚Ð°Ð¼Ð¸
+  feat  =>Ð”Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð½Ð¾Ð²Ð¾Ð³Ð¾ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¾Ð½Ð°Ð»Ð°     fix  => Ð˜ÑÐ¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð¾ÑˆÐ¸Ð±Ð¾Ðº
+  docs  => ÐžÐ±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ðµ Ð´Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ð°Ñ†Ð¸Ð¸          perf => Ð˜Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð½Ñ‹Ðµ Ð½Ð° ÑƒÐ»ÑƒÑ‡ÑˆÐµÐ½Ð¸Ðµ Ð¿Ñ€Ð¾Ð¸Ð·Ð²Ð¾Ð´Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ð¾ÑÑ‚Ð¸  
+  refactor => ÐŸÑ€Ð°Ð²ÐºÐ¸ ÐºÐ¾Ð´Ð° Ð±ÐµÐ· Ð¸ÑÐ¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ Ð¾ÑˆÐ¸Ð±Ð¾Ðº Ð¸Ð»Ð¸ Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ñ Ð½Ð¾Ð²Ñ‹Ñ… Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¹  revert  => ÐžÑ‚ÐºÐ°Ñ‚ Ð½Ð° Ð¿Ñ€ÐµÐ´Ñ‹Ð´ÑƒÑ‰Ð¸Ðµ ÐºÐ¾Ð¼Ð¼Ð¸Ñ‚Ñ‹
+  style	=> ÐŸÑ€Ð°Ð²ÐºÐ¸ Ð¿Ð¾ ÐºÐ¾Ð´ÑÑ‚Ð°Ð¹Ð»Ñƒ (Ñ‚Ð°Ð±Ñ‹, Ð¾Ñ‚ÑÑ‚ÑƒÐ¿Ñ‹, Ñ‚Ð¾Ñ‡ÐºÐ¸, Ð·Ð°Ð¿ÑÑ‚Ñ‹Ðµ Ð¸ Ñ‚.Ð´.)             test => Ð”Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ñ‚ÐµÑÑ‚Ð¾Ð²
 
 # phpdoc => 
     /* @var $this yii\web\View */
@@ -2242,12 +2242,12 @@ Create Anchor =>
 	 
 # View POST in Chrome => Network" tab => refresh => select POST in left =>  Choose "Headers" tab
 
-# Github tab/space/indentation problem => create a file in the project root named “.editorconfig” and give it the following contents (or ?ts=4) => 
+# Github tab/space/indentation problem => create a file in the project root named â€œ.editorconfigâ€ and give it the following contents (or ?ts=4) => 
   [*]
   indent_style = tab
   indent_size = 4
 
-#
+# Edit last commit  => git commit --amend
 
 ---------------------- JS ----------
 
@@ -2415,19 +2415,19 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 	
 =============================
 
-åñëè òîêåí íå ïðèíèìàåòñÿ îáðàáîò÷èêîì, òî âàðèàíòà ñóùåñòâóåò ïî ñóòè äâà – ëèáî îí íå îòïðàâëÿåòñÿ â çàïðîñå (îòñóòñòâóåò csrf_field() â ôîðìå, èëè íåò íóæíîãî çíà÷åíèÿ â àÿêñ-çàïðîñå – òàì îí ìîæåò ïåðåäàâàòüñÿ êàê â äàííûõ òàê è â çàãîëîâêàõ çàïðîñà), ëèáî íà ñòîðîíå ñåðâåðà íå çàãðóæàåòñÿ ñåññèÿ – èìåííî â íåé ñîõðàíÿåòñÿ òîêåí íà ñòîðîíå ñåðâåðà, ÷òîáû áûëî ñ ÷åì ñðàâíèòü òî ÷òî ïðèøëî â çàïðîñå.
+ÐµÑÐ»Ð¸ Ñ‚Ð¾ÐºÐµÐ½ Ð½Ðµ Ð¿Ñ€Ð¸Ð½Ð¸Ð¼Ð°ÐµÑ‚ÑÑ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚Ñ‡Ð¸ÐºÐ¾Ð¼, Ñ‚Ð¾ Ð²Ð°Ñ€Ð¸Ð°Ð½Ñ‚Ð° ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚ Ð¿Ð¾ ÑÑƒÑ‚Ð¸ Ð´Ð²Ð° â€“ Ð»Ð¸Ð±Ð¾ Ð¾Ð½ Ð½Ðµ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÑÐµÑ‚ÑÑ Ð² Ð·Ð°Ð¿Ñ€Ð¾ÑÐµ (Ð¾Ñ‚ÑÑƒÑ‚ÑÑ‚Ð²ÑƒÐµÑ‚ csrf_field() Ð² Ñ„Ð¾Ñ€Ð¼Ðµ, Ð¸Ð»Ð¸ Ð½ÐµÑ‚ Ð½ÑƒÐ¶Ð½Ð¾Ð³Ð¾ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ Ð² Ð°ÑÐºÑ-Ð·Ð°Ð¿Ñ€Ð¾ÑÐµ â€“ Ñ‚Ð°Ð¼ Ð¾Ð½ Ð¼Ð¾Ð¶ÐµÑ‚ Ð¿ÐµÑ€ÐµÐ´Ð°Ð²Ð°Ñ‚ÑŒÑÑ ÐºÐ°Ðº Ð² Ð´Ð°Ð½Ð½Ñ‹Ñ… Ñ‚Ð°Ðº Ð¸ Ð² Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²ÐºÐ°Ñ… Ð·Ð°Ð¿Ñ€Ð¾ÑÐ°), Ð»Ð¸Ð±Ð¾ Ð½Ð° ÑÑ‚Ð¾Ñ€Ð¾Ð½Ðµ ÑÐµÑ€Ð²ÐµÑ€Ð° Ð½Ðµ Ð·Ð°Ð³Ñ€ÑƒÐ¶Ð°ÐµÑ‚ÑÑ ÑÐµÑÑÐ¸Ñ â€“ Ð¸Ð¼ÐµÐ½Ð½Ð¾ Ð² Ð½ÐµÐ¹ ÑÐ¾Ñ…Ñ€Ð°Ð½ÑÐµÑ‚ÑÑ Ñ‚Ð¾ÐºÐµÐ½ Ð½Ð° ÑÑ‚Ð¾Ñ€Ð¾Ð½Ðµ ÑÐµÑ€Ð²ÐµÑ€Ð°, Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð±Ñ‹Ð»Ð¾ Ñ Ñ‡ÐµÐ¼ ÑÑ€Ð°Ð²Ð½Ð¸Ñ‚ÑŒ Ñ‚Ð¾ Ñ‡Ñ‚Ð¾ Ð¿Ñ€Ð¸ÑˆÐ»Ð¾ Ð² Ð·Ð°Ð¿Ñ€Ð¾ÑÐµ.
 
-äèàãíîñòèðîâàòü ìîæíî ñîîòâåòñòâåííî
+Ð´Ð¸Ð°Ð³Ð½Ð¾ÑÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¼Ð¾Ð¶Ð½Ð¾ ÑÐ¾Ð¾Ñ‚Ð²ÐµÑ‚ÑÑ‚Ð²ÐµÐ½Ð½Ð¾
 
-à) ÷åðåç çàêëàäêó Network â Dev Tools: ïðîâåðèòü ÷òî ñåññèÿ ñòàðòóåò ïðè îòêðûòèè ñòðàíèöû ñ ôîðìîé âîîáùå – ñåðâåð äîëæåí ïðèñëàòü Set-Cookie ñ êóêîé laravel_session (íàçâàíèå ïî óìîë÷àíèþ, ìîæåò áûòü èçìåíåíî)
-á) ïðîâåðÿåì ôîðìó – îòêðûâàåì ñòðóêòóðó äîêóìåíòà è ïðîâåðÿåì ÷òî òàì ãäå áûë âûçîâ csrf_field òåïåðü êðàñóåòñÿ input type hidden ñ èìåíåì _token
-â) ïðè ñàáìèòå ôîðìû ñìîòðèì çàãîëîâêè íà çàêëàäêå Network: ó çàïðîñà äîëæåí áûòü çàãîëîâîê Cookies ñîäåðæàùèé ïðàâèëüíîå çíà÷åíèå laravel_session, â äàííûõ ôîðìû äîëæåí îòïðàâëÿòüñÿ _token. åñëè çàïðîñ äåëàåòñÿ àÿêñîì, òîêåí ìîæåò ïåðåäàâàòüñÿ êàê îáû÷íî, à ìîæåò – çàãîëîâêîì çàïðîñà X-CSRF-Token.
+Ð°) Ñ‡ÐµÑ€ÐµÐ· Ð·Ð°ÐºÐ»Ð°Ð´ÐºÑƒ Network Ð² Dev Tools: Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ Ñ‡Ñ‚Ð¾ ÑÐµÑÑÐ¸Ñ ÑÑ‚Ð°Ñ€Ñ‚ÑƒÐµÑ‚ Ð¿Ñ€Ð¸ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð¸Ð¸ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñ‹ Ñ Ñ„Ð¾Ñ€Ð¼Ð¾Ð¹ Ð²Ð¾Ð¾Ð±Ñ‰Ðµ â€“ ÑÐµÑ€Ð²ÐµÑ€ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¿Ñ€Ð¸ÑÐ»Ð°Ñ‚ÑŒ Set-Cookie Ñ ÐºÑƒÐºÐ¾Ð¹ laravel_session (Ð½Ð°Ð·Ð²Ð°Ð½Ð¸Ðµ Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ, Ð¼Ð¾Ð¶ÐµÑ‚ Ð±Ñ‹Ñ‚ÑŒ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¾)
+Ð±) Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ Ñ„Ð¾Ñ€Ð¼Ñƒ â€“ Ð¾Ñ‚ÐºÑ€Ñ‹Ð²Ð°ÐµÐ¼ ÑÑ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ñƒ Ð´Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ð° Ð¸ Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ Ñ‡Ñ‚Ð¾ Ñ‚Ð°Ð¼ Ð³Ð´Ðµ Ð±Ñ‹Ð» Ð²Ñ‹Ð·Ð¾Ð² csrf_field Ñ‚ÐµÐ¿ÐµÑ€ÑŒ ÐºÑ€Ð°ÑÑƒÐµÑ‚ÑÑ input type hidden Ñ Ð¸Ð¼ÐµÐ½ÐµÐ¼ _token
+Ð²) Ð¿Ñ€Ð¸ ÑÐ°Ð±Ð¼Ð¸Ñ‚Ðµ Ñ„Ð¾Ñ€Ð¼Ñ‹ ÑÐ¼Ð¾Ñ‚Ñ€Ð¸Ð¼ Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²ÐºÐ¸ Ð½Ð° Ð·Ð°ÐºÐ»Ð°Ð´ÐºÐµ Network: Ñƒ Ð·Ð°Ð¿Ñ€Ð¾ÑÐ° Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð±Ñ‹Ñ‚ÑŒ Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²Ð¾Ðº Cookies ÑÐ¾Ð´ÐµÑ€Ð¶Ð°Ñ‰Ð¸Ð¹ Ð¿Ñ€Ð°Ð²Ð¸Ð»ÑŒÐ½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ laravel_session, Ð² Ð´Ð°Ð½Ð½Ñ‹Ñ… Ñ„Ð¾Ñ€Ð¼Ñ‹ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÑÑ‚ÑŒÑÑ _token. ÐµÑÐ»Ð¸ Ð·Ð°Ð¿Ñ€Ð¾Ñ Ð´ÐµÐ»Ð°ÐµÑ‚ÑÑ Ð°ÑÐºÑÐ¾Ð¼, Ñ‚Ð¾ÐºÐµÐ½ Ð¼Ð¾Ð¶ÐµÑ‚ Ð¿ÐµÑ€ÐµÐ´Ð°Ð²Ð°Ñ‚ÑŒÑÑ ÐºÐ°Ðº Ð¾Ð±Ñ‹Ñ‡Ð½Ð¾, Ð° Ð¼Ð¾Ð¶ÐµÑ‚ â€“ Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²ÐºÐ¾Ð¼ Ð·Ð°Ð¿Ñ€Ð¾ÑÐ° X-CSRF-Token.
 
-åñëè âñ¸ íà ìåñòå, çíà÷èò ôðîíòåíä îòðàáàòûâàåò êîððåêòíî. òåïåðü ñìîòðèì áýêåíä
+ÐµÑÐ»Ð¸ Ð²ÑÑ‘ Ð½Ð° Ð¼ÐµÑÑ‚Ðµ, Ð·Ð½Ð°Ñ‡Ð¸Ñ‚ Ñ„Ñ€Ð¾Ð½Ñ‚ÐµÐ½Ð´ Ð¾Ñ‚Ñ€Ð°Ð±Ð°Ñ‚Ñ‹Ð²Ð°ÐµÑ‚ ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾. Ñ‚ÐµÐ¿ÐµÑ€ÑŒ ÑÐ¼Ð¾Ñ‚Ñ€Ð¸Ð¼ Ð±ÑÐºÐµÐ½Ð´
 
-à) ñåññèè äîëæíû êîððåêòíî ñîõðàíÿòüñÿ è âîññòàíàâëèâàòüñÿ. çà âûáîð ñïîñîáà ðàáîòû ñ ñåññèÿìè îòâå÷àåò SESSION_DRIVER â .env à êîíêðåòíûå íàñòðîéêè ëåæàò â config/session.php. ïî óìîë÷àíèþ ñòîèò file – ïðîâåðÿåì ïðàâà äîñòóïà ê storage/framework/sessions. åñëè äðàéâåð database – äîëæíà áûòü ñîçäàíà òàáëèöà ñåññèé è íàñòðîåíî ïîäêëþ÷åíèå ê áàçå. äëÿ memcached è redis äîëæíû áûòü çàïóùåíû è íàñòðîåí äîñòóï ê ñîîòâåòñòâóþùèì äåìîíàì. äðàéâåðà null è array íå ïîääåðæèâàþò ñîõðàíåíèå äàííûõ íèêóäà âîîáùå – ñ íèìè CSRF-ïðîâåðêà ðàáîòàòü íå áóäåò â ëþáîì ñëó÷àå. äðàéâåð cookie íå òðåáóåò íàñòðîåê òàê êàê ïåðåäà¸ò âñå äàííûå ñðàçó â êóêàõ â øèôðîâàííîì âèäå – íåýôôåêòèâíî íî ïðîñòî è äëÿ òîãî ÷òîáû áûñòðî ÷òî-òî ïîòåñòèðîâàòü âïîëíå ïîäõîäèò
-á) åñëè ñåññèè íàñòðîåíû è ðàáîòàþò – ïðîâåðÿåì ÷òî ñåññèÿ ðåàëüíî ñîõðàíÿåòñÿ è âîññòàíàâëèâàåòñÿ ïðè çàïðîñàõ, çà ýòî îòâå÷àåò ìèääëâàðü Illuminate\Session\Middleware\StartSession êîòîðàÿ âõîäèò â ãðóïïó ìèääëâàðåé web. â âåðñèè 5.3 ýòà ãðóïïà ïðèìåíåíà íà ìàðøðóòàõ çàäàííûõ â routes/web.php. â áîëåå ðàííèõ âåðñèÿõ îíî çàäà¸òñÿ ÿâíî â app\Http\routes.php ñ ïîìîùüþ ãðóïïû Route::group(['middleware' => ['web']], function () { /* ... */ }); ìàðøðóòû, êîòîðûì íå íàçíà÷åíà ãðóïïà web èëè ÿâíî ìèääëâàðü StartSession íå ïîëó÷àþò ñåññèè è ñîîòâåòñòâåííî íå ìîãóò ïðî÷èòàòü ñîõðàí¸ííûé òîêåí
-â) åñëè ñåññèè íàñòðîåíû, ìèääëâàðè ïðèêðåïëåíû ê ìàðøðóòàì, ãäå îòîáðàæàåòñÿ è êóäà ñàáìèòèòñÿ ôîðìà, à òîêåí âñ¸ ðàâíî íåò òîò – îñòà¸òñÿ òîëüêî óñòàíîâèòü xdebug è ïîãóëÿòü ïî êîäó, ïðîâåðÿÿ ãäå òîêåíû ñîçäàþòñÿ è ñðàâíèâàþòñÿ, ïîòîìó ÷òî íà ýòîì ìåñòå ó ìåíÿ çàêîí÷èëàñü ôàíòàçèÿ êàê åù¸ ìîæíî ñëîìàòü ïðîñòîé è íàä¸æíûé êàê âàëåíîê ìåõàíèçì ðàáîòû ñ CSRF-òîêåíàìè smile
+Ð°) ÑÐµÑÑÐ¸Ð¸ Ð´Ð¾Ð»Ð¶Ð½Ñ‹ ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾ ÑÐ¾Ñ…Ñ€Ð°Ð½ÑÑ‚ÑŒÑÑ Ð¸ Ð²Ð¾ÑÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°Ñ‚ÑŒÑÑ. Ð·Ð° Ð²Ñ‹Ð±Ð¾Ñ€ ÑÐ¿Ð¾ÑÐ¾Ð±Ð° Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ ÑÐµÑÑÐ¸ÑÐ¼Ð¸ Ð¾Ñ‚Ð²ÐµÑ‡Ð°ÐµÑ‚ SESSION_DRIVER Ð² .env Ð° ÐºÐ¾Ð½ÐºÑ€ÐµÑ‚Ð½Ñ‹Ðµ Ð½Ð°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ¸ Ð»ÐµÐ¶Ð°Ñ‚ Ð² config/session.php. Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ ÑÑ‚Ð¾Ð¸Ñ‚ file â€“ Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ Ð¿Ñ€Ð°Ð²Ð° Ð´Ð¾ÑÑ‚ÑƒÐ¿Ð° Ðº storage/framework/sessions. ÐµÑÐ»Ð¸ Ð´Ñ€Ð°Ð¹Ð²ÐµÑ€ database â€“ Ð´Ð¾Ð»Ð¶Ð½Ð° Ð±Ñ‹Ñ‚ÑŒ ÑÐ¾Ð·Ð´Ð°Ð½Ð° Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð° ÑÐµÑÑÐ¸Ð¹ Ð¸ Ð½Ð°ÑÑ‚Ñ€Ð¾ÐµÐ½Ð¾ Ð¿Ð¾Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ Ðº Ð±Ð°Ð·Ðµ. Ð´Ð»Ñ memcached Ð¸ redis Ð´Ð¾Ð»Ð¶Ð½Ñ‹ Ð±Ñ‹Ñ‚ÑŒ Ð·Ð°Ð¿ÑƒÑ‰ÐµÐ½Ñ‹ Ð¸ Ð½Ð°ÑÑ‚Ñ€Ð¾ÐµÐ½ Ð´Ð¾ÑÑ‚ÑƒÐ¿ Ðº ÑÐ¾Ð¾Ñ‚Ð²ÐµÑ‚ÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¼ Ð´ÐµÐ¼Ð¾Ð½Ð°Ð¼. Ð´Ñ€Ð°Ð¹Ð²ÐµÑ€Ð° null Ð¸ array Ð½Ðµ Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶Ð¸Ð²Ð°ÑŽÑ‚ ÑÐ¾Ñ…Ñ€Ð°Ð½ÐµÐ½Ð¸Ðµ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð½Ð¸ÐºÑƒÐ´Ð° Ð²Ð¾Ð¾Ð±Ñ‰Ðµ â€“ Ñ Ð½Ð¸Ð¼Ð¸ CSRF-Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° Ñ€Ð°Ð±Ð¾Ñ‚Ð°Ñ‚ÑŒ Ð½Ðµ Ð±ÑƒÐ´ÐµÑ‚ Ð² Ð»ÑŽÐ±Ð¾Ð¼ ÑÐ»ÑƒÑ‡Ð°Ðµ. Ð´Ñ€Ð°Ð¹Ð²ÐµÑ€ cookie Ð½Ðµ Ñ‚Ñ€ÐµÐ±ÑƒÐµÑ‚ Ð½Ð°ÑÑ‚Ñ€Ð¾ÐµÐº Ñ‚Ð°Ðº ÐºÐ°Ðº Ð¿ÐµÑ€ÐµÐ´Ð°Ñ‘Ñ‚ Ð²ÑÐµ Ð´Ð°Ð½Ð½Ñ‹Ðµ ÑÑ€Ð°Ð·Ñƒ Ð² ÐºÑƒÐºÐ°Ñ… Ð² ÑˆÐ¸Ñ„Ñ€Ð¾Ð²Ð°Ð½Ð½Ð¾Ð¼ Ð²Ð¸Ð´Ðµ â€“ Ð½ÐµÑÑ„Ñ„ÐµÐºÑ‚Ð¸Ð²Ð½Ð¾ Ð½Ð¾ Ð¿Ñ€Ð¾ÑÑ‚Ð¾ Ð¸ Ð´Ð»Ñ Ñ‚Ð¾Ð³Ð¾ Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð±Ñ‹ÑÑ‚Ñ€Ð¾ Ñ‡Ñ‚Ð¾-Ñ‚Ð¾ Ð¿Ð¾Ñ‚ÐµÑÑ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð²Ð¿Ð¾Ð»Ð½Ðµ Ð¿Ð¾Ð´Ñ…Ð¾Ð´Ð¸Ñ‚
+Ð±) ÐµÑÐ»Ð¸ ÑÐµÑÑÐ¸Ð¸ Ð½Ð°ÑÑ‚Ñ€Ð¾ÐµÐ½Ñ‹ Ð¸ Ñ€Ð°Ð±Ð¾Ñ‚Ð°ÑŽÑ‚ â€“ Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ Ñ‡Ñ‚Ð¾ ÑÐµÑÑÐ¸Ñ Ñ€ÐµÐ°Ð»ÑŒÐ½Ð¾ ÑÐ¾Ñ…Ñ€Ð°Ð½ÑÐµÑ‚ÑÑ Ð¸ Ð²Ð¾ÑÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ÑÑ Ð¿Ñ€Ð¸ Ð·Ð°Ð¿Ñ€Ð¾ÑÐ°Ñ…, Ð·Ð° ÑÑ‚Ð¾ Ð¾Ñ‚Ð²ÐµÑ‡Ð°ÐµÑ‚ Ð¼Ð¸Ð´Ð´Ð»Ð²Ð°Ñ€ÑŒ Illuminate\Session\Middleware\StartSession ÐºÐ¾Ñ‚Ð¾Ñ€Ð°Ñ Ð²Ñ…Ð¾Ð´Ð¸Ñ‚ Ð² Ð³Ñ€ÑƒÐ¿Ð¿Ñƒ Ð¼Ð¸Ð´Ð´Ð»Ð²Ð°Ñ€ÐµÐ¹ web. Ð² Ð²ÐµÑ€ÑÐ¸Ð¸ 5.3 ÑÑ‚Ð° Ð³Ñ€ÑƒÐ¿Ð¿Ð° Ð¿Ñ€Ð¸Ð¼ÐµÐ½ÐµÐ½Ð° Ð½Ð° Ð¼Ð°Ñ€ÑˆÑ€ÑƒÑ‚Ð°Ñ… Ð·Ð°Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð² routes/web.php. Ð² Ð±Ð¾Ð»ÐµÐµ Ñ€Ð°Ð½Ð½Ð¸Ñ… Ð²ÐµÑ€ÑÐ¸ÑÑ… Ð¾Ð½Ð¾ Ð·Ð°Ð´Ð°Ñ‘Ñ‚ÑÑ ÑÐ²Ð½Ð¾ Ð² app\Http\routes.php Ñ Ð¿Ð¾Ð¼Ð¾Ñ‰ÑŒÑŽ Ð³Ñ€ÑƒÐ¿Ð¿Ñ‹ Route::group(['middleware' => ['web']], function () { /* ... */ }); Ð¼Ð°Ñ€ÑˆÑ€ÑƒÑ‚Ñ‹, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¼ Ð½Ðµ Ð½Ð°Ð·Ð½Ð°Ñ‡ÐµÐ½Ð° Ð³Ñ€ÑƒÐ¿Ð¿Ð° web Ð¸Ð»Ð¸ ÑÐ²Ð½Ð¾ Ð¼Ð¸Ð´Ð´Ð»Ð²Ð°Ñ€ÑŒ StartSession Ð½Ðµ Ð¿Ð¾Ð»ÑƒÑ‡Ð°ÑŽÑ‚ ÑÐµÑÑÐ¸Ð¸ Ð¸ ÑÐ¾Ð¾Ñ‚Ð²ÐµÑ‚ÑÑ‚Ð²ÐµÐ½Ð½Ð¾ Ð½Ðµ Ð¼Ð¾Ð³ÑƒÑ‚ Ð¿Ñ€Ð¾Ñ‡Ð¸Ñ‚Ð°Ñ‚ÑŒ ÑÐ¾Ñ…Ñ€Ð°Ð½Ñ‘Ð½Ð½Ñ‹Ð¹ Ñ‚Ð¾ÐºÐµÐ½
+Ð²) ÐµÑÐ»Ð¸ ÑÐµÑÑÐ¸Ð¸ Ð½Ð°ÑÑ‚Ñ€Ð¾ÐµÐ½Ñ‹, Ð¼Ð¸Ð´Ð´Ð»Ð²Ð°Ñ€Ð¸ Ð¿Ñ€Ð¸ÐºÑ€ÐµÐ¿Ð»ÐµÐ½Ñ‹ Ðº Ð¼Ð°Ñ€ÑˆÑ€ÑƒÑ‚Ð°Ð¼, Ð³Ð´Ðµ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÑ‚ÑÑ Ð¸ ÐºÑƒÐ´Ð° ÑÐ°Ð±Ð¼Ð¸Ñ‚Ð¸Ñ‚ÑÑ Ñ„Ð¾Ñ€Ð¼Ð°, Ð° Ñ‚Ð¾ÐºÐµÐ½ Ð²ÑÑ‘ Ñ€Ð°Ð²Ð½Ð¾ Ð½ÐµÑ‚ Ñ‚Ð¾Ñ‚ â€“ Ð¾ÑÑ‚Ð°Ñ‘Ñ‚ÑÑ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ xdebug Ð¸ Ð¿Ð¾Ð³ÑƒÐ»ÑÑ‚ÑŒ Ð¿Ð¾ ÐºÐ¾Ð´Ñƒ, Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÑ Ð³Ð´Ðµ Ñ‚Ð¾ÐºÐµÐ½Ñ‹ ÑÐ¾Ð·Ð´Ð°ÑŽÑ‚ÑÑ Ð¸ ÑÑ€Ð°Ð²Ð½Ð¸Ð²Ð°ÑŽÑ‚ÑÑ, Ð¿Ð¾Ñ‚Ð¾Ð¼Ñƒ Ñ‡Ñ‚Ð¾ Ð½Ð° ÑÑ‚Ð¾Ð¼ Ð¼ÐµÑÑ‚Ðµ Ñƒ Ð¼ÐµÐ½Ñ Ð·Ð°ÐºÐ¾Ð½Ñ‡Ð¸Ð»Ð°ÑÑŒ Ñ„Ð°Ð½Ñ‚Ð°Ð·Ð¸Ñ ÐºÐ°Ðº ÐµÑ‰Ñ‘ Ð¼Ð¾Ð¶Ð½Ð¾ ÑÐ»Ð¾Ð¼Ð°Ñ‚ÑŒ Ð¿Ñ€Ð¾ÑÑ‚Ð¾Ð¹ Ð¸ Ð½Ð°Ð´Ñ‘Ð¶Ð½Ñ‹Ð¹ ÐºÐ°Ðº Ð²Ð°Ð»ÐµÐ½Ð¾Ðº Ð¼ÐµÑ…Ð°Ð½Ð¸Ð·Ð¼ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ CSRF-Ñ‚Ð¾ÐºÐµÐ½Ð°Ð¼Ð¸ smile
 
 
 
@@ -2529,7 +2529,7 @@ L - Liskov Substitution Principle =>
     Every subclass or derived class should be substitutable for their base or parent class.
 -------------------------
 I - Interface Segregation Principle => 
-    A client should never be forced to implement an interface that it doesn’t use, or clients shouldn’t be forced to depend on methods they do not use.
+    A client should never be forced to implement an interface that it doesnâ€™t use, or clients shouldnâ€™t be forced to depend on methods they do not use.
 -------------------------
 D - Dependency Inversion Principle => 
     Entities must depend on abstractions, not on concretions. It states that the high-level module must not depend on the low-level module, but they should depend on abstractions.
@@ -2546,7 +2546,7 @@ D - Dependency Inversion Principle =>
 Creational(to create objects while hiding the creation logic) => Builder, Singleton, Factory, Prototype
 Structural(concern class and object composition) => Adapter, Bridge, Facade, Decorator 
 Behavioral(communication between objects) Patterns  => Chain of responsibility, Observer, Strategy, Iterator, Visitor
-Ïîðîæäàþùèå, Ñòðóêòóðíûå, Ïîâåäåí÷åñêèå 
+ÐŸÐ¾Ñ€Ð¾Ð¶Ð´Ð°ÑŽÑ‰Ð¸Ðµ, Ð¡Ñ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð½Ñ‹Ðµ, ÐŸÐ¾Ð²ÐµÐ´ÐµÐ½Ñ‡ÐµÑÐºÐ¸Ðµ 
 
 401.1 Singleton
      class Singleton
@@ -2574,7 +2574,7 @@ Behavioral(communication between objects) Patterns  => Chain of responsibility, 
 		 
 		 Singleton::getInstance()->doAction();
 ------------------------------------------------
-402.2 Strategy => ïîâåäåí÷åñêèé øàáëîí, similar to Dependency injection
+402.2 Strategy => Ð¿Ð¾Ð²ÐµÐ´ÐµÐ½Ñ‡ÐµÑÐºÐ¸Ð¹ ÑˆÐ°Ð±Ð»Ð¾Ð½, similar to Dependency injection
 
 ------------------------------------------------
 402.3 Factory method
@@ -2642,9 +2642,35 @@ Can be done via constructor => function __construct($service){$this->service = $
     $service = new Service('777');
     $app = new App($service);
 
+------------------------------------------------
+
+402.6 Service Container, Injection Dependency Container, IoC Container or Injector =>  Ð¾Ð±ÑŠÐµÐºÑ‚, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¹ Ð·Ð½Ð°ÐµÑ‚, ÐºÐ°Ðº ÑÐ¾Ð·Ð´Ð°Ð²Ð°Ñ‚ÑŒ Ð¸ Ð½Ð°ÑÑ‚Ñ€Ð°Ð¸Ð²Ð°Ñ‚ÑŒ Ð¾Ð±ÑŠÐµÐºÑ‚Ñ‹
+    class Container
+    {
+        protected $parameters = array();
+        public function __construct(array $parameters = array())
+        {
+            $this->parameters = $parameters;
+        }
+
+        public function getSomeService()
+        {
+            return new Service(
+            $this->parameters['option1'],
+            $this->parameters['option2']
+            );
+        }  
+    }
+
+    $container = new Container(array(
+        'option1' => 'foo',
+        'option2' => 'bar'
+    );
+    $service = $container->getSomeService();
+
 
 ------------------------------------------------
-402.6 Facade => is used to hide complecated realisation in one class. If we have 10 classes and 10 methods to run, just create one Facade to run them all 
+402.7 Facade => is used to hide complecated realisation in one class. If we have 10 classes and 10 methods to run, just create one Facade to run them all 
     class Controller  // (this is Facade)
     {
         function __construct(){
@@ -2657,8 +2683,10 @@ Can be done via constructor => function __construct($service){$this->service = $
         }
     }
 ------------------------------------------------
-402.7 Observer, Adopter, Decorator => https://medium.com/@ivorobioff/the-5-most-common-design-patterns-in-php-applications-7f33b6b7d8d6
+402.8 Repository => https://coderius.biz.ua/blog/article/repozitorij-repository-pattern-sablon-proektirovania-v-php
 
+------------------------------------------------
+402.9 Observer, Adopter, Decorator => https://medium.com/@ivorobioff/the-5-most-common-design-patterns-in-php-applications-7f33b6b7d8d6
 
 
 
