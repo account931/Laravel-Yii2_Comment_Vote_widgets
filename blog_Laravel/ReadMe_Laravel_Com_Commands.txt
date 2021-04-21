@@ -60,8 +60,9 @@ Table of Content:
 201. Laravel 6 LTS        => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 202. Yajra DataTables     => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 203. Yajra Datatables with CRUD. How it works => (IMPLEMENTED IN {abz_Laravel_6_LTS})
-204. Laravel Intervention => (IMPLEMENTED IN {abz_Laravel_6_LTS})
-205. Laravel Voyager      => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+204. Admin LTE
+205. Laravel Intervention => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+206. Laravel Voyager      => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 
 
 355.Miscellaneous VA Laravel
@@ -121,7 +122,9 @@ USAGE
 
 //============================================	
 
-
+ #composer install vs composer update
+ composer install => check if exists {composer.lock}, if true install versions from {composer.lock}
+ composer update  => check {composer.json}, install versions from {composer.json} and rewrite {composer.lock}
 
 
 
@@ -523,11 +526,16 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	 
   # php artisan migrate:refresh
   
+  
   #Create Foreign key in migration, e.g for table {shop_categories}	=> see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/migrations/2020_11_21_165700_create_shop_simple_table.php
-	NB!!!! => If one table contains ID that used as Forein Keys in other table, then migtation for this first table must be run first or migration will crash. Example: first create migration{create_shop_categories_table}, then {create_shop_simple_table}
-	$table->unsignedInteger('shop_categ')->nullable(); //create a column in this DB table
-    $table->foreign('shop_categ')->references('other_table_categ_id')->on('other_table_shop_categories')->onUpdate('cascade')->onDelete('cascade');
-	    
+	NB!!!! => If one table contains ID that used as Forein Keys in other table, then migration for this first table must be run first or migration will crash. Example: first create migration{create_shop_categories_table}, then {create_shop_simple_table}
+    
+    $table->bigInteger('rank_id')->unsigned()->comment = 'Rank Id from table (abz_ranks) (ForeignKey)'; 
+    $table->foreign('rank_id')->references('id')->on('abz_ranks')->onUpdate('cascade')->onDelete('cascade');  //Id from table {abz_ranks}
+	
+    If error "General error: 1005 Can't create table ,Foreign key constraint is incorrectly formed in laravel" => 
+       =>  make sure that FK type is the same as the reference table id, so instead of defining your column as Integer use bigInteger insteated  
+    
   # To add a new column to existing table => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/migrations/2020_11_21_171640_add_2_columns_to_shop_simple_table.php
      1. php artisan make:migration add_2_columns_to_shop_simple_table
 	 2. see content in example
@@ -852,6 +860,11 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	
    # Form must have csrf_token =>  <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
      Html must contain         =>  <meta name="csrf-token" content="{{ csrf_token() }}">
+     
+   # REST DELETE => return value 
+     204: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body.
+     200: The request has succeeded and the request payload includes a representation of the status of the action.
+     
 //================================================================================================
 
 
@@ -1743,13 +1756,6 @@ CORS middleware => https://stackoverflow.com/questions/34748981/laravel-5-2-cors
 #Yajra Datatables-2 with CRUD (working) => https://www.webslesson.info/2019/10/laravel-6-crud-application-using-yajra-datatables-and-ajax.html
 
 
-# Admin LTE + datatables => https://github.com/jeroennoten/Laravel-AdminLTE
-                            https://www.codeandtuts.com/create-admin-panel-using-laravel-adminlte-package/
-			                https://www.google.com/search?q=https%3A%2F%2Fwww.codeandtuts.com+yajra+admin+lte&oq=https%3A%2F%2Fwww.codeandtuts.com+yajra+admin+lte&aqs=chrome..69i57j69i58.15029j0j4&sourceid=chrome&ie=UTF-8
-
-
-
-
 
 
 
@@ -1888,10 +1894,19 @@ On cliking submit sends $_Post ajax to
 
 
 
+//================================================================================================ 
+
+204. Admin LTE + datatables => https://github.com/jeroennoten/Laravel-AdminLTE
+                            https://www.codeandtuts.com/create-admin-panel-using-laravel-adminlte-package/
+			                https://www.google.com/search?q=https%3A%2F%2Fwww.codeandtuts.com+yajra+admin+lte&oq=https%3A%2F%2Fwww.codeandtuts.com+yajra+admin+lte&aqs=chrome..69i57j69i58.15029j0j4&sourceid=chrome&ie=UTF-8
+
+
+# Edit layout menu => config/adminlte.php. If does not refresh => php artisan config:clear
+
 
 //================================================================================================
 
-204. Laravel Intervention => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+205. Laravel Intervention => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 
   #See example (upload image, resize and move to folder + save to DB) => https://github.com/account931/abz_Laravel_6_LTS/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php at public function update(Request $request)
   # All Intervention methods => http://image.intervention.io/
@@ -1921,14 +1936,13 @@ On cliking submit sends $_Post ajax to
 
 
 //================================================================================================ 
-205. Laravel Voyager      => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+206. Laravel Voyager      => (IMPLEMENTED IN {abz_Laravel_6_LTS})
    https://voyager-docs.devdojo.com/getting-started/installation
    
   # While installing Voyager (without dummy data), it will add (via migration) to existing table {users} fileds 'avatar', 'role_id' + several new tables
     But migration files won't be added to /datatables/migrations/. If u wish, u can copy migrations files from GitHub and run migration in CLI => https://github.com/the-control-group/voyager/tree/1.4/migrations
 
   # To change views of Voyager, go to => \vendor\tcg\voyager\resources\views
-
 
 
 
