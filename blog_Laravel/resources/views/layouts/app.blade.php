@@ -118,6 +118,7 @@
 							 <li><a href="{{ route('register') }}">Booking(N/A)</a></li>
 							 <li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>
 							 <li><a href="{{ route('register') }}">Vue JS(N/A)</a></li>
+                             <li class="{{ Request::is('service-layout*') ? 'active' : '' }}"> <a href="{{ route('service-layout') }}">Service Layout)</a></li>
 						 </ul>
                        </li>
 					 <!-- END Submenu DropDown!!!! (Bootsrap) -->

@@ -527,7 +527,9 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
   # php artisan migrate:refresh
   
   
-  #Create Foreign key in migration, e.g for table {shop_categories}	=> see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/migrations/2020_11_21_165700_create_shop_simple_table.php
+  #Create Foreign key in migration, e.g for table {shop_categories} => see example => 
+       correct example   => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/database/migrations/2021_02_05_140743_create_abz_employees_table.php
+       corrupted example (Foreign key constraint is incorrectly formed) =>https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/migrations/2020_11_21_165700_create_shop_simple_table.php
 	NB!!!! => If one table contains ID that used as Forein Keys in other table, then migration for this first table must be run first or migration will crash. Example: first create migration{create_shop_categories_table}, then {create_shop_simple_table}
     
     $table->bigInteger('rank_id')->unsigned()->comment = 'Rank Id from table (abz_ranks) (ForeignKey)'; 
@@ -2263,6 +2265,13 @@ Create Anchor =>
 
 # Edit last commit  => git commit --amend
 
+# Git track directories/folder but not their files (e.g folder with images) =>
+ to include a .gitignore file in your upload folder with this content
+   # Ignore everything in this directory
+   *
+   # Except this file
+   !.gitignore
+
 ---------------------- JS ----------
 
 //Check if <select> is selected (not empty) (when multiple forms are generated in loop )=> 
@@ -2697,13 +2706,52 @@ Can be done via constructor => function __construct($service){$this->service = $
         }
     }
 ------------------------------------------------
-402.8 Repository => https://coderius.biz.ua/blog/article/repozitorij-repository-pattern-sablon-proektirovania-v-php
+402.8 Repository 
+=> https://heera.it/laravel-repository-pattern#.VuJcVfl97cs
+=> https://coderius.biz.ua/blog/article/repozitorij-repository-pattern-sablon-proektirovania-v-php
+
 
 ------------------------------------------------
 402.9 Observer, Adopter, Decorator => https://medium.com/@ivorobioff/the-5-most-common-design-patterns-in-php-applications-7f33b6b7d8d6
 
 
+-------------------------------------------------
 
+402.10 Service Layer => ("S" in SOLID). 
+Never use models directly into the controllers. Use Service Layer to contain the business logic.
+Service Layer is a design pattern that will help you to abstract your logic. Actually, you delegate the application logic to a common service (the service layer) and have only one class to maintain.
+https://m.dotdev.co/design-pattern-service-layer-with-laravel-5-740ff0a7b65f?gi=7be9d92be90a
+https://habr.com/ru/post/547510/
+https://habr.com/ru/post/350778/  pizza
+
+EXAMPLE =>
+namespace App\Services;
+use App\Models\Bar;
+class MyService
+{
+    public function foo(Bar $bar) {
+       // do things
+    } }
+  
+  
+namespace App\Http\Controllers;
+use App\Services\MyService;
+use App\Models\Bar;
+class MyController extends Controller
+{
+    protected $myService;
+    public function __construct(MyService $myService) {
+        $this->myService = $myService;
+    }
+
+    public function handleRequest(Bar $bar){
+        $this->myService->foo($bar);
+    } }
+
+
+-----------------------------------
+402.11 Service providers 
+are the central place of all Laravel application bootstrapping. Your own application, as well as all of Laravel's core services, are bootstrapped via service providers.
 
 
 //================================================================================================

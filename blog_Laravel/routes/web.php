@@ -157,7 +157,8 @@ Route::get('/country-list',  'AdminLTEController@getList');
 Route::get('/eventListenersX', 'EventsListenersController@index')->name('eventListenersX'); //show a button to trigger
 Route::get('/runEventX',       'EventsListenersController@triggerEvent')->name('runEventX'); //run an event
 
- 
+//Service Layout
+Route::get('/service-layout',  'ServiceLayoutController@index')->name('service-layout'); 
 
 
 
