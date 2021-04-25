@@ -180,7 +180,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        
+        //my provider for Service Layer
+        App\Providers\MyServiceProvider::class,
     ],
 
     /*

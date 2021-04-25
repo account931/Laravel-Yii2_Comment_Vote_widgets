@@ -8,13 +8,16 @@ use App\models\wpress_blog_post; //model for all posts
 use App\users;
 use Illuminate\Support\Facades\Log; //Logging
 
+use App\Interfaces\IUserRepository; //My Interface
+
 class ServiceLayoutController extends Controller
 {
-    //
+    protected $user = null;
 	
-	public function __construct()
+	// IUserRepository is the interface
+    public function __construct(IUserRepository $user)
     {
-        //$this->middleware('auth');
+        $this->user = $user;
     }
 
 	
@@ -22,9 +25,10 @@ class ServiceLayoutController extends Controller
 	public function index()
     {
 		
-		
-        return view('service-layout.index'); //just return
-		//return view('showprofile', compact('$user'));
+		$users = $this->user->getAllUsers();
+        //dd($users);
+        
+		return view('service-layout.index', compact('users'));
 		//return view('showprofile')->with(compact('id', 'name', 'email', 'yourArticles', 'user'));
 
     }

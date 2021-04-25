@@ -859,9 +859,20 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	#If u mistakenly put routes in {routes/web.php}, REST Api endpoints will be => 
             http://localhost/laravel+Yii2_widgets/blog_Laravel/public/articles     http://localhost/laravel+Yii2_widgets/blog_Laravel/public/articles/8
 	
-	
-   # Form must have csrf_token =>  <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
-     Html must contain         =>  <meta name="csrf-token" content="{{ csrf_token() }}">
+   #Ajax CSRF => 
+   #Variant_1: 
+       Form must have csrf_token =>  <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
+   #Variant_2:
+       # Html must contain =>  <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- CSFR meta token --> 
+       # In JS before ajax =>
+            //ajax CSRF token  
+            $.ajaxSetup({
+                headers: {
+                   'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
+   
+
      
    # REST DELETE => return value 
      204: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body.
@@ -2368,7 +2379,7 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
   If you don't have .env copy from .env.example: =>   $ cp .env.example .env
 
 # If u incounter this error on hosting "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths => 
-   go /config/app.php re-set .env APP_KEY value =>
+   go /config/app.php and re-set .env APP_KEY value =>
    'key' => env('APP_KEY', 'base64:BSaw42CbRqRLo19TWc9ICD7XZzuhfqzf5lxwVzpTztQ='), //instead of 'key' => env('APP_KEY'),  // 'base64:BSaw42CbRqRLo19TWc9ICD7XZzuhfqzf5lxwVzpTztQ=' is a {APP_KEY} from .env
 
 # If error on hosting "SQLSTATE[HY000] [2002] Connection refused within Laravel homestead" => 
@@ -2710,7 +2721,95 @@ Can be done via constructor => function __construct($service){$this->service = $
 => https://heera.it/laravel-repository-pattern#.VuJcVfl97cs
 => https://coderius.biz.ua/blog/article/repozitorij-repository-pattern-sablon-proektirovania-v-php
 
-
+ #Example of Repository Pattern (Controller -> Service Layout -> Repository -> Model) => see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ServiceLayoutController.php
+ Instead of this in Controller:
+    public function getAllUsers(){
+        $users = User::all();
+        return View::make('user.index', compact('users'));
+    }
+    
+ #Repository Pattern:
+    
+    namespace App\Interfaces;
+    interface IUserRepository {
+        public function getAllUsers();
+        public function getUserById($id);
+        public function createOrUpdate($id = null);
+    }
+    
+    namespace App\Repositories;
+    use App\User;
+    use App\Interfaces\IUserRepository;
+    
+    class UserRepository implements IUserRepository {
+        public function getAllUsers(){ return User::all(); }
+ 
+        public function getUserById($id){ return User::find($id); }
+ 
+        public function createOrUpdate($id = null){
+        if(is_null($id)) {
+            // create after validation
+            $user = new User;
+            $user->name = 'Sheikh Heera'
+            $user->email = 'me@yahoo.com';
+            $user->password = '123456'
+            return $user->save();
+        }
+        else {
+            // update after validation
+            $user = User::find($id);
+            $user->name = 'Sheikh Heera'
+            $user->email = 'me@yahoo.com';
+            $user->password = '123456'
+            return $user->save();
+        }
+    }   }
+    
+    
+    use App\Interfaces\IUserRepository;
+    class ServiceLayoutController extends Controller {
+        protected $user = null;
+    
+        // IUserRepository is the interface
+        public function __construct(IUserRepository $user){ 
+            $this->user = $user; }
+ 
+        public function showUsers(){
+            $users = $this->user->getAllUsers();
+            return View::make('user.index', compact('users'));
+        }
+ 
+        public function getUser($id) {
+            $user = $this->user->getUserById($id);
+            return View::make('user.profile', compact('user'));
+        }
+ 
+        public function saveUser($id = null){
+            if($id) {
+                $this->user->createOrUpdate($id);
+            } else {
+                 $this->user->createOrUpdate();
+            }
+        // return redirect...
+    } }
+ 
+    # Create MyServiceProvide => App\Providers\MyServiceProvider =>
+        namespace App\Providers;
+        use Illuminate\Support\ServiceProvider;
+        class MyServiceProvider extends ServiceProvider {
+        public function register() {
+            $this->app->bind('App\\Interfaces\\IUserRepository', 'App\\Repositories\\UserRepository');
+        } }
+    # Register MyServiceProvide in /config/app.php in 'providers' => [
+         App\Providers\MyServiceProvider::class,
+         
+         
+         
+         
+         
+         
+         
+       
 ------------------------------------------------
 402.9 Observer, Adopter, Decorator => https://medium.com/@ivorobioff/the-5-most-common-design-patterns-in-php-applications-7f33b6b7d8d6
 
