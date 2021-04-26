@@ -41,12 +41,26 @@
                         
                         
 					    <div class="col-sm-12 col-xs-12">
-                            <h4><b>Getting users list via Repository and Service Layout</b> </h4>
+                            <h4 class="bg-info" style="padding:0.7em; border:1px solid black;">
+                                <b>Getting users list via Repository and Service Layout</b> 
+                            </h4>
                             <h5>See instruction at <b>402.8 Repository </b></h5>
                             @foreach ($users as $a)
-					        <p class="list-group-item"> User {{ $loop->iteration }} =>    <!-- {{ $loop->iteration }} is Blade equivalentof $i++ -->
-                                Name: {{ $a->name }}</p>
+					        <p class="list-group-item">
+                                <i class="fa fa-motorcycle" style="font-size:24px"></i>
+                                User  {{ $loop->iteration }} =>    <!-- {{ $loop->iteration }} is Blade equivalentof $i++ -->
+                                Name: {{ $a->name }}
+                            </p>
                             @endforeach
+                            
+                            
+                            <hr/>
+                            <h4 class="bg-info" style="padding:0.7em;border:1px solid black;">
+                                <b>Getting one user (id:1) via Repository and Service Layout ($this->user->getUserById(1))</b> 
+                            </h4>
+                            <p class="list-group-item"><i class="fa fa-meh-o" style="font-size:24px"></i> {{$oneUser->name}}</p>
+                            <p class="list-group-item"><i class="fa fa-meh-o" style="font-size:24px"></i> {{$oneUser->email}}</p>
+                            <p class="list-group-item"><i class="fa fa-meh-o" style="font-size:24px"></i> {{$oneUser->id}}</p>
                         </div>
 					
 					

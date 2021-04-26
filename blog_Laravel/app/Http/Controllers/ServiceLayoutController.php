@@ -1,5 +1,5 @@
 <?php
-//shows my profile (a profile of currently logged user)
+//Example of Repository Pattern (Controller -> Service Layout -> Repository -> Model)
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,12 +24,14 @@ class ServiceLayoutController extends Controller
 	
 	public function index()
     {
-		
+		//getting all users via Service Layer
 		$users = $this->user->getAllUsers();
         //dd($users);
         
-		return view('service-layout.index', compact('users'));
-		//return view('showprofile')->with(compact('id', 'name', 'email', 'yourArticles', 'user'));
+        //getting one via Service Layer
+		$oneUser = $this->user->getUserById(1);
+        
+		return view('service-layout.index', compact('users', 'oneUser'));
 
     }
 }

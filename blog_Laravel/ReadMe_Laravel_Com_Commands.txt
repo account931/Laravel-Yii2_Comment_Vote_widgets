@@ -859,6 +859,19 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	#If u mistakenly put routes in {routes/web.php}, REST Api endpoints will be => 
             http://localhost/laravel+Yii2_widgets/blog_Laravel/public/articles     http://localhost/laravel+Yii2_widgets/blog_Laravel/public/articles/8
 	
+    ------------------------------
+    # REST routes/methods => 
+    Route::post('articles', 'Rest@store');
+    Route::put('articles/{id}', 'Rest@update');
+    Route::delete('articles/{id}', 'Rest@delete');
+    
+    -----------------------------
+    
+    #REST CRUD roadmap EXAMPLES =>
+      *routes => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/routes/web.php 
+      *js/ajax => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/resources/views/admin-lte/admin-lte.blade.php
+      *server-side REST controller => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
+   ------------------------------
    #Ajax CSRF => 
    #Variant_1: 
        Form must have csrf_token =>  <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
@@ -871,7 +884,12 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 }
             });
-   
+    ------------------------
+    #If you have issue with PUT method (update) => see example at => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/resources/views/admin-lte/admin-lte.blade.php
+    to solve this you have to send a POST request, with a POST param _method with value PUT. Or if use {formData}=> 
+        var formData = new FormData(thatX)
+        formData. append("_method", "PUT"); //fix for PUT method
+
 
      
    # REST DELETE => return value 
@@ -2765,7 +2783,7 @@ Can be done via constructor => function __construct($service){$this->service = $
         }
     }   }
     
-    
+    namespace App\Http\Controllers;
     use App\Interfaces\IUserRepository;
     class ServiceLayoutController extends Controller {
         protected $user = null;
@@ -2793,7 +2811,7 @@ Can be done via constructor => function __construct($service){$this->service = $
         // return redirect...
     } }
  
-    # Create MyServiceProvide => App\Providers\MyServiceProvider =>
+    # Create MyServiceProvide => App\Providers\MyServiceProvider => see https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Providers/MyServiceProvider.php
         namespace App\Providers;
         use Illuminate\Support\ServiceProvider;
         class MyServiceProvider extends ServiceProvider {
