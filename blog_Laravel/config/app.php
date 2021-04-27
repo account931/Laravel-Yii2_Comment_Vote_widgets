@@ -183,6 +183,8 @@ return [
         
         //my provider for Service Layer
         App\Providers\MyServiceProvider::class,
+        
+        Laravel\Socialite\SocialiteServiceProvider::class, //Socialite Package
     ],
 
     /*
@@ -236,6 +238,7 @@ return [
 		'Entrust'   => Zizaco\Entrust\EntrustFacade::class,  // Entrust RBAC package
 		//'MyHelper' => App\Http\Helperss\Rbac\Helper_Rbac::class, //my helper
 		//'Datatables' => 'Yajra\Datatables\Facades\Datatables', ////Yajra DataTables
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class, //Socialite Package
 
     ],
 

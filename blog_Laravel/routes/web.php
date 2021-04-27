@@ -71,8 +71,6 @@ Route::post('update/{id}','WpBlog@update');
 */
 
 
-
-
 //Test Rest Api test
 Route::get('/testRest','TestRest@index');
 
@@ -138,8 +136,6 @@ Route::get('/customRegister', 'TestMiddleController@customRegister')->name('cust
 
 
 
-
-
 //Rest Api with TokenGuard, access to Rest by token (Bearer authentication  (also called token authentication))
 Route::get('/tokenGuard', 'TokenGuardController@index')->name('tokenGuard'); 
 
@@ -160,7 +156,10 @@ Route::get('/runEventX',       'EventsListenersController@triggerEvent')->name('
 //Service Layout
 Route::get('/service-layout',  'ServiceLayoutController@index')->name('service-layout'); 
 
-
+//Socialite Package (Facebook, Google)
+Route::get('/socialite',    'SocialiteController@index')->name('socialite'); 
+Route::get('auth/facebook', 'SocialiteController@facebookRedirect');
+Route::get('auth/facebook/callback', 'SocialiteController@loginWithFacebook');
 
 
 

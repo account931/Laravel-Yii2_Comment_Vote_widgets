@@ -34,5 +34,12 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+    
+    //Facebook
+    'facebook' => [
+        'client_id'     => env('FACEBOOK_ID'), 
+        'client_secret' => env('FACEBOOK_SECRET'), 
+        'redirect'      => env('FACEBOOK_URL'),   //'http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public/auth/facebook/callback',
+    ],
 
 ];

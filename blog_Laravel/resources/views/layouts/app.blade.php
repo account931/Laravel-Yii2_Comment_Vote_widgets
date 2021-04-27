@@ -88,39 +88,39 @@
 					 
 					 
 					 
-					 <!---------- Submenu DropDown!!!! (Bootsrap) ------------------>
-					 <li class="dropdown">
-                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                             Submenu<span class="caret"></span>
-                         </a>
+					<!---------- Submenu DropDown!!!! (Bootsrap) ------------------>
+					<li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Submenu<span class="caret"></span>
+                        </a>
 						
-                         <ul class="dropdown-menu" role="menu">
-                             <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
-                             <li class="{{ Request::is('rbac*') ? 'active' : '' }}">      <a href="{{ route('rbac') }}"> RBAC </a></li>
-                             <li class="{{ Request::is('shopSimple*') ? 'active' : '' }}"> <a href="{{ route('shopSimple') }}">E-shop</a></li>
-							 <li class="{{ Request::is('shopAdminPanel*') ? 'active' : '' }}"><a href="{{ route('shopAdminPanel') }}">E-shop AdminP</a></li>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="{{ Request::is('multilanguage*') ? 'active' : '' }}"> <a href="{{ route('multilanguage') }}">MultiLanguage</a></li>
+                            <li class="{{ Request::is('rbac*') ? 'active' : '' }}">      <a href="{{ route('rbac') }}"> RBAC </a></li>
+                            <li class="{{ Request::is('shopSimple*') ? 'active' : '' }}"> <a href="{{ route('shopSimple') }}">E-shop</a></li>
+							<li class="{{ Request::is('shopAdminPanel*') ? 'active' : '' }}"><a href="{{ route('shopAdminPanel') }}">E-shop AdminP</a></li>
 							 
-							 <li class="{{ Request::is('testMiddle*') ? 'active' : '' }}"><a href="{{ route('testMiddle') }}"> Test Middle</a></li>
-                             <li class="{{ Request::is('tokenGuard*') ? 'active' : '' }}"><a href="{{ route('tokenGuard') }}"> Rest Api TokenGuard</a></li>
+							<li class="{{ Request::is('testMiddle*') ? 'active' : '' }}"><a href="{{ route('testMiddle') }}"> Test Middle</a></li>
+                            <li class="{{ Request::is('tokenGuard*') ? 'active' : '' }}"><a href="{{ route('tokenGuard') }}"> Rest Api TokenGuard</a></li>
 
-                             <li class="{{ Request::is('appointment*') ? 'active' : '' }}">     <a href="{{ route('appointment') }}">    Appointment Vue.js  </a></li>
-                             <li class="{{ Request::is('adminlte*') ? 'active' : '' }}">        <a href="{{ route('adminlte') }}">       Admin LT3/Yajra DataTables Snowy </a></li>
-                             <li class="{{ Request::is('eventListenersX*') ? 'active' : '' }}"> <a href="{{ route('eventListenersX')}}"> Events/Listeners           </a></li>
+                            <li class="{{ Request::is('appointment*') ? 'active' : '' }}">     <a href="{{ route('appointment') }}">    Appointment Vue.js  </a></li>
+                            <li class="{{ Request::is('adminlte*') ? 'active' : '' }}">        <a href="{{ route('adminlte') }}">       Admin LT3/Yajra DataTables Snowy </a></li>
+                            <li class="{{ Request::is('eventListenersX*') ? 'active' : '' }}"> <a href="{{ route('eventListenersX')}}"> Events/Listeners           </a></li>
                              
-							 <!-- WPressImages -->
-							 <li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPress-Images      </a> </li> <!-- NOTE: name vs route -->
-                             <li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPress-Images Admin </a> </li> <!-- NOTE: name vs route -->
+							<!-- WPressImages -->
+							<li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPress-Images      </a> </li> <!-- NOTE: name vs route -->
+                            <li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPress-Images Admin </a> </li> <!-- NOTE: name vs route -->
 
-                             <!-- WPress on Vue Framework -->
-							 <li class="{{ Request::is('wpBlogVueFrameWork*') ? 'active' : '' }}"> <a href="{{ route('wpBlogVueFrameWork') }}" > WPress Vue.js + Vuex Store     </a> </li> <!-- NOTE: name vs route -->
+                            <!-- WPress on Vue Framework -->
+							<li class="{{ Request::is('wpBlogVueFrameWork*') ? 'active' : '' }}"> <a href="{{ route('wpBlogVueFrameWork') }}" > WPress Vue.js + Vuex Store     </a> </li> <!-- NOTE: name vs route -->
 
-
-							 <li><a href="{{ route('register') }}">Booking(N/A)</a></li>
-							 <li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>
-							 <li><a href="{{ route('register') }}">Vue JS(N/A)</a></li>
-                             <li class="{{ Request::is('service-layout*') ? 'active' : '' }}"> <a href="{{ route('service-layout') }}">Service Layout)</a></li>
-						 </ul>
-                       </li>
+							<li><a href="{{ route('register') }}">Booking(N/A)</a></li>
+							<li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>
+							<li><a href="{{ route('register') }}">Vue JS(N/A)</a></li>
+                            <li class="{{ Request::is('service-layout*') ? 'active' : '' }}"> <a href="{{ route('service-layout') }}">Service Layout</a></li>
+						    <li class="{{ Request::is('socialite*') ? 'active' : '' }}"> <a href="{{ route('socialite') }}">Facebook Socialite</a></li>
+                        </ul>
+                    </li>
 					 <!-- END Submenu DropDown!!!! (Bootsrap) -->
 					 
 					 

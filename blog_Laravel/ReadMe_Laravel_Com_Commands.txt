@@ -55,7 +55,7 @@ Table of Content:
 29. Events/Listeners
 34.Highlight active menu item
 35. Middleware (CORS example)
-
+36.	Socialite
 
 201. Laravel 6 LTS        => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 202. Yajra DataTables     => (IMPLEMENTED IN {abz_Laravel_6_LTS})
@@ -1759,14 +1759,27 @@ CORS middleware => https://stackoverflow.com/questions/34748981/laravel-5-2-cors
     header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Authorization');
 	
 	
+    
+    
+    
 	
-	
-	
-	
-	
-	
-	
-	
+//================================================================================================	
+36.	Socialite
+https://codeguida.com/post/678
+
+#Install             => composer require laravel/socialite
+If use Laravel < 5.6 => composer require laravel/socialite "^3.2.0"	
+
+#Get Facebook appID and secret key => register as a developer => https://developers.facebook.com/ => https://developers.facebook.com/apps
+
+Режим "В разработке" is OK to work, localhost is OK too.
+# Errors =>
+   'The request is invalid because the app is configured as a desktop app' => Tick "No" to "Нативное приложение или приложение для ПК?" (https://developers.facebook.com/apps -> settings/advanced/))
+   'This IP can't make requests for that application' => remove IPs from Security-> Список разрешенных IP-адресов сервера               (https://developers.facebook.com/apps -> settings/advanced/)
+
+
+
+
 
 //================================================================================================
 201. Laravel 6 LTS        => (IMPLEMENTED IN {abz_Laravel_6_LTS})
@@ -1972,7 +1985,9 @@ On cliking submit sends $_Post ajax to
    
   # While installing Voyager (without dummy data), it will add (via migration) to existing table {users} fileds 'avatar', 'role_id' + several new tables
     But migration files won't be added to /datatables/migrations/. If u wish, u can copy migrations files from GitHub and run migration in CLI => https://github.com/the-control-group/voyager/tree/1.4/migrations
-
+  
+  # Change authentic model /app/User => class User extends \TCG\Voyager\Models\User
+  
   # To change views of Voyager, go to => \vendor\tcg\voyager\resources\views
 
 
@@ -2841,7 +2856,7 @@ https://m.dotdev.co/design-pattern-service-layer-with-laravel-5-740ff0a7b65f?gi=
 https://habr.com/ru/post/547510/
 https://habr.com/ru/post/350778/  pizza
 
-EXAMPLE =>
+EXAMPLE => see https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ServiceLayoutController.php
 namespace App\Services;
 use App\Models\Bar;
 class MyService
