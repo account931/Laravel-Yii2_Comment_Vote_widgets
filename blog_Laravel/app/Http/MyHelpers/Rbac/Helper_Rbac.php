@@ -27,7 +27,7 @@ class Helper_Rbac
     public static function displayUserRoles($userModel, $buildDeleteButton = false)
     {
         //getting all current loop user's roles 
-		if (isset($userModel->roles[0]['name'])) { //if $user->roles (it is hasMany relation) found any role by user
+		if (isset($userModel->roles[0]['name'])) { //if $user->roles (it is hasMany relation (enabled due to { use EntrustUserTrait; in User model})), found any role by user
 		    $r = "";
 		    //use for() loop in case user has 2 and more roles. If user could have only 1 role, we would just use {$userModel->roles[0]['name']}
 			for($j = 0; $j < count($userModel->roles); $j++){

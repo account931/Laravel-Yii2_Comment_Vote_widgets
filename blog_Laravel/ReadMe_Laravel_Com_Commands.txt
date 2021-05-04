@@ -24,6 +24,7 @@ Table of Content:
 7.Forms validation via Controller
 8.Form Validation (General info)
 8.1.1 Form Validation via Request Class
+8.1.2 Custom Form Validation via Model(like in Yii2)
 8.1.2 Image Upload and validation
 8.1 Form input with in-line validation errors <span>, like in Yii2 
 8.2 Form fields Insert to DB
@@ -335,6 +336,29 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
   #Docs => https://laravel.ru/docs/v5/validation
   
   use Illuminate\Support\Facades\Validator;
+  
+  
+		$rules = [
+			'first_name'  => ['required', 'string', 'min:3'], 
+			'email'       => ['required', 'email', 'min:3', 'unique:abz_employees,email'], 
+			'user_dob'    => ['required', 'date'], //date validation
+			'user_phone'  => ['required',  "regex: $RegExp_Phone" ],
+			'user_n'      => ['required', 'string', 'min:3'],
+			'user_salary' => ['required',  'numeric'], //numeric to accept float
+            'user_rank'   => ['required', 'integer', Rule::in($rankList) ] , //in range];
+			'user_superior'   => ['required', 'integer', ],
+			'user_hired_at'   => ['required', 'date'], //date validation
+			'image'           => ['required',  'mimes:png,jpg', 'max:5120' ], //2mb = 2048 //'mimes:jpeg,png,jpg,gif,svg'
+			
+		];
+        
+        $messages = [
+        'first_name.min'  => 'First name at least 3 chars',
+        'u_phone.regex'   => 'Phone must be in format +380....',
+        ];
+
+        $result =  Validator::make($request, $rules, $messages);
+        if ($result->fails()) { //.........}  
 //================================================================================================
 
 
@@ -421,6 +445,15 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
  
 }
 
+
+
+
+//================================================================================================
+
+8.1.2 Custom Form Validation via Model(like in Yii2), (when u can't use Request as intended, e.g for REST requests), see example at =>
+   Controller => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
+   Model      => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Models/Abz/Abz_Employees.php
+                 validateRequest($request), interventionResizeSave($request)
 
 //================================================================================================
 
@@ -1770,9 +1803,17 @@ https://codeguida.com/post/678
 #Install             => composer require laravel/socialite
 If use Laravel < 5.6 => composer require laravel/socialite "^3.2.0"	
 
+# /config/app.php => add provider and aliase  
+# /config/services.php => add  
+        'client_id'     => env('FACEBOOK_ID'), 
+        'client_secret' => env('FACEBOOK_SECRET'), 
+        'redirect'      => env('FACEBOOK_URL'), 
+# add values {FACEBOOK_ID, FACEBOOK_SECRET, FACEBOOK_URL}to .env.php  
+
 #Get Facebook appID and secret key => register as a developer => https://developers.facebook.com/ => https://developers.facebook.com/apps
 
-Режим "В разработке" is OK to work, localhost is OK too.
+#Режим "В разработке" is OK to work, localhost is OK too.
+
 # Errors =>
    'The request is invalid because the app is configured as a desktop app' => Tick "No" to "Нативное приложение или приложение для ПК?" (https://developers.facebook.com/apps -> settings/advanced/))
    'This IP can't make requests for that application' => remove IPs from Security-> Список разрешенных IP-адресов сервера               (https://developers.facebook.com/apps -> settings/advanced/)
@@ -2189,7 +2230,11 @@ composer dump-autoload
 
 # Change default home route => Route::get('/', ['uses'=>'BandController@index']);
 
-
+# Redirect from root folder all requests to /public => Create in root file .htaccess => 
+Options -MultiViews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ public [L]
 
 
 
@@ -2405,13 +2450,16 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 # Error "TokenMismatchException" while form submitting => 
    change 	<input type="hidden" value="{{ csrf_token() }}" name="_token{{$loop->iteration}} " /> to   {!! csrf_field() !!}
 
+
+
+========================== New application, moving, migrate to hosting ===============
 # Error after install & migrate new Laravel 
 "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths. laravel 5.3
 
   You need to have .env on your appication then run: => $ php artisan key:generate  +  $  php artisan confg:cache
   If you don't have .env copy from .env.example: =>   $ cp .env.example .env
 
-# If u incounter this error on hosting "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths => 
+# If u encounter this error on hosting (after migrate to hosting) "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths => 
    go /config/app.php and re-set .env APP_KEY value =>
    'key' => env('APP_KEY', 'base64:BSaw42CbRqRLo19TWc9ICD7XZzuhfqzf5lxwVzpTztQ='), //instead of 'key' => env('APP_KEY'),  // 'base64:BSaw42CbRqRLo19TWc9ICD7XZzuhfqzf5lxwVzpTztQ=' is a {APP_KEY} from .env
 
@@ -2422,7 +2470,11 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
       'database' => env('DB_DATABASE', 'id1611*******'),
       'username' => env('DB_USERNAME', 'id161********'),
       'password' => env('DB_PASSWORD', 'fghdgf********),
-  
+ 
+# If error after install new package and moving to hosting => check vendor folders with today's date
+===========================================
+
+
 
 # If can not type in form input => add to form CSS rule {z-index: 9999;}
 

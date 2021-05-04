@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 //Socialite
 use App\User;
 use Validator;
-use Socialite;
+use Socialite; //use Laravel\Socialite\Facades\Socialite;
 use Exception;
 
 
