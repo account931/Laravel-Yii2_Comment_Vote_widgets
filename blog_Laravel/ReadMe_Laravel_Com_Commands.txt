@@ -68,7 +68,7 @@ Table of Content:
 
 355.Miscellaneous VA Laravel
 356.Miscellaneous VA HTML/CSS
-357.Miscellaneous to move to Yii2 ReadMe
+357.Miscellaneous Php (to move to Yii2 ReadMe)
 358.Known Errors
 400.SOLID principles
 401.Design Patterns
@@ -2236,9 +2236,15 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ public [L]
 
+# Moving Controllers to Sub folders
+ 1. append the folder name in the namespace => namespace App\Http\Controllers\Panel;
+ 2. Add "use App\Http\Controllers\Controller;" to the controller => 
+ 3. Route => Route::get('foo','Panel\PanelController@anyaction');
 
-
-
+# Return redirect from model => In controller u have to return model's method =>
+    In Controller => return $model->addOrRemoveItmemsFromCart($request);
+    In model      => function addOrRemoveItmemsFromCart($request){....return redirect('/shopSimple')->with('flashMessageFailX', 'Product <b> ' . $productOne[0]->shop_title . ' </b> was deleted from cart' );
+}
 
 
 //================================================================================================
@@ -2281,13 +2287,26 @@ RewriteRule ^ public [L]
 
 
 //================================================================================================
-357.Miscellaneous to move to Yii2 ReadMe
+357.Miscellaneous Php (to move to Yii2 ReadMe)
 
-//================================Move to Yii2 ReadMe =============================
+//================================ Move to Yii2 ReadMe =============================
 
 ---------------------- PHP ----------
+# Php Types: 8 primitive data types: 4 scalar types: Integer, Float, String, Booleans; Array, Object, resource and NULL
+     + iterable pseudo-type (PHP 7.1) => (function x(iterable $myIterable)) function getIterable():iterable {return ["a", "b", "c"];}
+     + callable pseudo-type (anonymous function {$x = function ($a) {return $a * 2;}}, a string containing the name of a function. )
 
-# Array search examples (move it to Yii)
+# Type Hinting => function x(string $arg){}  function x(callable $callable) {$callable();}
+
+# Return type declarations => function arraysSum(array ...$arrays): array {}
+
+# Php Closure (also known as anonymous function) => 
+            $example = function () use ($message) {var_dump($message);}; $example(); //setting global scope
+            $greet = function($name){}; //anonymous function
+            $a=array(1,2,3,4,5); $x2 = array_map(function($v){return $v + 1;}, $a);//anonymous function as a callback
+
+
+# Array search examples
 $listOfLanguages = array(
 	"English" => array("langName" => "en", "langFlagImg" => "en-US.svg"),
 	"Dansk"   => array("langName" => "dk", "langFlagImg" => "dk-DK.svg") );
@@ -2309,7 +2328,12 @@ $listOfLanguages = array(
 
 # UUID => function generateUUID($length=10) {$this->UUID = "sh-" . time() ."-". substr( md5(uniqid()), 0, $length);  return $this->UUID;}
 
+# Check if not null => if($value->master && $value->master !== null)
+
 # Authentication(login/pass) vs authorization (Rbac)
+
+
+-------------------- Untitled (Git, etc) ---------
 
 #Github Readme.md => Markdown is a lightweight markup language => See example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/readme_template_example.md
 Create Anchor => 
@@ -2344,6 +2368,8 @@ Create Anchor =>
      * @return boolean whether the saving succeeded (i.e. no validation errors occurred).
 	 * @return void
      */
+     
+     
 	 
 # View POST in Chrome => Network" tab => refresh => select POST in left =>  Choose "Headers" tab
 
@@ -2360,6 +2386,7 @@ Create Anchor =>
    *
    # Except this file
    !.gitignore
+
 
 ---------------------- JS ----------
 
@@ -2390,7 +2417,6 @@ $(document).on("click", '.sbmBtn', function() {   // this  click  is  used  to  
 
 # Use {toFixed(2)} to return 33.00 not 33.0008 =>  $(this).parent().next().html((numProduct*price).toFixed(2)); 
 
-# Check if not null => if($value->master && $value->master !== null)
 
 # Makes Grid table to be wide with scroll => <div class="col-sm-12 col-xs-12" style="width:80em;overflow-x: scroll;">
 
