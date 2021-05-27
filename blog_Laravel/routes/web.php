@@ -162,8 +162,14 @@ Route::get('auth/facebook', 'SocialiteController@facebookRedirect');
 Route::get('auth/facebook/callback', 'SocialiteController@loginWithFacebook');
 
 
+//Create XML YML file for Rozet shop
+Route::get('/rozetk',     'RozetController@index')       ->name('rozetk'); 
+Route::get('/createSQL',  'RozetController@createXMLSQL')->name('createSQL');
 
-
+//Captcha, reCaptcha, Laravel Notify package
+Route::get('/captcha',         'CaptchaController@index')         ->name('captcha');
+Route::post('/handcaptcha',    'CaptchaController@handCaptcha')   ->name('handcaptcha');
+Route::post('/package-captcha','CaptchaController@packageCaptcha')->name('package-captcha');
 
 
 

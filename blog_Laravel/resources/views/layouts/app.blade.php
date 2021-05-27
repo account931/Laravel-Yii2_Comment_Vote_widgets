@@ -118,7 +118,9 @@
 							<li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>
 							<li><a href="{{ route('register') }}">Vue JS(N/A)</a></li>
                             <li class="{{ Request::is('service-layout*') ? 'active' : '' }}"> <a href="{{ route('service-layout') }}">Service Layout</a></li>
-						    <li class="{{ Request::is('socialite*') ? 'active' : '' }}"> <a href="{{ route('socialite') }}">Facebook Socialite</a></li>
+						    <li class="{{ Request::is('socialite*') ? 'active' : '' }}">      <a href="{{ route('socialite') }}">Facebook Socialite</a></li>
+                            <li class="{{ Request::is('rozetk*') ? 'active' : '' }}">         <a href="{{ route('rozetk') }}">Rozetk XML/YML</a></li>
+                            <li class="{{ Request::is('captcha*') ? 'active' : '' }}">         <a href="{{ route('captcha') }}">Capcha+Notify</a></li>
                         </ul>
                     </li>
 					 <!-- END Submenu DropDown!!!! (Bootsrap) -->
@@ -262,7 +264,12 @@
 		<script src="{{ asset('js/AdminLTE/my-snow.js')}}"></script> <!--My code to start snow-->
 	@endif
 	
-
+    <!-- To register JS/CSS for specific view only (for captcha only). -->
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['captcha'])) <!--Route::getFacadeRoot()->current()->uri()  returns testRest--> 
+	    @notifyCss <!--  <link rel="stylesheet" type="text/css" href="http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public/vendor/mckenziearts/laravel-notify/css/notify.css"/><script>-->
+        @notifyJs  <!--  <script type="text/javascript" src="http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public/vendor/mckenziearts/laravel-notify/js/notify.js"></script></script>-->
+    @endif
+	
 	<!-- ALL OTHER/SOME OTHER CSS/JS SCRIPT ARE LOADED IN EVERY SPECIFIC VIEW (before {endsection}) -->
 
 </body>

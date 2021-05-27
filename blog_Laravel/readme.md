@@ -91,10 +91,15 @@
 
 ![Screenshot](public/images/Screenshots/31.png)
 
+## Generete Xml Yml file for Rozet (from DB or Excel(N/A))
 
+![Screenshot](public/images/Screenshots/32.png)
 
+![Screenshot](public/images/Screenshots/33.png)
 
+## Capcha
 
+![Screenshot](public/images/Screenshots/34.png)
 
 
 

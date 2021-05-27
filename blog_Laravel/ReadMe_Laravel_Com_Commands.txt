@@ -55,8 +55,10 @@ Table of Content:
 28. PhpUnit tests vs Laravel Dusk
 29. Events/Listeners
 34.Highlight active menu item
-35. Middleware (CORS example)
+35. Middleware
+35.1 Middleware (CORS example)
 36.	Socialite
+37. Liqpay & Paypal
 
 201. Laravel 6 LTS        => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 202. Yajra DataTables     => (IMPLEMENTED IN {abz_Laravel_6_LTS})
@@ -64,7 +66,7 @@ Table of Content:
 204. Admin LTE
 205. Laravel Intervention => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 206. Laravel Voyager      => (IMPLEMENTED IN {abz_Laravel_6_LTS})
-
+207. Laravel Gii Crud Generators 
 
 355.Miscellaneous VA Laravel
 356.Miscellaneous VA HTML/CSS
@@ -79,7 +81,7 @@ Table of Content:
 http://laravel.su/docs/5.4/installation
 
 1. If first time ever, install global installer=>  composer global require "laravel/installer"
-2. Navigate to necessary folder and =>    laravel new yourProjectName
+2. Navigate to necessary folder and =>    laravel new yourProjectName   Var2 => composer create-project laravel/laravel  Var3 => composer create-project --prefer-dist laravel/laravel blog "6.*"
 3. To add authentication (login/register) (or read manual => https://vegibit.com/how-to-create-user-registration-in-laravel/ )=>
        CLI=> php artisan make:auth
 
@@ -124,9 +126,11 @@ USAGE
 //============================================	
 
  #composer install vs composer update
+ 
  composer install => check if exists {composer.lock}, if true install versions from {composer.lock}
  composer update  => check {composer.json}, install versions from {composer.json} and rewrite {composer.lock}
-
+ 
+ #if change "composer.json" => use {composer update}
 
 
 
@@ -256,7 +260,8 @@ USAGE
 7.Forms validation via Controller => 
     see example_1 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimpleController.php    at => public function storeToCart(Request $request)
     see example_2 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   at =>  public function store(Request $request)
-  # get one input => $request->input('role_sel');
+ 
+ # get one input => $request->input('role_sel'); vs $request->all()
   
   #get form input => 
          use Illuminate\Support\Facades\Input;
@@ -330,7 +335,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 //================================================================================================
 
-8.Form Validation (General info) => 
+8.Form Validation  vai Controller(General info) => 
   NB: first implement back-emd validation, then front-end
   # 4 ways of validation => https://laravel.demiart.ru/ways-of-laravel-validation/
   #Docs => https://laravel.ru/docs/v5/validation
@@ -679,8 +684,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
     User::all() and User::get() will do the exact same thing. get() is a method on the Eloquent\Builder object. If you need to modify the query, such as adding a where clause, then you have to use get().
 	
     $articles = wpress_blog_post::all();
-    $articles =  wpress_blog_post::where('wpBlog_status', '1')->get();  INSIDE MODEL =>   $articles = $this->where('wpBlog_status', '1')->get();
-	$articles = wpress_blog_post::where('wpBlog_status', '1')->where('wpBlog_category', 1)->get();
+    $articles = wpress_blog_post::where('wpBlog_status', '1')->get();  INSIDE MODEL =>   $articles = $this->where('wpBlog_status', '1')->get();
+	$articles = wpress_blog_post::where('wpBlog_status', '1')->where('wpBlog_category', 1)->get(); //multiple where
     
 	$user = User::where('username', '=', 'michele')->first();
 	$roles = Role::select('role','surname')->where('id', 1)->get(); //select columns
@@ -752,8 +757,25 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
                return $q->orderBy('shop_created_at', 'desc');
             })
 			->paginate(6); //with pagination
-			
-	# If Laravel Pagination links not including other GET parameters =>
+	
+# delete orders from table {shop_orders_main} which are older than 24 hours based on Carbon
+    use Carbon\Carbon;
+    
+    $yesterday = Carbon::now()->subDays(1)->toDateTimeString(); //2021-05-23 14:37:08"
+    $delete = ShopOrdersMain::where('if_paid', '0')->where('ord_placed', '<=', $yesterday)->get(); //get for foreach
+    ShopOrdersMain::where('if_paid', '0')->where('ord_placed', '<=', $yesterday)->delete(); //delete
+        
+    //delete relevant rows in table {order_item}
+    $array_of_ids = array();
+    foreach($delete as $v){
+        array_push($array_of_ids, $v->order_id); //[id, id, id]            
+    }
+    $subDelete = ShopOrdersItems::whereIn('fk_order_id', $array_of_ids)->delete(); //delete multiple ids
+    
+   
+
+   
+# If Laravel Pagination links not including other GET parameters =>
 	//adds this to SQL Result Object (in Controller) in order Laravel Pagination links would including other GET parameters when u naviagate to page=2, etc; i.e the URL would contain previous $_GET[] params, like it was "shopSimple?order=lowest", when goes to page=2 it will be "shopSimple?order=lowest&page=2". Without this fix URL will be just "shopSimple?page=2"
 	$allDBProducts = ShopSimple::orderBy('shop_price', 'desc')->paginate(6);
 	$allDBProducts = $allDBProducts->appends(\Illuminate\Support\Facades\Input::except('page'));
@@ -1779,10 +1801,15 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 
 
 
+//================================================================================================	 
+35. Middleware 
+https://code.tutsplus.com/ru/tutorials/understand-the-basics-of-laravel-middleware--cms-29147
+
+
 
 	 
 //================================================================================================	 
-35. Middleware (CORS example)
+35.1 Middleware (CORS example)
 For CORS speicifically, see => # Cors in Ajax (Cross-origin resource sharing)(Same-Origin-Policy) => see https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/README_MY.txt
 
 CORS middleware => https://stackoverflow.com/questions/34748981/laravel-5-2-cors-get-not-working-with-preflight-options
@@ -1821,6 +1848,20 @@ If use Laravel < 5.6 => composer require laravel/socialite "^3.2.0"
 
 
 
+//================================================================================================
+37. Liqpay & Paypal
+
+37.1 Liqpay example (use App\ThirdParty_SDK\LiqPaySDK\LiqPay; +.env credentials) => 
+      Controller => public function pay2() => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimpleController.php
+      View       =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple/pay-page.blade.php
+
+37.2 Paypal example =>
+      View       =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple/pay-page.blade.php
+
+# Or look up more up-to-date Cleansed Shop version (same contoller, view, .env name) at => https://github.com/dimmm931/Laravel_Shop
+
+
+
 
 //================================================================================================
 201. Laravel 6 LTS        => (IMPLEMENTED IN {abz_Laravel_6_LTS})
@@ -1830,7 +1871,7 @@ If use Laravel < 5.6 => composer require laravel/socialite "^3.2.0"
 #Install =>  composer create-project --prefer-dist laravel/laravel blog "6.*"
 #Make Auth => 
       composer require laravel/ui "^1.0" --dev
-	  php artisan ui vue --auth    (if this requires, do ia Win cmd => npm install && npm run dev )
+	  php artisan ui vue --auth    (if this requires, do in Win cmd => npm install  var2 => npm install && npm run dev )
 	  php artisan migrate
 
 
@@ -2033,8 +2074,23 @@ On cliking submit sends $_Post ajax to
 
 
 
+
+
+
+//================================================================================================ 
+207. Laravel Gii Crud Generators      => 
+1. https://github.com/mehradsadeghi/laravel-crud-generator/blob/master/README.md
+   Generates controller only, model must be created manually before, no views generated. Works on fillable[]
+       php artisan make:crud UserController --model=User --validation
  
-	 
+	
+
+
+
+
+
+
+    
 //================================================================================================ 
 355.Miscellaneous VA Laravel
 
@@ -2170,7 +2226,9 @@ composer dump-autoload
 # Session set => use Illuminate\Support\Facades\Session; Session::put('backUrl', url()->previous());
 # Session get => session()->get('backUrl');	
 
-# get id of new saved row/Get the Last Inserted Id => $m->save(); $id = $m->id;  see function saveFields_to_shopOrdersMain at example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/ShopSimple/ShopOrdersMain.php
+# Get id of new last saved row/Get the Last Inserted Id => $m->save(); $id = $m->id;  see function saveFields_to_shopOrdersMain at example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/ShopSimple/ShopOrdersMain.php
+# Get Last saved ID in model Example1 => saveNewProduct($data, $imageName)   => https://github.com/dimmm931/Laravel_Shop/blob/master/app/models/ShopSimple/ShopSimple.php
+                             Example2 => saveFields_to_shopOrdersMain($data) => https://github.com/dimmm931/Laravel_Shop/blob/master/app/models/ShopSimple/ShopOrdersMain.php
 
 # gets url route for ajax =>
   1. via js  =>  see example at =>https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/public/js/ShopPaypalSimple_Admin/ajax_count_orders_quantity.js
@@ -2245,6 +2303,11 @@ RewriteRule ^ public [L]
     In Controller => return $model->addOrRemoveItmemsFromCart($request);
     In model      => function addOrRemoveItmemsFromCart($request){....return redirect('/shopSimple')->with('flashMessageFailX', 'Product <b> ' . $productOne[0]->shop_title . ' </b> was deleted from cart' );
 }
+
+
+# Errors "Class not found " while => new DOMDocument('1.0'); new SimpleXMLElement();
+ Use global namespace => new \DOMDocument('1.0');
+
 
 
 //================================================================================================
@@ -2332,6 +2395,9 @@ $listOfLanguages = array(
 
 # Authentication(login/pass) vs authorization (Rbac)
 
+#function return multiple/several values => https://github.com/account931/yii2_REST_and_Rbac_2019/blob/master/models/BookingCph.php
+    function some(){return array($a, $b);}  $r = some(); $value1 = $r[0]; $value2 = $r[1];  
+    function some(){return array('a'=> $a, 'b'=> $b);}  $r = some(); $value1 = $r['a']; $value2 = $r['b'];
 
 -------------------- Untitled (Git, etc) ---------
 

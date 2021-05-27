@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<yml_catalog date="2021-05-25 15:41">
+<shop>
+<name>Shop name</name>
+<company>ООО Company Dimmm</company>
+<url>http://site.com/</url>
+<currencies>
+<currency id="RUR" rate="1"/>
+</currencies>
+<offers>
+<offer id="1">
+<url>http://site.com/prod/1.html</url>
+<price>2354.16</price>
+<oldprice>2354.16</oldprice>
+<currencyId>$</currencyId>
+<categoryId>Desktop</categoryId>
+<picture>http://site.com/img/1.jpgcanon.jpg</picture>
+<name>Canon EOS R</name>
+<description> <![CDATA[CANON EOS R, 30 Mpx. The EOS R is Canon's first full-frame mirrorless camera. It features a 30.3MP CMOS sensor with Dual Pixel AF and an ISO range of 100-40000 (expandable to 50-102400). The EOS R can record both 14-bit (CRW) and compressed (C-RAW) formats. It can shoot continuously at 8 fps in single AF and 5 fps with continuous AF]]> </description>
+</offer>
+<offer id="2">
+<url>http://site.com/prod/2.html</url>
+<price>287.36</price>
+<oldprice>287.36</oldprice>
+<currencyId>$</currencyId>
+<categoryId>Desktop</categoryId>
+<picture>http://site.com/img/1.jpghp.jpg</picture>
+<name>HP notebook 4530S</name>
+<description> <![CDATA[HP 4530S, 4Gb Ram, 320Gb HDD. Outfitted with a 2.3-GHz Intel Core i5-2410M processor and 4GB of RAM, the HP ProBook 4530s offers solid performance. Equipped with a large 500GB hard drive spinning at a quick 7,200 rpm, the ProBook 4530s managed to fire up Windows 7 Professional in 58 seconds, 8 seconds faster than the average 15-inch notebook]]> </description>
+</offer>
+<offer id="3">
+<url>http://site.com/prod/3.html</url>
+<price>60.55</price>
+<oldprice>60.55</oldprice>
+<currencyId>$</currencyId>
+<categoryId>Desktop</categoryId>
+<picture>http://site.com/img/1.jpgiphone_3.jpg</picture>
+<name>Iphone 3</name>
+<description> <![CDATA[TFT capacitive touchscreen, 3.5 inches, 16M colors, 2 Mpx]]> </description>
+</offer>
+<offer id="4">
+<url>http://site.com/prod/4.html</url>
+<price>112.39</price>
+<oldprice>112.39</oldprice>
+<currencyId>$</currencyId>
+<categoryId>Mobile</categoryId>
+<picture>http://site.com/img/1.jpgiphone_5.jpg</picture>
+<name>Iphone 5</name>
+<description> <![CDATA[Iphone 5 description......]]> </description>
+</offer>
+<offer id="5">
+<url>http://site.com/prod/5.html</url>
+<price>273.34</price>
+<oldprice>273.34</oldprice>
+<currencyId>$</currencyId>
+<categoryId>Mobile</categoryId>
+<picture>http://site.com/img/1.jpgipod_classic_3.jpg</picture>
+<name>Ipod</name>
+<description> <![CDATA[Ipod description....]]> </description>
+</offer>
+<offer id="6">
+<url>http://site.com/prod/6.html</url>
+<price>257.64</price>
+<oldprice>257.64</oldprice>
+<currencyId>$</currencyId>
+<categoryId>Tablet</categoryId>
+<picture>http://site.com/img/1.jpgsamsung_sync.jpg</picture>
+<name>Samsung C27R500</name>
+<description> <![CDATA[Samsung C27R500 27'. FHD Curved Monitor with 1800R curvature and 3-sided bezel-less screen.]]> </description>
+</offer>
+<offer id="7">
+<url>http://site.com/prod/7.html</url>
+<price>472.91</price>
+<oldprice>472.91</oldprice>
+<currencyId>$</currencyId>
+<categoryId>Audio Pro</categoryId>
+<picture>http://site.com/img/1.jpgturntable.jpg</picture>
+<name>Audio-Tech AT-LP120</name>
+<description> <![CDATA[The best starter turntable with all the features you'll ever need. This professional stereo turntable features a high-torque direct-drive motor for quick start-ups and a USB output that connects directly to your computer. Other features include: forward and reverse play capability; cast aluminum platter with slip mat and a start/stop button; three speeds 33/45/78; selectable high-accuracy quartz-controlled pitch lock and pitch change slider control with +/-10% or +/-20% adjustment ranges; and removable hinged dust cover. Mac and PC compatible Audacity software digitizes your LPs Direct drive high-torque motor. Stroboscopic platter speed indicator]]> </description>
+</offer>
+<offer id="8">
+<url>http://site.com/prod/8.html</url>
+<price>169.36</price>
+<oldprice>169.36</oldprice>
+<currencyId>$</currencyId>
+<categoryId>Audio Pro</categoryId>
+<picture>http://site.com/img/1.jpgmixer.jpg</picture>
+<name>Behringer Vmx200</name>
+<description> <![CDATA[Professional 2-channel ultra-low noise DJ mixer with state-of-the-art phono preamps. Super-smooth, long-life ULTRAGLIDE faders (up to 500,000 cycles). 3-band kill EQ (-32 dB) and precise level meters with peak hold function]]> </description>
+</offer>
+<offer id="9">
+<url>http://site.com/prod/9.html</url>
+<price>3.35</price>
+<oldprice>3.35</oldprice>
+<currencyId>$</currencyId>
+<categoryId>Desktop</categoryId>
+<picture>http://site.com/img/1.jpgkingston.jpg</picture>
+<name>Kington 16GB Flash</name>
+<description> <![CDATA[16 GB Flash Drive. Convenient - small, capless and pocket-sized for easy transportability. Durable - metal casing with sturdy ring. USB Specification: USB 2.0,Guaranteed - five-year warranty]]> </description>
+</offer>
+<offer id="10">
+<url>http://site.com/prod/10.html</url>
+<price>351.69</price>
+<oldprice>351.69</oldprice>
+<currencyId>$</currencyId>
+<categoryId>Audio Pro</categoryId>
+<picture>http://site.com/img/1.jpgwego.jpg</picture>
+<name>Pioneer DDJ-WEGO-K</name>
+<description> <![CDATA[Ultra-compact and affordable DJ controller. Plug & Play with bundled Virtual DJ LE software. Pulse Control Provides Visual Prompts via Various Types of Illuminations Directly on the Unit. Multi-colored LED for customization of lights to match the user's style]]> </description>
+</offer>
+</offers>
+</shop>
+</yml_catalog>

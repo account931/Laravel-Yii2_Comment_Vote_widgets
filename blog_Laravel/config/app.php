@@ -166,7 +166,7 @@ return [
 		Zizaco\Entrust\EntrustServiceProvider::class, // Entrust RBAC package
 		
         //Yajra\Datatables\DatatablesServiceProvider::class, //Yajra DataTables, use non-capital '...table'
-		 
+		
         /*
          * Package Service Providers...
          */
@@ -184,7 +184,9 @@ return [
         //my provider for Service Layer
         App\Providers\MyServiceProvider::class,
         
-        Laravel\Socialite\SocialiteServiceProvider::class, //Socialite Package
+        Laravel\Socialite\SocialiteServiceProvider::class,       //Socialite Package
+        Mckenziearts\Notify\LaravelNotifyServiceProvider::class, //Laravel Notify
+        Mews\Captcha\CaptchaServiceProvider::class,             //Mews\Captcha 
     ],
 
     /*
@@ -239,6 +241,7 @@ return [
 		//'MyHelper' => App\Http\Helperss\Rbac\Helper_Rbac::class, //my helper
 		//'Datatables' => 'Yajra\Datatables\Facades\Datatables', ////Yajra DataTables
         'Socialite' => Laravel\Socialite\Facades\Socialite::class, //Socialite Package
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,          //Mews Captcha
 
     ],
 
