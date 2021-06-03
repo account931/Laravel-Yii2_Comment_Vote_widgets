@@ -1,5 +1,5 @@
 <!-- https://github.com/hayanisaid/Vue-router -->
-<!-- Vue-Router Main menu with Links -->
+<!-- Vue-Router Main menu with Links, routes themselves are defined in /router/index -->
 
 <template>
   <div id="appDemo">

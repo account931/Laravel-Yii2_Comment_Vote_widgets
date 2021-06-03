@@ -1,3 +1,4 @@
+//Defines routes. The links themselves are located in VueRouteMenu
 //https://github.com/hayanisaid/Vue-router
 import Vue from 'vue';
 import Router from 'vue-router';
@@ -14,9 +15,9 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: home
+      path: '/',      //define URL route path. The links themselves are located in VueRouteMenu
+      name: 'home',   //same name as in component return section
+      component: home //component itself in '../components/pages/home'
     },
     {
       path: '/home',

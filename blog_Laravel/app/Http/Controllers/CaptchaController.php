@@ -30,11 +30,9 @@ class CaptchaController extends Controller
     { 
         session_start();
         
-        //test of Laravel Notify package
-        //$when = now()->addSeconds(3);//addMinutes(1);
-		notify()->success('Laravel Notify is awesome!');
-        //notify()->success('Laravel Notify is awesome222!')->delay($when);
-        //connectify('success', 'Connection Found', 'Success Message Here');
+        //test of Laravel Notify package, can config at /config/notify.php
+		notify()->success('Laravel Notify. Can modify me at /config/notify.php. Can send Notify from other function like flash messages (just add in view @include("notify::messages"))');
+        //connectify('success', 'Connection Found', 'Can modify me at /config/notify.php');
         //drakify('success');
         //smilify('success', 'You are successfully reconnected');
         
@@ -42,6 +40,15 @@ class CaptchaController extends Controller
         $length = 4;
         $UUID = "sh-" . time() ."-". substr( md5(uniqid()), 0, $length); 
         $_SESSION['captcha_1604938863'] = $UUID;
+        
+        //convert text to image via GD Library
+        $img = imagecreate(200, 60); //creates an empty canvas, an empty transparent rectangle //NEW EMPTY IMAGE OBJECT // imagecreate(WIDTH, HEIGHT)
+        $white = imagecolorallocate($img, 255, 255, 255); //SET COLORS (background)//imagecolorallocate(IMAGE, RED, GREEN, BLUE)
+        $black = imagecolorallocate($img, 0, 0, 0); //text color
+        imagefilledrectangle($img, 0, 0, 200, 100, $white); // imagefilledrectangle(IMAGE, START X, START Y, END X, ENDY, COLOR) //fill a solid background to rectangle 
+        imagestring($img, 5, 10, 20, $UUID, $black);   //to write the text to image //imagestring(IMAGE, FONT, X, Y(vertical), TEXT, COLOR) //// FONT is a number 1 to 5. 1 is smallest font size, 5 is biggest.
+        imagepng($img, "captcha-image.png"); //saves image to /public/
+        //imagedestroy($img); // OPTIONAL //not really required but good to have
         
         return view('captcha.index',  compact('UUID'));
     }
@@ -72,6 +79,7 @@ class CaptchaController extends Controller
         $validator =  Validator::make($request->all(), $rules, $messages);
         
         if ($validator->fails()) { 
+            //notify()->success('Validation failed'); //Works if there is no other Notification in target action
             return redirect()->back()
 			    ->withInput()
 			    ->with('flashMessageFailX', "Validation Failed")

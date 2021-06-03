@@ -31,6 +31,7 @@ Table of Content:
 9.Migrations/Seeders
 10.hasOne/hasMany relation
 11.DB SQL Eloquent queries
+11.1 DB SQL Eloquent queries otimization
 12.Laravel CRUD
 12.24. Save to DB (SQL INSERT) via model function
 13.REST API
@@ -74,6 +75,7 @@ Table of Content:
 358.Known Errors
 400.SOLID principles
 401.Design Patterns
+402.Used Laravel Packages
 
 
 //================================================
@@ -574,7 +576,10 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
     $table->foreign('rank_id')->references('id')->on('abz_ranks')->onUpdate('cascade')->onDelete('cascade');  //Id from table {abz_ranks}
 	
     If error "General error: 1005 Can't create table ,Foreign key constraint is incorrectly formed in laravel" => 
-       =>  make sure that FK type is the same as the reference table id, so instead of defining your column as Integer use bigInteger insteated  
+       => make sure that FK type is the same as the reference table id, so instead of defining your column as Integer use bigInteger insteated  
+       => if ($table->bigIncrements('id');)        then use for FK ($table->bigInteger('a_tables_id')->unsigned();)
+       => if ($table->increments('wpImStock_id');) then use for FK ($table->integer('wpImStock_postID')->unsigned()->nullable()->comment = 'Category';)
+    #UNSIGNED only stores positive numbers (or zero), SIGNED positive and negative
     
   # To add a new column to existing table => see example at https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/migrations/2020_11_21_171640_add_2_columns_to_shop_simple_table.php
      1. php artisan make:migration add_2_columns_to_shop_simple_table
@@ -680,6 +685,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 //================================================================================================
 11.DB SQL Eloquent queries
+  
   #For Eloquent ORM:
     User::all() and User::get() will do the exact same thing. get() is a method on the Eloquent\Builder object. If you need to modify the query, such as adding a where clause, then you have to use get().
 	
@@ -782,6 +788,71 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	//... return view(......)
 			
 //================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//================================================================================================
+11.1 DB SQL Eloquent queries otimization https://laravel.demiart.ru/laravel-database-queries-optimization/
+    1. Use chunk =>
+        $posts = Post::chunk(100, function($posts){
+        foreach ($posts as $post){ /* do smth */ }  });
+    2. Select only required fields => 
+        $posts = Post::select(['id','title'])->find(1); //Eloquent
+        $posts = DB::table('posts')->where('id','=',1)->select(['id','title'])->first(); //query builder
+    3. Pluck => $posts = Post::pluck('title', 'slug');
+    4. Count => instead of  $posts = Post::all()->count(); , DO => $posts = Post::count();
+    5. Eager loading => 
+        $posts = Post::with(['author'])->get();
+        $posts = WpressRest::with('authorName', 'categoryNames')->where('wpBlog_id', $id)->get();
+    6. Use simplePaginate instead of Paginate =>
+        NOT: $posts = Post::paginate(20);  YES: $posts = Post::simplePaginate(20); //links only to next and prev page
+    7. WHERE usage => NOT: $posts = Post::whereDate('created_at', '>=', now() )->get();  YES: $posts = Post::where('created_at', '>=', now() )->get();
+    8. Getting last SQL row =>
+       NOT: $posts = Post::latest()->get();   YES: $posts = Post::latest('id')->get();
+    9. Group similar queries =>
+        NOT:
+        $published_posts = Post::where('status','=','published')->get();
+        $featured_posts = Post::where('status','=','featured')->get();
+        $scheduled_posts = Post::where('status','=','scheduled')->get();
+        YES:
+        $posts = Post::whereIn('status',['published', 'featured', 'scheduled'])->get();
+        $published_posts = $posts->where('status','=','published');
+        $featured_posts = $posts->where('status','=','featured');
+        $scheduled_posts = $posts->where('status','=','scheduled');
+ 
+
+
+
+
+
+
+//================================================================================================
+
+11.2 Eloquent vs Query builder: 
+  Eloquent is Laravel's implementation of Active Record pattern. Less faster Performance. When you process a few records, there is nothing to worry about. But for cases when you read lots of records (e.g. for datagrids, for reports, for batch processing etc.) the plain Laravel DB methods is a better approach
+  
+  #Query builder => 
+      use Illuminate\Support\Facades\DB;
+      $posts = DB::table('posts')->where('id','=',1)->select(['id','title'])->first();
+
+
+
+
+
+
+
+
 
 
 
@@ -1014,6 +1085,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 //================================================================================================
 15. Js/Css, minify, Laravel Mix CAUSION => read {Alternative (and currently used)}
    File => /webpack.mix.js
+   # If 1st time ever => npm install
    
    Works so muck like Browserify + Gulp.......
     All Development css/js (js/css u're changing) are located in /resources/assets/. They are not included to index.php (\resources\views\layouts). 
@@ -1561,7 +1633,7 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		npm install vue-router --save
 		
 		# Router example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/router/index.js
-	    # Component with Menu Vue-Router is inited here => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
+	    # Component with Menu Vue-Router is inited here   => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
 		# Component with Menu Vue-Router Links and with view area <router-view/> => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/VueRouterMenu.vue
 		# Vue-Router Menu's pages are in => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/tree/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/pages
 		
@@ -2368,6 +2440,13 @@ RewriteRule ^ public [L]
             $greet = function($name){}; //anonymous function
             $a=array(1,2,3,4,5); $x2 = array_map(function($v){return $v + 1;}, $a);//anonymous function as a callback
 
+# Access global variable (u can pass it as param or in funct {global $data;} or use in Closure)=>
+  $data = 'My data';
+  $menugen = function() use ($data) {echo "[".$data."]";};
+            
+# Null coalescing operator (php 7.0) =>  just isset() in a handy operator => $foo = $bar ?? 'something';  EQUALS $foo = isset($bar) ? $bar : 'something';
+                        assign value => return $cache['key'] ??= getSomeVal('key')
+# Nullable types => defines ?int as either int or null => function nullOrInt(?int $arg)
 
 # Array search examples
 $listOfLanguages = array(
@@ -2452,6 +2531,37 @@ Create Anchor =>
    *
    # Except this file
    !.gitignore
+
+
+# GD Library, save text to image =>  public function index() => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/CaptchaController.php
+
+#RegExp regular expression Php =>  
+    # if (!preg_match($RegExp_Phone, $phone)), returns 1 if a match was found,or 0
+    # preg_replace('/microsoft/i', 'W3Schools', $str); Returns a string or an array of strings
+    #if(preg_match_all("/ain/i", $str, $matches)), returns the number of matches or FALSE and populates a variable $matches with the matches 
+    
+    $RegExp_Phone = '/^[+]380[\d]{1,4}[0-9]+$/'; //phone regexp
+    $RegExp_Phone = '/^[+]380\([\d]{1,4}\)[0-9]+$/'; //old var
+    $RegExp_Name='/^[a-zA-Z]{3,16}$/'; //name, min 3, max 16
+    $RegExp_Email='/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/';
+    
+
+#RegExp JS  => 
+    # test()  {RegExpPattern.test(string);} tests for a match in a string,  returns true if it finds a match or False 
+              var patternX = /details-info\/[0-9]+/g;  //RegExp if (patternX.test(from.path)){ 
+    # match() {string.match(/ain/g);}      method searches a string,  returns the matches, as an Array object or null
+    # replace() var res = str.replace("oldWord", "newWord");
+    
+    var RegExp_Phone = /^[+][\d]{8,9}[0-9]+$/; //phone number regExp for world wide
+	var RegExp_Phone_UA = /^[+]380[\d]{2}[0-9]{7}$/; //phone number regExp for Ukraine //must have strict +380 & 9 digits ///^[+]380[\d]{1,4}[0-9]+$/;
+    //from blankspace
+    var RegExp_PlsKnow = /please (know||note) (?!that)\w*/gi;
+    var numbComma      = (textarea.match(/ \,+/g) || []).length; //count space+comma
+    var numbDot        = (textarea.match(/ \.+/g) || []).length; //count space+dot
+    var doubleWords    = (textarea.match(/\b(\w+)\s+\1\b/g) || []).length; // count all consecutive duplicate words
+    var doubleCommas   = (textarea.match(/(\,\,+)/g  ) || []).length; // count all consecutive duplicate commas (i.e ",,")
+    var doubleDots     = (textarea.match(/(\.\.+)/g  ) || []).length; // count all consecutive duplicate dots (i.e "..")
+
 
 
 ---------------------- JS ----------
@@ -2548,7 +2658,7 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 # Error after install & migrate new Laravel 
 "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths. laravel 5.3
 
-  You need to have .env on your appication then run: => $ php artisan key:generate  +  $  php artisan confg:cache
+  You need to have .env on your appication then run: => $ php artisan key:generate  +  $  php artisan config:cache
   If you don't have .env copy from .env.example: =>   $ cp .env.example .env
 
 # If u encounter this error on hosting (after migrate to hosting) "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths => 
@@ -2623,7 +2733,8 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 # Click does not work in mobile  => 
     Solution 1 => style="position:relative; z-index:9999999999;"
 	Solution 2 => on IOS, safari JS click fix => add empty {onClick}  => <span onClick="" id="someID"></span>   OR => cursor: pointer;
-	
+
+# Laravel notify toasts are hidden by menu bar => wrap  @include('notify::messages') in <div style="position:relative;z-index:99999999999999999;"></div>	
 =============================
 
 если токен не принимается обработчиком, то варианта существует по сути два – либо он не отправляется в запросе (отсутствует csrf_field() в форме, или нет нужного значения в аякс-запросе – там он может передаваться как в данных так и в заголовках запроса), либо на стороне сервера не загружается сессия – именно в ней сохраняется токен на стороне сервера, чтобы было с чем сравнить то что пришло в запросе.
@@ -3030,8 +3141,22 @@ class MyController extends Controller
 are the central place of all Laravel application bootstrapping. Your own application, as well as all of Laravel's core services, are bootstrapped via service providers.
 
 
-//================================================================================================
 
+
+
+//================================================================================================
+402.Used Laravel Packages
+ 1. Laravel Notify           => https://github.com/mckenziearts/laravel-notify
+ 2. Mews\Captcha             => https://github.com/mewebstudio/captcha     
+ 3. Zizaco/Entrust
+ 4. Laravel yajra datatables => https://github.com/yajra/laravel-datatables  => composer create-project laravel/laravel laravel-yajra-datatables --prefer-dist
+ 5. Admin LTE + datatables   => https://github.com/jeroennoten/Laravel-AdminLTE
+ 6. Crud Generator           => https://github.com/mehradsadeghi/laravel-crud-generator/blob/master/README.md
+ 7. LaraAppointments         => https://github.com/LaravelDaily/LaraAppointments-QuickAdminPanel
+ 8. Voyager Admin Panel
+ 9. Socialite
+ 
+ #Pending: Avored, Aimeos, appzcoder/crud-generator, Zofe_Rapyd
 
 
   /*

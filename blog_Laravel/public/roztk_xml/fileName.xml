@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE yml_catalog SYSTEM "shops.dtd">
-<yml_catalog date="2021-05-27 14:49">
+<yml_catalog date="2021-05-28 14:20">
 <shop>
 <name>Shop name</name>
 <company>ООО Company Dimmm</company>
 <url>http://site.com/</url>
 <currencies>
 <currency id="UAH" rate="1"/>
-<currency id="USD" rate="26.8"/>
-<currency id="EUR" rate="29.2"/>
 </currencies>
 <categories>
 <category id="391">Куртки для мальчиков</category>
@@ -150,7 +148,7 @@
 <vendor>Greenleaf Haven</vendor>
 <stock_quantity>100</stock_quantity>
 <name>Pioneer DDJ-WEGO-K</name>
-<description> <![CDATA[Ultra-compact and affordable DJ controller. Plug & Play with bundled Virtual DJ LE software. Pulse Control Provides Visual Prompts via Various Types of Illuminations Directly on the Unit. Multi-colored LED for customization of lights to match the user's style]]> </description>
+<description> <![CDATA[Ultra-compact and affordable DJ controller. Plug &amp; Play with bundled Virtual DJ LE software. Pulse Control Provides Visual Prompts via Various Types of Illuminations Directly on the Unit. Multi-colored LED for customization of lights to match the user's style]]> </description>
 <param name="Рост">146 см</param>
 <param name="Цвет">Черный</param>
 <param name="Дополнительные характеристики"><![CDATA[Гладить при темпера не более 110 °С. Стирка при температуре 30 °С]]></param>

@@ -54,7 +54,7 @@
                         <button class="btn btn-large btn-success">Save & Output new XML from DB</button>
                     </a></p>
                     
-                    <p><a href="{{ route('createSQL') }}">
+                    <p><a onclick="alert('Not implemented yet');" href="#">
                         <button class="btn btn-large btn-info">Save & Output new XML from Excel</button>
                     </a></p>
 				    read Excel files with SimpleXLSX Lib

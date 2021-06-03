@@ -1,5 +1,5 @@
 <?php
-
+//Laravel Notify Package config
 return [
 
     /*
@@ -40,7 +40,7 @@ return [
     'animate' => [
         'in_class'  => 'bounceInRight', // The class to use to animate the notice in.
         'out_class' => 'bounceOutRight', // The class to use to animate the notice out.
-        'timeout'   => 5000, // Number of seconds before the notice disappears
+        'timeout'   => 12000, // Number of seconds before the notice disappears //5000
     ],
 
     /*

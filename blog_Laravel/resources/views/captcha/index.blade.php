@@ -53,11 +53,14 @@
                 <div class="panel-body">
 				    
 					<p><a href="{{ route('handcaptcha') }}">
-                        <button class="btn btn-large btn-success">Send notification</button>
+                        <button class="btn btn-large btn-success">Send notification(N/A)</button>
                     </a></p>
-
-				    @include('notify::messages')
-				
+                    
+                    <!-- Laravel notify message. Div is not required by documentation, but a fix not to hide notify message by menu bar -->
+                    <!-- Can modify at /config/notify.php -->
+                    <div style="position:relative;z-index:99999999999999999;">
+				        @include('notify::messages')
+				    </div>
                 
                 
                 
@@ -83,13 +86,24 @@
 							        </div>
                                 </div>	
                                 
-                                <!-- Display Hand-made generated Captcha  -->
+                                <!-- Display Hand-made generated Captcha (both html and image)  -->
                                 <div class="form-group">
                                     <label for="product-name" class="col-md-4 control-label">Captcha</label>
                                     <div class="col-md-6">
-                                        <p class="" style="background:red; padding:2em 1em; border:1px solid black;font-size:1.3em;"> {{ $UUID }} </p>
+                                        <p style="padding:0.5em; border:1px solid black;border-radius:15px; width:40%;">
+                                            Captcha html
+                                        </p>
+                                        <p class="" style="background:red; padding:2em 1em; border:1px solid black;font-size:1.3em;"> 
+                                            {{ $UUID }}  <!-- generated captcha as html text -->
+                                        </p>
+                                        
+                                        <p style="padding:0.5em; border:1px solid black;border-radius:15px;width:40%;">
+                                            Captcha text to Image via GD
+                                        </p>
+                                        <p><img src="captcha-image.png" alt=""/></p> <!-- generated captcha as GD image -->
                                     </div>
                                 </div>
+                                
                                 
                                 <!-- Hand made Capcha to repeat -->
                                 <div class="form-group{{ $errors->has('hand-captcha') ? ' has-error' : '' }}">

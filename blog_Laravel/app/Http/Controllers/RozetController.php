@@ -38,7 +38,7 @@ class RozetController extends Controller
      * SimpleXMLElement, DOMDocument  is a built-in Php library
      * @return \Illuminate\Http\Response
      * https://sellerhelp.rozetka.com.ua/p185-pricelist-requirements.html
-     * символы ", &, >, <, ' нужно заменять на эквивалентные коды. Требование относится только к тексту и не относится к написанию тегов;
+     * Use htmlspecialchars() as символы ", &, >, <, ' нужно заменять на эквивалентные коды. Требование относится только к тексту и не относится к написанию тегов;
      */
     public function createXMLSQL()
     {
@@ -62,13 +62,13 @@ class RozetController extends Controller
         // Список курсов валют магазина.
         $out .= '<currencies>' . "\r\n";
         $out .= '<currency id="UAH" rate="1"/>' . "\r\n";
-        $out .= '<currency id="USD" rate="26.8"/>' . "\r\n";
-        $out .= '<currency id="EUR" rate="29.2"/>' . "\r\n";
+        //$out .= '<currency id="USD" rate="26.8"/>' . "\r\n";
+        //$out .= '<currency id="EUR" rate="29.2"/>' . "\r\n";
         $out .= '</currencies>' . "\r\n";
  
  
         // Список категорий магазина:
-        // id     - ID категории.
+        // id     - ID категории, any random ID set by you.
         // parent - ID родительской категории.
         // name   - Название категории.
         $out .= '<categories>' . "\r\n";
@@ -100,7 +100,7 @@ class RozetController extends Controller
 	        // Валюта товара.
 	        $out .= '<currencyId>UAH</currencyId>' . "\r\n";//$out .= '<currencyId>' . $row->shop_currency . '</currencyId>' . "\r\n"; 
  
-	        // ID категории.
+	        // ID категории. //WRONG!!!!!!!!!!!!!
 	        $out .= '<categoryId>' . $row->categoryName->categ_name . '</categoryId>' . "\r\n"; //hasOne
  
 	        // Изображения товара, Required. Минимальное количество фото - 1, максимальное - 15. Максимальный размер 1 фотографии ━ 10 Мб..
@@ -116,7 +116,7 @@ class RozetController extends Controller
 	        $out .= '<name>'. $row->shop_title  .'</name>' . "\r\n";
  
 	       // Описание товара, максимум 50 000. Required. символов. описание желательно отформатировать с помощью html тегов. Html теги закрыть в <![CDATA[...]]>; 
-	       $out .= '<description> <![CDATA[' . stripslashes( $row->shop_descr ) . ']]> </description>' . "\r\n";   //A CDATA section is "a section of element content that is marked for the parser to interpret as only character data, not markup." 
+	       $out .= '<description> <![CDATA[' . stripslashes(htmlspecialchars($row->shop_descr)) . ']]> </description>' . "\r\n";   //A CDATA section is "a section of element content that is marked for the parser to interpret as only character data, not markup." 
 	       
            //Характеристики (параметры) товара. Required. Минимальное количество необходимых характеристик у товара — 3.
             $out .= '<param name="Рост">146 см</param>' . "\r\n";
