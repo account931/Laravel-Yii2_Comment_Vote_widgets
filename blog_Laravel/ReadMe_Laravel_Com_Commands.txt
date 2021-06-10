@@ -31,7 +31,7 @@ Table of Content:
 9.Migrations/Seeders
 10.hasOne/hasMany relation
 11.DB SQL Eloquent queries
-11.1 DB SQL Eloquent queries otimization
+11.1 DB SQL Eloquent queries optimization
 12.Laravel CRUD
 12.24. Save to DB (SQL INSERT) via model function
 13.REST API
@@ -803,7 +803,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 
 //================================================================================================
-11.1 DB SQL Eloquent queries otimization https://laravel.demiart.ru/laravel-database-queries-optimization/
+11.1 DB SQL Eloquent queries optimization https://laravel.demiart.ru/laravel-database-queries-optimization/
     1. Use chunk =>
         $posts = Post::chunk(100, function($posts){
         foreach ($posts as $post){ /* do smth */ }  });
@@ -1057,6 +1057,92 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 
 
+
+//================================================================================================
+
+13.2 REST API authentication via token =>
+ #If u use routes in /routes/web.php and have auth middleware { Route::group(['middleware' => 'auth'}, access to Endpoints will be protected by session (request will redirect u to login page) & all is OK, but...if u use /routes/api.php it gonna crash without certain work
+ #If u use routes in /routes/api.php and have auth middleware .....
+  https://dev.to/grantholle/implementing-laravel-s-built-in-token-authentication-48cf
+  composer require laravel/passport "4.0.3" for L 5.4
+
+# Built-in Api Route (returns current user) => http://localhost/CLEANSED_GIT_HUB/Laravel_Vue_Blog/public/api/user
+
+
+# Tempo: middleware AccessTokenMiddleware kind of working, though including in routes/api as middelware does not imply any meaning,
+   what really has menaing is wether in /app/Http/Kernel.ph   protected $middleware = [] contains this  AccessTokenMiddleware (protected $middleware are executed on every request)
+
+
+
+
+====================================
+
+# My manual implementation if u use routes in /routes/api.php  =>
+
+  1.VARIANT_1, when u send token ({User} table field {api_token}) in ajax as url?token=xxxxx => fetch('api/post/get_all?token=' + state.api_tokenY
+      # Route::group(['middleware' => ['api'],  'prefix' => 'post'],
+      # Pass current User to component in view  => <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'> 
+      # In /components/VueRouterMenu.vue we add {props: ['currentUser']} to read passed value and push this value to Vuex store in beforeMount => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/VueRouterMenu.vue
+         <script>
+         export default {
+            props: ['currentUser'],
+            //......
+            beforeMount() { 
+               var dataTest = this.currentUser.api_token; //passed from php in view as <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'> 
+               this.$store.dispatch('changeVuexStoreTokenFromChild', dataTest); //working example how to change Vuex store from child component  
+            },
+      # In Store {/store/index.js} => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js
+        In Store we set token to store state.api_tokenY and add it in ajax as api/post/get_all?token=' + state.api_tokenY
+      # In REST controller WpBlog_Rest_API_Contoller we check $_GET['token'] existance and if OK, return json collection of Wpress_images_Posts => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
+  
+  --------------
+  
+  2.VARIANT_2, when u send token ({User} table field {api_token}) in HEADERS via middleware (70%)
+      #Route::group(['middleware' => ['sendTokenMy', 'auth:api'],  'prefix' => 'post'],
+      # Create AccessTokenMiddleware and pass there {field {api_token} as header (CURRENTLY NOT WORKING, HAVE TO PASS MANUALLY) => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Middleware/AccessTokenMiddleware.php
+      # Register AccessTokenMiddleware in /app/Kernel.php in protected $middleware =[]
+      # In REST controller WpBlog_Rest_API_Contoller we check $request->bearerToken() existance and if OK, return json collection of Wpress_images_Posts 
+
+====================================
+
+
+
+--------------------
+# JWT (not working)=> https://codebriefly.com/laravel-jwt-authentication-vue-ja-spa-part-1/
+1. composer require tymon/jwt-auth
+
+2.
+'providers' => [
+    ....
+    ....
+    Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+],
+'aliases' => [
+    ....
+    'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+    'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+    ....
+],
+
+3. php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+
+4. php artisan jwt:secret
+
+5. 
+class User extends Authenticatable implements JWTSubject
+    public function getJWTIdentifier() {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims() {
+        return [];
+    }
+
+# If {php artisan jwt:generate} returns error "  There are no commands defined in the "jwt" namespace." => 
+    php artisan config:clear
+    php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class"
+    php artisan config:cache
+    php artisan vendor:publish
 
 
 
@@ -1493,6 +1579,44 @@ It is done pretty like the same as for Login, see  example at => https://github.
 	   var_3 iterate with componemt <one-room/>  =>
 	      <one-room v-for="(item, index) in companies" :key="index" :itemZ="item" /> <!-- sendin props-->
 
+    --------------------------------
+    
+    25.4.4 Iterate loop over  Vuex store, adding a "col-sm-12 col-xs-12"  after every 2nd "col-sm-6 col-xs-6" 
+    
+    <div class="row">
+        
+            <!-- Original -->
+            <div v-for="(post, i) in posts" :key=i> <!-- or this.$store.state.posts -->
+                
+                <!-- is rendered only if i % 2 == 0 -->
+                <div class="col-sm-12 col-xs-12"  style="border: 1px solid black;" v-if="i % 2 == 0"> 
+                    banner 
+                </div>
+                
+                <!-- is rendered always -->
+                <div class="col-sm-6 col-xs-6">
+	
+                    <!-- Show 1st image if exists. HasMany Relation. {get_images} is a model {function getImages()}  HasMany Relation -->		 
+                    <!--<img v-if="post.get_images.length" class="card-img-top my-img" :src="`images/${post.get_images[0].wpImStock_name}`" />-->
+		
+		            <!-- Image with LightBox -->
+	                <a v-if="post.get_images.length" :href="`images/${post.get_images[0].wpImStock_name}`"   title="image" :data-lightbox="`roadtrip${post.wpBlog_id}`" > <!-- roadtrip + currentID, to create a unique data-lightbox name, so in modal LightBox will show images related to this article only, not all -->
+                        <img v-if="post.get_images.length" class="card-img-top my-img" :src="`images/${post.get_images[0].wpImStock_name}`" />
+	                </a>
+                    <!-- End Image with LightBox -->
+		
+                    <div class="card-body">
+                        <p class="card-text"><strong>{{ post.wpBlog_title }}</strong> <br>
+                           {{ truncateText(post.wpBlog_text) }}
+                        </p>
+                    </div>
+                    <button class="btn btn-success m-2 z-overlay-fix-2" v-on:click="viewPost(i)">View   <i class="fa fa-crosshairs" style="font-size:14px"></i></button>
+                    <button class="btn btn-info m-2 z-overlay-fix-2"    @click="goTodetail(i)" > Router <i class="fa fa-tag" style="font-size:14px"></i></button>
+		            <hr>
+                </div>
+            </div>
+	     </div> <!-- end class="row"-->
+    
     -----------------------------
 	25.5 Register components => \resources\assets\js\Appointment/appoint-vue-start.js
     25.6 Use component in onother component => \resources\assets\js\Appointment\components\generateListOfRoom.js
@@ -1625,7 +1749,8 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		
 		
 		//-------------------------------------------------------------------------------------
-
+        
+        # How to update/change Vuex store from child component => see example at => this.$store.dispatch('changeVuexStoreFromChild', dataTest); =>  https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/AllPosts.vue
 		
   
 		-------------------------------------------------
@@ -1640,7 +1765,7 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		
 		
 		-------------------------------------------------
-		26. Unsorted Vue
+		26. Unsorted Vue (uplift to parent, pass to child, etc)
 		------------------------------------------------
 		# how to use data (equivalent of React state)=>
 		     <template> {{count}} </template>
@@ -1688,7 +1813,11 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		     <selectedRoom :clickedX="this.idClicked" :hostname="typeof(this.idClicked)=== 'string' ? 'No select so far' : this.roomsX[this.idClicked].r_host_name "/>
         
 		# Image in Vue =>    <img v-if="post.get_images.length" class="card-img-top" :src="`images/wpressImages/${post.get_images[0].wpImStock_name}`" />
-
+        
+        # Image in Vue with if(){} else {} . Example is from Loop =>    
+                    <img v-if="post.get_images.length" class="card-img-top my-img" :src="`images/${post.get_images[0].wpImStock_name}`" />
+                    <img v-else class="card-img-top my-img" :src="`images/no-image-found.png`" />
+                     
         # Import/include a file at same folder level => import store from './store/index'; , to import file one level up => import store from '../store/index';
         
 		# LightBox Library on Vue vs Blade php =>
@@ -1723,6 +1852,23 @@ It is done pretty like the same as for Login, see  example at => https://github.
 			
 		# How to get route ID => e.g "wpBlogVueFrameWork#/details/2", gets 2. See example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/pages/details.vue
 	       var ID = this.$route.params.Pid; //gets 2  //{Pid} is set in 'pages/home' in => this.$router.push({name:'details',params:{Pid:proId}})
+
+        # Pass var from php to vue => 
+            1. in view => <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'>  //User array contains id, name, api_token, etc
+            2. in component add => 
+               <script>
+               export default {
+                   props: ['currentUser'],
+                   //......................
+            3. and can use in component as => {{this.currentUser.api_token}}
+            
+        # Pass data between router component =>  see example at =>https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/router/index.js
+            1. add {props} at /router/index.js  to targeted router component =>  
+               path: '/New_2021', 
+               name: 'new_2021', //same as in component return section
+               component: blog_2021,  //component itself
+               props: { tokenZZ: 'FFFFFFFFV' },
+            2. use in component as => {{tokenZZ}}          
 //================================================================================================
 
 
@@ -1763,12 +1909,13 @@ Ready solution => https://laravel.demiart.ru/paypal-into-laravel/
 
 //================================================================================================
 
-27. CLI command => call controller via command line
+27. CLI command => call Controller function via command line
 navigate by CLI to folder and:
   php artisan tinker
   $cc = app()->make('App\Http\Controllers\CliCommandController');
   app()->call([$cc, 'index'], ['filter[id]'=>1, 'anotherparam' => '2']); //the last [] in the app()->call() can hold arguments such as [user_id] => 10 etc'
 
+# Create console command =>  https://dev.to/grantholle/implementing-laravel-s-built-in-token-authentication-48cf
 //================================================================================================
 
 
@@ -1874,9 +2021,18 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 
 
 //================================================================================================	 
-35. Middleware 
-https://code.tutsplus.com/ru/tutorials/understand-the-basics-of-laravel-middleware--cms-29147
+35. Middleware (registered in app/Http/Kernel.php)
+My Rbac middleware example  => https://github.com/dimmm931/Laravel_Shop/blob/master/app/Http/Middleware/RbacMiddle.php
+Instructions                => https://code.tutsplus.com/ru/tutorials/understand-the-basics-of-laravel-middleware--cms-29147
 
+-----
+# if want to get some data first, like user, use firstly => 
+     $response = $next($request); 
+     //get some data... $token = auth()->user()->api_token;
+     return $response;
+# If u do return this {return $next($request);} at the end of file at once, u won't get user  => 
+-----
+Several middlewares => Route::group(['middleware' => ['auth', 'web']],
 
 
 	 
@@ -2617,6 +2773,8 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 
 	 
 # Preview an image before it is uploaded (when u select image in <input type="file">) =>  \blog_Laravel\public\js\Wpress_ImagesBlog\wpress_blog.js
+
+# see ajax => Network -> XHR
 //================================ End Move to Yii2 ReadMe =============================
 
 //================================================================================================
@@ -2735,6 +2893,12 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 	Solution 2 => on IOS, safari JS click fix => add empty {onClick}  => <span onClick="" id="someID"></span>   OR => cursor: pointer;
 
 # Laravel notify toasts are hidden by menu bar => wrap  @include('notify::messages') in <div style="position:relative;z-index:99999999999999999;"></div>	
+
+# Error => Out of memory (allocated 1570766848) (tried to allocate 4096 bytes) 
+    => COMPOSER_MEMORY_LIMIT=-1 composer install
+    
+    
+    
 =============================
 
 если токен не принимается обработчиком, то варианта существует по сути два – либо он не отправляется в запросе (отсутствует csrf_field() в форме, или нет нужного значения в аякс-запросе – там он может передаваться как в данных так и в заголовках запроса), либо на стороне сервера не загружается сессия – именно в ней сохраняется токен на стороне сервера, чтобы было с чем сравнить то что пришло в запросе.
@@ -3156,7 +3320,7 @@ are the central place of all Laravel application bootstrapping. Your own applica
  8. Voyager Admin Panel
  9. Socialite
  
- #Pending: Avored, Aimeos, appzcoder/crud-generator, Zofe_Rapyd
+ #Pending: Passport, Avored, Aimeos, appzcoder/crud-generator, Zofe_Rapyd
 
 
   /*
