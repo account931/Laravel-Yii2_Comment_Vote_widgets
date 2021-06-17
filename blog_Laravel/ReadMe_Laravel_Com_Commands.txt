@@ -35,7 +35,9 @@ Table of Content:
 12.Laravel CRUD
 12.24. Save to DB (SQL INSERT) via model function
 13.REST API
-13.1  Has Many relation in JSON (REST API)
+13.1 Has Many relation in JSON (REST API)
+13.2 REST API authentication via token (Token Bearer, String Query)
+13.3 REST ajax server validation (& display errors in ajax)
 14. Laravel Flash messages
 15. Js/Css, minify, Laravel Mix
 16. 
@@ -453,7 +455,18 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 }
 
 
+----------------
 
+ #If u want if Validation fails, the Controller still execute code =>
+    In Request => protected function failedValidation(Validator $validator){$this->validator = $validator;}
+    In Controller =>
+        public function createPost(SaveNewArticleRequest $request) {
+            if (isset($request->validator) && $request->validator->fails()) {
+               //return response()->json($request->validator->messages(), 400);
+               return response()->json(['error' => true, 'data' => 'Too Good, but validation crashes', 'validateErrors'=>  $request->validator->messages()]);
+            } 
+    
+    
 
 //================================================================================================
 
@@ -626,7 +639,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 //================================================================================================
 10.hasOne/hasMany relation
 
-#For Rest API see => 13.1  Has Many relation in JSON (REST API)
+#For Rest API see => 13.1 Has Many relation in JSON (REST API)
 
 #Main difference between hasOne/hasMany vs belongsTo: (if table 'X' primary ID is used in other table as ordinary table, then 'X' model hasOne/hasMany)
   belongsTo and belongsToMany - you're telling Laravel that this table holds the foreign key that connects it to the other table.
@@ -1030,7 +1043,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 //================================================================================================
 
-13.1  Has Many relation in JSON (REST API)
+13.1 Has Many relation in JSON (REST API)
 
 1. In model (REST model) add relation:
 
@@ -1060,11 +1073,12 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 //================================================================================================
 
-13.2 REST API authentication via token =>
+13.2 REST API authentication via token (Token Bearer, String Query)
  #If u use routes in /routes/web.php and have auth middleware { Route::group(['middleware' => 'auth'}, access to Endpoints will be protected by session (request will redirect u to login page) & all is OK, but...if u use /routes/api.php it gonna crash without certain work
  #If u use routes in /routes/api.php and have auth middleware .....
   https://dev.to/grantholle/implementing-laravel-s-built-in-token-authentication-48cf
-  composer require laravel/passport "4.0.3" for L 5.4
+
+# Middleware => ['auth:api'] in /routes/api.php automatically makes sure to check if access token(User's field{api_token}) is passed, BUT passing the token must be implemented by you (as string query/header in js or php)
 
 # Built-in Api Route (returns current user) => http://localhost/CLEANSED_GIT_HUB/Laravel_Vue_Blog/public/api/user
 
@@ -1077,9 +1091,50 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 ====================================
 
-# My manual implementation if u use routes in /routes/api.php  =>
+# My simple (without Passport )manual implementation of Token Authentication if u use routes in /routes/api.php  =>
 
-  1.VARIANT_1, when u send token ({User} table field {api_token}) in ajax as url?token=xxxxx => fetch('api/post/get_all?token=' + state.api_tokenY
+1.VARIANT_1 Authentication, when u send Bearer token in Headers in ajax (used in CLEANSED_GIT_HUB\Laravel_Vue_Blog) => see => https://github.com/dimmm931/Laravel_Vue_Blog
+    1.1. For token we use (User's table field {api_token})
+    1.2 # In order to return {"error":"Unauthenticated."} not redirection to /home if the Token is wrong => DO Force json response on every api request via middleware =>
+        create middleware MyForceJsonResponse => see example => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Middleware/MyForceJsonResponse.php
+        and register it in /app/Kernel.php => 
+            protected $middlewareGroups = [
+                'web' => [],
+                'api' => [
+                    \App\Http\Middleware\MyForceJsonResponse::class, //Force json response on every api request (as result when token is incorrect, it returns {"error":"Unauthenticated."} not redirect to /home)
+                     //...........
+  
+    
+    1.3 in /routes/api we use 'auth:api' middleware, it will do the Token checking automatically, simple 'api' won't=>
+        Route::group(['middleware' => ['auth:api'/*, 'sendTokenMyX'*/, 'myJsonForce'],  'prefix' => 'post'],
+    
+    1.4 Pass current User to Vue component in view  => <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'>  => see https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/views/wpBlog_Vue/index.blade.php
+    
+    1.5 In /components/VueRouterMenu.vue we add {props: ['currentUser']} to read passed value and push/uplift this value to Vuex store in beforeMount => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/VueRouterMenu.vue
+         <script>
+         export default {
+            props: ['currentUser'],
+            //......
+            beforeMount() { 
+                var dataTest = this.currentUser.api_token; //passed from php in view as <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'> 
+                this.$store.dispatch('changeVuexStoreTokenFromChild', dataTest); //working example how to change Vuex store from child component  
+            },
+    1.6 In Store {/store/index.js} => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js
+        In Store we use {changeVuexStoreTokenFromChild({ commit }, dataTestX)} to trigger mutation {setApiToken(state, response)} and set passed token to store.state.api_tokenY 
+        And then and we call ajax/fetch add it as Header =>
+            fetch('api/post/get_all', { //http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public/post/get_all
+               method: 'get',
+               //pass Bearer token in headers ()
+               headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + state.api_tokenY },
+               
+    1.7 In REST controller WpBlog_Rest_API_Contoller we need no manual check(and they won't work) as all is done by middleware 'auth:api'
+    
+    
+    
+    --------------
+   
+      
+    2.VARIANT_2, when u send token as String Query in ajax as url?token=xxxxx => fetch('api/post/get_all?token=' + state.api_tokenY
       # Route::group(['middleware' => ['api'],  'prefix' => 'post'],
       # Pass current User to component in view  => <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'> 
       # In /components/VueRouterMenu.vue we add {props: ['currentUser']} to read passed value and push this value to Vuex store in beforeMount => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/VueRouterMenu.vue
@@ -1096,16 +1151,17 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
       # In REST controller WpBlog_Rest_API_Contoller we check $_GET['token'] existance and if OK, return json collection of Wpress_images_Posts => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
   
   --------------
-  
-  2.VARIANT_2, when u send token ({User} table field {api_token}) in HEADERS via middleware (70%)
-      #Route::group(['middleware' => ['sendTokenMy', 'auth:api'],  'prefix' => 'post'],
+    3.VARIANT_3. Usage of AccessTokenMiddleware (70% working, cant get user instance in middleware)
       # Create AccessTokenMiddleware and pass there {field {api_token} as header (CURRENTLY NOT WORKING, HAVE TO PASS MANUALLY) => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Middleware/AccessTokenMiddleware.php
       # Register AccessTokenMiddleware in /app/Kernel.php in protected $middleware =[]
       # In REST controller WpBlog_Rest_API_Contoller we check $request->bearerToken() existance and if OK, return json collection of Wpress_images_Posts 
+  
 
 ====================================
 
-
+--------------------
+#Passport -??????
+  composer require laravel/passport "4.0.3" for L 5.4
 
 --------------------
 # JWT (not working)=> https://codebriefly.com/laravel-jwt-authentication-vue-ja-spa-part-1/
@@ -1143,6 +1199,32 @@ class User extends Authenticatable implements JWTSubject
     php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class"
     php artisan config:cache
     php artisan vendor:publish
+
+
+
+
+
+
+
+
+
+
+
+//================================================================================================
+
+
+13.3 REST ajax server validation (& display errors in ajax)
+   Example 1 =>
+       Controller   => function createPost(SaveNewArticleRequest $request) => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
+       Request      => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Requests/SaveNewArticleRequest.php
+       View(Vue.js) => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue
+    
+    Example 2 =>
+       Controller         => function store(request $request)        =>  https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
+       Validate(in model) => function validateStoreRequest($request) =>  https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Models/Abz/Abz_Employees.php
+       View               => $('#sample_form').on('submit'           => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/resources/views/admin-lte/admin-lte.blade.php
+
+
 
 
 
@@ -1868,7 +1950,12 @@ It is done pretty like the same as for Login, see  example at => https://github.
                name: 'new_2021', //same as in component return section
                component: blog_2021,  //component itself
                props: { tokenZZ: 'FFFFFFFFV' },
-            2. use in component as => {{tokenZZ}}          
+            2. use in component as => {{tokenZZ}} 
+
+        # Problem with {this}, e.g can't set state in ajax success (this.List = someResult) => 
+        const that = this;   //or var that = this; 
+        that.List =  someResult     
+        
 //================================================================================================
 
 
