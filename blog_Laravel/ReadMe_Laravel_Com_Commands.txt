@@ -25,7 +25,9 @@ Table of Content:
 8.Form Validation (General info)
 8.1.1 Form Validation via Request Class
 8.1.2 Custom Form Validation via Model(like in Yii2)
-8.1.2 Image Upload and validation
+8.1.2 Image Upload and validation (regular form)
+8.1.3 Image Upload and validation via ajax (Formdata)
+
 8.1 Form input with in-line validation errors <span>, like in Yii2 
 8.2 Form fields Insert to DB
 9.Migrations/Seeders
@@ -483,7 +485,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 
 //================================================================================================
-8.1.2 Image Upload and validation
+8.1.2 Image Upload and validation (regular form)
 
 
  #Example_1 => 
@@ -503,6 +505,26 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 # get file name =>      $request->image->getClientOriginalName()
 
  #Dont forget to add to form enctype="multipart/form-data" =>  <form method="post" action="{{url('/storeNewWpressImg')}}"  enctype="multipart/form-data">
+
+
+
+
+
+
+
+
+//================================================================================================
+8.1.3 Image Upload and validation via ajax (Formdata)
+
+#One image ajax upload example => 
+    View/Js    => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/resources/views/admin-lte/admin-lte.blade.php
+    Controller => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
+
+#Multiple image ajax upload Vue example => 
+    View/Js    => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue
+    Controller => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
+
+
 
 
 
@@ -1220,9 +1242,9 @@ class User extends Authenticatable implements JWTSubject
        View(Vue.js) => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue
     
     Example 2 =>
-       Controller         => function store(request $request)        =>  https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
-       Validate(in model) => function validateStoreRequest($request) =>  https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Models/Abz/Abz_Employees.php
-       View               => $('#sample_form').on('submit'           => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/resources/views/admin-lte/admin-lte.blade.php
+       Controller                    => function store(request $request)        =>  https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
+       Validate(in model)(via model) => function validateStoreRequest($request) =>  https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Models/Abz/Abz_Employees.php
+       View                          => $('#sample_form').on('submit'           => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/resources/views/admin-lte/admin-lte.blade.php
 
 
 
@@ -1954,8 +1976,11 @@ It is done pretty like the same as for Login, see  example at => https://github.
 
         # Problem with {this}, e.g can't set state in ajax success (this.List = someResult) => 
         const that = this;   //or var that = this; 
-        that.List =  someResult     
+        that.List =  someResult   
+
+        # Vue ensure state Reactivity (e.g state.errorList gets some result on ajax success) => see example and note issue with {var that = this;} => booksGet =>  https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue      
         
+        # Vue comment => {{ /* checkStore */ }}  VS <!--{{ this.$store.state.posts.length }}-->
 //================================================================================================
 
 
@@ -2609,7 +2634,7 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ public [L]
 
-# Moving Controllers to Sub folders
+# Moving Controllers to Sub folders /move Controllers to separate folder
  1. append the folder name in the namespace => namespace App\Http\Controllers\Panel;
  2. Add "use App\Http\Controllers\Controller;" to the controller => 
  3. Route => Route::get('foo','Panel\PanelController@anyaction');
@@ -2622,6 +2647,12 @@ RewriteRule ^ public [L]
 
 # Errors "Class not found " while => new DOMDocument('1.0'); new SimpleXMLElement();
  Use global namespace => new \DOMDocument('1.0');
+
+
+
+
+
+
 
 
 
@@ -2759,7 +2790,6 @@ Create Anchor =>
      
      
 	 
-# View POST in Chrome => Network" tab => refresh => select POST in left =>  Choose "Headers" tab
 
 # Github tab/space/indentation problem => create a file in the project root named “.editorconfig” and give it the following contents (or ?ts=4) => 
   [*]
@@ -2862,6 +2892,10 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 # Preview an image before it is uploaded (when u select image in <input type="file">) =>  \blog_Laravel\public\js\Wpress_ImagesBlog\wpress_blog.js
 
 # see ajax => Network -> XHR
+# View POST in Chrome (e.g for ajax) => Network" tab => refresh => select POST in left =>  Choose "Headers" tab ("All" must be selected )
+# View Server Response(e.g e.g for ajax to see dd() ) in Chrome => Network" tab => click/select the Request under "Name" => Response. On server-side do => var_dump($request->all(), true); die();
+# View Cookies => in Chrome =>  Network" tab => click/select the Request under "Name" => Cookies
+
 //================================ End Move to Yii2 ReadMe =============================
 
 //================================================================================================
@@ -2984,7 +3018,12 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 # Error => Out of memory (allocated 1570766848) (tried to allocate 4096 bytes) 
     => COMPOSER_MEMORY_LIMIT=-1 composer install
     
-    
+# JS Error => ajax formdata : Illegal invocation => add to ajax =>
+      processData: false,
+      contentType: false   
+      
+# JS Webkitformboundary when sending Formdata via ajax POST =>
+   set up tha ajax correctly, see example at => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue
     
 =============================
 
