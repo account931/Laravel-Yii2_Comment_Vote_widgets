@@ -1045,6 +1045,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 }
             });
+            
     ------------------------
     #If you have issue with PUT method (update) => see example at => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/resources/views/admin-lte/admin-lte.blade.php
     to solve this you have to send a POST request, with a POST param _method with value PUT. Or if use {formData}=> 
@@ -1975,12 +1976,17 @@ It is done pretty like the same as for Login, see  example at => https://github.
             2. use in component as => {{tokenZZ}} 
 
         # Problem with {this}, e.g can't set state in ajax success (this.List = someResult) => 
-        const that = this;   //or var that = this; 
-        that.List =  someResult   
+          Explaination => if you use this.data, it is incorrect, because when 'this' reference the vue-app, you could use this.data, but here (ajax success callback function), this does not reference to vue-app, instead 'this' reference to whatever who called this function(ajax call)
+          const that = this;   //or var that = this; 
+          that.List =  someResult   
 
         # Vue ensure state Reactivity (e.g state.errorList gets some result on ajax success) => see example and note issue with {var that = this;} => booksGet =>  https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue      
         
         # Vue comment => {{ /* checkStore */ }}  VS <!--{{ this.$store.state.posts.length }}-->
+        
+        # Vue assign id => <div v-for="(postAdmin, i) in booksGet" :key=i class="col-sm-12 col-xs-12 oneAdminPost" :id="postAdmin.wpBlog_id"> 
+        # Vue get id of clicked => @click="deletePost(postAdmin.wpBlog_id) =>  https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/list_all.vue
+        # Vue set inpt value with ajax response => v-model="inputTitleValue" => https://github.com/dimmm931/Laravel_Vue_Blog/tree/main/resources/assets/js/WpBlog_Admin_Part/components/pages/editItem.vue
 //================================================================================================
 
 
@@ -2118,7 +2124,19 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
         event(new SomeEventX());
 
  
+ 
 
+======= NB about some buil-in Events functionality ====================
+Built-in event 'Illuminate\Auth\Events\Login' works like a charm, though a built-in event 'eloquent.deleting' does not work that way.
+While trying to emulate Yii2 analogue of beforeDeleted() event I tried to emplement it as specified above in {# How to implement Events/Listeners:} but it did not work. Plus I tried to implement it in App/Traits/trait UserStampsTrait and use this Train in model App/User. It should fire when I manually dellete a user with ID 999, but it does not work.
+So, the only working way to emulate Yii2 analogue of beforeDeleted() event is use this code in  model App/User (fires when u delete any user, i.e model User instance) => see example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/User.php
+    public static function boot()
+    {
+        parent::boot(); 
+        static::deleting(function($user) {   
+            Log::info("Listener in model App/User says: Deleted User with ID:" . $user->id .  " at " . date('Y-m-d H:i:s') );
+        });
+    }
 
 
 
@@ -2838,6 +2856,37 @@ Create Anchor =>
 
 
 ---------------------- JS ----------
+# JS Array Vs JS Object iteration methods => Map, Each etc
+
+ //jQuery each function (iterate over Array)
+ someArray = ["image1", "image2", "image3", "image4"];
+ $.each(someArray, function (index, value) {
+    formData.append(`imagesZZZ[${index}]`, value);
+    //imagesUploaded.push(`images[${index}]`, value);
+  });
+
+  
+  //Array (pure JS)
+  someArray.forEach(function(item, i, arr) {
+     alert( i + ": " + item + " (массив:" + arr + ")" );
+  });
+
+  //Array (pure JS)
+  var nameLengths = someArray.map(function(name, i) {
+      return name.length;
+  });
+  
+  //Object (pure JS)
+  for (let key in obj) {
+     console.log(key, obj[key]);
+  }
+  
+  //jQuery each function (iterate over Object)
+  var obj = {one: 1, two: 2, three: 3, four: 4, five: 5};
+  $.each(obj, function (index, value) {
+     console.log(value);
+  });
+-----
 
 //Check if <select> is selected (not empty) (when multiple forms are generated in loop )=> 
 $(document).on("click", '.sbmBtn', function() {   // this  click  is  used  to   react  to  newly generated cicles;

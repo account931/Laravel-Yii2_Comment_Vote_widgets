@@ -7,13 +7,15 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 //use Illuminate\Database\Eloquent\Model; //???? Added by me
-
 use Zizaco\Entrust\Traits\EntrustUserTrait; //my
+//use App\Traits\UserStampsTrait; //my Trait to test beforeDelete Event
+use Log; //use logging
 
 class User extends Authenticatable
 {
     use EntrustUserTrait; //use Zizaco Entrust
 	use Notifiable;
+    //use UserStampsTrait;
 	
 
     /**
@@ -33,4 +35,25 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    
+    
+    /**
+     * For testing only, 
+     * To test Yii2 beforeDelete() analogue, a hook to detect Deleting event. //Works
+     * 
+     */
+    public static function boot()
+    {
+        parent::boot(); 
+
+        static::deleting(function($user) //$user
+        {   
+            //dd("Delting Fired (in App/User Model)!!!");
+            Log::info("Listener in model App/User says: Deleted User with ID:" . $user->id .  " at " . date('Y-m-d H:i:s') );
+        });
+    }
+    
+    
+    
 }

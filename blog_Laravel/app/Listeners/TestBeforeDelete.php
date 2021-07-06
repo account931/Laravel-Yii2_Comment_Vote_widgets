@@ -1,6 +1,6 @@
 <?php
-//Listener for built-in Event 'Illuminate\Auth\Events\Login'
-//Fires on 'Illuminate\Auth\Events\Login'  
+// Listener for built-in Event 'eloquent.deleting' 
+//Does Not work. The only working way to emulate Yii2 beforeDelete() event is to hook the Delete event in model App/User
 namespace App\Listeners;
 
 use Illuminate\Auth\Events\Login;
@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Log; //use logging
 
-class WriteCredentialsToLog
+class TestBeforeDelete
 {
     /**
      * Create the event listener.
@@ -26,16 +26,14 @@ class WriteCredentialsToLog
      * @param  Login  $event
      * @return void
      */
-    public function handle(Login $event)
+    public function handle() //Login $event
     {
          // get logged in user's email and username
-        $email = $event->user->email;
-        $username = $event->user->name;
-		//dd("Event says " . $email . " " . $username ); //works
-		
+        //$email = $event->user->email;
+        //$username = $event->user->name;
+		dd("Before Deleted");
 		//writing to /storage/log
-		Log::info("Listerner WriteCredentialsToLog says: Login at " . date('Y-m-d H:i:s') . " with ". $email . " and username " . $username);
+		Log::info("Listener TestBeforeDelete says: Deleted at " . date('Y-m-d H:i:s') . " with ");
     
-        // send email notification about login or whatever u want
     }
 }

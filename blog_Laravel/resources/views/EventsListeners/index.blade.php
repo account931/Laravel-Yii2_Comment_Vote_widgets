@@ -46,8 +46,7 @@
                 @endif
                 <!-- End Display form validation errors var 2 -->				
 					
-					
-               
+                    
 
                 <div class="panel-heading text-warning col-sm-12 col-xs-12">
 				  <div class="col-sm-12 col-xs-12">
@@ -75,7 +74,10 @@
 					
 					
 					
-					
+					<!-- Before Deleted Event Status message -->
+                    <div class="alert alert-danger col-sm-12 col-xs-12">
+                        {!! $message !!} <!-- with html unescapped tags  -->
+                    </div>
 				
 					
 					<!----------------------- START   ----------------------------->

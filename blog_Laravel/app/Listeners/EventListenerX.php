@@ -1,5 +1,5 @@
 <?php
-
+// Listener for manually created Event 'App\Events\SomeEventX'  
 namespace App\Listeners;
 
 use App\Events\SomeEventX;
