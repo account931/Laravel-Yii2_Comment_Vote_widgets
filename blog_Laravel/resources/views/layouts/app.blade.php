@@ -109,7 +109,7 @@
                              
 							<!-- WPressImages -->
 							<li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPress-Images      </a> </li> <!-- NOTE: name vs route -->
-                            <li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPress-Images Admin </a> </li> <!-- NOTE: name vs route -->
+                            <li class="{{ Request::is('wpBlogImages*') ? 'active' : '' }}"> <a href="{{ route('wpBlogImages') }}" > WPress-Images Admin(N/A) </a> </li> <!-- NOTE: name vs route -->
 
                             <!-- WPress on Vue Framework -->
 							<li class="{{ Request::is('wpBlogVueFrameWork*') ? 'active' : '' }}"> <a href="{{ route('wpBlogVueFrameWork') }}" > WPress Vue.js + Vuex Store     </a> </li> <!-- NOTE: name vs route -->

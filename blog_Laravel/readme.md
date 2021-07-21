@@ -79,6 +79,8 @@
 
 ![Screenshot](public/images/Screenshots/27.png)
 
+![Screenshot](public/images/Screenshots/27.1.png)
+
 ## Vue JS
 
 ![Screenshot](public/images/Screenshots/28.png)

@@ -11,6 +11,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait; //my
 //use App\Traits\UserStampsTrait; //my Trait to test beforeDelete Event
 use Log; //use logging
 
+
 class User extends Authenticatable
 {
     use EntrustUserTrait; //use Zizaco Entrust
@@ -49,9 +50,14 @@ class User extends Authenticatable
 
         static::deleting(function($user) //$user
         {   
-            //dd("Delting Fired (in App/User Model)!!!");
-            Log::info("Listener in model App/User says: Deleted User with ID:" . $user->id .  " at " . date('Y-m-d H:i:s') );
+            //dd("Deleting Fired (in App/User Model)!!!");
+            Log::info("static::deleting Listener in boot() in model App/User says: Deleted User with ID:" . $user->id .  " at " . date('Y-m-d H:i:s') );
         });
+        
+        //static::deleted (function($modelName=''){  });
+        //static::creating(function($modelName=''){  });
+        //static::created (function($modelName=''){  });
+        //static::updating(function($modelName=''){  });
     }
     
     

@@ -16,9 +16,9 @@ class EventServiceProvider extends ServiceProvider
         //'App\Events\Event' => [ 'App\Listeners\EventListener', ], //some default Event => Listener
 		
 		//here is mine defined Events => Listeners
-		'App\Events\SomeEventX'        => ['App\Listeners\EventListenerX', ], //on my SomeEventX run EventListenerX
-		'Illuminate\Auth\Events\Login' => ['App\Listeners\WriteCredentialsToLog',], //on login run WriteCredentialsToLog (event Login is a built Laravel event, we don't have to define it)
-        'eloquent.deleting'            => ['App\Listeners\TestBeforeDelete',], //on beforeDelete
+		'App\Events\SomeEventX'        => ['App\Listeners\EventListenerX' ],       //on my SomeEventX run EventListenerX
+		'Illuminate\Auth\Events\Login' => ['App\Listeners\WriteCredentialsToLog'], //on login run WriteCredentialsToLog (event Login is a built Laravel event, we don't have to define it)
+        'eloquent.deleting'            => ['App\Listeners\TestBeforeDelete'],      //on beforeDelete // Does not work, working version is implemented directly in App/User model.
     ];
 
     /**
@@ -31,5 +31,6 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
 
         //
+    
     }
 }

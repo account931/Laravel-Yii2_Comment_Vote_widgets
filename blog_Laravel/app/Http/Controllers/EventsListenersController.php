@@ -31,14 +31,14 @@ class EventsListenersController extends Controller
     }
  
     
-	/**
-   * returns all 
-   * @return 
+  /**
+   * Trigger my Event
+   * 
    */
 	public function triggerEvent()
     {
         // here we trigger an event 'App\Events\SomeEventX'
-        event(new SomeEventX());
+        event(new SomeEventX()); // event() == Event::fire() 
 
     }
        

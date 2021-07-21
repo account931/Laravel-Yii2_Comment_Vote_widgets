@@ -40,6 +40,7 @@ Table of Content:
 13.1 Has Many relation in JSON (REST API)
 13.2 REST API authentication via token (Token Bearer, String Query)
 13.3 REST ajax server validation (& display errors in ajax)
+13.4 REST API CRUD
 14. Laravel Flash messages
 15. Js/Css, minify, Laravel Mix
 16. 
@@ -1022,8 +1023,9 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	
     ------------------------------
     # REST routes/methods => 
-    Route::post('articles', 'Rest@store');
-    Route::put('articles/{id}', 'Rest@update');
+    Route::get   ('/sample/edit/{id}',   'YajraDataTablesCrudController@getFormVal')->name('/sample.edit'); //get some DB data to fill Edit/Update form
+    Route::post  ('articles',      'Rest@store');
+    Route::put   ('articles/{id}', 'Rest@update');
     Route::delete('articles/{id}', 'Rest@delete');
     
     -----------------------------
@@ -1032,7 +1034,10 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
       *routes => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/routes/web.php 
       *js/ajax => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/resources/views/admin-lte/admin-lte.blade.php
       *server-side REST controller => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
+   
+   
    ------------------------------
+   
    #Ajax CSRF => 
    #Variant_1: 
        Form must have csrf_token =>  <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
@@ -1105,6 +1110,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 # Built-in Api Route (returns current user) => http://localhost/CLEANSED_GIT_HUB/Laravel_Vue_Blog/public/api/user
 
+# In order to return {"error":"Unauthenticated."} not redirection to /home if the Token is wrong => DO Force json response on every api request via middleware =>
 
 # Tempo: middleware AccessTokenMiddleware kind of working, though including in routes/api as middelware does not imply any meaning,
    what really has menaing is wether in /app/Http/Kernel.ph   protected $middleware = [] contains this  AccessTokenMiddleware (protected $middleware are executed on every request)
@@ -1180,13 +1186,22 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
       # In REST controller WpBlog_Rest_API_Contoller we check $request->bearerToken() existance and if OK, return json collection of Wpress_images_Posts 
   
 
+
+
+
+
+
 ====================================
 
---------------------
 #Passport -??????
   composer require laravel/passport "4.0.3" for L 5.4
 
---------------------
+    #Manual => https://tutsforweb.com/laravel-passport-create-rest-api-with-authentication
+    #Manual GitHub =>https://github.com/hamzaali00001/laravel-passport-authentication
+
+
+
+====================================
 # JWT (not working)=> https://codebriefly.com/laravel-jwt-authentication-vue-ja-spa-part-1/
 1. composer require tymon/jwt-auth
 
@@ -1250,6 +1265,39 @@ class User extends Authenticatable implements JWTSubject
 
 
 
+
+//================================================================================================
+
+13.4 REST API CRUD
+    -------------------
+    #READ =>
+        Example 1 =>
+            JS part(Vue)  => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/blog_2021.vue
+            PHP part      => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
+    
+    --------------------
+    #CREATE => 
+        Example 1 =>
+            JS part  => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/resources/views/admin-lte/admin-lte.blade.php
+            PHP part => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
+
+        Example 2 =>
+            JS part(Vue)  => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue
+            PHP part      => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
+
+
+
+    --------------------
+    #UPDATE =>
+        Example 1 =>
+            JS part(Vue)  => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/editItem.vue
+            PHP part      => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Admin_Part/WpBlog_Admin_Rest_API_Contoller.php
+
+     --------------------
+    #DELETE =>
+         Example 1 =>
+            JS part(Vue)  => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/list_all.vue
+            PHP part      => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Admin_Part/WpBlog_Admin_Rest_API_Contoller.php
 
 //================================================================================================
 14. Laravel Flash messages
@@ -1641,8 +1689,14 @@ It is done pretty like the same as for Login, see  example at => https://github.
 			
    ------------------------------
    25.2 Vue ajax =>  
-       see example_1 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/Appointment/components/subcomponents/rooms-in-loop.vue
-       see example_2 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/Appointment/components/test-ajax.vue
+       Ajax in Vue can be used in different ways: can be used directly in component and set result to local data; or u can dispatch/trigger a Vuex Store method in local component, specify the logic/mutation in Vuex Store and use in local component as {this.$store.state.adm_posts_qunatity}
+       #Example_1 (ajax used in component)  at => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/list_all.vue
+       #Example_2 (ajax used in Vuex Store )  => 
+            Component    => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/blog_2021.vue
+            Vues store   => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js
+           
+       #Example_3 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/Appointment/components/subcomponents/rooms-in-loop.vue
+       #Example_4 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/Appointment/components/test-ajax.vue
 	   
 	   
 	   mounted() {
@@ -1827,7 +1881,8 @@ It is done pretty like the same as for Login, see  example at => https://github.
    
 		        <script>
                     import { mapState } from 'vuex';
-			        computed: {
+			        computed: {  //computed property is used to declaratively describe a value that depends on other values. When you data-bind to a computed property inside the template, Vue knows when to update the DOM when any of the values depended upon by the computed property has changed.
+
 	                    ...mapState(['products']), //{products} is from Vuex store
 			 			//...................................
 			3. Use computed, => see "3" next paragraph 
@@ -1987,6 +2042,31 @@ It is done pretty like the same as for Login, see  example at => https://github.
         # Vue assign id => <div v-for="(postAdmin, i) in booksGet" :key=i class="col-sm-12 col-xs-12 oneAdminPost" :id="postAdmin.wpBlog_id"> 
         # Vue get id of clicked => @click="deletePost(postAdmin.wpBlog_id) =>  https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/list_all.vue
         # Vue set inpt value with ajax response => v-model="inputTitleValue" => https://github.com/dimmm931/Laravel_Vue_Blog/tree/main/resources/assets/js/WpBlog_Admin_Part/components/pages/editItem.vue
+
+
+        # Use dispatch with argument(can use 1 arg only) (dispatch to fire some action in Vuex Store from some other component) =>
+            #In ajax, see example at => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/list_all.vue => 
+                var that = this; //Explaination => if you use this.data, it is incorrect, because when 'this' reference the vue-app, you could use this.data, but here (ajax success callback function), this does not reference to vue-app, instead 'this' reference to whatever who called this function(ajax call)
+              
+		        $.ajax({
+                   //......
+                   success: function(data) {
+                       that.$store.dispatch('setPostsQuantity', data.data.length); 
+          
+            #In Vuex Store, see example at  => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js =>
+                
+                actions: {
+                    setPostsQuantity ({ commit, state  }, passedArgument) {  //state is a fix
+                       return commit('setQuantMutations', passedArgument ); //to store via mutation
+                    },
+                },
+               
+                mutations: {
+                    //mutation to quantity of Blog to STORE
+                    setQuantMutations(state, myPassedArg) {
+                        state.adm_posts_qunatity = myPassedArg;        
+                    },
+          
 //================================================================================================
 
 
@@ -2127,6 +2207,7 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
  
 
 ======= NB about some buil-in Events functionality ====================
+
 Built-in event 'Illuminate\Auth\Events\Login' works like a charm, though a built-in event 'eloquent.deleting' does not work that way.
 While trying to emulate Yii2 analogue of beforeDeleted() event I tried to emplement it as specified above in {# How to implement Events/Listeners:} but it did not work. Plus I tried to implement it in App/Traits/trait UserStampsTrait and use this Train in model App/User. It should fire when I manually dellete a user with ID 999, but it does not work.
 So, the only working way to emulate Yii2 analogue of beforeDeleted() event is use this code in  model App/User (fires when u delete any user, i.e model User instance) => see example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/User.php
@@ -2137,6 +2218,10 @@ So, the only working way to emulate Yii2 analogue of beforeDeleted() event is us
             Log::info("Listener in model App/User says: Deleted User with ID:" . $user->id .  " at " . date('Y-m-d H:i:s') );
         });
     }
+    
+Plus, there is a bug: {User::where('id',999)->delete();} in Contoller delete an entry but does not fire a Delete Event, it  must be  {User::where('id',999)->first()->delete();} 
+
+
 
 
 
@@ -2940,9 +3025,10 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 	 
 # Preview an image before it is uploaded (when u select image in <input type="file">) =>  \blog_Laravel\public\js\Wpress_ImagesBlog\wpress_blog.js
 
-# see ajax => Network -> XHR
-# View POST in Chrome (e.g for ajax) => Network" tab => refresh => select POST in left =>  Choose "Headers" tab ("All" must be selected )
-# View Server Response(e.g e.g for ajax to see dd() ) in Chrome => Network" tab => click/select the Request under "Name" => Response. On server-side do => var_dump($request->all(), true); die();
+# see ajax => F12 => Network -> XHR
+# View POST in Chrome F12 (e.g for ajax see form submit) => Network" tab => refresh => select POST in left =>  Choose "Headers" tab ("All" must be selected )
+# View Server Response(e.g e.g for ajax to see dd() ) in Chrome F12 => Network" tab => click/select the Request under "Name" => Response. On server-side do => var_dump($request->all(), true); die();
+           => or click "Preview" to see raw Server response
 # View Cookies => in Chrome =>  Network" tab => click/select the Request under "Name" => Cookies
 
 //================================ End Move to Yii2 ReadMe =============================
