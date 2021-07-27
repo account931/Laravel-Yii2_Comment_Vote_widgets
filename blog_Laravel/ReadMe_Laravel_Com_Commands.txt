@@ -701,8 +701,52 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
  # Check if relation exists (example for hasMany), see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/orders.blade.php
   @if( $v->orderDetail->isEmpty() )
+ 
+ -----------
+ 
+ #LATEST UPDATE, NB =>
+   hasMany returns hasMany method in DB result as subArray(must be foreached the 2nd time), e.g $data = ['some' =>'text', 'some2' => 'text', 'hasManyMethod' => array( [coulmnName=>''], [coulmnName=>'']) ]
+   
+   //Version for $db->get(), i.e if it returns array of objects  //getImages is a model hasMany method  
+   $data = Wpress_images_Posts::with('getImages', 'authorName', 'categoryNames')->where('wpBlog_id', $idN)->orderBy('wpBlog_created_at', 'desc')->get(); //->with('getImages', 'authorName', 'categoryNames') => hasMany/belongTo Eager Loading
+        $text = "";
+        foreach($data as $b){
+            if ($b->getImages->isEmpty()){
+                $text.= 'Empty ';
+            } else {
+                foreach($b->getImages as $f){
+                    $text.= " Id to delete: " . $f->wpImStock_id . " ";
+                }
+            }
+        }
+ 
+ 
+ 
+    //Version for $db->findOrFail($idN), i.e if it returns one object
+    $data = Wpress_images_Posts::with('getImages')->findOrFail($idN);
+    $text = "";
+    if ($data->getImages->isEmpty()){
+        $text.= ' No images connected to post found. ';
+    } else {
+        foreach($data->getImages as $f){
+            $text.= " Id to delete: " . $f->wpImStock_id . " ";
+        }
+    }
   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
   
+                
+                
  ---------------------------- 
  
  10.3 belongsTo relation (The Inverse Of The Relationship)
@@ -741,7 +785,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	$articles->count()
 	
 	$books = Book::with('author', 'categories')->get(); => Eager loading for hasOne/hasMany relations (use instead of simple (->get()) for DB oprimaization), 'author', 'categories' are models' hasOne/hasMany relations.
-  
+    $books = Wpress_images_Posts::with('getImages', 'authorName', 'categoryNames')->findOrFail($id);
   
   #Метод get() возвращает объект Illuminate\Support\Collection (для версии 5.2 и ранее — массив) c результатами, в котором каждый результат — это экземпляр PHP-объекта StdClass.
   use Illuminate\Support\Facades\DB;  $users = $articles = DB::table('wpress_blog_post')->get();
@@ -1079,7 +1123,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
        {return $this->hasOne('App\users', 'id', 'wpBlog_author');      //$this->belongsTo('App\modelName', 'foreign_key_that_table', 'parent_id_this_table');}
     
 	public function categoryNames(){ //hasMany
-    return $this->belongsTo('App\models\wpress_category', 'wpBlog_category','wpCategory_id');  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');} Eager loading.
+        return $this->belongsTo('App\models\wpress_category', 'wpBlog_category','wpCategory_id');  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');} Eager loading.
 	  
 2. In controller:
     public function show($id)
