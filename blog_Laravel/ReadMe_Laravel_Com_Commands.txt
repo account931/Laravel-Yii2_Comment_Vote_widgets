@@ -45,6 +45,7 @@ Table of Content:
 15. Js/Css, minify, Laravel Mix
 16. 
 17.  RBAC on Zizaco/Entrust
+17.1 RBAC on Spatie Laravel Permission.
 17.2 Gates (variant of built-in Laravel RBAC)
 17.3 Policy in Laravel
 18. Multilanguges (Localization)
@@ -1228,7 +1229,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
       # Create AccessTokenMiddleware and pass there {field {api_token} as header (CURRENTLY NOT WORKING, HAVE TO PASS MANUALLY) => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Middleware/AccessTokenMiddleware.php
       # Register AccessTokenMiddleware in /app/Kernel.php in protected $middleware =[]
       # In REST controller WpBlog_Rest_API_Contoller we check $request->bearerToken() existance and if OK, return json collection of Wpress_images_Posts 
-  
+      //$request->bearerToken() is an access token sent in headers in ajax
 
 
 
@@ -1468,7 +1469,7 @@ class User extends Authenticatable implements JWTSubject
 
 //================================================================================================
 
-17.  RBAC on Zizaco/Entrust
+17.  RBAC on Zizaco/Entrust   Works on Laravel 5, Does not work on < Laravel 6
 https://github.com/Zizaco/entrust
 Requires composer installing package Zizaco/Entrust
 
@@ -1505,12 +1506,41 @@ Requires composer installing package Zizaco/Entrust
 
 # How make Self-made Rbac  => https://laravel.demiart.ru/guide-to-roles-and-permissions/
 
+
+
+
+
+
+
+
+
 //================================================================================================
 
+17.1 RBAC on Spatie Laravel Permission. Works on Laravel < 5.8. 
+Substitution for Zizaco/entrust that does not work on Lavaravel > 6
+    https://spatie.be/docs/laravel-permission/v4/introduction
+    Install => composer require spatie/laravel-permission
+    
+# it is strongly recommended to always use permission directives, instead of role directives.
 
+# Unlike Entrust Rbac, Spatie Rbac has buil-in models {Permission, Role}, so u don't need to create them manually.
+Just use them where needed => 
+    use Spatie\Permission\Models\Role;
+    use Spatie\Permission\Models\Permission;
+    
+# Spatie Rbac uses 4 tables => model_has_permissions, model_has_roles, role_has_permissions, role, permission.
 
+# See example of assigning => class Spatie_Seeder =>  https://github.com/account931/Laravel_Vue_Blog_V6_Passport/blob/main/database/seeds/DatabaseSeeder.php
 
+# Example Check permisssion in Controller=> 
+    //$userX = auth()->user(); //current user
+    $userX = User::where('api_token', '=', $request->bearerToken())->first(); //$request->bearerToken() is an access token sent in headers in ajax
+    if(!$userX->hasAllPermissions(['edit articles', 'delete articles',])){ 
 
+#Blade permisssion check in views => @can('edit articles')     @endcan 
+   
+# Example Check role in Controller => $user->hasRole(['AdminX', 'moderator']);
+# Blade role check in views => @role('writer') I am a writer!  @else  I am not a writer... @endrole
 
 
 
@@ -1894,14 +1924,22 @@ It is done pretty like the same as for Login, see  example at => https://github.
 	    25.9 Vue store Vuex
 		
 		Main difference between Redux and Vuex - while Redux uses reducers Vuex uses mutations. In Redux state is always immutable, while in Vuex committing mutation by the store is the only way to change data
-		
+		#NB: must have Vuex dependecies in package.json, see example at => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/package.json
+        
 		see example of Vuex store => 
-		   Vuex store itself                            => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/store/index.js
-		   Store connected/initiated in main entry file => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
-		   Store used/displayed in component =>           
+		   #Vuex store itself                            
+                 example_1 => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/store/index.js
+		         example_2 => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js
+
+           #Store connected/initiated in main entry file 
+                 example_1 => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
+		         example_2 => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
+           
+           #Store used/displayed in component =>           
 		              example_1 (with ajax) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/AllPosts.vue
 		              example_2             => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/pages/details.vue
-		
+                      example_3             => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/blog_2021.vue
+                      
 		#working example how to change Vuex store from child component => see changeVuexStoreFromChild in  => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/AllPosts.vue
 		
 		
@@ -3624,6 +3662,7 @@ are the central place of all Laravel application bootstrapping. Your own applica
  7. LaraAppointments         => https://github.com/LaravelDaily/LaraAppointments-QuickAdminPanel
  8. Voyager Admin Panel
  9. Socialite
+ 10.Spatie Laravel Permission => https://spatie.be/docs/laravel-permission/v4/introduction
  
  #Pending: Passport, Avored, Aimeos, appzcoder/crud-generator, Zofe_Rapyd
 
