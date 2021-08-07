@@ -38,7 +38,8 @@ Table of Content:
 12.24. Save to DB (SQL INSERT) via model function
 13.REST API
 13.1 Has Many relation in JSON (REST API)
-13.2 REST API authentication via token (Token Bearer, String Query)
+13.2   REST API authentication via token (Token Bearer, String Query)
+13.2.1 REST API authentication via Passport package
 13.3 REST ajax server validation (& display errors in ajax)
 13.4 REST API CRUD
 14. Laravel Flash messages
@@ -57,6 +58,7 @@ Table of Content:
 23.2 After Registration redirect to previous page 
 24.
 25. Laravel Vue
+25.9 React ReadMe
 26. PayPal
 27. CLI command => call controller via command line
 28. PhpUnit tests vs Laravel Dusk
@@ -1146,12 +1148,14 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 //================================================================================================
 
-13.2 REST API authentication via token (Token Bearer, String Query)
- #If u use routes in /routes/web.php and have auth middleware { Route::group(['middleware' => 'auth'}, access to Endpoints will be protected by session (request will redirect u to login page) & all is OK, but...if u use /routes/api.php it gonna crash without certain work
+13.2   REST API authentication via token (Token Bearer, String Query)
+
+ #If u use routes in /routes/web.php and have auth middleware { Route::group(['middleware' => 'auth'}, access to Endpoints will be protected by session (request will redirect u to login page) & all is OK, but not correct for REST API, u have to use  /routes/api.php and it gonna crash without certain work
+ 
  #If u use routes in /routes/api.php and have auth middleware .....
   https://dev.to/grantholle/implementing-laravel-s-built-in-token-authentication-48cf
 
-# Middleware => ['auth:api'] in /routes/api.php automatically makes sure to check if access token(User's field{api_token}) is passed, BUT passing the token must be implemented by you (as string query/header in js or php)
+# Middleware => ['auth:api'] in /routes/api.php automatically makes sure to check if access token(User's field{api_token}) is passed ()u don'y need to check it manually on API Back-end), BUT passing the token must be implemented by you (as string query/header in js or php)
 
 # Built-in Api Route (returns current user) => http://localhost/CLEANSED_GIT_HUB/Laravel_Vue_Blog/public/api/user
 
@@ -1168,8 +1172,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 # My simple (without Passport )manual implementation of Token Authentication if u use routes in /routes/api.php  =>
 
 1.VARIANT_1 Authentication, when u send Bearer token in Headers in ajax (used in CLEANSED_GIT_HUB\Laravel_Vue_Blog) => see => https://github.com/dimmm931/Laravel_Vue_Blog
-    1.1. For token we use (User's table field {api_token})
-    1.2 # In order to return {"error":"Unauthenticated."} not redirection to /home if the Token is wrong => DO Force json response on every api request via middleware =>
+    #1.1. For token we use (User's table field {api_token})
+    #1.2 # In order to return {"error":"Unauthenticated."} not redirection to /home if the Token is wrong => DO Force json response on every api request via middleware =>
         create middleware MyForceJsonResponse => see example => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Middleware/MyForceJsonResponse.php
         and register it in /app/Kernel.php => 
             protected $middlewareGroups = [
@@ -1179,12 +1183,14 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
                      //...........
   
     
-    1.3 in /routes/api we use 'auth:api' middleware, it will do the Token checking automatically, simple 'api' won't=>
-        Route::group(['middleware' => ['auth:api'/*, 'sendTokenMyX'*/, 'myJsonForce'],  'prefix' => 'post'],
+    #1.3 in /routes/api we use 'auth:api' middleware(it checks if user is logged via token), it will do the Token checking/verifying automatically, simple 'api' won't. BUT passing the token in API request must be implemented by you (as string query/header in js or php) =>
+        Route::group(['middleware' => ['auth:api'/*, 'sendTokenMyX'*/, 'myJsonForce'],  'prefix' => 'post'],  //e.g of a route => "api/post/get_all"
     
-    1.4 Pass current User to Vue component in view  => <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'>  => see https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/views/wpBlog_Vue/index.blade.php
+    #1.3.1 in {/config/auth.php}  'guards' => [ 'api' => [ 'driver'   => 'passport' ] ],
     
-    1.5 In /components/VueRouterMenu.vue we add {props: ['currentUser']} to read passed value and push/uplift this value to Vuex store in beforeMount => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/VueRouterMenu.vue
+    #1.4 Pass current User to Vue component in /views/wpBlog_Vue/index.blade.php  => <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'>  => see https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/views/wpBlog_Vue/index.blade.php
+    
+    #1.5 In /WpBlog_Vue/components/VueRouterMenu.vue we add {props: ['currentUser']} to read passed value and push/uplift this value to Vuex store in beforeMount => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/VueRouterMenu.vue
          <script>
          export default {
             props: ['currentUser'],
@@ -1193,7 +1199,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
                 var dataTest = this.currentUser.api_token; //passed from php in view as <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'> 
                 this.$store.dispatch('changeVuexStoreTokenFromChild', dataTest); //working example how to change Vuex store from child component  
             },
-    1.6 In Store {/store/index.js} => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js
+    #1.6 In Store {/store/index.js} => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js
         In Store we use {changeVuexStoreTokenFromChild({ commit }, dataTestX)} to trigger mutation {setApiToken(state, response)} and set passed token to store.state.api_tokenY 
         And then and we call ajax/fetch add it as Header =>
             fetch('api/post/get_all', { //http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public/post/get_all
@@ -1201,7 +1207,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
                //pass Bearer token in headers ()
                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + state.api_tokenY },
                
-    1.7 In REST controller WpBlog_Rest_API_Contoller we need no manual check(and they won't work) as all is done by middleware 'auth:api'
+    #1.7 In REST controller WpBlog_Rest_API_Contoller we need no manual check(and they won't work) as all is done by middleware 'auth:api'
     
     
     
@@ -1224,6 +1230,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
         In Store we set token to store state.api_tokenY and add it in ajax as api/post/get_all?token=' + state.api_tokenY
       # In REST controller WpBlog_Rest_API_Contoller we check $_GET['token'] existance and if OK, return json collection of Wpress_images_Posts => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
   
+  
   --------------
     3.VARIANT_3. Usage of AccessTokenMiddleware (70% working, cant get user instance in middleware)
       # Create AccessTokenMiddleware and pass there {field {api_token} as header (CURRENTLY NOT WORKING, HAVE TO PASS MANUALLY) => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Middleware/AccessTokenMiddleware.php
@@ -1236,13 +1243,35 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 
 
-====================================
 
-#Passport -??????
+
+
+
+============================================================================
+13.2.1 REST API authentication via Passport package
+
+#Passport 
   composer require laravel/passport "4.0.3" for L 5.4
-
-    #Manual => https://tutsforweb.com/laravel-passport-create-rest-api-with-authentication
+  
+  and proceed with complete set-up specified in documentation(migrate, passport:install, add {HasApiTokens} trait to model {User}, 
+  in {app/Providers/AuthServiceProvider} add use Laravel\Passport\Passport; public function boot(){ $this->registerPolicies(); Passport::routes();}, in {/config/auth.php} => 'guards' => [ 'api' => [ 'driver'   => 'passport' ]], etc)
+    #Set-up manual => https://www.twilio.com/blog/build-secure-api-php-laravel-passport
+    #Manual        => https://tutsforweb.com/laravel-passport-create-rest-api-with-authentication
     #Manual GitHub =>https://github.com/hamzaali00001/laravel-passport-authentication
+
+# Passport Migration creates tables: oauth_access_tokens, oauth_auth_codes, oauth_clients, oauth_personal_access_clients, oauth_refresh_tokens
+
+-----
+
+#General explanation (how it works in https://github.com/account931/Laravel_Vue_Blog_V6_Passport) =>
+
+#Login via REST API, see example at => https://github.com/account931/Laravel_Vue_Blog_V6_Passport/blob/main/app/Http/Controllers/Auth_API/UserAuthController.php
+Login auth is done not via regular session, on succesful login, we create a token via Passport, and Json it back.
+Note that $token is not the same as recorded to DB table {oauth_access_tokens}
+   $token = auth()->user()->createToken('API Token Any Name')->accessToken; //create token via Passport
+   return response(['user' => auth()->user(), 'token' => $token]);
+
+
 
 
 
@@ -2155,10 +2184,9 @@ It is done pretty like the same as for Login, see  example at => https://github.
 
 
 
-
-
-
-
+//================================================================================================
+25.9 React ReadMe
+  See => https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/README_MY_React_Com_Commands.txt
 
 
 
@@ -2363,6 +2391,8 @@ If use Laravel < 5.6 => composer require laravel/socialite "^3.2.0"
 # add values {FACEBOOK_ID, FACEBOOK_SECRET, FACEBOOK_URL}to .env.php  
 
 #Get Facebook appID and secret key => register as a developer => https://developers.facebook.com/ => https://developers.facebook.com/apps
+
+#add column 'fb_id' to Table Users, see migration =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/migrations/2021_04_27_144812_add_fb_id_column_in_users_table.php
 
 #Режим "В разработке" is OK to work, localhost is OK too.
 
@@ -3241,7 +3271,10 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
       
 # JS Webkitformboundary when sending Formdata via ajax POST =>
    set up tha ajax correctly, see example at => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue
-    
+ 
+
+# Error "Undefined Class Constant App\Providers\RouteServicProvider::Home" when trying to get all routes list with {php artisan route:list} => 
+    add to App\Providers\RouteServiceProvider.php => public const HOME = '/home';
 =============================
 
 если токен не принимается обработчиком, то варианта существует по сути два – либо он не отправляется в запросе (отсутствует csrf_field() в форме, или нет нужного значения в аякс-запросе – там он может передаваться как в данных так и в заголовках запроса), либо на стороне сервера не загружается сессия – именно в ней сохраняется токен на стороне сервера, чтобы было с чем сравнить то что пришло в запросе.

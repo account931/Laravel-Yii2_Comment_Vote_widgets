@@ -103,7 +103,9 @@
 
 ![Screenshot](public/images/Screenshots/34.png)
 
+## Laravel Socialite package
 
+![Screenshot](public/images/Screenshots/35.png)
 
 
 
