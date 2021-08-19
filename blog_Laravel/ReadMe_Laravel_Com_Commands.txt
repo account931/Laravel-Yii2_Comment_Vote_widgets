@@ -525,8 +525,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
     Controller => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
 
 #Multiple image ajax upload Vue example => 
-    View/Js    => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue
-    Controller => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
+    View/Js    => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue
+    Controller => https://github.com/account931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
 
 
 
@@ -1171,10 +1171,10 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 # My simple (without Passport )manual implementation of Token Authentication if u use routes in /routes/api.php  =>
 
-1.VARIANT_1 Authentication, when u send Bearer token in Headers in ajax (used in CLEANSED_GIT_HUB\Laravel_Vue_Blog) => see => https://github.com/dimmm931/Laravel_Vue_Blog
+1.VARIANT_1 Authentication, when u send Bearer token in Headers in ajax (used in CLEANSED_GIT_HUB\Laravel_Vue_Blog) => see => https://github.com/account931/Laravel_Vue_Blog
     #1.1. For token we use (User's table field {api_token})
     #1.2 # In order to return {"error":"Unauthenticated."} not redirection to /home if the Token is wrong => DO Force json response on every api request via middleware =>
-        create middleware MyForceJsonResponse => see example => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Middleware/MyForceJsonResponse.php
+        create middleware MyForceJsonResponse => see example => https://github.com/account931/Laravel_Vue_Blog/blob/main/app/Http/Middleware/MyForceJsonResponse.php
         and register it in /app/Kernel.php => 
             protected $middlewareGroups = [
                 'web' => [],
@@ -1188,9 +1188,9 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
     
     #1.3.1 in {/config/auth.php}  'guards' => [ 'api' => [ 'driver'   => 'passport' ] ],
     
-    #1.4 Pass current User to Vue component in /views/wpBlog_Vue/index.blade.php  => <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'>  => see https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/views/wpBlog_Vue/index.blade.php
+    #1.4 Pass current User to Vue component in /views/wpBlog_Vue/index.blade.php  => <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'>  => see https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/views/wpBlog_Vue/index.blade.php
     
-    #1.5 In /WpBlog_Vue/components/VueRouterMenu.vue we add {props: ['currentUser']} to read passed value and push/uplift this value to Vuex store in beforeMount => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/VueRouterMenu.vue
+    #1.5 In /WpBlog_Vue/components/VueRouterMenu.vue we add {props: ['currentUser']} to read passed value and push/uplift this value to Vuex store in beforeMount => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/VueRouterMenu.vue
          <script>
          export default {
             props: ['currentUser'],
@@ -1199,7 +1199,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
                 var dataTest = this.currentUser.api_token; //passed from php in view as <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'> 
                 this.$store.dispatch('changeVuexStoreTokenFromChild', dataTest); //working example how to change Vuex store from child component  
             },
-    #1.6 In Store {/store/index.js} => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js
+    #1.6 In Store {/store/index.js} => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js
         In Store we use {changeVuexStoreTokenFromChild({ commit }, dataTestX)} to trigger mutation {setApiToken(state, response)} and set passed token to store.state.api_tokenY 
         And then and we call ajax/fetch add it as Header =>
             fetch('api/post/get_all', { //http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public/post/get_all
@@ -1217,7 +1217,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
     2.VARIANT_2, when u send token as String Query in ajax as url?token=xxxxx => fetch('api/post/get_all?token=' + state.api_tokenY
       # Route::group(['middleware' => ['api'],  'prefix' => 'post'],
       # Pass current User to component in view  => <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'> 
-      # In /components/VueRouterMenu.vue we add {props: ['currentUser']} to read passed value and push this value to Vuex store in beforeMount => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/VueRouterMenu.vue
+      # In /components/VueRouterMenu.vue we add {props: ['currentUser']} to read passed value and push this value to Vuex store in beforeMount => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/VueRouterMenu.vue
          <script>
          export default {
             props: ['currentUser'],
@@ -1226,14 +1226,14 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
                var dataTest = this.currentUser.api_token; //passed from php in view as <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'> 
                this.$store.dispatch('changeVuexStoreTokenFromChild', dataTest); //working example how to change Vuex store from child component  
             },
-      # In Store {/store/index.js} => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js
+      # In Store {/store/index.js} => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js
         In Store we set token to store state.api_tokenY and add it in ajax as api/post/get_all?token=' + state.api_tokenY
-      # In REST controller WpBlog_Rest_API_Contoller we check $_GET['token'] existance and if OK, return json collection of Wpress_images_Posts => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
+      # In REST controller WpBlog_Rest_API_Contoller we check $_GET['token'] existance and if OK, return json collection of Wpress_images_Posts => https://github.com/account931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
   
   
   --------------
     3.VARIANT_3. Usage of AccessTokenMiddleware (70% working, cant get user instance in middleware)
-      # Create AccessTokenMiddleware and pass there {field {api_token} as header (CURRENTLY NOT WORKING, HAVE TO PASS MANUALLY) => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Middleware/AccessTokenMiddleware.php
+      # Create AccessTokenMiddleware and pass there {field {api_token} as header (CURRENTLY NOT WORKING, HAVE TO PASS MANUALLY) => https://github.com/account931/Laravel_Vue_Blog/blob/main/app/Http/Middleware/AccessTokenMiddleware.php
       # Register AccessTokenMiddleware in /app/Kernel.php in protected $middleware =[]
       # In REST controller WpBlog_Rest_API_Contoller we check $request->bearerToken() existance and if OK, return json collection of Wpress_images_Posts 
       //$request->bearerToken() is an access token sent in headers in ajax
@@ -1327,9 +1327,9 @@ class User extends Authenticatable implements JWTSubject
 
 13.3 REST ajax server validation (& display errors in ajax)
    Example 1 =>
-       Controller   => function createPost(SaveNewArticleRequest $request) => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
-       Request      => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Requests/SaveNewArticleRequest.php
-       View(Vue.js) => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue
+       Controller   => function createPost(SaveNewArticleRequest $request) => https://github.com/account931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
+       Request      => https://github.com/account931/Laravel_Vue_Blog/blob/main/app/Http/Requests/SaveNewArticleRequest.php
+       View(Vue.js) => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue
     
     Example 2 =>
        Controller                    => function store(request $request)        =>  https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
@@ -1346,8 +1346,8 @@ class User extends Authenticatable implements JWTSubject
     -------------------
     #READ =>
         Example 1 =>
-            JS part(Vue)  => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/blog_2021.vue
-            PHP part      => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
+            JS part(Vue)  => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/blog_2021.vue
+            PHP part      => https://github.com/account931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
     
     --------------------
     #CREATE => 
@@ -1356,22 +1356,22 @@ class User extends Authenticatable implements JWTSubject
             PHP part => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/app/Http/Controllers/YajraDataTablesCrudController.php
 
         Example 2 =>
-            JS part(Vue)  => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue
-            PHP part      => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
+            JS part(Vue)  => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue
+            PHP part      => https://github.com/account931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Rest_API_Contoller.php
 
 
 
     --------------------
     #UPDATE =>
         Example 1 =>
-            JS part(Vue)  => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/editItem.vue
-            PHP part      => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Admin_Part/WpBlog_Admin_Rest_API_Contoller.php
+            JS part(Vue)  => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/editItem.vue
+            PHP part      => https://github.com/account931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Admin_Part/WpBlog_Admin_Rest_API_Contoller.php
 
      --------------------
     #DELETE =>
          Example 1 =>
-            JS part(Vue)  => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/list_all.vue
-            PHP part      => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Admin_Part/WpBlog_Admin_Rest_API_Contoller.php
+            JS part(Vue)  => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/list_all.vue
+            PHP part      => https://github.com/account931/Laravel_Vue_Blog/blob/main/app/Http/Controllers/WpBlog_Admin_Part/WpBlog_Admin_Rest_API_Contoller.php
 
 //================================================================================================
 14. Laravel Flash messages
@@ -1758,16 +1758,16 @@ It is done pretty like the same as for Login, see  example at => https://github.
  # Roadmap to start vue.js implement =>
     #1. Create one start source code core Vue.js file in "/resources/asset/js/someOneFile.js".
         For Example => \resources\assets\js\WpBlog_Vue\wpblog-vue-start
-    #2. You have to include this file in webpack.mix as source file and specify the output folder, concatenated file will be saved in that folder with the same name. U have to add this file (public/js/Wpress_Vue_JS/wpblog-vue-start.js) in html =>
+    #2. You have to include this file in webpack.mix as source file and specify the output folder, concatenated/uglified file will be saved in that folder with the same name. U have to add this file (public/js/Wpress_Vue_JS/wpblog-vue-start.js) in html =>
        .js('resources/assets/js/WpBlog_Vue/wpblog-vue-start.js',   'public/js/Wpress_Vue_JS')  //Vue.js; Source-> Destination
-    #3. Include js file "public/js/Wpress_Vue_JS/wpblog-vue-start.js" in html
+    #3. Include js file "public/js/Wpress_Vue_JS/wpblog-vue-start.js" in html (e.g views/layout/app.php)
 	#4. Init some components in \resources\assets\js\WpBlog_Vue\wpblog-vue-start.js, then put this Vue components where u need in /views/../some_view_file
 	    Example => Vue.component('create-post',  require('./components/CreatePost.vue')); => in html => <create-post/>
 	#5. Run {npm run watch} to watch changes
 
 	
  #Examples of a start Vue file see =>  /resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
-                                  =>  /resources/assets/js/Appointment/appoint-vue-start.js
+                                   =>  /resources/assets/js/Appointment/appoint-vue-start.js
 								  
 
    
@@ -1793,10 +1793,10 @@ It is done pretty like the same as for Login, see  example at => https://github.
    ------------------------------
    25.2 Vue ajax =>  
        Ajax in Vue can be used in different ways: can be used directly in component and set result to local data; or u can dispatch/trigger a Vuex Store method in local component, specify the logic/mutation in Vuex Store and use in local component as {this.$store.state.adm_posts_qunatity}
-       #Example_1 (ajax used in component)  at => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/list_all.vue
+       #Example_1 (ajax used in component)  at => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/list_all.vue
        #Example_2 (ajax used in Vuex Store )  => 
-            Component    => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/blog_2021.vue
-            Vues store   => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js
+            Component    => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/blog_2021.vue
+            Vues store   => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js
            
        #Example_3 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/Appointment/components/subcomponents/rooms-in-loop.vue
        #Example_4 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/Appointment/components/test-ajax.vue
@@ -1953,21 +1953,21 @@ It is done pretty like the same as for Login, see  example at => https://github.
 	    25.9 Vue store Vuex
 		
 		Main difference between Redux and Vuex - while Redux uses reducers Vuex uses mutations. In Redux state is always immutable, while in Vuex committing mutation by the store is the only way to change data
-		#NB: must have Vuex dependecies in package.json, see example at => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/package.json
+		#NB: must have Vuex dependecies in package.json, see example at => https://github.com/account931/Laravel_Vue_Blog/blob/main/package.json
         
 		see example of Vuex store => 
 		   #Vuex store itself                            
                  example_1 => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/store/index.js
-		         example_2 => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js
+		         example_2 => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js
 
            #Store connected/initiated in main entry file 
                  example_1 => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
-		         example_2 => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
+		         example_2 => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
            
            #Store used/displayed in component =>           
 		              example_1 (with ajax) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/AllPosts.vue
 		              example_2             => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/pages/details.vue
-                      example_3             => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/blog_2021.vue
+                      example_3             => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/blog_2021.vue
                       
 		#working example how to change Vuex store from child component => see changeVuexStoreFromChild in  => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/AllPosts.vue
 		
@@ -2021,7 +2021,7 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		
 		//-------------------------------------------------------------------------------------
         
-        # How to update/change Vuex store from child component => see example at => this.$store.dispatch('changeVuexStoreFromChild', dataTest); =>  https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/AllPosts.vue
+        # How to update/change Vuex store from child component => see example at => this.$store.dispatch('changeVuexStoreFromChild', dataTest); =>  https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/AllPosts.vue
 		
   
 		-------------------------------------------------
@@ -2124,8 +2124,11 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		# How to get route ID => e.g "wpBlogVueFrameWork#/details/2", gets 2. See example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/pages/details.vue
 	       var ID = this.$route.params.Pid; //gets 2  //{Pid} is set in 'pages/home' in => this.$router.push({name:'details',params:{Pid:proId}})
 
-        # Pass var from php to vue => 
-            1. in view => <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'>  //User array contains id, name, api_token, etc
+        # Pass var from php to vue component => 
+            1.  in view => <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'>  //User array contains id, name, api_token, etc
+            1.2 For strings use double quotes "'string'" =>  
+                           <vue-router-menu-with-link-content-display v-bind:current-user="'someString'" >         <!-- Passport Changes (double quotes is a must-have FIX)-->
+
             2. in component add => 
                <script>
                export default {
@@ -2133,7 +2136,7 @@ It is done pretty like the same as for Login, see  example at => https://github.
                    //......................
             3. and can use in component as => {{this.currentUser.api_token}}
             
-        # Pass data between router component =>  see example at =>https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/router/index.js
+        # Pass data between router component =>  see example at =>https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/router/index.js
             1. add {props} at /router/index.js  to targeted router component =>  
                path: '/New_2021', 
                name: 'new_2021', //same as in component return section
@@ -2146,17 +2149,17 @@ It is done pretty like the same as for Login, see  example at => https://github.
           const that = this;   //or var that = this; 
           that.List =  someResult   
 
-        # Vue ensure state Reactivity (e.g state.errorList gets some result on ajax success) => see example and note issue with {var that = this;} => booksGet =>  https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue      
+        # Vue ensure state Reactivity (e.g state.errorList gets some result on ajax success) => see example and note issue with {var that = this;} => booksGet =>  https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue      
         
         # Vue comment => {{ /* checkStore */ }}  VS <!--{{ this.$store.state.posts.length }}-->
         
         # Vue assign id => <div v-for="(postAdmin, i) in booksGet" :key=i class="col-sm-12 col-xs-12 oneAdminPost" :id="postAdmin.wpBlog_id"> 
-        # Vue get id of clicked => @click="deletePost(postAdmin.wpBlog_id) =>  https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/list_all.vue
-        # Vue set inpt value with ajax response => v-model="inputTitleValue" => https://github.com/dimmm931/Laravel_Vue_Blog/tree/main/resources/assets/js/WpBlog_Admin_Part/components/pages/editItem.vue
+        # Vue get id of clicked => @click="deletePost(postAdmin.wpBlog_id)   => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/list_all.vue
+        # Vue set inpt value with ajax response => v-model="inputTitleValue" => https://github.com/account931/Laravel_Vue_Blog/tree/main/resources/assets/js/WpBlog_Admin_Part/components/pages/editItem.vue
 
 
         # Use dispatch with argument(can use 1 arg only) (dispatch to fire some action in Vuex Store from some other component) =>
-            #In ajax, see example at => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/list_all.vue => 
+            #In ajax, see example at => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/list_all.vue => 
                 var that = this; //Explaination => if you use this.data, it is incorrect, because when 'this' reference the vue-app, you could use this.data, but here (ajax success callback function), this does not reference to vue-app, instead 'this' reference to whatever who called this function(ajax call)
               
 		        $.ajax({
@@ -2164,7 +2167,7 @@ It is done pretty like the same as for Login, see  example at => https://github.
                    success: function(data) {
                        that.$store.dispatch('setPostsQuantity', data.data.length); 
           
-            #In Vuex Store, see example at  => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js =>
+            #In Vuex Store, see example at  => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/store/index.js =>
                 
                 actions: {
                     setPostsQuantity ({ commit, state  }, passedArgument) {  //state is a fix
@@ -2178,6 +2181,22 @@ It is done pretty like the same as for Login, see  example at => https://github.
                         state.adm_posts_qunatity = myPassedArg;        
                     },
           
+            # Getter value isLoggedIn based on computed property of other state => 
+                getters: {
+                    isLoggedIn: state => !!state.passport_api_tokenY, //get value (true/false) based on other state
+            
+                Use in other component => <p> {{this.$store.getters.isLoggedIn}} </p> 
+            
+                Or do checking =>
+                    Variant 1 => 
+                       < div v-if="this.$store.state.passport_api_tokenY !== null"> Logged <logged-user-page></logged-user-page></div>
+                        <div v-else class="col-sm-12 col-xs-12 alert alert-danger"> Not logged </div>
+                    Variant 2 => 
+                        <div v-if="this.$store.getters.isLoggedIn"> Logged </div>
+                        <div v-else class="col-sm-12 col-xs-12 alert alert-danger"> Not logged</div>
+                        
+                        
+            -----------------------------------
 //================================================================================================
 
 
@@ -3270,7 +3289,7 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
       contentType: false   
       
 # JS Webkitformboundary when sending Formdata via ajax POST =>
-   set up tha ajax correctly, see example at => https://github.com/dimmm931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue
+   set up tha ajax correctly, see example at => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Vue/components/pages/loadnew.vue
  
 
 # Error "Undefined Class Constant App\Providers\RouteServicProvider::Home" when trying to get all routes list with {php artisan route:list} => 
