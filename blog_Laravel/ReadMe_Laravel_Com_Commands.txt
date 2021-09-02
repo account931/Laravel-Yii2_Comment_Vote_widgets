@@ -80,6 +80,8 @@ Table of Content:
 355.Miscellaneous VA Laravel
 356.Miscellaneous VA HTML/CSS
 357.Miscellaneous Php (to move to Yii2 ReadMe)
+357.1 Miscellaneous Untitled (Git, etc)
+357.2 Miscellaneous JS 
 358.Known Errors
 400.SOLID principles
 401.Design Patterns
@@ -363,6 +365,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
             'user_rank'   => ['required', 'integer', Rule::in($rankList) ] , //in range];
 			'user_superior'   => ['required', 'integer', ],
 			'user_hired_at'   => ['required', 'date'], //date validation
+            'password'        => ['required', 'confirmed'], //password confirm match (works without specifiying the confirm input name, but the confirm input must be {foo_confirmation} i.e {password_confirmation})
 			'image'           => ['required',  'mimes:png,jpg', 'max:5120' ], //2mb = 2048 //'mimes:jpeg,png,jpg,gif,svg'
 			
 		];
@@ -471,8 +474,28 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
                //return response()->json($request->validator->messages(), 400);
                return response()->json(['error' => true, 'data' => 'Too Good, but validation crashes', 'validateErrors'=>  $request->validator->messages()]);
             } 
-    
-    
+            
+  ------------------ 
+ # Variant 2 for controller validation =>
+    use Illuminate\Support\Facades\Validator;
+
+    $validator =  Validator::make($request->all(), [
+            'name'                  => 'required|max:255',
+            'email'                 => 'required|email|unique:users',
+            'password'              => ['required', 'confirmed'], //same as => 'required|confirmed',
+            'password_confirmation' => 'required' // //must be named 'password_confirmation', i.e 'firstINPUT_confirmation' to be automatically validate in back-end ()
+
+        ]);
+        
+        if ($validator ->fails()) {
+            return response()->json(['error' => true, 'data' => 'Too Good, but validation crashes', 'validateErrors'=>  $validator->messages()]);
+        } 
+
+        if ($validator ->passes()) {
+            return response()->json(['error' => true, 'data' => 'Too Good, but validation OK']);
+        }
+
+   
 
 //================================================================================================
 
@@ -1271,8 +1294,10 @@ Note that $token is not the same as recorded to DB table {oauth_access_tokens}
    $token = auth()->user()->createToken('API Token Any Name')->accessToken; //create token via Passport
    return response(['user' => auth()->user(), 'token' => $token]);
 
+-------------------------------------------------------
 
-
+# Auth::user()->id;  //getting the logged user ID, version for Passport
+# Auth::user();      //getting the logged user Object, version for Passport
 
 
 ====================================
@@ -2986,12 +3011,21 @@ $listOfLanguages = array(
     function some(){return array($a, $b);}  $r = some(); $value1 = $r[0]; $value2 = $r[1];  
     function some(){return array('a'=> $a, 'b'=> $b);}  $r = some(); $value1 = $r['a']; $value2 = $r['b'];
 
--------------------- Untitled (Git, etc) ---------
+# GD Library, save text to image =>  public function index() => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/CaptchaController.php
+
+
+
+
+
+=======================================================================
+357.1 Miscellaneous Untitled (Git, etc)
+
 
 #Github Readme.md => Markdown is a lightweight markup language => See example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/readme_template_example.md
 Create Anchor => 
     - [1. Go to My Acnchored Section 1](#1-real-cool-heading1)    ## 1. Real Cool Heading1
    Some my text
+   
  to test what my readme.md file will look like before committing to github => http://tmpvar.com/markdown.html
  see my example => /root/readme_template_example.md
 
@@ -3040,7 +3074,6 @@ Create Anchor =>
    !.gitignore
 
 
-# GD Library, save text to image =>  public function index() => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/CaptchaController.php
 
 #RegExp regular expression Php =>  
     # if (!preg_match($RegExp_Phone, $phone)), returns 1 if a match was found,or 0
@@ -3069,6 +3102,23 @@ Create Anchor =>
     var doubleCommas   = (textarea.match(/(\,\,+)/g  ) || []).length; // count all consecutive duplicate commas (i.e ",,")
     var doubleDots     = (textarea.match(/(\.\.+)/g  ) || []).length; // count all consecutive duplicate dots (i.e "..")
 
+
+
+
+# see ajax => F12 => Network -> XHR
+# View POST in Chrome F12 (e.g for ajax see form submit) => Network" tab => refresh => select POST in left =>  Choose "Headers" tab ("All" must be selected )
+# View Server Response(e.g e.g for ajax to see dd() ) in Chrome F12 => Network" tab => click/select the Request under "Name" => Response. On server-side do => var_dump($request->all(), true); die();
+           => or click "Preview" to see raw Server response
+# View Cookies => in Chrome =>  Network" tab => click/select the Request under "Name" => Cookies
+
+
+
+
+
+
+
+=======================================
+357.2 Miscellaneous JS 
 
 
 ---------------------- JS ----------
@@ -3156,11 +3206,15 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 	 
 # Preview an image before it is uploaded (when u select image in <input type="file">) =>  \blog_Laravel\public\js\Wpress_ImagesBlog\wpress_blog.js
 
-# see ajax => F12 => Network -> XHR
-# View POST in Chrome F12 (e.g for ajax see form submit) => Network" tab => refresh => select POST in left =>  Choose "Headers" tab ("All" must be selected )
-# View Server Response(e.g e.g for ajax to see dd() ) in Chrome F12 => Network" tab => click/select the Request under "Name" => Response. On server-side do => var_dump($request->all(), true); die();
-           => or click "Preview" to see raw Server response
-# View Cookies => in Chrome =>  Network" tab => click/select the Request under "Name" => Cookies
+# fetch http example (with then promises)       => https://github.com/account931/Laravel_Vue_Blog_V6_Passport/blob/main/resources/assets/js/store/index.js
+# axios example and difference from fetch      => https://github.com/account931/Laravel_Vue_Blog_V6_Passport/blob/main/resources/assets/js/store/index.js
+
+
+
+
+
+
+
 
 //================================ End Move to Yii2 ReadMe =============================
 
@@ -3567,6 +3621,8 @@ Can be done via constructor => function __construct($service){$this->service = $
 402.8 Repository 
 => https://heera.it/laravel-repository-pattern#.VuJcVfl97cs
 => https://coderius.biz.ua/blog/article/repozitorij-repository-pattern-sablon-proektirovania-v-php
+
+NB: this example is not 100% Repository, better look for Repository example at => O - Open-closed Principle => 
 
  #Example of Repository Pattern (Controller -> Service Layout -> Repository -> Model) => see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ServiceLayoutController.php
  Instead of this in Controller:
