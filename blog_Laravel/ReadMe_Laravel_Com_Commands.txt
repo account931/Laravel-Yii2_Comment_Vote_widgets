@@ -58,6 +58,7 @@ Table of Content:
 23.2 After Registration redirect to previous page 
 24.
 25. Laravel Vue
+25.1.1.1 Vue standalone (without Laravel)
 25.9 React ReadMe
 26. PayPal
 27. CLI command => call controller via command line
@@ -1903,6 +1904,23 @@ It is done pretty like the same as for Login, see  example at => https://github.
                 </div>
             </div>
 	     </div> <!-- end class="row"-->
+         
+    
+    ----------------------------------
+    
+    25.4.5 Iterate over array without html tag
+        <template v-for="(item2, index2) in vertical">
+                <!-- Build empty td cell, used for building IF this iterator is undefined in gameHits[] -->            
+                <td :key="index2" v-if="booksGet[index * horizontal + index2] == undefined " class="game-cell" :id="index * horizontal + index2"  @click="mainUserClick(index * horizontal + index2)">
+                    Nul{{index * horizontal + index2}}                
+                </td>
+            
+                <!-- Build taken td cell ("0" of "X"), used for building IF this iterator is defined in gameHits[] as ("0" of "X") -->            
+                <td :key="index2" v-if="booksGet[index * horizontal + index2] != undefined " class="game-cell" :id="index * horizontal + index2"> <!-- if array el is not undefined, dispplay it's value -->
+                    {{ booksGet[index * horizontal + index2 ] }} {{ index * horizontal + index2  }}     
+                </td>
+        </template>
+    -----------------------------
     
     -----------------------------
 	25.5 Register components => \resources\assets\js\Appointment/appoint-vue-start.js
@@ -2222,8 +2240,28 @@ It is done pretty like the same as for Login, see  example at => https://github.
                         
                         
             -----------------------------------
+            
+            # {{index * 3 + index2}} <!-- fu**ing iterator for 2 loops one in other, just tobreplace simple i++ -->
+            
+            #   //this.gameHits[item] = "x"; //add to main array //VUE ALERT: this approach is NOT reactive
+                this.gameHits.splice(item, 0, "x"); //to ensure reactivity should use this approach to change array
+
 //================================================================================================
 
+
+
+
+
+//================================================================================================
+25.1.1.1 Vue standalone (without Laravel)
+Star a new project => 
+    https://monsterlessons.com/project/lessons/bystryj-start-s-vuejs
+    # Install once globally => npm install -g vue-cli
+    # Create new project    => vue init webpack name_goes_here
+    # npm install
+    # npm run dev   => it will launch it on http://localhost:8080/. Watch will be done automatically. NB: OpenServer must run too ???? (CHECK)
+    # npm run build => to build product to folder /build (for production). Goes to folder /dist, not /build!!!!
+    NB: after {npm run build}, just like in React, u have to go /dist/index.html and replace all {/static} to {{static}}, otherwise it won't run
 
 
 
@@ -2231,7 +2269,6 @@ It is done pretty like the same as for Login, see  example at => https://github.
 //================================================================================================
 25.9 React ReadMe
   See => https://github.com/account931/sms_Textbelt_Api_React_JS/blob/master/README_MY_React_Com_Commands.txt
-
 
 
 
@@ -3073,7 +3110,7 @@ Create Anchor =>
    # Except this file
    !.gitignore
 
-
+# git change default master to main  => https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
 
 #RegExp regular expression Php =>  
     # if (!preg_match($RegExp_Phone, $phone)), returns 1 if a match was found,or 0
