@@ -635,8 +635,10 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
        corrupted example (Foreign key constraint is incorrectly formed) =>https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/database/migrations/2020_11_21_165700_create_shop_simple_table.php
 	NB!!!! => If one table contains ID that used as Forein Keys in other table, then migration for this first table must be run first or migration will crash. Example: first create migration{create_shop_categories_table}, then {create_shop_simple_table}
     
+	//Foreign key
     $table->bigInteger('rank_id')->unsigned()->comment = 'Rank Id from table (abz_ranks) (ForeignKey)'; 
     $table->foreign('rank_id')->references('id')->on('abz_ranks')->onUpdate('cascade')->onDelete('cascade');  //Id from table {abz_ranks}
+	//End Foreign key
 	
     If error "General error: 1005 Can't create table ,Foreign key constraint is incorrectly formed in laravel" => 
        => make sure that FK type is the same as the reference table id, so instead of defining your column as Integer use bigInteger insteated  
@@ -1806,9 +1808,9 @@ It is done pretty like the same as for Login, see  example at => https://github.
    25.4 Iterate over Object (Object that is from data, i.e equivalent of React State)
    25.4.2 Iterate over Array (Array that is from data, i.e equivalent of React State)
    25.5 Register components
-   25.6 Use component in onother component
+   25.6 Use component in another component
    25.7 Click action
-   25.8 Call function from another file
+   25.8 Call function from other external file
    25.9 Vue store Vuex
    25.9.1 Vue Router
    26. Unsorted Vue (uplift to parent, pass to child, etc)
@@ -1924,7 +1926,10 @@ It is done pretty like the same as for Login, see  example at => https://github.
     
     -----------------------------
 	25.5 Register components => \resources\assets\js\Appointment/appoint-vue-start.js
-    25.6 Use component in onother component => \resources\assets\js\Appointment\components\generateListOfRoom.js
+    
+    ----------------------------------------------
+    
+    25.6 Use component in another component => \resources\assets\js\Appointment\components\generateListOfRoom.js
 	    <template>
            <div class="col-sm-12 col-xs-12">
                <h5>Hello from /subcomponents/room-in-loops</h5>				
@@ -1956,7 +1961,9 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		
 		<p v-for="item in companies"> {{ item }}</p>
 		
-		
+		NB: if troubles see => if in subcomponent in nested loops can't get passed from Parents props
+        
+        
 		-------------------------
 		 25.7 Click action
 		<div class='subfolder shadowX' v-on:click="greet"></div>
@@ -1973,7 +1980,7 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		
 		
 		-------------------------------------------------
-		25.8 Call function from another external file, see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/Appointment/components/subcomponents/one-room.vue
+		25.8 Call function from other external file, see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/Appointment/components/subcomponents/one-room.vue
 	       1. Create external file, e.g '/my_functions/scroll_function.js'
 		         export const ScrollExternalFile = {
 				     
@@ -1989,7 +1996,7 @@ It is done pretty like the same as for Login, see  example at => https://github.
 			    ScrollExternalFile.scrollResults(".selected-room");
 				
        
-	   
+	        4.NB: if external file function uses {this}, e.g {this.gameHits}, u have to pass {this} as arg in targetted component, but in external file function can't use the same name {this} as arg, for example use {thisX}
 	   
 	   
         -------------------------------------------------
@@ -2106,8 +2113,8 @@ It is done pretty like the same as for Login, see  example at => https://github.
 		
 		-------------------
 		# uplift value from child to parent => see 2 examples at child => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/Appointment/components/subcomponents/one-room.vue
-		                                       parent is => /rooms-in-loop.js
-		    in Child=> 
+		                                       parent is => /rooms-in-loop.js		
+        in Child=> 
 		        methods: {
                      onClickButton (event) {
                          this.$emit('clicked', 'someValue')
@@ -2121,7 +2128,12 @@ It is done pretty like the same as for Login, see  example at => https://github.
                    onClickChild (value) {
                        console.log(value) // someValue
                     }
-  
+        -------------------
+        
+        # same flow (as uplift value from child to parent) goes to call parent method from child =>
+            => see parent example => https://github.com/account931/CPH_miscellaneous/blob/main/Tic_tac_Vue_Framework/src/components/TicTac/TicTacStart.vue
+            => see child example  => https://github.com/account931/CPH_miscellaneous/blob/main/Tic_tac_Vue_Framework/src/components/TicTac/sub_components/gameField.vue
+
         -------------------
         # pass props to child on ternary => 
 		     <selectedRoom :clickedX="this.idClicked" :hostname="typeof(this.idClicked)=== 'string' ? 'No select so far' : this.roomsX[this.idClicked].r_host_name "/>
@@ -2246,7 +2258,15 @@ It is done pretty like the same as for Login, see  example at => https://github.
             #   //this.gameHits[item] = "x"; //add to main array //VUE ALERT: this approach is NOT reactive
                 this.gameHits.splice(item, 0, "x"); //to ensure reactivity should use this approach to change array
 
+
+            #if in subcomponent in nested for loops u can't get passed from Parents props, then use computed to get them => 
+                => computed: { fkGetVertical () { return this.verticalX;}, }
 //================================================================================================
+
+
+
+
+
 
 
 
@@ -2843,7 +2863,7 @@ Pass var from controller to view =>  return view('home2', compact('user'));
   
 # clear cache/reconfig =>  php artisan config:cache <==> php artisan cache:clear 
 
-composer dump-autoload
+# class not found => composer dump-autoload
 
 # Exception with html unescapped tags / without escapping ('Bad request, go LOGIN first') => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShowProfile.php
   In controller=> $text = 'You are not logged, <a href="'. route('login') . '"> click here  </a>  to login'; throw new \App\Exceptions\myException( $text );
@@ -2924,13 +2944,13 @@ composer dump-autoload
 
 # Change default home route => Route::get('/', ['uses'=>'BandController@index']);
 
-# Redirect from root folder all requests to /public => Create in root file .htaccess => 
+# Redirect from root folder all requests to /public, i.e no need to go to => localhost, then choose /public => Create in root file .htaccess => 
 Options -MultiViews
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ public [L]
 
-# Moving Controllers to Sub folders /move Controllers to separate folder
+# Moving Controllers to Sub folders /move Controllers to separate folder (controller in subfolder)
  1. append the folder name in the namespace => namespace App\Http\Controllers\Panel;
  2. Add "use App\Http\Controllers\Controller;" to the controller => 
  3. Route => Route::get('foo','Panel\PanelController@anyaction');

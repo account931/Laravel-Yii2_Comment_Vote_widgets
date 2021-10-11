@@ -18,27 +18,30 @@ class DatabaseSeeder extends Seeder
 		//specify whta data to run
         // $this->call(UsersTableSeeder::class);
 		
-		 $this->call('Wpress_blog_post_Seeder'); //fill DB table {Wpress_blog} with data
-         $this->call('WpressCategory_Seeder');
-		 $this->call('Users_Seeder');  //fill DB table {users} with data
-		 $this->call('Roles_Seeder');  //fill DB table {roles} with data {4 roles}
-		 $this->call('RoleUsers_Seeder');  //fill DB table {role_user} with data {assign admin to Dima}
-		 $this->call('ShopCategories_Seeder');  //fill DB table {shop_categories} with data. MUST BE BEFORE {ShopSimpleSeeder} as contains Forein Keys for {ShopSimpleSeeder}
+		$this->call('Wpress_blog_post_Seeder'); //fill DB table {Wpress_blog} with data
+        $this->call('WpressCategory_Seeder');
+		$this->call('Users_Seeder');  //fill DB table {users} with data
+		$this->call('Roles_Seeder');  //fill DB table {roles} with data {4 roles}
+		$this->call('RoleUsers_Seeder');  //fill DB table {role_user} with data {assign admin to Dima}
+		$this->call('ShopCategories_Seeder');  //fill DB table {shop_categories} with data. MUST BE BEFORE {ShopSimpleSeeder} as contains Forein Keys for {ShopSimpleSeeder}
 		 
-		 //Seeder in separated file
-    	 $this->call('ShopSimpleSeeder');  //fill DB table {shopsimple} with data. SEEDER IS IN SUBFOLDER /SeedersFiles.
+		//Seeder in separated file
+    	$this->call('ShopSimpleSeeder');  //fill DB table {shopsimple} with data. SEEDER IS IN SUBFOLDER /SeedersFiles.
 		 
-		 $this->call('Shop_Quantity_Seeder');  //fill DB table {shop_quantity} with data. 
+		$this->call('Shop_Quantity_Seeder');  //fill DB table {shop_quantity} with data. 
 		 
-         $this->call('AppointRoomList_Seeder');  //fill DB table {appoint-room-list} with data.
-         //$this->call('Students_Seeder');  //fill DB table {appoint-room-list} with data. //Not used here. Used in {abz_Laravel_6_LTS} as Abz_Employees_Seeder
+        $this->call('AppointRoomList_Seeder');  //fill DB table {appoint-room-list} with data.
+        //$this->call('Students_Seeder');  //fill DB table {appoint-room-list} with data. //Not used here. Used in {abz_Laravel_6_LTS} as Abz_Employees_Seeder
 		 
-		 $this->call('Wpressimage_category_Seeder');      //fill DB table { wpressimage_category} with data
-		 $this->call('WpressImages_blog_Post_Seeder');    //fill DB table {	wpressimages_blog_post} with data
-         $this->call('WpressImages_ImagesStock_Seeder');  //fill DB table {	wpressimage_imagesstock} with data
+		$this->call('Wpressimage_category_Seeder');      //fill DB table { wpressimage_category} with data
+		$this->call('WpressImages_blog_Post_Seeder');    //fill DB table {	wpressimages_blog_post} with data
+        $this->call('WpressImages_ImagesStock_Seeder');  //fill DB table {	wpressimage_imagesstock} with data
+		
+        //Seeder in separated file. PolymorphicSeeder
+    	$this->call('PolymorphicSeeder');  //seeder for 3 tables => {polymorphic_posts}, {polymorphic_users}, {polymorphic_images},. SEEDER IS IN SUBFOLDER /SeedersFiles.
+		 		
 		 
-		 
-		 $this->command->info('Seedering action was successful!');
+		$this->command->info('Seedering action was successful!');
     }
 	
 	

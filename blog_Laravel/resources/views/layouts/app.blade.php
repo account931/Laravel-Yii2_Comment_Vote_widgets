@@ -117,11 +117,13 @@
 							<li><a href="{{ route('register') }}">Booking(N/A)</a></li>
 							<li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>
 							<li><a href="{{ route('register') }}">Vue JS(N/A)</a></li>
-                            <li class="{{ Request::is('service-layout*') ? 'active' : '' }}"> <a href="{{ route('service-layout') }}">Service Layout</a></li>
-						    <li class="{{ Request::is('socialite*') ? 'active' : '' }}">      <a href="{{ route('socialite') }}">Facebook Socialite</a></li>
-                            <li class="{{ Request::is('rozetk*') ? 'active' : '' }}">         <a href="{{ route('rozetk') }}">Rozetk XML/YML</a></li>
-                            <li class="{{ Request::is('captcha*') ? 'active' : '' }}">         <a href="{{ route('captcha') }}">Capcha+Notify</a></li>
-                        </ul>
+                            <li class="{{ Request::is('service-layout*') ? 'active' : '' }}"> <a href="{{ route('service-layout') }}">Service Layout        </a></li>
+						    <li class="{{ Request::is('socialite*') ? 'active' : '' }}">      <a href="{{ route('socialite') }}">     Facebook Socialite    </a></li>
+                            <li class="{{ Request::is('rozetk*') ? 'active' : '' }}">         <a href="{{ route('rozetk') }}">        Rozetk XML/YML        </a></li>
+                            <li class="{{ Request::is('captcha*') ? 'active' : '' }}">        <a href="{{ route('captcha') }}">       Capcha+Notify         </a></li>
+                            <li class="{{ Request::is('polymorphic*') ? 'active' : '' }}">    <a href="{{ route('polymorphic') }}">   Polymorphic Rel + Gii  </a></li>
+
+						</ul>
                     </li>
 					 <!-- END Submenu DropDown!!!! (Bootsrap) -->
 					 

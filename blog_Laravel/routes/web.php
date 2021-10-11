@@ -145,7 +145,7 @@ Route::get('/appointment', 'AppointmentController@index')->name('appointment');
 
 
 //Admin LTE, Inject from ABZ-Laravel_6 //JUST FACADE, as Admin LTE won't work on Laravel 5.2 (). Implemented in => (IMPLEMENTED IN abz_Laravel_6_LTS)
-Route::get('/adminlte',       'AdminLTEController@index')->name('adminlte');
+Route::get('/adminlte',      'AdminLTEController@index')->name('adminlte');
 Route::get('/country-list',  'AdminLTEController@getList');
 
 
@@ -157,8 +157,8 @@ Route::get('/runEventX',       'EventsListenersController@triggerEvent')->name('
 Route::get('/service-layout',  'ServiceLayoutController@index')->name('service-layout'); 
 
 //Socialite Package (Facebook, Google)
-Route::get('/socialite',    'SocialiteController@index')->name('socialite'); 
-Route::get('auth/facebook', 'SocialiteController@facebookRedirect');
+Route::get('/socialite',             'SocialiteController@index')->name('socialite'); 
+Route::get('auth/facebook',          'SocialiteController@facebookRedirect');
 Route::get('auth/facebook/callback', 'SocialiteController@loginWithFacebook');
 
 
@@ -172,6 +172,8 @@ Route::post('/handcaptcha',    'CaptchaController@handCaptcha')   ->name('handca
 Route::post('/package-captcha','CaptchaController@packageCaptcha')->name('package-captcha');
 
 
+//Polymorphic relations + Gii Crud example (Controller is in subfolder)
+Route::get('/polymorphic',    'Polymorphic_Controller\PolymorphicController@index') ->name('polymorphic');
 
 
 //test route to call controller via command-line. Actually does not need any Route as called via CLI Tinker just to check it works. Controller function just saves current time to log.
