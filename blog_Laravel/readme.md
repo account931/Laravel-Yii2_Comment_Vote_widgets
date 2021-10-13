@@ -111,7 +111,9 @@
 
 ![Screenshot](public/images/Screenshots/37.png)
 
+## Laravel polymorphic relations
 
+![Screenshot](public/images/Screenshots/38.png)
 
 
 

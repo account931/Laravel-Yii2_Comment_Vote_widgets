@@ -1448,7 +1448,7 @@ class User extends Authenticatable implements JWTSubject
 
 
 ------------------------------------------------------
- #Loading CSS and JS files on specific views in Laravel 5.2
+ #Loading CSS and JS files on specific views in Laravel 5.2. include css
 
   #Variant 1 (most working)(use/include in main layout, i.e /views/layout/blade.php)!!! =>
     <!-- To register JS/CSS file for specific view only (In layout template) -->
@@ -1460,7 +1460,8 @@ class User extends Authenticatable implements JWTSubject
 	
 	
 	#Variant 2 (working) (use/include in any child view before {@endsection}, i.e /views/auth/login). OR right after @section('content') (if u don't want to encounter div loads for 1 sec without css styling) =>
-	    <!-- Include js/css file for this view only -->
+	    => see example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/edit-product.blade.php
+		<!-- Include js/css file for this view only -->
         <script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>
         <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
         @endsection	
@@ -2742,8 +2743,8 @@ On cliking submit sends $_Post ajax to
 	
 
 
-
-
+#Hand-made Gii example, see => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
+ or see => CRUD section
 
 
     
@@ -2753,7 +2754,7 @@ On cliking submit sends $_Post ajax to
 
 
 #image =>           <img class="img-responsive my-cph" src="{{URL::to("/")}}/images/cph.jpg"  alt="a"/>
-#link a href => 	<li><a href="{{ route('register') }}">Gii</a></li>
+#link a href => 	<li><a href="{{ route('register') }}">Register</a></li>
 #link a href with $_GET => <a href="{{route('profile', ['id' => 1])}}">login here</a>
 #link with helper => $post = App\Models\Post::find(1);  echo url("/posts/{$post->id}");  Use => <a href ="<?php  echo url("/posts/2"); ?>"> link </a>
 
@@ -3006,7 +3007,13 @@ RewriteRule ^ public [L]
 # To close bootstrap collapsed responsive menu on menuItem click => Simply add the properties on main div as such, like on the MENU button => <div class="nav-collapse collapse" data-toggle="collapse"  data-target=".nav-collapse">
 
 
-
+ /* ---- Shadow CSS */
+.shadowX {
+	box-shadow: 0 1px 4px rgba(0, 0, 0, .3),
+                -23px 0 20px -23px rgba(0, 0, 0, .6),
+                 23px 0 20px -23px rgba(0, 0, 0, .6),
+                inset 0 0 40px rgba(0, 0, 0, .1);
+}
 
 
 
@@ -3266,7 +3273,8 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 # fetch http example (with then promises)       => https://github.com/account931/Laravel_Vue_Blog_V6_Passport/blob/main/resources/assets/js/store/index.js
 # axios example and difference from fetch      => https://github.com/account931/Laravel_Vue_Blog_V6_Passport/blob/main/resources/assets/js/store/index.js
 
-
+//with animation
+$("#game").stop().fadeOut(/*"slow"*/ 200 ,function(){  $(this).html(result)}).fadeIn(2000);
 
 
 

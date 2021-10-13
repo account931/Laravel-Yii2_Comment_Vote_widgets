@@ -1,5 +1,5 @@
 <?php
-//Admin page to add a product
+//Admin page to edit a product
 ?>
 
 @extends('layouts.app')
@@ -7,8 +7,7 @@
 @section('content')
 
 <!-- Include js/css file for this view only + SEE ONE JS AT THE BOTTOM -->
-<link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
-<link href="{{ asset('css/ShopPaypalSimple_AdminPanel/product_tabs.css') }}" rel="stylesheet"> <!-- Css for W3school Full Page Tabs (uses css + js) https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
+<link href="{{ asset('css/Polymorphic/product_tabs.css') }}" rel="stylesheet"> <!-- Css for W3school Full Page Tabs (uses css + js) https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
 
 <!-- Sweet Alerts -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> <!-- Sweet Alert CSS -->
@@ -73,8 +72,7 @@
 							 <br>  
 						</p>
 				        
-						&nbsp;<i class="fa fa-arrow-circle-o-left" style="font-size:24px"></i>&nbsp;       <a href="{{ url('/admin-products') }}">back to View all products </a><br>
-				        &nbsp;<i class="fa fa-arrow-circle-o-left" style="font-size:24px"></i>&nbsp;&nbsp;<a href="{{ url('/shopAdminPanel') }}">back to admin panel </a>
+						&nbsp;<i class="fa fa-arrow-circle-o-left" style="font-size:24px"></i>&nbsp;       <a href="{{ url('/polymorphic') }}">back to View all products </a><br>
                     </div>
 					
 					
@@ -128,18 +126,19 @@
                         <div id="Home" class="tabcontent">
 						
                             <!--------- Form to a add new item   --------------->
-				            <form class="form-horizontal" method="post" action="{{url('/storeNewproduct')}}" enctype="multipart/form-data">
+				            <form class="form-horizontal" method="post" action="{{url('update-post')}}" enctype="multipart/form-data">
 			
                             
                             <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
- 
+                            <input type="hidden" value="{{ $productOne[0]->id }}" name="prod-id" /> <!-- product ID -->
+
  
                             <!-- product name -->
                             <div class="form-group{{ $errors->has('product-name') ? ' has-error' : '' }}">
                                 <label for="product-name" class="col-md-4 control-label">Product name</label>
 
                                 <div class="col-md-6">
-                                    <input id="product-name" type="text" class="form-control" name="product-name" value="{{old('product-name', $productOne[0]->shop_title)}}" required autofocus>
+                                    <input id="product-name" type="text" class="form-control" name="product-name" value="{{old('product-name', $productOne[0]->post_name)}}" required autofocus>
                                                                                        
                                     @if ($errors->has('product-name'))
                                     <span class="help-block">
@@ -156,7 +155,7 @@
                                 <label for="product-desr" class="col-md-4 control-label">Description</label>
 
                                 <div class="col-md-6">
-                                    <textarea cols="5" rows="5" id="product-desr"  class="form-control" name="product-desr" required> {{old('product-desr', $productOne[0]->shop_descr)}} </textarea>
+                                    <textarea cols="5" rows="5" id="product-desr"  class="form-control" name="product-desr" required> {{old('product-desr', $productOne[0]->post_text)}} </textarea>
                                                                                                                                     
                                     @if ($errors->has('product-desr'))
                                     <span class="help-block">
@@ -168,6 +167,7 @@
 							
 							
 							<!-- product price -->
+							<!--
                             <div class="form-group{{ $errors->has('product-price') ? ' has-error' : '' }}">
                                 <label for="product-price" class="col-md-4 control-label">Price</label>
 
@@ -180,19 +180,22 @@
                                     </span>
                                     @endif 
 							     </div>
-                            </div>	 
+                            </div>	--> 
 							
 							
 							
-							<!-- product category Select dropdown  -->
+							<!-- Author Select dropdown  -->
                             <div class="form-group{{ $errors->has('product-category') ? ' has-error' : '' }}">
-                                <label for="product-category" class="col-md-4 control-label">Category (not implemented)</label>
+                                <label for="product-category" class="col-md-4 control-label">Author</label>
 
                                 <div class="col-md-6">
 
                                     <select name="product-category" class="mdb-select md-form">
-						              <option  disabled="disabled"  selected="selected">Choose category</option>
+						                <option  disabled="disabled"  selected="selected">Choose author</option>
 		                              
+									    @foreach ($authorsAll as $a) <!-- hasOne Relat -->
+						                    <option value={{ $a->id }} 	{{  $a->id == $productOne[0]->authorName->id  ?  ' selected="selected"' : '' }} > {{ $a->user_name}} </option>
+					                    @endforeach 
 						            </select>
 
 									
@@ -205,7 +208,8 @@
                             </div>	
 							
 							
-							
+					
+								
 							
 							
 							<!----- Image  ------->
@@ -214,7 +218,7 @@
 
                                 <div class="col-md-6">
 
-                                    <input type="file" name="image" class="form-control">
+                                    <input type="file" name="image" class="form-control my-img-input-x">
 
                                     @if ($errors->has('image'))
                                     <span class="help-block">
@@ -225,11 +229,26 @@
                             </div>	
 							
 				
+				
+				
+				            <!----- Display an image of edited post (if any was prev loaded) + new uploaded img will appear in this div ---->
+							<div class="col-md-6" id="imagePreview">
+				                @if ($productOne[0]->imageZ)  <!-- $x->imageZ->exists() DOES NOT WORK -->
+								    <img  class="small-img" src="{{URL::to("/")}}/{{ $productOne[0]->imageZ->url }}"  alt="a"/>
+
+							    @else
+								    <!-- no image is found photo -->
+								    <img class="small-img" src="{{URL::to("/")}}/images/no-image-found.png"  alt="a"/>
+							    @endif
+		                    </div>
+							<!----- Display an image of edited post (if any was prev loaded) ---->
+
+									
 							
 							<!-- Button --> 
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary"> Create </button>
+                                    <button type="submit" class="btn btn-primary"> Edit </button>
                                 </div>
                             </div>
 
@@ -252,114 +271,11 @@
 					
 					
 					
-					
-					
-					    <!-------------------- 2nd tab div (with edit quantity form) ---------------------------------->
+					     <!-------------------- 2nd tab div (with edit quantity form) ---------------------------------->
                         <div id="EditQuantity" class="tabcontent">
-                            <h3>Edit quantity</h3>
-                            <p>Load to stock new quantity of : <span style="color:red; font-weight:bold;"> {{ $productOne[0]->shop_title }} </b></p>
-							<p> 
-							    All quantity:  {{ $productOne[0]->quantityGet->all_quantity }} items <!--hasOne relation in '/model/ShopSimple' on table {shop_quantity} -->
-							    Last load:     {{ $productOne[0]->quantityGet->all_updated }}        <!--hasOne relation in '/model/ShopSimple' on table {shop_quantity} -->
-							</p>
-							
-							<p> Currently left: {{ $productOne[0]->quantityGet->left_quantity }} items</p><!--hasOne relation in '/model/ShopSimple' on table {shop_quantity} -->
-
-
-
-
-							<!--------- Form to a edit a quntity ++   --------------->                            
-							<div class="col-sm-12 col-xs-12"> 
-							    <center>
-								    <h4><i class="fa fa-plus-square-o" ></i> Load in ++ (add to {{ $productOne[0]->quantityGet->all_quantity }} items ) </h4>
-								</center>
-							</div>
-							
-							
-				            <form class="form-horizontal" method="post" action="{{url('/addQuantity')}}" enctype="multipart/form-data">
-			
-                                <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf -->
-								<input type="hidden" value="{{ $productOne[0]->shop_id }}" name="prod-id" /> <!-- product ID -->
-                                                               
-							
-							    <!-- product quantity (to add to table {}) -->
-                                <div class="form-group{{ $errors->has('product-quant') ? ' has-error' : '' }}">
-                                    <label for="product-quant" class="col-md-4 control-label">Quantity++</label>
-
-                                    <div class="col-md-6">
-                                        <input id="product-quant" type="number" min="0" class="form-control" name="product-quant" value="{{ old('product-quant') }}" required>
-                                
-                                        @if ($errors->has('product-quant'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('product-quant') }}</strong>
-                                        </span>
-                                        @endif 
-							        </div>
-                                </div>	
-							
-							
-							    <!-- Button --> 
-                                <div class="form-group">
-                                    <div class="col-md-8 col-md-offset-4">
-                                        <button type="submit" class="btn btn-primary"> Add  <i class="fa fa-plus-square-o" ></i></button>
-                                    </div>
-                                </div>
-							
-                            </form>
-						    <!--------- End Form to edit quantity ++  --------------->  
-						
-						
-						
-						
-						
-						    <br>
-						    <!--------- Form to a edit a quntity Minus --   --------------->
-						    <div class="col-sm-12 col-xs-12"> 
-							    <center>
-								    <h4><i class="fa fa-minus-square-o" ></i> Load out -- </h4>
-								</center>
-							</div>
-							
-				            <form class="form-horizontal" method="post" action="{{url('/minusQuantity')}}" enctype="multipart/form-data">
-			
-                                <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
-							    <input type="hidden" value="{{ $productOne[0]->shop_id}}" name="prod-id" /><!-- product ID -->
-
-
-							    <!-- product quantity (to add to table {}) -->
-                                <div class="form-group{{ $errors->has('product-quant') ? ' has-error' : '' }}">
-                                    <label for="product-quant" class="col-md-4 control-label">Quantity--</label>
-
-                                    <div class="col-md-6">
-                                        <input id="product-quant" type="number" min="0" class="form-control" name="product-quant" value="{{ old('product-quant') }}" required>
-                                
-                                        @if ($errors->has('product-quant'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('product-quant') }}</strong>
-                                        </span>
-                                        @endif 
-							        </div>
-                                </div>	
-							
-							
-							    <!-- Minus submit Button --> 
-                                <div class="form-group">
-                                    <div class="col-md-8 col-md-offset-4">
-                                        <button type="submit" class="btn btn-primary"> Minus  <i class="fa fa-minus-square-o" ></i></button>
-                                    </div>
-                                </div>
-							
-                            </form>
-						    <!--------- End Form to edit quantity --  --------------->  
-						
-						
-						
-						
-						
-                        </div>
-						<!------------------------ End 2nd tab div (with edit quantity form) ----------------->
-  
-  
+					        <h3>Info 2</h3>
+					     </div>
+						<!-------- End 3rd tab div ------->
   
   
   
@@ -441,7 +357,7 @@
 </div> <!-- end . animate-bottom -->
 
 <!-- Include js/css file for this view only -->
- <script src="{{ asset('js/ShopPaypalSimple_Admin/Products/product_tabs.js') }}"></script> <!--  JS for W3school Full Page Tabs (uses css + js) https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
+ <script src="{{ asset('js/Polymorphic/product_tabs.js') }}"></script> <!--  JS for W3school Full Page Tabs (uses css + js) https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
 <!-- Include js/css file for this view only -->
 
 @endsection

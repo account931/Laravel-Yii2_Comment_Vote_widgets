@@ -173,7 +173,10 @@ Route::post('/package-captcha','CaptchaController@packageCaptcha')->name('packag
 
 
 //Polymorphic relations + Gii Crud example (Controller is in subfolder)
-Route::get('/polymorphic',    'Polymorphic_Controller\PolymorphicController@index') ->name('polymorphic');
+Route::get('/polymorphic',       'Polymorphic_Controller\PolymorphicController@index') ->name('polymorphic');
+// gii table, show edit page
+Route::get('gii-edit-post/{id}', 'Polymorphic_Controller\PolymorphicController@editProduct')->name('gii-edit-post/{id}'); //display form to edit an existing post
+Route::post('update-post',       'Polymorphic_Controller\PolymorphicController@updateProduct')->name('update-post'); //$_PUT to update existing post
 
 
 //test route to call controller via command-line. Actually does not need any Route as called via CLI Tinker just to check it works. Controller function just saves current time to log.
