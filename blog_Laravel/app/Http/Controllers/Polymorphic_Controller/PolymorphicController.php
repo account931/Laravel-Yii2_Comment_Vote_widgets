@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Polymorphic_Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+//use Illuminate\Support\Facades\Validator;
+//use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Validator; //from ABZ + Controllers/WpBlog_Admin_Part/WpBlog_Admin_Rest_API_Contoller.php
+
 use Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use App\Http\Requests\Polymorphic\PostPolymUpdateRequest; //Validation via Request Class
+
 use App\Http\Controllers\Controller; //to place controller in subfolder
 use App\models\Polymorphic\Polymorphic_Posts;    //model for DB table {polymorphic_posts}
 use App\models\Polymorphic\Polymorphic_Images;   //model for DB table {polymorphic_images}
@@ -90,16 +94,24 @@ class PolymorphicController extends Controller
 	 
     public function updateProduct (PostPolymUpdateRequest $request)
 	{
-		dd($request->all());
+		//dd($request->all());
 		
 		//commented {function withValidator} and decommented {function failedValidation} in Requests\Polymorphic\PostPolymUpdateRequest in order if Validation fails, the Controller still execute code
 		//if validation fails
 		if (isset($request->validator) && $request->validator->fails()) {
-            return redirect()->back()->withInput()->with('flashMessageFailX', 'Validation Failedd!!!' )->withErrors($validator);
-		} 
+            return redirect()->back()->withInput()->with('flashMessageFailX', 'Validation Failedd!!!' )->withErrors($request->validator->messages()); //Error was here ->withErrors($validator);
+		    
+			/*
+			return response()->json([
+               'error' => true, 
+               'data' => 'Was seem to be OK, but validation crashes', 
+               'validateErrors'=>  $request->validator->messages()]);
+			*/
+		}
+		
 		
 		//$request->input('role_sel'); vs $request->all()
-		
+		return "Validation is OK";
 	}
       
    

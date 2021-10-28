@@ -468,6 +468,12 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 ----------------
 
  #If u want if Validation fails, the Controller still execute code =>
+    See example_1 Controller => function AdminUpdateOneItem => https://github.com/account931/Laravel_Vue_Blog_V6_Passport/blob/main/app/Http/Controllers/WpBlog_Admin_Part/WpBlog_Admin_Rest_API_Contoller.php
+	See example_1 Request    => https://github.com/account931/Laravel_Vue_Blog_V6_Passport/blob/main/app/Http/Requests/UpdateExistingArticleRequest.php
+	
+	See example_2 Controller => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Polymorphic_Controller/PolymorphicController.php
+	See example_2 Request    => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Requests/Polymorphic/PostPolymUpdateRequest.php
+	
     In Request => protected function failedValidation(Validator $validator){$this->validator = $validator;}
     In Controller =>
         public function createPost(SaveNewArticleRequest $request) {
@@ -497,6 +503,10 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
         }
 
    
+
+
+
+
 
 //================================================================================================
 
@@ -3413,6 +3423,10 @@ $("#game").stop().fadeOut(/*"slow"*/ 200 ,function(){  $(this).html(result)}).fa
 
 # Error "Undefined Class Constant App\Providers\RouteServicProvider::Home" when trying to get all routes list with {php artisan route:list} => 
     add to App\Providers\RouteServiceProvider.php => public const HOME = '/home';
+
+
+# ErrorException file_put_contents failed to open stream: No such file or directory =>  php artisan cache:clear    php artisan config:cache
+
 =============================
 
 если токен не принимается обработчиком, то варианта существует по сути два – либо он не отправляется в запросе (отсутствует csrf_field() в форме, или нет нужного значения в аякс-запросе – там он может передаваться как в данных так и в заголовках запроса), либо на стороне сервера не загружается сессия – именно в ней сохраняется токен на стороне сервера, чтобы было с чем сравнить то что пришло в запросе.

@@ -44,6 +44,7 @@
                     <h3>
                         <i class="fa fa-recycle" style="font-size:36px"></i>  
                         Polymorphic Relations + Gii Crud<span class="small text-danger">*</span>
+						<p>Db table <b> {polymorphic_images} </b> contains images either for table <b> {polymorphic_posts} </b> or <b> {polymorphic_users }</b>. Table <b>{polymorphic_images}</b> has a column that contains model belonging to image</p>
                     </h3>
                     <p></p> 
                     <p></p>                  

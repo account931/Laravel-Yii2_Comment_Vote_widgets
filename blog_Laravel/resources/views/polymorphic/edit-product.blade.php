@@ -127,7 +127,8 @@
 						
                             <!--------- Form to a add new item   --------------->
 				            <form class="form-horizontal" method="post" action="{{url('update-post')}}" enctype="multipart/form-data">
-			
+			                
+							<input name="_method" type="hidden" value="PUT">  <!--{!!  method_field('PUT') !!} --> <!-- Fix for PUT -->
                             
                             <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
                             <input type="hidden" value="{{ $productOne[0]->id }}" name="prod-id" /> <!-- product ID -->
