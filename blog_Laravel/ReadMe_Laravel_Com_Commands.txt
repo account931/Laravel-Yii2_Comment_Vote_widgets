@@ -3160,6 +3160,8 @@ Create Anchor =>
       git reflog   => it 'll display all commits which are/were created in your repository - after this you should checkout to removed commit by checkout command
       git checkout <your commit-SHA>
 
+# git: when try to git add . , gets error => Unable to create '...git/index.lock': File exists.
+    Solution: run => rm -f ./.git/index.lock
 
 #RegExp regular expression Php =>  
     # if (!preg_match($RegExp_Phone, $phone)), returns 1 if a match was found,or 0
