@@ -18,7 +18,7 @@ class Polymorphic_Images extends Model
 
   
     //protected $fillable = ['wpBlog_author', 'wpBlog_title', 'wpBlog_text', 'wpBlog_category', 'wpBlog_created_at'];  //????? protected $fillable = ['wpBlog_author', 'wpBlog_text', 'wpBlog_author', 'wpBlog_category',  'updated_at', 'created_at'];
-    //public $timestamps = false; //to override Error "Unknown Column 'updated_at'" that fires when saving new entry
+    public $timestamps = false; //to override Error "Unknown Column 'updated_at'" that fires when saving new entry
 
   
     /**

@@ -22,9 +22,11 @@ class CreatePolymorphicPostsTable extends Migration
                 $table->text('post_text')->nullable()->comment = 'post text';       //equivalent for text 
 				
 				//Foreign key
-				$table->bigInteger('author_id')->unsigned()->comment = 'Author Id from table (polymorphic_users) (ForeignKey)'; 
+				$table->integer('author_id')->unsigned()->comment = 'Author Id from table (polymorphic_users) (ForeignKey)'; 
                 $table->foreign('author_id')->references('id')->on('polymorphic_users')->onUpdate('cascade')->onDelete('cascade');  //Id from table {abz_ranks}
 	            //End Foreign key
+				
+				$table->timestamps(); //adding created_at and updated_at columns
 			});
 	    }
     }

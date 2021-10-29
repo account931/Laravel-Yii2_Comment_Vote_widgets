@@ -11,6 +11,9 @@
 
 .underlined{text-decoration: underline; text-decoration-color:black;  padding-top: 4em; } 
 .link-text {color:white;}
+
+.timestamp{font-size:0.6em; color: green;}
+
  /* Mobile */
  @media screen and (max-width: 480px) { 
  }

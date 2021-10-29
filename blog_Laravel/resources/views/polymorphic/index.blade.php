@@ -123,10 +123,12 @@
                             @foreach ($allPosts as $x)
                                 <?php $i++; ?>							
 		                        <div class="col-sm-5 col-xs-5 shadowX posts-grid">
-                                    <p> Title:             {{ $x->post_name }} </p>
-                                    <p> Text:              {{ $x->post_text }} </p>
-                                    <p> Author:            {{ $x->authorName->user_name }} </p>	<!-- hasOne relation -->
-                                    
+                                    <p>                   Title:             {{ $x->post_name }}             </p>
+                                    <p>                   Text:              {{ $x->post_text }}             </p>
+                                    <p>                   Author:            {{ $x->authorName->user_name }} </p>	<!-- hasOne relation -->
+                                    <p class="timestamp"> Created:           {{ $x->created_at }}             </p>
+									<p class="timestamp"> Updated:           {{ $x->updated_at ? $x->updated_at : "never updated" }} </p>
+									
 									@if ($x->imageZ)  <!-- $x->imageZ->exists() DOES NOT WORK -->
 										<p> Image(polymorph):  {{ $x->imageZ['url'] }} </p>	            <!-- Polymorphic relation -->									
 									    <img  class="small-img" src="{{URL::to("/")}}/{{ $x->imageZ['url'] }}"  alt="a"/>
@@ -153,9 +155,9 @@
 
 
 
-                    <!--------------- Gii CRUD ------------------->
+                    <!--------------- Gii CRUD for table polymorphic_posts------------------->
 					<div class="col-sm-12 col-xs-12"></br>
-					    <h3 class="underlined">Gii CRUD</h3>      
+					    <h3 class="underlined">Gii CRUD for table <b> polymorphic_posts </b></h3>      
 					</div>	
 						   
 						   

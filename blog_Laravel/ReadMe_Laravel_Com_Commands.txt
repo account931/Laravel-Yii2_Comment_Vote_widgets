@@ -542,9 +542,11 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 # get file size =>      $request->image->getSize()
 # get file name =>      $request->image->getClientOriginalName()
 
- #Dont forget to add to form enctype="multipart/form-data" =>  <form method="post" action="{{url('/storeNewWpressImg')}}"  enctype="multipart/form-data">
+#Dont forget to add to form enctype="multipart/form-data" =>  <form method="post" action="{{url('/storeNewWpressImg')}}"  enctype="multipart/form-data">
 
 
+
+# U can as well upload an image using Intervention Library methods (not only upload, but resize, watermark, etc), see => 205. Laravel Intervention => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 
 
 
@@ -660,7 +662,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
      1. php artisan make:migration add_2_columns_to_shop_simple_table
 	 2. see content in example
 	 
-  # Add automatic timestamps =>  $table->timestamps();
+  # Add automatic timestamps =>  $table->timestamps();  //adding created_at and updated_at columns
+  
   //----------------------------
   
   #SEEDER
@@ -687,7 +690,9 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	  DB::statement('SET FOREIGN_KEY_CHECKS=0');
       DB::table('products')->truncate();
   
-  
+  # Set/seed 'created_at' with current timestamp => 
+      use Carbon\Carbon;
+      'created_at' => Carbon::now()->format('Y-m-d H:i:s')
 //================================================================================================
 
 
@@ -1285,6 +1290,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 ============================================================================
 13.2.1 REST API authentication via Passport package
+
+#NB: more detailed Passport info is at README.md & Readme_This_Project_itself.txt => at =>  https://github.com/account931/Laravel_Vue_Blog_V6_Passport
 
 #Passport 
   composer require laravel/passport "4.0.3" for L 5.4
@@ -3148,6 +3155,11 @@ Create Anchor =>
    !.gitignore
 
 # git change default master to main  => https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
+
+# git: how restore/save files if you removed 2 last commits with  git reset --hard HEAD~2
+      git reflog   => it 'll display all commits which are/were created in your repository - after this you should checkout to removed commit by checkout command
+      git checkout <your commit-SHA>
+
 
 #RegExp regular expression Php =>  
     # if (!preg_match($RegExp_Phone, $phone)), returns 1 if a match was found,or 0

@@ -2,6 +2,7 @@
 //seeder for 3 tables => {polymorphic_posts}, {polymorphic_users}, {polymorphic_images},
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class PolymorphicSeeder extends Seeder {
 
@@ -15,6 +16,9 @@ class PolymorphicSeeder extends Seeder {
 
         DB::table('polymorphic_users')->insert(['id' => 1, 'user_name' => 'Polymorph User 1']);
         DB::table('polymorphic_users')->insert(['id' => 2, 'user_name' => 'Polymorph User 2']);
+		DB::table('polymorphic_users')->insert(['id' => 3, 'user_name' => 'Polymorph User 3']);
+		
+		
 		
 		
 		
@@ -24,9 +28,9 @@ class PolymorphicSeeder extends Seeder {
 		DB::statement('SET FOREIGN_KEY_CHECKS=0');
         DB::table('polymorphic_posts')->truncate();
 
-        DB::table('polymorphic_posts')->insert(['id' => 1, 'post_name' => 'Post 1', 'post_text' => 'Some Post 1"s text goes here..', 'author_id' => 1]);
-	    DB::table('polymorphic_posts')->insert(['id' => 2, 'post_name' => 'Post 2', 'post_text' => 'Some Post 2"s text goes here..', 'author_id' => 1 ]);
-        DB::table('polymorphic_posts')->insert(['id' => 3, 'post_name' => 'Post 3', 'post_text' => 'Some Post 3"s text goes here..', 'author_id' => 1 ]);
+        DB::table('polymorphic_posts')->insert(['id' => 1, 'post_name' => 'Post 1', 'post_text' => 'Some Post 1"s text goes here..', 'author_id' => 1, 'created_at' => Carbon::now()->format('Y-m-d H:i:s') ]);
+	    DB::table('polymorphic_posts')->insert(['id' => 2, 'post_name' => 'Post 2', 'post_text' => 'Some Post 2"s text goes here..', 'author_id' => 1, 'created_at' => Carbon::now()->format('Y-m-d H:i:s') ]);
+        DB::table('polymorphic_posts')->insert(['id' => 3, 'post_name' => 'Post 3', 'post_text' => 'Some Post 3"s text goes here..', 'author_id' => 1, 'created_at' => Carbon::now()->format('Y-m-d H:i:s') ]);
 
 		
 		

@@ -31,7 +31,7 @@ class Polymorphic_Posts extends Model
     }
 
     
-	 /**
+	/**
      * Get the Author name. hasOne relation
 	 *
      */

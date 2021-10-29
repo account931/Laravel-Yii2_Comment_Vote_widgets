@@ -111,15 +111,21 @@
 
 ![Screenshot](public/images/Screenshots/37.png)
 
-## Laravel polymorphic relations
+## Laravel polymorphic relations: Db table {polymorphic_images} contains images either for table {polymorphic_posts} or {polymorphic_users }
 
 ![Screenshot](public/images/Screenshots/38.png)
 
 ![Screenshot](public/images/Screenshots/39.png)
 
+## Laravel polymorphic relations: check if DB is empty
 
+![Screenshot](public/images/Screenshots/39.1png)
 
+## Laravel polymorphic relations: edit form
 
+![Screenshot](public/images/Screenshots/40.png)
+![Screenshot](public/images/Screenshots/41.png)
+![Screenshot](public/images/Screenshots/42.png)
 
 
 

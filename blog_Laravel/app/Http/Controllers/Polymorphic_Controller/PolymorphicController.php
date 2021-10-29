@@ -37,6 +37,11 @@ class PolymorphicController extends Controller
      */
     public function index()
     { 
+	    //additional check if any posts are at all 
+	    if (Polymorphic_Posts::all()->count() == 0) { 
+	        throw new \App\Exceptions\myException('Sorry, so far no posts in DB');
+	    }
+	    
         $testMessage = "test mess from Controller";
 		
 		//getting one post
@@ -86,7 +91,7 @@ class PolymorphicController extends Controller
 	
 	
 	/**
-     * $_PUT to update a post
+     * $_PUT to update a one single post
      * @param  \Illuminate\Http\PostPolymUpdateReques  $request
      * @return \Illuminate\Http\Response
 	 *
@@ -94,7 +99,7 @@ class PolymorphicController extends Controller
 	 
     public function updateProduct (PostPolymUpdateRequest $request)
 	{
-		//dd($request->all());
+		//dd($request->all()); //all form input (is shown always even if validation fails)
 		
 		//commented {function withValidator} and decommented {function failedValidation} in Requests\Polymorphic\PostPolymUpdateRequest in order if Validation fails, the Controller still execute code
 		//if validation fails
@@ -111,7 +116,116 @@ class PolymorphicController extends Controller
 		
 		
 		//$request->input('role_sel'); vs $request->all()
-		return "Validation is OK";
+		//return "Validation is OK";
+		
+		
+		/*
+		//additional check in case user directly intentionally navigates to  ../blog_Laravel/public/delete/12 to not his record
+	        try{
+	            $articleOne = wpress_blog_post::where('wpBlog_id',$id)->firstOrFail(); //find the article by id  ->firstOrFail();
+	        } catch (\Exception $e) {
+	            //if(!$articleOne){
+	            throw new \App\Exceptions\myException('Article does not exist');
+	        }
+		*/
+		
+		//dd($request->all());
+		//dd($request->input('product-name'));
+		//dd($request->image->getSize() . ' byte'); //image size
+		
+		$form_data = array(
+            'post_name'      =>  $request->input('product-name'), //DB column => input name
+            'post_text'      =>  $request->input('product-desr'),
+			'author_id'      =>  $request->input('article-author'), //$request->article-author, //won't work
+			
+			/*
+			'phone'       =>  $request->user_phone,
+			'username'    =>  $request->user_n,
+			'rank_id'     =>  $request->user_rank,
+			'superior_id' =>  $request->user_superior,
+			'salary'      =>  $request->user_salary,
+			'hired_at'    =>  $request->user_hired_at,
+			'image'       =>  $imageName, //$request->image,
+			*/
+        );    
+
+        //Updating the Post
+        if (Polymorphic_Posts::whereId($request->input('hidden-prod-id'))->update($form_data)) { //request->hidden-prod-id
+            
+			//remove the prev image from folder (100%).........
+			//delete a prev/old image from folder '/images/polymorphic/'
+		    $product = Polymorphic_Images::where('imageable_id', $request->input('hidden-prod-id'))->first(); //found image 
+		    
+			$pieces = explode("/images/polymorphic/", $product->url); //as db column saves image url as "/images/polymorphic/someName" we need to "someName" first
+			if(file_exists(public_path('images/polymorphic/' . $pieces[1]))){ //$pieces[1] is an image name without "/images/polymorphic/
+		        \Illuminate\Support\Facades\File::delete('images/polymorphic/' . $pieces[1]);
+		    }
+			
+			
+			
+			
+			//
+		    //------------------------------------------------------------------
+		    //Intervention Lib, resizing image + save ----- //https://stackoverflow.com/questions/59300544/how-to-reduce-size-of-image-in-laravel-when-upload
+	        /*
+			if($request->file('image') != null){ //if a user uploaded an image which is NOT OBLIGATORY REQUIRED for UPDATE
+		        $image = $request->file('image'); //uploded image 
+		        $imageName = time(). '_' . $request->image->getClientOriginalName(); //new name (time + originalName). //Prev variant (before implement Intervention resize). Working!!!
+                //$input['imagename'] = time().  '_' . $request->image->getClientOriginalName(); // . '.'.$image->getClientOriginalExtension(); //create name: time+name+extension
+
+                $destinationPath = public_path('images/employees');
+                $img = Image::make($image->getRealPath());
+		
+		        //watermark
+		        $watermark = Image::make('images/water-mark.png'); //watermark
+		        $watermark->resize(20, 20); //watermark resize
+		
+		        //resize avatar image to (300, 300) + adding watermark + save. Uses method chaining. Alternatively can do separately $img->resize(); $img->insert(); $img-save();
+                $img->resize(300, 300, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+		        ->insert($watermark, 'bottom-right', 10, 10) // insert watermark at bottom-right corner with 10px offset
+		        ->save($destinationPath.'/' . $imageName); //save
+            }
+            */
+           //$destinationPath = public_path('images/employees');
+           //$image->move($destinationPath, $imageName);
+	       
+	   //END Intervention Lib, resizing image + save  -----
+	   //------------------------------------------------------------------
+			//
+			
+			
+			//update the image in table Polymorphic_Images ------------------------------------------
+			
+			//getting Image info for Flash Message
+		    $imageName      = time(). '_' . $request->image->getClientOriginalName();
+		    $sizeInByte     = $request->image->getSize() . ' byte';
+		    $sizeInKiloByte = round( ($request->image->getSize() / 1024), 2 ). ' kilobyte'; //round 10.55364364 to 10.5
+		    $fileExtens     =     $request->image->getClientOriginalExtension();
+		    //getting Image info for Flash Message
+			
+			//Move uploaded image to the specified folder 
+		    request()->image->move(public_path('images/polymorphic'), $imageName);
+		
+		    //update image itself
+			Polymorphic_Images::where('imageable_id', $request->input('hidden-prod-id') )->update([  'url' => '/images/polymorphic/' . $imageName, /* 'wpBlog_title' => $data['title'], */  ]);
+            
+			//End update the image in table Polymorphic_Images -------------------------------------
+
+
+
+			
+			
+			//return response()->json(['success' => 'Data is successfully updated.]); //Version for JSON
+			return redirect()->back()->withInput()->with('flashMessageX', 'Data is successfully updated! Connected image is ' . $imageName . ' ' . $sizeInByte );
+
+		} else {
+			//return response()->json(['success' => 'Failed to update']);             //Version for JSON
+			return redirect()->back()->withInput()->with('flashMessageFailX', 'Failed to update!!!' );
+
+
+		}
 	}
       
    

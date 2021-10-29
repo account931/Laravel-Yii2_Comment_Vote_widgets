@@ -32,10 +32,15 @@ class PostPolymUpdateRequest extends FormRequest
      */
     public function rules()
     {
+		//$RegExp_Phone = '/^[+]380[\d]{1,4}[0-9]+$/'; //phone regexp
+		$RegExp_Title = '/^Post [0-9]+$/'; //phone regexp
+		
         return [
             //
-			'product-name'     => ['required', 'string',   'min:3'], 
-			'product-desr'     => [ 'required',  'string', 'min:8'],
+			'product-name'     => ['required', 'string',   'min:3', "regex: $RegExp_Title"], //Post title form field
+			'product-desr'     => ['required',  'string', 'min:8'],                          //Post text form field
+			'article-author'   => ['required',  'integer', ], //'integer'                    //Author form field
+			'image'            => ['required',  'mimes:png,jpg', 'max:5120' ], //2mb = 2048 //'mimes:jpeg,png,jpg,gif,svg'
             //'u_email'          => [ 'required', 'email' ] ,
         ];
     }
@@ -51,8 +56,15 @@ class PostPolymUpdateRequest extends FormRequest
     {
         // use trans instead on Lang 
         return [
-		   'product-name.required'   => 'Kindly ask you to specify the title',
-		   'product-name.min'        => 'Post title can"t be less than 3 chars',
+		   'product-name.required'       => 'Kindly ask you to specify the title',
+		   'product-name.min'            => 'Post title can"t be less than 3 chars',
+		   'product-name.regex'          => 'Post title must be in format Post + number....',
+		   'article-author.required'     => 'Kindly ask you to specify the author',
+		   'article-author.integer'      => 'Author must be integer',
+		   'image.required'              => 'Kindly ask you to specify the image',
+		   'image.mimes'                 => 'Image must be png,jpg',
+		   
+		   
            //'username.required' => Lang::get('userpasschange.usernamerequired'),
 	       //'u_name.required'     => 'We need u to specify your name',
 	       //'u_email.email'       => 'Give us real email',

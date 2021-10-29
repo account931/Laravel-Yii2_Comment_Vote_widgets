@@ -72,7 +72,7 @@
 							 <br>  
 						</p>
 				        
-						&nbsp;<i class="fa fa-arrow-circle-o-left" style="font-size:24px"></i>&nbsp;       <a href="{{ url('/polymorphic') }}">back to View all products </a><br>
+						&nbsp;<i class="fa fa-arrow-circle-o-left" style="font-size:24px"></i>&nbsp;       <a href="{{ url('/polymorphic') }}">back to View all Polymorphic posts </a><br>
                     </div>
 					
 					
@@ -131,10 +131,10 @@
 							<input name="_method" type="hidden" value="PUT">  <!--{!!  method_field('PUT') !!} --> <!-- Fix for PUT -->
                             
                             <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
-                            <input type="hidden" value="{{ $productOne[0]->id }}" name="prod-id" /> <!-- product ID -->
+                            <input type="hidden" value="{{ $productOne[0]->id }}" name="hidden-prod-id" /> <!-- product ID -->
 
  
-                            <!-- product name -->
+                            <!-- Post Titel, product name -->
                             <div class="form-group{{ $errors->has('product-name') ? ' has-error' : '' }}">
                                 <label for="product-name" class="col-md-4 control-label">Product name</label>
 
@@ -151,7 +151,7 @@
                            
 						   
 						   
-						    <!-- product description -->
+						    <!-- Post Text, product description -->
                             <div class="form-group{{ $errors->has('product-desr') ? ' has-error' : '' }}">
                                 <label for="product-desr" class="col-md-4 control-label">Description</label>
 
@@ -186,12 +186,12 @@
 							
 							
 							<!-- Author Select dropdown  -->
-                            <div class="form-group{{ $errors->has('product-category') ? ' has-error' : '' }}">
-                                <label for="product-category" class="col-md-4 control-label">Author</label>
+                            <div class="form-group{{ $errors->has('article-author') ? ' has-error' : '' }}">
+                                <label for="article-author" class="col-md-4 control-label">Author</label>
 
                                 <div class="col-md-6">
 
-                                    <select name="product-category" class="mdb-select md-form">
+                                    <select name="article-author" class="mdb-select md-form">
 						                <option  disabled="disabled"  selected="selected">Choose author</option>
 		                              
 									    @foreach ($authorsAll as $a) <!-- hasOne Relat -->
@@ -200,9 +200,9 @@
 						            </select>
 
 									
-                                    @if ($errors->has('product-category'))
+                                    @if ($errors->has('article-author'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('product-category') }}</strong>
+                                        <strong>{{ $errors->first('article-author') }}</strong>
                                     </span>
                                     @endif 
 							     </div>
