@@ -3863,7 +3863,9 @@ are the central place of all Laravel application bootstrapping. Your own applica
  7. LaraAppointments         => https://github.com/LaravelDaily/LaraAppointments-QuickAdminPanel
  8. Voyager Admin Panel
  9. Socialite
- 10.Spatie Laravel Permission => https://spatie.be/docs/laravel-permission/v4/introduction
+ 10. Spatie Laravel Permission => https://spatie.be/docs/laravel-permission/v4/introduction
+ 11. Laravel Intervention (not package, just using Intervention Library in Laravel )
+ 12. Passport Api
  
  #Pending: Passport, Avored, Aimeos, appzcoder/crud-generator, Zofe_Rapyd
 

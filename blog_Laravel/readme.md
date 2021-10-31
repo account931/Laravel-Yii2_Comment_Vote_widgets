@@ -119,7 +119,7 @@
 
 ## Laravel polymorphic relations: check if DB is empty
 
-![Screenshot](public/images/Screenshots/39.1png)
+![Screenshot](public/images/Screenshots/39.1.png)
 
 ## Laravel polymorphic relations: edit form
 
