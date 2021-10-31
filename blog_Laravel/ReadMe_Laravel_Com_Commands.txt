@@ -3165,7 +3165,7 @@ Create Anchor =>
 	
 	
 	
-# git: check repo consistency => git fsck	
+# git: check repo consistency => { git fsck } , if "error: refs/remotes/origin/master: Invalid sha1 pointer", do {git pull} and create new commit as usual (git add .  git commit)
 	
 	
 	
