@@ -3162,6 +3162,13 @@ Create Anchor =>
 
 # git: when try to git add . , gets error => Unable to create '...git/index.lock': File exists.
     Solution: run => rm -f ./.git/index.lock
+	
+	
+	
+# git: check repo consistency => git fsck	
+	
+	
+	
 
 #RegExp regular expression Php =>  
     # if (!preg_match($RegExp_Phone, $phone)), returns 1 if a match was found,or 0
