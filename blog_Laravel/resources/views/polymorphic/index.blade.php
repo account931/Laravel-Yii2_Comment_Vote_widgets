@@ -98,10 +98,21 @@
 						
 						
 						<!-- Image, Polymorphic relation --> 
-						@if( $postOne->imageZ->exists())  
-						   <p> {{ $postOne->imageZ->url }} </p>
-					       <img class="img-responsive my-cph" src="{{URL::to("/")}}/{{ $postOne->imageZ->url }}"  alt="a"/>
-	
+						@if( $postOne->imageZ->exists())  <!-- If this Post record has image connected via Polymorphic relation --> 
+						   
+						    @if(file_exists(public_path(  $postOne->imageZ['url'] ))) <!-- check if file is physically available in folder(e.g was in folder but was accidentally deleted) --> 
+
+						        <p> {{ $postOne->imageZ->url }} </p>                                                             <!-- Polymorphic relation, just display the path -->
+					            <img class="img-responsive my-cph" src="{{URL::to("/")}}/{{ $postOne->imageZ->url }}"  alt="a"/> <!-- Polymorphic relation -->
+	                        
+							@else <!-- if Post has image connected via Polymorphic relation but physically IS NOT available in folder --> 
+								<p> 
+								    <i class="fa fa-exclamation-circle" style="font-size:20px;color:red"></i>
+									Image corrupted 
+								</p>
+									
+							@endif		
+									
 						@else
 							<p> Sorry, no polymorph image </p>
 							
@@ -112,6 +123,9 @@
 
 
 
+                    
+					
+				
 
 
 
@@ -129,12 +143,23 @@
                                     <p class="timestamp"> Created:           {{ $x->created_at }}             </p>
 									<p class="timestamp"> Updated:           {{ $x->updated_at ? $x->updated_at : "never updated" }} </p>
 									
-									@if ($x->imageZ)  <!-- $x->imageZ->exists() DOES NOT WORK -->
-										<p> Image(polymorph):  {{ $x->imageZ['url'] }} </p>	            <!-- Polymorphic relation -->									
-									    <img  class="small-img" src="{{URL::to("/")}}/{{ $x->imageZ['url'] }}"  alt="a"/>
+									@if ($x->imageZ)  <!-- If this Post record has image connected via Polymorphic relation --> <!-- $x->imageZ->exists() DOES NOT WORK -->
+									
+									    @if(file_exists(public_path(  $x->imageZ['url'] ))) <!-- check if file is physically available in folder(e.g was in folder but was not accidentally deleted) --> 
+											
+										    <p> Image(polymorph):  {{ $x->imageZ['url'] }} </p>	                              <!-- Polymorphic relation -->									
+									        <img  class="small-img" src="{{URL::to("/")}}/{{ $x->imageZ['url'] }}"  alt="a"/> <!-- Polymorphic relation -->
 
-										<p> Type is:           {{gettype($x->imageZ)}}
-									@else
+										    <p> Type is:           {{gettype($x->imageZ)}}
+											
+										@else <!-- if Post has image connected via Polymorphic relation but physically IS NOT available in folder --> 
+										    <p class="timestamp"> 
+											    <i class="fa fa-exclamation-circle" style="font-size:20px;color:red"></i>
+											    Seems like polymorph image is corrupted/missing in folder 
+											</p>
+										@endif
+										
+									@else <!-- If Post has no image connected via Polymorphic relation -->
 										<p>No polymorph image is attached to this post record</p>
 									    <img class="small-img" src="{{URL::to("/")}}/images/no-image-found.png"  alt="a"/>
 									@endif
@@ -213,9 +238,20 @@
 							</div>
 
                             <div class="col-sm-2 col-xs-2">
-								<!-- Show polymorphic image -->
-							    @if ($x->imageZ)  <!-- $x->imageZ->exists() DOES NOT WORK -->
-									<img  class="gii-img" src="{{URL::to("/")}}/{{ $x->imageZ['url'] }}"  alt="a"/>
+								<!-- Show polymorphic relation image -->
+							    @if ($x->imageZ)  <!-- If this Post record has image connected via Polymorphic relation -->   <!-- $x->imageZ->exists() DOES NOT WORK -->
+								    
+									@if(file_exists(public_path(  $x->imageZ['url'] ))) <!-- check if file is physically available in folder(e.g was in folder but was accidentally deleted) --> 
+
+									    <img  class="gii-img" src="{{URL::to("/")}}/{{ $x->imageZ['url'] }}"  alt="a"/>  <!-- Polymorphic relation -->
+                                    
+									@else <!-- if Post has image connected via Polymorphic relation but physically IS NOT available in folder --> 
+										    <p class="timestamp"> 
+												<i class="fa fa-exclamation-circle" style="font-size:20px;color:red"></i>
+												Image corrupted 
+											</p>
+									
+									@endif										
 
 							    @else
 								    <!-- No image -->

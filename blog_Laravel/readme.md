@@ -117,6 +117,10 @@
 
 ![Screenshot](public/images/Screenshots/39.png)
 
+## Additional check if Post record DOES have image connected via Polymorphic relation but the image file is NOT physically available in folder(e.g was accidentally deleted)
+
+![Screenshot](public/images/Screenshots/39.2.png)
+
 ## Laravel polymorphic relations: check if DB is empty
 
 ![Screenshot](public/images/Screenshots/39.1.png)
@@ -125,6 +129,8 @@
 
 ![Screenshot](public/images/Screenshots/40.png)
 ![Screenshot](public/images/Screenshots/41.png)
+![Screenshot](public/images/Screenshots/41.1.png)
+![Screenshot](public/images/Screenshots/41.2.png)
 ![Screenshot](public/images/Screenshots/42.png)
 
 

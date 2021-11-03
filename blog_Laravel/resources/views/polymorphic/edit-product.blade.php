@@ -210,7 +210,16 @@
 							
 							
 					
-								
+							<!-- Checkbox "Do not update image" --> 
+                            <div class="col-md-6 col-md-offset-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Do not update image
+                                    </label><p></p>
+                                </div>
+                            </div>
+
+							
 							
 							
 							<!----- Image  ------->
@@ -234,19 +243,33 @@
 				
 				            <!----- Display an image of edited post (if any was prev loaded) + new uploaded img will appear in this div ---->
 							<div class="col-md-6" id="imagePreview">
-				                @if ($productOne[0]->imageZ)  <!-- $x->imageZ->exists() DOES NOT WORK -->
-								    <img  class="small-img" src="{{URL::to("/")}}/{{ $productOne[0]->imageZ->url }}"  alt="a"/>
+				                @if ($productOne[0]->imageZ) <!-- If this Post record has image connected via Polymorphic relation -->     <!-- $x->imageZ->exists() DOES NOT WORK -->
+								    
+									@if(file_exists(public_path( $productOne[0]->imageZ['url'] ))) <!-- check if file is physically available in folder(e.g was in folder but was accidentally deleted) --> 
 
+									    <img  class="small-img" src="{{URL::to("/")}}/{{ $productOne[0]->imageZ->url }}"  alt="a"/>
+                                    @else <!-- if Post has image connected via Polymorphic relation but physically IS NOT available in folder --> 
+								        <p> 
+								        <i class="fa fa-exclamation-circle" style="font-size:20px;color:red"></i>
+									    Image corrupted 
+								    </p>
+									
+							        @endif	
+							
 							    @else
 								    <!-- no image is found photo -->
+								    Sorry, no polymorph image
 								    <img class="small-img" src="{{URL::to("/")}}/images/no-image-found.png"  alt="a"/>
 							    @endif
 		                    </div>
 							<!----- Display an image of edited post (if any was prev loaded) ---->
 
-									
 							
-							<!-- Button --> 
+
+
+							
+							
+							<!-- Submit Button --> 
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary"> Edit </button>

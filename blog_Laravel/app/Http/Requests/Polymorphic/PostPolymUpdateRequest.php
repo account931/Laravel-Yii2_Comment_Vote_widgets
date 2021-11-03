@@ -40,11 +40,16 @@ class PostPolymUpdateRequest extends FormRequest
 			'product-name'     => ['required', 'string',   'min:3', "regex: $RegExp_Title"], //Post title form field
 			'product-desr'     => ['required',  'string', 'min:8'],                          //Post text form field
 			'article-author'   => ['required',  'integer', ], //'integer'                    //Author form field
-			'image'            => ['required',  'mimes:png,jpg', 'max:5120' ], //2mb = 2048 //'mimes:jpeg,png,jpg,gif,svg'
+			
+			//image file is required is only if checkbox 'remember' is unticked
+			'image'            => ['required_without:remember',  'mimes:jpeg,png,jpg,gif,svg', 'max:5120' ], //2mb = 2048 //'mimes:jpeg,png,jpg,gif,svg' //'required_with:remember'
             //'u_email'          => [ 'required', 'email' ] ,
         ];
     }
 	
+	
+     
+           
 	
 	
 	/**
@@ -62,7 +67,7 @@ class PostPolymUpdateRequest extends FormRequest
 		   'article-author.required'     => 'Kindly ask you to specify the author',
 		   'article-author.integer'      => 'Author must be integer',
 		   'image.required'              => 'Kindly ask you to specify the image',
-		   'image.mimes'                 => 'Image must be png,jpg',
+		   'image.mimes'                 => 'Image must be jpeg,png,jpg,gif,svg',
 		   
 		   
            //'username.required' => Lang::get('userpasschange.usernamerequired'),

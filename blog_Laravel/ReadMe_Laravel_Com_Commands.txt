@@ -3,7 +3,7 @@ OpenServer 5.2.2 Php 7.2 Node-v13.14.0-x86.msi
 Credentials: dimmm931@gmail.com =>  dimax2
 PhpMyAdmin => http://localhost/openserver/phpmyadmin/
 
-
+NB: Considering corruped/lame folder architecture, artisan command (i.e php artisan db:seed) must be executed in CLI inside folder /blog_Laravel, not /laravel+Yii2_comment_widget
 NB: CHECK WPRESS MIGRATION (SETTING TIMESTAMP BY DEFAULT) (as varinat add to migration $table->timestamps(); but column name will change)!!!!!!!!!!!!!!!!!!!!!!! 
 
 On HP EliteBook 2530p: Composer -> via Windows cmd, artisan -> via OpenServer (navigate to your project folder first with cd ), 
@@ -21,8 +21,8 @@ Table of Content:
 4.Error handling, throw custom exceptions 
 5.Atrisan commands
 6.How to create new Controller/action, view and add to menu
-7.Forms validation via Controller
-8.Form Validation (General info)
+7.Forms validation via Controller (+getting form inputs) (for validation rules best practices see next chapter) => 
+8.Form Validation viaController(General info: Validation Best practice) => 
 8.1.1 Form Validation via Request Class
 8.1.2 Custom Form Validation via Model(like in Yii2)
 8.1.2 Image Upload and validation (regular form)
@@ -270,16 +270,19 @@ USAGE
 
 //================================================================================================
 
-7.Forms validation via Controller => 
+7.Forms validation via Controller (+getting form inputs) (for validation rules best practices see next chapter) => 
+
     see example_1 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimpleController.php    at => public function storeToCart(Request $request)
     see example_2 at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlog.php   at =>  public function store(Request $request)
  
- # get one input => $request->input('role_sel'); vs $request->all()
+ # Get one form input           => $request->input('role_sel'); vs $request->all()
+ # check if checkbox is ticked  => if($request->has('remember')) {
   
   #get form input => 
          use Illuminate\Support\Facades\Input;
 		   var_dump(Input::get('description'));
-		   dd(Input::all());
+		   dd(Input::all()); 
+		   dd($request->all());
 		   
  #creating custom error messages, if use {Validator::make()} in controller => 
  
@@ -348,33 +351,58 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 //================================================================================================
 
-8.Form Validation  vai Controller(General info) => 
+8.Form Validation viaController(General info: Validation Best practice) => 
   NB: first implement back-emd validation, then front-end
   # 4 ways of validation => https://laravel.demiart.ru/ways-of-laravel-validation/
   #Docs => https://laravel.ru/docs/v5/validation
   
   use Illuminate\Support\Facades\Validator;
+  use Illuminate\Validation\Rule; //for in: validation
+
   
+        //Used for reg exp validation
+        $RegExp_Phone = '/^[+]380[\d]{1,4}[0-9]+$/'; //phone regexp
+		//$RegExp_Title = '/^Post [0-9]+$/'; //phone regexp
+		
+		
+		//Used for validation in range {Rule::in(['admin', 'owner']) ]}, ['13', '17']. Getting all existing categories from DB {wpressimage_category}, get from DB only column "id". Used for validation in range {Rule::in(['admin', 'owner']) ]}, ['13', '17']
+		$existingRoles = Wpress_images_Category::select('wpCategory_id')->get(); 
+		$rolesList  = array(); // array to contain all roles id  from DB in format ['13', '17']
+		foreach($existingRoles as $n){
+			array_push($rolesList, $n->wpCategory_id);	
+		}
+		
   
 		$rules = [
-			'first_name'  => ['required', 'string', 'min:3'], 
-			'email'       => ['required', 'email', 'min:3', 'unique:abz_employees,email'], 
-			'user_dob'    => ['required', 'date'], //date validation
-			'user_phone'  => ['required',  "regex: $RegExp_Phone" ],
-			'user_n'      => ['required', 'string', 'min:3'],
-			'user_salary' => ['required',  'numeric'], //numeric to accept float
-            'user_rank'   => ['required', 'integer', Rule::in($rankList) ] , //in range];
+			'first_name'      => ['required', 'string', 'min:3'], 
+			'email'           => ['required', 'email', 'min:3', 'unique:abz_employees,email'], 
+			'user_dob'        => ['required', 'date'], //date validation
+			'user_phone'      => ['required', "regex: $RegExp_Phone" ],
+			'user_n'          => ['required', 'string', 'min:3'],
+			'user_salary'     => ['required', 'numeric'], //numeric to accept float
+            'user_rank'       => ['required', 'integer', Rule::in($rankList) ] , //in range]; //Rule::in(['admin', 'second-zone']) => see blog_Laravel/app/Http/Requests/Wpress_Images/SaveNewWpressImagesRequest.php
 			'user_superior'   => ['required', 'integer', ],
 			'user_hired_at'   => ['required', 'date'], //date validation
             'password'        => ['required', 'confirmed'], //password confirm match (works without specifiying the confirm input name, but the confirm input must be {foo_confirmation} i.e {password_confirmation})
-			'image'           => ['required',  'mimes:png,jpg', 'max:5120' ], //2mb = 2048 //'mimes:jpeg,png,jpg,gif,svg'
+            'product-name'    => ['required', 'string', 'min:3', 'unique:shop_simple,shop_title'],  //unique:tableName, columnName
+
+			'image'           => ['required',  'mimes:jpeg,png,jpg,gif,svg', 'max:5120' ], //2mb = 2048 //'mimes:jpeg,png,jpg,gif,svg' //'required_with:remember'
+            'someField'       => ['required_without:remember', 'string', 'min:3'], //'required_with:remember' //only required if checkbox 'remeber' is not ticked              
+							 //required on condition => https://laravel.com/docs/8.x/validation#rule-required-unless 
 			
 		];
+		
+		
+		
+		
         
         $messages = [
         'first_name.min'  => 'First name at least 3 chars',
         'u_phone.regex'   => 'Phone must be in format +380....',
+		'image.mimes'     => 'Image must be jpeg,png,jpg,gif,svg',
+
         ];
+		
 
         $result =  Validator::make($request, $rules, $messages);
         if ($result->fails()) { //.........}  
@@ -3139,6 +3167,8 @@ Create Anchor =>
      
      
 	 
+// Git Section ***********************************************************************
+// Some additional git commands => https://github.com/account931/git-browserify-yii_commands_manuals/blob/master/README.md
 
 # Github tab/space/indentation problem => create a file in the project root named “.editorconfig” and give it the following contents (or ?ts=4) => 
   [*]
@@ -3166,6 +3196,12 @@ Create Anchor =>
 	
 	
 # git: check repo consistency => { git fsck } , if "error: refs/remotes/origin/master: Invalid sha1 pointer", do {git pull} and create new commit as usual (git add .  git commit)
+
+# git: 5 steps to change GitHub default branch from master to main => git branch -m master main  git push -u origin main   git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main    => https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
+
+	
+// End Git Section ***********************************************************************
+	
 	
 	
 	
