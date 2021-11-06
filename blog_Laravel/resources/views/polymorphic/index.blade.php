@@ -136,7 +136,7 @@
 						
                             @foreach ($allPosts as $x)
                                 <?php $i++; ?>							
-		                        <div class="col-sm-5 col-xs-5 shadowX posts-grid">
+		                        <div class="col-sm-5 col-xs-12 shadowX posts-grid">
                                     <p>                   Title:             {{ $x->post_name }}             </p>
                                     <p>                   Text:              {{ $x->post_text }}             </p>
                                     <p>                   Author:            {{ $x->authorName->user_name }} </p>	<!-- hasOne relation -->
@@ -162,6 +162,7 @@
 									@else <!-- If Post has no image connected via Polymorphic relation -->
 										<p>No polymorph image is attached to this post record</p>
 									    <img class="small-img" src="{{URL::to("/")}}/images/no-image-found.png"  alt="a"/>
+										<p> Type is:  No type </p>
 									@endif
 									
 								</div>
@@ -182,33 +183,39 @@
 
                     <!--------------- Gii CRUD for table polymorphic_posts------------------->
 					<div class="col-sm-12 col-xs-12"></br>
-					    <h3 class="underlined">Gii CRUD for table <b> polymorphic_posts </b></h3>      
+					    <h3 class="underlined">Gii CRUD for table <b> polymorphic_posts </b></h3> 
+                        
+						<!-- Button "Create new" -->
+                        <button class="btn btn-info">
+						    <a href = 'gii-create-new-post'>  
+							<span class="link-text" onclick="return confirm('Are you sure to create new?')">Create new/POST  </span></a> <!--<img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/> --> 
+						</button> 						
 					</div>	
 						   
 						   
 					<div class="col-sm-12 col-xs-12  list-group-item shadowX head-name">
 							
-						<div class="col-sm-2 col-xs-2">
+						<div class="col-sm-2 col-xs-12"> <!-- hidden-xs -->
 							Post id
 					    </div>
 							
-						<div class="col-sm-2 col-xs-2">
+						<div class="col-sm-2 col-xs-12">
 							Post name
 					    </div>
 							
-					    <div class="col-sm-2 col-xs-2">
+					    <div class="col-sm-2 col-xs-12">
 							Post title
 						</div>
 							
-						<div class="col-sm-2 col-xs-2">
+						<div class="col-sm-2 col-xs-12">
 							Author
 						</div>
 							
-					    <div class="col-sm-2 col-xs-2">
+					    <div class="col-sm-2 col-xs-12">
 							Image
 					    </div>
 								
-						<div class="col-sm-2 col-xs-2">
+						<div class="col-sm-2 col-xs-12">
 							Buttons
 					    </div>
 									
@@ -219,25 +226,25 @@
 				
 					<!-- display all posts for Gii admin table -->		
 				    @foreach ($allPosts as $x)
-					    <div class="col-sm-12 col-xs-12 list-group-item bg-success cursorX shadowX"> <!-- class="row gii-content" -->
+					    <div class="col-sm-12 col-xs-12 list-group-item bg-success cursorX shadowX crud-div"> <!-- class="row gii-content" -->
                             
-							<div class="col-sm-2 col-xs-2">
+							<div class="col-sm-2 col-xs-12">
 							    {{ $x->id }}
 							</div>
                                     
-                            <div class="col-sm-2 col-xs-2">
+                            <div class="col-sm-2 col-xs-12">
 							    {{ $x->post_name }}
 							</div>
 
-                            <div class="col-sm-2 col-xs-2">
+                            <div class="col-sm-2 col-xs-12">
 							    {{ $x->post_text }}
 							</div>
                                     
-                            <div class="col-sm-2 col-xs-2">
+                            <div class="col-sm-2 col-xs-12">
 							    {{ $x->authorName->user_name }}
 							</div>
 
-                            <div class="col-sm-2 col-xs-2">
+                            <div class="col-sm-2 col-xs-12">
 								<!-- Show polymorphic relation image -->
 							    @if ($x->imageZ)  <!-- If this Post record has image connected via Polymorphic relation -->   <!-- $x->imageZ->exists() DOES NOT WORK -->
 								    
@@ -259,9 +266,14 @@
 							    @endif
 							</div>
 									
-							<div class="col-sm-2 col-xs-2">
-							    <button class="btn btn-info"><a href = 'gii-edit-post/{{ $x->id }}'>  <span class="link-text" onclick="return confirm('Are you sure to edit?')">Edit via /PUT  <!--<img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/> --> </span></a></button>  
-								<button class="btn btn-danger"> Delete </button>
+							<div class="col-sm-2 col-xs-12">
+							    <p class="hidden-sm"></p> <!-- hidden in desktop-->
+							    <button class="btn btn-info">
+								    <a href = 'gii-edit-post/{{ $x->id }}'>  
+								        <span class="link-text" onclick="return confirm('Are you sure to edit?')">Edit via /PUT  </span></a> <!--<img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/> --> 
+								</button>  
+								
+								<button class="btn btn-danger" onclick="return confirm('Are you sure to delete post {{$x->id}}  ?')"> Delete (N/A) </button>
 							</div>
 						</div>	
 					@endforeach	

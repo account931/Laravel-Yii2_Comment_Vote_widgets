@@ -273,8 +273,8 @@
     @endif
 	
 	
-	 <!-- To register JS/CSS for specific view only (for Polymorphic only). -->
-    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['polymorphic'])) 
+	 <!-- To register JS/CSS for specific view only (for Polymorphic only). Additional JS and CSS are connected in views (create-new-product.blade + edit-product.blade.php) -->
+    @if (in_array(Route::getFacadeRoot()->current()->uri(), ['polymorphic', 'gii-edit-post/{id}', 'gii-create-new-post'])) 
 		<link href="{{ asset('css/Polymorphic/polymorphic.css') }}" rel="stylesheet">
     @endif
 	

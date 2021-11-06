@@ -1,10 +1,9 @@
 <?php
-
+//used both for update and create in PolymorphicController
 namespace App\Http\Requests\Polymorphic;
 
 use Illuminate\Foundation\Http\FormRequest;
 //use Illuminate\Http\Request as BaseRequest;
-
 //use Illuminate\Contracts\Validation\Validator;
 //use Illuminate\Support\Facades\Validator;
 

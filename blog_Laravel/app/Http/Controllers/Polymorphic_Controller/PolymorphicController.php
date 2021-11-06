@@ -13,7 +13,7 @@ use Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
-use App\Http\Requests\Polymorphic\PostPolymUpdateRequest; //Validation via Request Class
+use App\Http\Requests\Polymorphic\PostPolymUpdateRequest; //Validation via Request Class (both for create and update)
 
 use App\Http\Controllers\Controller; //to place controller in subfolder
 use App\models\Polymorphic\Polymorphic_Posts;    //model for DB table {polymorphic_posts}
@@ -91,7 +91,7 @@ class PolymorphicController extends Controller
 	
 	
 	/**
-     * $_PUT to update a one single post
+     * $_PUT request to update/edit a one single post
      * @param  \Illuminate\Http\PostPolymUpdateReques  $request
      * @return \Illuminate\Http\Response
 	 *
@@ -108,7 +108,7 @@ class PolymorphicController extends Controller
 			dd("IMAGE is a must");
 		} */ 
 		
-		//commented {function withValidator} and decommented {function failedValidation} in Requests\Polymorphic\PostPolymUpdateRequest in order if Validation fails, the Controller still execute code
+		//commented {function withValidator} and decommented {function failedValidation} in Requests\Polymorphic\PostPolymUpdateRequest in order if Validation fails, the Controller will still execute code
 		//if validation fails
 		if (isset($request->validator) && $request->validator->fails()) {
             return redirect()->back()->withInput()->with('flashMessageFailX', 'Validation Failedd!!!' )->withErrors($request->validator->messages()); //Error was here ->withErrors($validator);
@@ -241,6 +241,56 @@ class PolymorphicController extends Controller
 
 		}
 	}
+	
+	
+	
+	
+	
+	/**
+     * Display form to create a new product 
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createProduct()
+    { 
+		
+		//find all authors for form dropdown
+		$authorsAll = Polymorphic_Users::all();
+		
+		return view('polymorphic.create-new-product')->with(compact( 'authorsAll'));  
+	}
       
    
+   
+   
+    
+	/**
+     * $_POST request to create a new post
+     * @param  \Illuminate\Http\PostPolymUpdateReques  $request
+     * @return \Illuminate\Http\Response
+	 *
+     */
+	 
+    public function createStoreProduct (PostPolymUpdateRequest $request)
+	{
+		//dd($request->all()); //all form input (is shown always even if validation fails)
+		
+		//commented {function withValidator} and decommented {function failedValidation} in Requests\Polymorphic\PostPolymUpdateRequest in order if Validation fails, the Controller will still execute code
+		//if validation fails
+		if (isset($request->validator) && $request->validator->fails()) {
+            return redirect()->back()->withInput()->with('flashMessageFailX', 'Validation Failedd!!!' )->withErrors($request->validator->messages()); //Error was here ->withErrors($validator);
+		    
+			/*
+			return response()->json([
+               'error' => true, 
+               'data' => 'Was seem to be OK, but validation crashes', 
+               'validateErrors'=>  $request->validator->messages()]);
+			*/
+		}
+		
+		dd($request->all());
+	}
+	
+	
+	
 }

@@ -31,7 +31,7 @@ Table of Content:
 8.1 Form input with in-line validation errors <span>, like in Yii2 
 8.2 Form fields Insert to DB
 9.Migrations/Seeders
-10.hasOne/hasMany relation
+10.hasOne/hasMany/polymorphic relation
 11.DB SQL Eloquent queries
 11.1 DB SQL Eloquent queries optimization
 12.Laravel CRUD
@@ -564,6 +564,12 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
    # Upload image example (Controller) => see function store() => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/WpBlogImagesContoller.php
    # Upload form => see https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/wpBlog_Images/create.blade.php
    # Js to populate => \blog_Laravel\public\js\Wpress_ImagesBlog\wpress_blog.js
+   
+ #Example_3 (upload image with conditional required (based on checkbox))=>
+   # Image Validation rules example (via Request Class) see at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Requests/Polymorphic/PostPolymUpdateRequest.php
+   # Upload image example (Controller) => see {function updateProduct (PostPolymUpdateRequest $request)}  => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Polymorphic_Controller/PolymorphicController.php
+   # Upload form => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/polymorphic/edit-product.blade.php
+   
 ---------------------------------------
 #u can get image via request =>  $request->image (DONT USE $request->input('image') as IT WON"T WORK)
 # get file extension => $request->image->getClientOriginalExtension();
@@ -599,8 +605,10 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 //================================================================================================
 8.1 Form input with in-line validation errors <span>, like in Yii2  => 
-  => see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/auth/login.blade.php
-  => see example2 with different inputs(textarea, select) at =>https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/add-product.blade.php
+  Example_1 => see example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/auth/login.blade.php
+  Example_2 => see example2 with different inputs(textarea, select) at =>https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/add-product.blade.php
+  Example_3 (with keeping old input for <select>) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/polymorphic/create-new-product.blade.php
+  
   
 <div class="form-group{{ $errors->has('product-name') ? ' has-error' : '' }}">
     <label for="product-name" class="col-md-4 control-label">Product name</label>
@@ -732,7 +740,7 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 
 //================================================================================================
-10.hasOne/hasMany relation
+10.hasOne/hasMany/polymorphic relation
 
 #For Rest API see => 13.1 Has Many relation in JSON (REST API)
 
@@ -828,7 +836,14 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	}
 
  
-//================================================================================================
+ ---------------------------- 
+ 10.4 Polymorphic relation
+    #model example (model table contains image both for 2 tables (polymorphic_posts and polymorphic_users)) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/Polymorphic/Polymorphic_Images.php
+    #model for table {polymorphic_posts}   => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/Polymorphic/Polymorphic_Posts.php
+	#view displaying polymorphic rel       => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/polymorphic/index.blade.php
+
+
+/================================================================================================
 
 
 
@@ -2386,13 +2401,26 @@ navigate by CLI to folder and:
 PhpUnit supports module (i.e unit) tests and functional tests.
 https://phpunit.readthedocs.io/ru/latest/assertions.html
 
-  php vendor/phpunit/phpunit/phpunit    => run all PhpUnit tests (in folder "tests/Unit" and "tests/Feature"). Does not run tests in "/tests/Browser"
+  php vendor/phpunit/phpunit/phpunit    => vendor/bin/phpunit =>  run all PhpUnit tests (in folder "tests/Unit" and "tests/Feature"). Does not run tests in "/tests/Browser"
   php artisan dusk                      => run Dusk tests only (in "/tests/Browser")
   
   # Unit test example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/tests/Unit/MyTest.php
   # to use Dusk uncomment register in /app/Providers/AppServiceProvider.php
   
-  // below is ????
+  
+  
+ ---------------------------
+ 
+ #Rest Api Testing => https://auth0.com/blog/testing-laravel-apis-with-phpunit/
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  // below is USELESS ????-------------------------------------------------
   php artisan dusk:make LoginTest
   
  The visit and see method no longer works in Laravel 5.4 by default. You need to install Laravel Dusk package.
@@ -2792,13 +2820,18 @@ On cliking submit sends $_Post ajax to
  or see => CRUD section
 
 
+
+
+
+
     
 //================================================================================================ 
 355.Miscellaneous VA Laravel
 
 
 
-#image =>           <img class="img-responsive my-cph" src="{{URL::to("/")}}/images/cph.jpg"  alt="a"/>
+#image =>           <img src="{{URL::to("/")}}/images/cph.jpg"  class="img-responsive my-cph" alt="a"/>
+# image: check if image is physically avilable + if relation check if image relation exists  => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/polymorphic/index.blade.php
 #link a href => 	<li><a href="{{ route('register') }}">Register</a></li>
 #link a href with $_GET => <a href="{{route('profile', ['id' => 1])}}">login here</a>
 #link with helper => $post = App\Models\Post::find(1);  echo url("/posts/{$post->id}");  Use => <a href ="<?php  echo url("/posts/2"); ?>"> link </a>
@@ -3029,7 +3062,7 @@ RewriteRule ^ public [L]
     .col-lg- (large devices - screen width equal to or greater than 992px)
     .col-xl- (xlarge devices - screen width equal to or greater than 1200px)
 	
-# bootstrap 3 hidden/visible on mobile  => .hidden-xs	visible-xs
+# bootstrap 3 hidden/visible on mobile  => .oauth_access_tokens	visible-xs
 # bootstrap 3 hidden/visible on desktop  => .hidden-sm	visible-sm  
                                            .visible-inline-xs is used to display on the same line not next 
 										   

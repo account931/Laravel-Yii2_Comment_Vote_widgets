@@ -1,6 +1,7 @@
 /*--------- Polymorphic */
 
-.small-img{width: 14%; padding: 0.4em; border: 1px solid black;}
+.small-img {width:44%; height:8em;  margin-bottom:0.6em; padding: 0.4em;}
+.small-img-edit{width: 86%; margin-bottom:0.6em; padding: 0.4em; border: 1px solid black;}
 
 .gii-img {width: 24%;}
 
@@ -14,10 +15,38 @@
 
 .timestamp{font-size:0.6em; color: green;}
 
+.crud-div{overflow-y: scroll;}
+
+
  /* Mobile */
  @media screen and (max-width: 480px) { 
+     .posts-grid{margin-left: 0.1em; margin-top: 0.8em;}
+	 .crud-div{width:100%; overflow-y: scroll;}
  }
  
+
+
+
+/* CheckBox styling*/
+input.larger{
+  width:  1.5em; height: 1.5em; 
+}
+.ch-text{margin-left:0.4em; font-size:1em; color: green;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* ---------------------- Some CSS import from /css/ShopPaypalSimple/shopSimple.css */

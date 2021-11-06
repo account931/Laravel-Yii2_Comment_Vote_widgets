@@ -1,5 +1,5 @@
 <?php
-//Admin page to edit a product
+//Admin page to create a new product
 ?>
 
 @extends('layouts.app')
@@ -68,7 +68,7 @@
 				    <div class="col-sm-8 col-xs-6">
 					    <p>  
 						     <i class="fa fa-paperclip border shadowX" style="font-size:46px; margin-right: 0.5em;"></i>  
-							 Edit  <span class="small text-danger">*</span> 
+							 Create new  <span class="small text-danger">*</span> 
 							 <br>  
 						</p>
 				        
@@ -99,7 +99,7 @@
                 <div class="panel-body shop">
 				
 				    <div class="col-sm-10 col-xs-10">
-                        <h1>Edit an item</h1>
+                        <h1>Create new item</h1>
 		            </div>	
 				
 				  
@@ -117,7 +117,7 @@
 					
 					
 					    <!-- Start W3school Full Page Tabs (uses css + js file + js <button onclick="openPage()") https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
-					    <button class="tablink" onclick="openPage('Home', this, '#d4d4f7')" id="defaultOpen">Edit product</button>
+					    <button class="tablink" onclick="openPage('Home', this, '#d4d4f7')" id="defaultOpen">Create new</button>
                         <button class="tablink" onclick="openPage('EditQuantity', this, '#eaeafb')">Load Stock</button>
                         <button class="tablink" onclick="openPage('About', this, 'orange')">Info</button>
 
@@ -126,12 +126,11 @@
                         <div id="Home" class="tabcontent">
 						
                             <!--------- Form to a add new item   --------------->
-				            <form class="form-horizontal" method="post" action="{{url('update-post')}}" enctype="multipart/form-data">
+				            <form class="form-horizontal" method="post" action="{{url('create-new-polym-post')}}" enctype="multipart/form-data">
 			                
-							<input name="_method" type="hidden" value="PUT">  <!--{!!  method_field('PUT') !!} --> <!-- Fix for PUT -->
+							<!--<input name="_method" type="hidden" value="PUT">-->  <!--{!!  method_field('PUT') !!} --> <!-- Fix for PUT -->
                             
                             <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
-                            <input type="hidden" value="{{ $productOne[0]->id }}" name="hidden-prod-id" /> <!-- product ID -->
 
  
                             <!-- Post Titel, product name -->
@@ -139,7 +138,7 @@
                                 <label for="product-name" class="col-md-4 control-label">Product name</label>
 
                                 <div class="col-md-6">
-                                    <input id="product-name" type="text" class="form-control" name="product-name" value="{{old('product-name', $productOne[0]->post_name)}}" required autofocus>
+                                    <input id="product-name" type="text" class="form-control" name="product-name" value="{{old('product-name')}}" required autofocus>
                                                                                        
                                     @if ($errors->has('product-name'))
                                     <span class="help-block">
@@ -156,7 +155,7 @@
                                 <label for="product-desr" class="col-md-4 control-label">Description</label>
 
                                 <div class="col-md-6">
-                                    <textarea cols="5" rows="5" id="product-desr"  class="form-control" name="product-desr" required> {{old('product-desr', $productOne[0]->post_text)}} </textarea>
+                                    <textarea cols="5" rows="5" id="product-desr"  class="form-control" name="product-desr" required> {{old('product-desr')}} </textarea>
                                                                                                                                     
                                     @if ($errors->has('product-desr'))
                                     <span class="help-block">
@@ -195,7 +194,11 @@
 						                <option  disabled="disabled"  selected="selected">Choose author</option>
 		                              
 									    @foreach ($authorsAll as $a) <!-- hasOne Relat -->
-						                    <option value={{ $a->id }} 	{{  $a->id == $productOne[0]->authorName->id  ?  ' selected="selected"' : '' }} > {{ $a->user_name}} </option>
+										    @if(old('article-author') == $a->id ) <!-- to keep old input if validation fails -->
+                                                <option value="{{ $a->id }}" selected>{{ $a->user_name }}</option>
+                                            @else
+                                                <option value={{ $a->id }} > {{ $a->user_name}} </option> <!-- if no old input -->
+                                            @endif
 					                    @endforeach 
 						            </select>
 
@@ -214,8 +217,8 @@
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" class="larger" name="remember" {{ old('remember') ? 'checked' : '' }}> <span class="ch-text"> Keep old img/don't update image </span>
-                                    </label><hr>
+                                        <input type="checkbox" class="larger"  name="remember" {{ old('remember') ? 'checked' : '' }}> <span class="ch-text">Create post without image/Image is not required </span>
+                                    </label><p></p>
                                 </div>
                             </div>
 
@@ -243,24 +246,7 @@
 				
 				            <!----- Display an image of edited post (if any was prev loaded) + new uploaded img will appear in this div ---->
 							<div class="col-md-6" id="imagePreview">
-				                @if ($productOne[0]->imageZ) <!-- If this Post record has image connected via Polymorphic relation -->     <!-- $x->imageZ->exists() DOES NOT WORK -->
-								    
-									@if(file_exists(public_path( $productOne[0]->imageZ['url'] ))) <!-- check if file is physically available in folder(e.g was in folder but was accidentally deleted) --> 
-
-									    <img  class="small-img-edit" src="{{URL::to("/")}}/{{ $productOne[0]->imageZ->url }}"  alt="a"/>
-                                    @else <!-- if Post has image connected via Polymorphic relation but physically IS NOT available in folder --> 
-								        <p> 
-								        <i class="fa fa-exclamation-circle" style="font-size:20px;color:red"></i>
-									    Image corrupted 
-								    </p>
-									
-							        @endif	
-							
-							    @else
-								    <!-- no image is found photo -->
-								    Sorry, no polymorph image
-								    <img class="small-img-edit" src="{{URL::to("/")}}/images/no-image-found.png"  alt="a"/>
-							    @endif
+				                
 		                    </div>
 							<!----- Display an image of edited post (if any was prev loaded) ---->
 
@@ -272,7 +258,7 @@
 							<!-- Submit Button --> 
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary"> Edit </button>
+                                    <button type="submit" class="btn btn-primary"> Create </button>
                                 </div>
                             </div>
 
@@ -298,6 +284,8 @@
 					     <!-------------------- 2nd tab div (with edit quantity form) ---------------------------------->
                         <div id="EditQuantity" class="tabcontent">
 					        <h3>Info 2</h3>
+							<p> Here you can create a new post with connected polymorphic relation image.</p>
+							<p> <i class='fa fa-flask' style='font-size:39px'></i></p>
 					     </div>
 						<!-------- End 3rd tab div ------->
   
@@ -310,7 +298,7 @@
                         <!-------- 3rd tab div ------->
                         <div id="About" class="tabcontent">
                             <h3>Info</h3>
-                            <p>At those tabs you can edit products and their quantity.</p>
+                            <p>Here you can create a new post with connected polymorphic relation image.</p>
                         </div>
 						<!-------- End 3rd tab div ------->
 						
@@ -381,7 +369,7 @@
 </div> <!-- end . animate-bottom -->
 
 <!-- Include js/css file for this view only -->
- <script src="{{ asset('js/Polymorphic/product_tabs.js') }}"></script> <!--  JS for W3school Full Page Tabs (uses css + js) https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
+ <script src="{{ asset('js/Polymorphic/product_tabs.js') }}">     </script> <!--  JS for W3school Full Page Tabs (uses css + js) https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
  <script src="{{ asset('js/Polymorphic/preview_form_image.js') }}"></script> <!--  JS to view an uploaded form image -->
 
 <!-- Include js/css file for this view only -->

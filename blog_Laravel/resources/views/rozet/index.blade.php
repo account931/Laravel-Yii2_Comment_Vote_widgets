@@ -51,11 +51,11 @@
                 <div class="panel-body">
 				    
 					<p><a href="{{ route('createSQL') }}">
-                        <button class="btn btn-large btn-success">Save & Output new XML from DB</button>
+                        <button class="btn btn-large btn-success">Output & Save new XML from DB (file goes to /public/roztk_xml)</button>
                     </a></p>
                     
                     <p><a onclick="alert('Not implemented yet');" href="#">
-                        <button class="btn btn-large btn-info">Save & Output new XML from Excel</button>
+                        <button class="btn btn-large btn-info">Save & Output new XML from Excel (N/A)</button>
                     </a></p>
 				    read Excel files with SimpleXLSX Lib
 				
