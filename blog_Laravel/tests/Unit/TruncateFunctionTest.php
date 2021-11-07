@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 use App\models\ShopSimple\ShopSimple;     //model to test
 
-class MyTest extends TestCase
+class TruncateFunctionTest extends TestCase
 {
 	
 	

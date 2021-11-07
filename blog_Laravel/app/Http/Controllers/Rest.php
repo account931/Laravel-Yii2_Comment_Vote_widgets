@@ -17,6 +17,7 @@ class Rest extends Controller
 	public function index()
     {
         return WpressRest::all();
+		//return response()->json(['data' => WpressRest::all(), 'status'=>  200]);
     }
  
  

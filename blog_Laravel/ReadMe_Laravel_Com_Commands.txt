@@ -2408,7 +2408,7 @@ https://phpunit.readthedocs.io/ru/latest/assertions.html
   # to use Dusk uncomment register in /app/Providers/AppServiceProvider.php
   
   
-  
+  #The only methods that PHPUnit will recognize as tests are those with names starting with test.
  ---------------------------
  
  #Rest Api Testing => https://auth0.com/blog/testing-laravel-apis-with-phpunit/
@@ -2420,7 +2420,8 @@ https://phpunit.readthedocs.io/ru/latest/assertions.html
  
  
  
-  // below is USELESS ????-------------------------------------------------
+  // below is USELESS ???? NO! It is useful -------------------------------------------------
+  //DUSK Section ----------------------------------------------------------------------------
   php artisan dusk:make LoginTest
   
  The visit and see method no longer works in Laravel 5.4 by default. You need to install Laravel Dusk package.
@@ -3202,6 +3203,9 @@ Create Anchor =>
 	 
 // Git Section ***********************************************************************
 // Some additional git commands => https://github.com/account931/git-browserify-yii_commands_manuals/blob/master/README.md
+
+# Git standart commit flow => git add .  =>   git commit => git push origin master /git push  
+# If github branch is master => git push origin master   # If github branch is main => git push 
 
 # Github tab/space/indentation problem => create a file in the project root named “.editorconfig” and give it the following contents (or ?ts=4) => 
   [*]
