@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;//Fix
 
 class CheckRoutesTest extends TestCase
 {
-	////use RefreshDatabase;
+	//use RefreshDatabase;
 	
 	
 	
@@ -49,7 +49,7 @@ class CheckRoutesTest extends TestCase
 	public function test_checkVisual()
     {
 		/*
-        $this->visit('wpBlogg')
+        $this->visit('/')
              ->see('Laravel CPH 2019')
              ->dontSee('Rails'); 
         */			 

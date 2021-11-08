@@ -2429,7 +2429,7 @@ https://phpunit.readthedocs.io/ru/latest/assertions.html
 
     php artisan dusk:install
 
-composer require laravel/browser-kit-testing --dev
+composer require laravel/browser-kit-testing --dev  =>  https://github.com/laravel/browser-kit-testing
 
 composer require --dev laravel/dusk v1.1    => only this is OK for Laravel 5.4 !!!!!!!!!!!!!!
 

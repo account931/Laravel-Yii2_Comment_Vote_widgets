@@ -8,7 +8,7 @@ use Tests\TestCase;
 	
 class Rest_Endpoint_Test extends TestCase {
     
-    public function testIndexReturnsDataInValidFormatTest() {
+    public function testRestReturnsDataInValidFormatTest() {
     
 	    //$this->assertTrue(true);
 
