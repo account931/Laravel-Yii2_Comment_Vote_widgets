@@ -39,8 +39,10 @@ class DatabaseSeeder extends Seeder
 		
         //Seeder in separated file. PolymorphicSeeder
     	$this->call('PolymorphicSeeder');  //seeder for 3 tables => {polymorphic_posts}, {polymorphic_users}, {polymorphic_images},. SEEDER IS IN SUBFOLDER /SeedersFiles.
-		 		
-		 
+		
+        //Seeder in separated file. ElasticSeeder 		
+		$this->call('ElasticSeeder');
+		
 		$this->command->info('Seedering action was successful!');
     }
 	

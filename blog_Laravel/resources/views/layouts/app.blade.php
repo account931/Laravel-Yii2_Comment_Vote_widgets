@@ -122,6 +122,7 @@
                             <li class="{{ Request::is('rozetk*') ? 'active' : '' }}">         <a href="{{ route('rozetk') }}">        Rozetk XML/YML        </a></li>
                             <li class="{{ Request::is('captcha*') ? 'active' : '' }}">        <a href="{{ route('captcha') }}">       Capcha+Notify         </a></li>
                             <li class="{{ Request::is('polymorphic*') ? 'active' : '' }}">    <a href="{{ route('polymorphic') }}">   Polymorphic Rel + Gii  </a></li>
+                            <li class="{{ Request::is('elastic*') ? 'active' : '' }}">        <a href="{{ route('elastic') }}">       Elastic serach  </a></li>
 
 						</ul>
                     </li>

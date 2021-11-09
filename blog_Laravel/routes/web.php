@@ -176,16 +176,18 @@ Route::post('/package-captcha','CaptchaController@packageCaptcha')->name('packag
 //Polymorphic relations + Gii Crud example (Controller is in subfolder)
 Route::get('/polymorphic',       'Polymorphic_Controller\PolymorphicController@index') ->name('polymorphic');
 
-// gii table, show edit page
+// Gii table, show edit page
 Route::get('gii-edit-post/{id}', 'Polymorphic_Controller\PolymorphicController@editProduct')  ->name('gii-edit-post/{id}'); //display form to edit an existing post
 Route::put('update-post',        'Polymorphic_Controller\PolymorphicController@updateProduct')->name('update-post'); //$_PUT to update existing post
 
-// gii table, show "Create new" page
+// Gii table, show "Create new" page
 Route::get('gii-create-new-post',    'Polymorphic_Controller\PolymorphicController@createProduct')     ->name('gii-create-new-post'); //display form to create a new post
 Route::post('create-new-polym-post', 'Polymorphic_Controller\PolymorphicController@createStoreProduct')->name('create-new-polym-post'); //$_POST to create a new post
 
 
 
+//Elastic Search (Controller is in subfolder)
+Route::get('/elastic', 'Elastic\ElasticController@index') ->name('elastic');
 
 
 

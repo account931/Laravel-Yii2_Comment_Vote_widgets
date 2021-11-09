@@ -195,6 +195,15 @@ USAGE
   {{$count}}
   
 # Displays content without html escaping => {!! session()->get('flashMessageX') !!} 
+
+
+# Check if var is passed from Controller => 
+@if(empty($results))
+    <p>Data does not exist</p>
+@else
+    <p>Data is here</p>
+@endif
+						
 ===========================================
 
 
@@ -953,6 +962,10 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	$allDBProducts = ShopSimple::orderBy('shop_price', 'desc')->paginate(6);
 	$allDBProducts = $allDBProducts->appends(\Illuminate\Support\Facades\Input::except('page'));
 	//... return view(......)
+	
+	
+# Like => 	$results = Elastic_Posts::where('elast_title', 'LIKE', "%{$request->search}%")->orWhere('elast_text', 'LIKE', "%{$request->search}%")->get();
+
 			
 //================================================================================================
 
@@ -3009,14 +3022,17 @@ Pass var from controller to view =>  return view('home2', compact('user'));
   
 # Faker => see class Students_Seeder in database/seeder/DataBaseSeeder //In this project. Or example of usage in {abz_Laravel_6_LTS} as Abz_Employees_Seeder
 
-# ElasticSearch equivalent => https://github.com/ErickTamayo/laravel-scout-elastic
-    if ($request->has('searcher')) { // equivalent if (isset($search_data) && !empty($search_data) )
+# ElasticSearch equivalent => WORKS WITH MyISAM only, InnoDb gonna crash => https://github.com/ErickTamayo/laravel-scout-elastic
+    if ($request->has('searcher')) { // equivalent if (isset($search_data) && !empty($search_data) ) //fielld name
         $results = $product->whereRaw(
             "MATCH(product_name,product_id,description) AGAINST(? IN BOOLEAN MODE)",
             [$request->searcher]
         )->get();
         return view('products/search')->with('results', $results);
     } 
+	
+# ElasticSearch equivalent Var_2 =>	$results = Elastic_Posts::where('elast_title', 'LIKE', "%{$request->search}%")->orWhere('elast_text', 'LIKE', "%{$request->search}%")->get();
+
 
 
 # Slug URL via 'cviebrock/eloquent-sluggable' => https://cleverman.org/post/laravel-5-5-i-slug-chto-takoe-slagi-i-zachem-oni-nuzhny

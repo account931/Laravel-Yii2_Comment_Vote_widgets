@@ -16,7 +16,7 @@ class TruncateFunctionTest extends TestCase
      *
      * @return void
      */
-    public function testBoxContents()
+    public function testModelAttribute()
     {
         $box = new ShopSimple();
         //$this->assertTrue($box->has('table'));
@@ -53,7 +53,23 @@ class TruncateFunctionTest extends TestCase
     }
 	
 	
-	
+     /**WORKING!!!!!
+     * A test for generateUUID($length=10) 
+     * make sure it generates UUID as designed
+     * @return boolean
+     */
+    public function testGenerateUUID()
+    {
+		$m = new ShopSimple();
+		$uuid_1  = $m->generateUUID(12);
+		//$check_1 = str_split($uuid_1); //(int)strlen($uuid_1);
+		
+		//manually created UUID
+		$uuid_2  = "sh-" . time() . "-123456789012";
+		$check_2 = str_split($uuid_2); //string to array
+		
+		$this->assertCount(strlen($uuid_1), $check_2); //WTF, 1st arg can be as string length (strlen($uuid_1), but 2nd cannot, only as plain array and PHPUnit count it itself)  //not count($check_2), Php Counts by itself
+	}
 	
 	
 	

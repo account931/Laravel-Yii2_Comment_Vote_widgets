@@ -69,7 +69,7 @@ class PolymorphicController extends Controller
 	
 	/**
      * Display form to edit an existing product 
-     *
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function editProduct($id)
