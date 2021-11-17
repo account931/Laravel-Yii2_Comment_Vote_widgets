@@ -966,7 +966,28 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	
 # Like => 	$results = Elastic_Posts::where('elast_title', 'LIKE', "%{$request->search}%")->orWhere('elast_text', 'LIKE', "%{$request->search}%")->get();
 
-			
+# HAVING Operator, see details at Where_havingController  --------------
+# HAVING => SELECT StudentId FROM EXAM_RESULT GROUP BY StudentID HAVING MIN(Mark) = 5	
+
+#Working HAVING Eloquent Examples =>
+
+        \DB::statement("SET SQL_MODE=''");//this is the trick use it just before your query to ovveride Syntax error or access violation: 1055 Error
+        $findModel2 = DB::table('shop_simple')->having('shop_price', '<', 10)->get();                                //Works, find with price less than 10
+		$findModel2 = DB::table('shop_simple')->groupBy('shop_id', 'shop_title')->having('shop_id', '>=', 9)->get(); //Works, gets records with id bigger/equal than 9
+        $findModel2 = ShopSimple::where('shop_categ', '1')->groupBy('shop_price')->get();                            //Works, gets soted by 'shop_price' but NOT HAVING     
+		
+        
+		//Works OK, returns data containing list of all table categories with overall sum price for each category, BUT HAS NO hasOne relation!!! 
+		$findModel3 = ShopSimple::selectRaw("SUM(shop_price) as total_category_price") //return SUM as property $findModel3->total_category_price
+		                        ->selectRaw("shop_categ as productCategoryX") //also selects shop_categ column as property $findModel3->productCategoryX
+		                        //->selectRaw("SUM(credit) as total_credit")
+		                       ->groupBy('shop_categ')->get(); 
+		
+        
+		
+        //Same as prev but with hasOne relation
+        $findModel3 = ShopSimple::select('*')->with('categoryName')->selectRaw("SUM(shop_price) as total_category_price")
+		                        ->selectRaw("shop_categ as productCategoryX") ->groupBy('shop_categ')->get();
 //================================================================================================
 
 

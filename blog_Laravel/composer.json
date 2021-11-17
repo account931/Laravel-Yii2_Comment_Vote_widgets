@@ -6,12 +6,13 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "elasticsearch/elasticsearch": "^7.11",
         "laravel/framework": "5.4.*",
         "laravel/socialite": "^3.2.0",
         "laravel/tinker": "~1.0",
         "mckenziearts/laravel-notify": "1.*",
-        "zizaco/entrust": "5.2.x-dev",
-        "mews/captcha": "~2.0"
+        "mews/captcha": "~2.0",
+        "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

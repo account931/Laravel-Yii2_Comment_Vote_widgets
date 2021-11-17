@@ -31,5 +31,12 @@ class AppServiceProvider extends ServiceProvider
         }
 		*/
 		
+		
+		//bind Elastic search
+		$this->app->bind(
+            \App\ElasticRepository\ArticlesRepositoryInterface::class,
+            \App\ElasticRepository\EloquentRepository::class
+        );
+		
     }
 }

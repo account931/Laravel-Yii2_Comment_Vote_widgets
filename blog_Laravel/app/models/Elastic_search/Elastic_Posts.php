@@ -4,11 +4,12 @@ namespace App\models\Elastic_search;
 
 use Illuminate\Database\Eloquent\Model;
 //use App\models\Polymorphic\Polymorphic_Images;   //model for DB table {polymorphic_images} //Mega Fix
-
+use App\ElasticRepository\traits\Searchable;
 
 class Elastic_Posts extends Model
 {
-
+    use Searchable; //use my trait
+	
     /**
     * Connected DB table name.
     *

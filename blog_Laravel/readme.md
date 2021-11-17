@@ -133,7 +133,9 @@
 ![Screenshot](public/images/Screenshots/41.2.png)
 ![Screenshot](public/images/Screenshots/42.png)
 
+## Laravel Eloquent HAVING with relation
 
+![Screenshot](public/images/Screenshots/43.png)
 
 
 

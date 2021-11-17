@@ -189,7 +189,8 @@ Route::post('create-new-polym-post', 'Polymorphic_Controller\PolymorphicControll
 //Elastic Search (Controller is in subfolder)
 Route::get('/elastic', 'Elastic\ElasticController@index') ->name('elastic');
 
-
+//SQL: Where vs Having(Controller is in subfolder)
+Route::get('/where_having', 'SQL_where_having_Contr\Where_havingController@index') ->name('where_having');
 
 
 

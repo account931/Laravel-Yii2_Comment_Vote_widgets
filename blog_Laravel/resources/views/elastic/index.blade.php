@@ -59,22 +59,38 @@
 				
 				
                 
-				    <!--------------- Elastic Search form ------------------->
-					<div class="col-sm-12 col-xs-12"></br>
-					    <h3>Elastic Search</h3> 
+				    <!--------------- Simple Search form (just to compare )------------------->
+					<div class="col-sm-6 col-xs-12"></br>
+					    <h3>Simple Search</h3> 
 						<form class="form-horizontal" method="get" action="{{url('elastic')}}">
-						    <input type="text" placeholder="Search.." name="search">
+						    <input type="text" placeholder="Search.." name="simpleSearch">
                             <button type="submit">Submit</button>
 						</form>
                         
 					</div> 
-                    <!------------ End Elastic  ------------------->					
+                    <!------------ End Simple Search form (just to compare ) ------------------->
+
+
+
+
+                    <!--------------- Elastic Search form ------------------->
+					<div class="col-sm-6 col-xs-12"></br>
+					    <h3>Elastic Search <i class="fa fa-search-plus" style="font-size:36px"></i></h3> 
+						<form class="form-horizontal" method="get" action="{{url('elastic')}}">
+						    <input type="text" placeholder="Search Elastic.." name="elastic-search">
+                            <button type="submit">Elastic Search <i class="fa fa-search-plus" style="font-size:16px"></i></button>
+						</form>
+                        
+					</div> 
+                    <!------------ End Elastic Search form -------------------> 					
+
 
 
                    
-                    <!--------------- Elastic Search Results ----------------------->
+                    <!--------------- Simple Search Results ----------------------->
 					<div class="col-sm-12 col-xs-12">
-					    
+					    <hr> <i class="fa fa-retweet" style="font-size:36px"></i> <hr>
+
 						
 						@if(empty($results))
 							<br>
@@ -102,7 +118,7 @@
 						
 						
 					</div>
-					<!--------------- End Elastic Search Results ------------------->
+					<!--------------- End Simple Search Results ------------------->
                     
                   
 
