@@ -74,34 +74,55 @@
                     
 					
 					
-				    <!--------------- Sql Having section ------------------->
+				    <!--------------- Sql Having without groupBy ($findModel2)------------------->
 					<div class="col-sm-12 col-xs-12"></br>
-					    <p><b> Sql Having section </b></p>
+					    <hr><p><b> Sql Having without groupBy </b></p>
+						<p style="font-size:0.8em;"><b> Shows with id bigger than 9  </b></p>
 						
 					    @foreach($findModel2 as $product)
 						    <p> {{$product->shop_title}}  {{$product->shop_price}}$ </p>
 						@endforeach
 					    
 					</div> 
-                    <!------------ End Sql Having section ------------------->
+                    <!------------ End Sql Having without groupBy ($findModel2) ------------------->
 
                     
 					
 					
-					 <!--------------- Sql Having SUM by category + hasOne relation ------------------->
+				    <!--------------- Sql groupBy SUM by category, No HAVING, NO hasOne relation ($findModel3) ------------------->
 					<div class="col-sm-12 col-xs-12"></br>
-					    <p><b> Sql Having SUM by category + hasOne relation </b></p>
-						<p> Shows all categories with overall sum price of each category product price </p>
+					    <hr><p><b> Sql groupBy SUM by category, No HAVING, NO hasOne relation </b></p>
+						<p style="font-size:0.8em;"><b> Shows all categories with overall sum price of each category product price </b></p>
 					    @foreach($findModel3 as $product)
 						    
 						    <p> Category {{$product->productCategoryX}} =>         <!-- i.e 1,2 --> <!-- can also us $product->shop_categ-->
-							             {{$product->categoryName->categ_name}} =>  <!-- hasOne relation i.e Desktop --> 
-										 {{$product->shop_categ}}  {{$product->total_category_price}}$ 
+										 {{$product->total_category_price}}$ 
 							</p>
 						@endforeach
 					    
 					</div> 
-                    <!------------ End Sql Having SUM by category------------------->
+                    <!------------ End Sql groupBy SUM by category, No HAVING, NO hasOne relation  ($findModel3)  ------------------------------------->
+					
+					
+					
+					
+					<!--------------- Sql groupBy Having SUM by category + hasOne relation ($findModel4) ------------------->
+					<div class="col-sm-12 col-xs-12"></br>
+					    <hr><p><b> Sql groupBy  Having SUM by category + hasOne relation </b></p>
+						<p style="font-size:0.8em;"><b> 
+						    Finds all products, than calc overall summed products price, group them up by 'shop_categ' and selectes only categories where 'total_category_price', '>=', 1000 </b>
+						</p>
+							
+					    @foreach($findModel4 as $product)
+						    
+						    <p> Category {{$product->productCategoryX}} =>         <!-- i.e 1,2 --> <!-- can also us $product->shop_categ-->
+							             {{$product->categoryName->categ_name}} =>  <!-- hasOne relation i.e Desktop --> 
+										 {{-- $product->shop_categ --}}  {{$product->total_category_price}}$ 
+							</p>
+						@endforeach
+					    
+					</div> 
+                    <!------------ Sql groupBy Having SUM by category + hasOne relation ($findModel4)  ------------------------->
 					
 				
 

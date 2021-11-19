@@ -69,6 +69,7 @@ Table of Content:
 35.1 Middleware (CORS example)
 36.	Socialite
 37. Liqpay & Paypal
+38. Elasticsearch
 
 201. Laravel 6 LTS        => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 202. Yajra DataTables     => (IMPLEMENTED IN {abz_Laravel_6_LTS})
@@ -966,28 +967,36 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	
 # Like => 	$results = Elastic_Posts::where('elast_title', 'LIKE', "%{$request->search}%")->orWhere('elast_text', 'LIKE', "%{$request->search}%")->get();
 
-# HAVING Operator, see details at Where_havingController  --------------
+# HAVING Operator, see details at => Where_havingController  --------------
 # HAVING => SELECT StudentId FROM EXAM_RESULT GROUP BY StudentID HAVING MIN(Mark) = 5	
 
 #Working HAVING Eloquent Examples =>
 
-        \DB::statement("SET SQL_MODE=''");//this is the trick use it just before your query to ovveride Syntax error or access violation: 1055 Error
-        $findModel2 = DB::table('shop_simple')->having('shop_price', '<', 10)->get();                                //Works, find with price less than 10
-		$findModel2 = DB::table('shop_simple')->groupBy('shop_id', 'shop_title')->having('shop_id', '>=', 9)->get(); //Works, gets records with id bigger/equal than 9
-        $findModel2 = ShopSimple::where('shop_categ', '1')->groupBy('shop_price')->get();                            //Works, gets soted by 'shop_price' but NOT HAVING     
-		
         
-		//Works OK, returns data containing list of all table categories with overall sum price for each category, BUT HAS NO hasOne relation!!! 
+        \DB::statement("SET SQL_MODE=''");//this is the trick use it just before your query to ovveride Syntax error or access violation: 1055 Error
+		
+        //$findModel2 = DB::table('shop_simple')->having('shop_price', '<', 10)->get();                                //Works, find with price less than 10
+		$findModel2 = DB::table('shop_simple')->groupBy('shop_id', 'shop_title')->having('shop_id', '>=', 9)->get(); //Works, gets records with id bigger/equal than 9
+        //$findModel2 = ShopSimple::where('shop_categ', '1')->groupBy('shop_price')->get();                            //Works, gets soted by 'shop_price' but NOT HAVING     
+		
+		
+		//Works OK, returns data containing list of all table categories with overall summed products price for each category, BUT HAS NO hasOne relation!!! //e.g returns => Category 1 => all Category 1's products price summed (category 1's prouduct1 ptice + category 1's prouduct1 ptice, etc)
 		$findModel3 = ShopSimple::selectRaw("SUM(shop_price) as total_category_price") //return SUM as property $findModel3->total_category_price
-		                        ->selectRaw("shop_categ as productCategoryX") //also selects shop_categ column as property $findModel3->productCategoryX
-		                        //->selectRaw("SUM(credit) as total_credit")
-		                       ->groupBy('shop_categ')->get(); 
+		                        ->selectRaw("shop_categ as productCategoryX") //also selects shop_categ column, not necessary if use {::select('*')} as in example below
+		                        //->selectRaw("SUM(credit) as total_credit") //another condition to sum other column, not used here
+		                        ->groupBy('shop_categ')->get(); 
 		
         
 		
         //Same as prev but with hasOne relation
-        $findModel3 = ShopSimple::select('*')->with('categoryName')->selectRaw("SUM(shop_price) as total_category_price")
-		                        ->selectRaw("shop_categ as productCategoryX") ->groupBy('shop_categ')->get();
+		//Finds all products, than calc overall summed products price, group them up by 'shop_categ' and selectes only categories where 'total_category_price', '>=', 1000
+        $findModel4 = ShopSimple::select('*')
+		                        ->with('categoryName') //hasOne relation
+		                        ->selectRaw("SUM(shop_price) as total_category_price")
+		                        ->selectRaw("shop_categ as productCategoryX") //not mandatory here as here we use {::select('*')}
+ 								->groupBy('shop_categ')
+								->having('total_category_price', '>=', 800)//where 'total_category_price' bigger than 2000
+								->get();
 //================================================================================================
 
 
@@ -2624,6 +2633,21 @@ If use Laravel < 5.6 => composer require laravel/socialite "^3.2.0"
       View       =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple/pay-page.blade.php
 
 # Or look up more up-to-date Cleansed Shop version (same contoller, view, .env name) at => https://github.com/dimmm931/Laravel_Shop
+
+
+
+
+
+
+//================================================================================================
+38. Elasticsearch
+#Requires Java to be installed
+#Install via zip => download, unzip, CLI to folder and started from the command line =>  .\bin\elasticsearch.bat
+http://localhost:9200
+
+
+
+
 
 
 

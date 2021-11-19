@@ -32,7 +32,7 @@ class Where_havingController extends Controller
 	
 	
 	/**
-     * Show start page  
+     * Page with HAVING/groupBy SQL examples (queries are done to table {shop_simple})  
      *
      * @return \Illuminate\Http\Response
      */
@@ -41,29 +41,35 @@ class Where_havingController extends Controller
 	    //simple Eloquent
 		$findModel = ShopSimple::where('shop_categ', '1')->where('shop_currency', "$")->get(); //multiple where
 
-        //HAVING examples
+        //HAVING Clause examples
         \DB::statement("SET SQL_MODE=''");//this is the trick use it just before your query to ovveride Syntax error or access violation: 1055 Error
 		
         //$findModel2 = DB::table('shop_simple')->having('shop_price', '<', 10)->get();                                //Works, find with price less than 10
 		$findModel2 = DB::table('shop_simple')->groupBy('shop_id', 'shop_title')->having('shop_id', '>=', 9)->get(); //Works, gets records with id bigger/equal than 9
         //$findModel2 = ShopSimple::where('shop_categ', '1')->groupBy('shop_price')->get();                            //Works, gets soted by 'shop_price' but NOT HAVING     
 		
-		//Works OK, returns data containing list of all table categories with overall sum price for each category, BUT HAS NO hasOne relation!!! 
+		
+		//Works OK, returns data containing list of all table categories with overall summed products price for each category, BUT HAS NO hasOne relation!!! //e.g returns => Category 1 => all Category 1's products price summed (category 1's prouduct1 ptice + category 1's prouduct1 ptice, etc)
 		$findModel3 = ShopSimple::selectRaw("SUM(shop_price) as total_category_price") //return SUM as property $findModel3->total_category_price
 		                        ->selectRaw("shop_categ as productCategoryX") //also selects shop_categ column, not necessary if use {::select('*')} as in example below
-		                        //->selectRaw("SUM(credit) as total_credit")
-		                       ->groupBy('shop_categ')->get(); 
+		                        //->selectRaw("SUM(credit) as total_credit") //another condition to sum other column, not used here
+		                        ->groupBy('shop_categ')->get(); 
 		
         
 		
         //Same as prev but with hasOne relation
-        $findModel3 = ShopSimple::select('*')->with('categoryName')->selectRaw("SUM(shop_price) as total_category_price")
-		                        ->selectRaw("shop_categ as productCategoryX") //not mandatory as here we use {::select('*')}
- 								->groupBy('shop_categ')->get();
+		//Finds all products, than calc overall summed products price, group them up by 'shop_categ' and selectes only categories where 'total_category_price', '>=', 1000
+        $findModel4 = ShopSimple::select('*')
+		                        ->with('categoryName') //hasOne relation
+		                        ->selectRaw("SUM(shop_price) as total_category_price")
+		                        ->selectRaw("shop_categ as productCategoryX") //not mandatory here as here we use {::select('*')}
+ 								->groupBy('shop_categ')
+								->having('total_category_price', '>=', 800)//where 'total_category_price' bigger than 2000
+								->get();
 		
 		//dd($findModel3);
 		
-		return view('sql_where_having.index',  compact('findModel', 'findModel2', 'findModel3'));
+		return view('sql_where_having.index',  compact('findModel', 'findModel2', 'findModel3', 'findModel4'));
     }
 	
 	
