@@ -44,8 +44,9 @@
                     <h3>
                         <i class="fa fa-recycle" style="font-size:36px"></i>  
                         Elastic Search on DB Table {elastic_search}<span class="small text-danger">*</span>
+						<p style="border:1px solid black; padding:0.5em;"><b> So far, works only simple SQL Search, Elastic search does not work, failed to install Elastic server 9200 (via zip, msi, as Java not compatible.)</b></p>
                     </h3>
-                    <p><button class="btn btn-success"> Make indexing table</button></p> 
+                    <p><button class="btn btn-success"> Make Elastic indexing table(N/A)</button></p> 
                     <p></p>                  
                 </div>
 
@@ -78,7 +79,7 @@
 					    <h3>Elastic Search <i class="fa fa-search-plus" style="font-size:36px"></i></h3> 
 						<form class="form-horizontal" method="get" action="{{url('elastic')}}">
 						    <input type="text" placeholder="Search Elastic.." name="elastic-search">
-                            <button type="submit">Elastic Search <i class="fa fa-search-plus" style="font-size:16px"></i></button>
+                            <button type="submit">Elastic Search(N/A) <i class="fa fa-search-plus" style="font-size:16px"></i></button>
 						</form>
                         
 					</div> 

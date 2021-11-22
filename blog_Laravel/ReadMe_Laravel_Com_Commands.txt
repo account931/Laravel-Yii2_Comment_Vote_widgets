@@ -3217,6 +3217,10 @@ $listOfLanguages = array(
 
 # GD Library, save text to image =>  public function index() => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/CaptchaController.php
 
+# curl example (POST with data and header)=> https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Elastic/ElasticController.php
+
+---------------------- END PHP ----------
+
 
 
 
@@ -4010,7 +4014,14 @@ are the central place of all Laravel application bootstrapping. Your own applica
  
  #Pending: Passport, Avored, Aimeos, appzcoder/crud-generator, Zofe_Rapyd
 
+402.1 Used PHP Libraries(in other projects, not Laravel)
+   1. SimpleXLSX Lib (read Excel files)
+   2. SimpleXLSXGen (write Excel files)
+   3. Php fPDF library
 
+  Mapbox JS GL API, Mapbox Datasets, MapBox Direction Api 
+  
+  
   /*
   |--------------------------------------------------------------------------
   | when user clicks NEXT button
