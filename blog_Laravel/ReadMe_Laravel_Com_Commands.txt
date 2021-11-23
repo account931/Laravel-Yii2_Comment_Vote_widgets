@@ -2645,13 +2645,15 @@ If use Laravel < 5.6 => composer require laravel/socialite "^3.2.0"
 #Install via zip => download, unzip, CLI to folder and started from the command line =>  .\bin\elasticsearch.bat
 http://localhost:9200
 
+-----------------------------------------------------
+#  Failed to installed Elastic Search on localhost via zip or msi, due Java compatibility conflict. So used and tested Elastic Search on Cloud
+Steps:
+   #registered, got an endpoint https://myelasticz.ent.us-central1.gcp.cloud.es.io/. Endpoint is used for personal account cabinet and as url to make API requests.
+   #to index your document via web(not REST Api): go to endpoint ->Elastic App Search->Engines->create or edit your engine
+   #can make Search queries via /GET (via browser) https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/my-elastic-enginez/search?query=kingston (username/password will be propted if not logged to web account version)
+                         or via /POST (via cURL, passing query in body and passing Public_Search_Key token in Headers) => see more at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Elastic/ElasticController.php
 
-
-
-
-
-
-
+   # If Api returns only document id(e.g "id":{"raw":"doc-619ccb07cb9751408b3905d1"), go to Panel->Result Setting->tick the SQL columns to be returned
 //================================================================================================
 201. Laravel 6 LTS        => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 
@@ -3033,7 +3035,7 @@ Pass var from controller to view =>  return view('home2', compact('user'));
 
 
 # where store API Keys (Works on hosting, does not work on local) => in .env.php =>  SECRET_API_KEY=PUT YOUR API KEY HERE  //use no single quotes!!!
-   get key =>   env('SECRET_API_KEY');
+   get key =>   env('SECRET_API_KEY'); //if returns null => php artisan config:cache   php artisan config:clear
    
 # how to check laravel version =>   php artisan --version       Check php version =>  php -v
 
