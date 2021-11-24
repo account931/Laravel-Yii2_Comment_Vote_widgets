@@ -187,10 +187,18 @@ Route::post('create-new-polym-post', 'Polymorphic_Controller\PolymorphicControll
 
 
 //Elastic Search (Controller is in subfolder)
-Route::get('/elastic', 'Elastic\ElasticController@index') ->name('elastic');
+Route::get('/elastic',               'Elastic\ElasticController@index')          ->name('elastic');          //page with forms for simplle and elastic search
+Route::get('/elas-one-product/{id}', 'Elastic\ElasticController@showOneProduct') ->name('elas-one-product'); //show one product by ID (when u click in Elastic Cloud Search results)
+Route::get('/elastic-indexing',      'Elastic\ElasticController@doElasIndexing') ->name('elastic-indexing'); //page to do Elastic indexing for a Sql table
+
+
 
 //SQL: Where vs Having(Controller is in subfolder)
 Route::get('/where_having', 'SQL_where_having_Contr\Where_havingController@index') ->name('where_having');
+
+
+
+
 
 
 

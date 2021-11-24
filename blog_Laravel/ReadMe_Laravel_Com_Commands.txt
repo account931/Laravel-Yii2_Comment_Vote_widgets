@@ -69,7 +69,7 @@ Table of Content:
 35.1 Middleware (CORS example)
 36.	Socialite
 37. Liqpay & Paypal
-38. Elasticsearch
+38. ElasticSearch
 
 201. Laravel 6 LTS        => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 202. Yajra DataTables     => (IMPLEMENTED IN {abz_Laravel_6_LTS})
@@ -2640,20 +2640,41 @@ If use Laravel < 5.6 => composer require laravel/socialite "^3.2.0"
 
 
 //================================================================================================
-38. Elasticsearch
-#Requires Java to be installed
-#Install via zip => download, unzip, CLI to folder and started from the command line =>  .\bin\elasticsearch.bat
-http://localhost:9200
+38. ElasticSearch
+#ElasticSearch server can run on localhost or on ElasticSearch Cloud.
+
+38.1 ElasticSearch server on localhost (failed to implement due to Java version conflict)
+   #Requires Java to be installed
+   #Install Elastic Server via zip or msi. For zip version => download, unzip, CLI to folder and started from the command line =>  .\bin\elasticsearch.bat
+   #Available by /GET at => http://localhost:9200
 
 -----------------------------------------------------
-#  Failed to installed Elastic Search on localhost via zip or msi, due Java compatibility conflict. So used and tested Elastic Search on Cloud
-Steps:
-   #registered, got an endpoint https://myelasticz.ent.us-central1.gcp.cloud.es.io/. Endpoint is used for personal account cabinet and as url to make API requests.
-   #to index your document via web(not REST Api): go to endpoint ->Elastic App Search->Engines->create or edit your engine
-   #can make Search queries via /GET (via browser) https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/my-elastic-enginez/search?query=kingston (username/password will be propted if not logged to web account version)
-                         or via /POST (via cURL, passing query in body and passing Public_Search_Key token in Headers) => see more at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Elastic/ElasticController.php
 
-   # If Api returns only document id(e.g "id":{"raw":"doc-619ccb07cb9751408b3905d1"), go to Panel->Result Setting->tick the SQL columns to be returned
+38.2 ElasticSearch on ElasticSearch Cloud. See example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Elastic/ElasticController.php
+Works on Engines API => docs => https://www.elastic.co/guide/en/app-search/current/engines.html
+Steps:
+   #Registered, got an endpoint e.g https://myelasticz.ent.us-central1.gcp.cloud.es.io/. Endpoint is used for personal account dashboard and as url to make API requests.
+   
+   #HOW TO SEARCH (ElasticSearch Cloud) => 
+       #Via personal account dashboard => go to endpoint ->Elastic App Search->Engines->Select your Engine->Query Tester
+       #Via REST API (Engines API)      =>
+	      #cURL Queries must include authentication in headers (Public_Search_Key)
+	      #can make Search queries via /GET (via browser) https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/my-elastic-enginez/search?query=kingston (username/password will be propted if not logged to web account version)
+                               or via /POST (via cURL, passing query in body and passing Public_Search_Key token in Headers) => see more at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Elastic/ElasticController.php
+   
+   #HOW TO INDEX DOCUMENTS (ElasticSearch Cloud) =>
+       #Via personal account dashboard => (via web not REST Api): go to endpoint ->Elastic App Search->Engines->create or select your engine->Documents->paste your JSON(can create json file in PhpAdmin). Be sure the structure of JSON you paste is [ {id": "park_rock1","title": "Rocky Mount2"}, {id": "park_rock2","title": "Rocky Mount2"}]
+       #Via REST API (Engines API)      =>
+	   
+	   
+   # If Api returns results with only document id(e.g "id":{"raw":"doc-619ccb07cb9751408b3905d1"), go to Panel->Result Setting->tick the SQL columns to be returned
+
+
+
+
+
+
+
 //================================================================================================
 201. Laravel 6 LTS        => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 
@@ -2894,7 +2915,8 @@ On cliking submit sends $_Post ajax to
 #image =>           <img src="{{URL::to("/")}}/images/cph.jpg"  class="img-responsive my-cph" alt="a"/>
 # image: check if image is physically avilable + if relation check if image relation exists  => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/polymorphic/index.blade.php
 #link a href => 	<li><a href="{{ route('register') }}">Register</a></li>
-#link a href with $_GET => <a href="{{route('profile', ['id' => 1])}}">login here</a>
+#link a href with $_GET => <a href="{{route('profile',          ['id' => 1])}}">login here</a>
+                           <a href="{{route('elas-one-product', ['id' => $res->shop_id->raw])}}">View One</a> 
 #link with helper => $post = App\Models\Post::find(1);  echo url("/posts/{$post->id}");  Use => <a href ="<?php  echo url("/posts/2"); ?>"> link </a>
 
 # Link by route ID => i.e /edit/156

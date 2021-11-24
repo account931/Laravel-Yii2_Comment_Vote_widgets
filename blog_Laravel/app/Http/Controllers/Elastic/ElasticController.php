@@ -20,7 +20,7 @@ use App\Http\Controllers\Controller; //to place controller in subfolder
 //use App\models\Polymorphic\Polymorphic_Images;   //model for DB table {polymorphic_images}
 //use App\models\Polymorphic\Polymorphic_Users;   //model for DB table {polymorphic_images}
 use App\models\Elastic_search\Elastic_Posts;        //model for all elastic posts (test posts to perform search
-
+use App\models\ShopSimple\ShopSimple;     //model for DB table 
 
 
 
@@ -33,13 +33,13 @@ class ElasticController extends Controller
 	
 	
 	/**
-     * Show start page  
+     * Show start page, both show forms and handles requests
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request) 
     { 
-	    
+
 		
 	    //if user submitted Simple Search 
 	    if ($request->has('simpleSearch')) { // equivalent if (isset($search_data) && !empty($search_data) )
@@ -73,13 +73,14 @@ class ElasticController extends Controller
 	        //Test Elastic cloud
 		
 		    //https://www.elastic.co/guide/en/app-search/7.15/authentication.html //Search Api Docs
+			
 		    //https://myelasticz.ent.us-central1.gcp.cloud.es.io //my endpoint
 		    //https://myelasticz.ent.us-central1.gcp.cloud.es.io/as#/engines //my account cabinet
 		
 		    //WORKING Elastic Cloud ENDPOINTS (works after login(username:elastic, pass: see in txt)) =>
 		    // https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/  => returns list of documents /GET (via browser)
 			//https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/my-elastic-enginez /GET 
-			//https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/my-elastic-enginez/search?query=kingston /GET 
+			//https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/my-elastic-enginez/search?query=kingston  => search by word /GET 
 		    //End Test Elastic cloud
 		
 		
@@ -103,15 +104,16 @@ class ElasticController extends Controller
 			$dataX = '{"query":"' . $request->input('elastic-search') . '" }';  
 
             curl_setopt_array($curl, array(
-                CURLOPT_URL => $url,
-	            CURLOPT_HTTPHEADER => array('Content-Type: application/json' , $authorization ), //Inject the token into the header
+                CURLOPT_URL            => $url,
+	            CURLOPT_HTTPHEADER     => array('Content-Type: application/json' , $authorization ), //Inject the token into the header
                 CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => $dataX,//"{\n  \"customer\" : \"con\",\n  \"customerID\" : \"5108\",\n  \"customerEmail\" : \"jordi@correo.es\",\n  \"Phone\" : \"34600000000\",\n  \"Active\" : false,\n  \"AudioWelcome\" : \"https://audio.com/welcome-defecto-es.mp3\"\n\n}",
+				//CURLOPT_USERPWD => 'user:pass', //authorization variant 2
+                CURLOPT_ENCODING       => "",
+                CURLOPT_MAXREDIRS      => 10,
+                CURLOPT_TIMEOUT        => 30,
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST   => "POST",
+                CURLOPT_POSTFIELDS      => $dataX,//"{\n  \"customer\" : \"con\",\n  \"customerID\" : \"5108\",\n  \"customerEmail\" : \"jordi@correo.es\",\n  \"Phone\" : \"34600000000\",\n  \"Active\" : false,\n  \"AudioWelcome\" : \"https://audio.com/welcome-defecto-es.mp3\"\n\n}",
                 /*CURLOPT_HTTPHEADER => array(
                   "cache-control: no-cache",
                   "content-type: application/json",
@@ -122,20 +124,22 @@ class ElasticController extends Controller
 
 
             $response = curl_exec($curl);
-            $err = curl_error($curl);
+            $err = curl_error($curl); //return string with last error or if no errof empty string
 
             curl_close($curl);
 
             if ($err) {
                 //echo "cURL Error #:" . $err;
-				$elasticResults = "cURL Error #:" . $err;
+				//$elasticResults = "cURL Error #:" . $err;
+				throw new \App\Exceptions\myException("cURL Exception happened while Elastic Cloud Search " . $err);
+
             } else {
                 //echo "<p> FEATURE STATUS=></p><p>Below is response from API-></p>";
                 //echo "Elastic Cloud response is => " . $response;
 				$elasticResults = $response;
             }
 			
-			$elasticResults = json_decode($elasticResults, false);//Decode the result from JSON to array or objetc,  true used for ARRAY [], not  used  for OBJECT '->'
+			$elasticResults = json_decode($elasticResults, false);//Decode the result from JSON to array or object,  true used for ARRAY [], not  used  for OBJECT '->'
 			//dd($elasticResults); //to see response structure
 		    //dd($elasticResults['results'][0]['_meta']['engine']); //if 2nd json_decode() arg is true, i.e returns array
 			//dd($elasticResults->results[0]->_meta->engine);         //if 2nd json_decode() is false, i.e returns object
@@ -152,5 +156,39 @@ class ElasticController extends Controller
 	
 	
 	
+	
+	
+	 /**
+     * Page to show one product, when user clicked on link in Elastic Cloud Search Result List 
+	 * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showOneProduct($id)
+    { 
+	    //additional check in case user directly intentionally navigates to this URL with not-existing ID
+	    if (!ShopSimple::where('shop_id', $id)->exists()) { 
+	        throw new \App\Exceptions\myException('Product ' . $id . ' does not exist');
+	    }
+		
+		//find the product by id
+		$productOne = ShopSimple::where('shop_id', $id)->get();
+		
+		$model = new ShopSimple(); //to call model method, e.g truncateTextProcessor($text, $maxLength)
+	    
+		
+		return view('elastic.showOneProduct')->with(compact('productOne', 'model')); 
+	}
+	 
+	 
+	 
+	 
+	 /**
+     * Do Elastic Undexing here
+     * @return \Illuminate\Http\Response
+     */
+    public function doElasIndexing()
+    { 
+	    dd("Index");
+	}
 	
 }
