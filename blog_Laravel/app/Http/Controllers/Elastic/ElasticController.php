@@ -45,17 +45,22 @@ class ElasticController extends Controller
 	    if ($request->has('simpleSearch')) { // equivalent if (isset($search_data) && !empty($search_data) )
 			//dd($request->input('simpleSearch'));
 		    //dd($request->simpleSearch);
+			
+			$startMicroSec = microtime(true); //microseconds for Benchmark  
 		
 		    $product = new Elastic_Posts();
 			
 			//Elastic search simple alternative
-			//table type must be myISAM, if InnoDB otherwise you will get SQLSTATE[HY000]: General error: 1191 Can't find FULLTEXT index matching the column list
+			//THIS IS TRUE only if u decomment the next line => table type must be myISAM, if InnoDB otherwise you will get SQLSTATE[HY000]: General error: 1191 Can't find FULLTEXT index matching the column list
             //$results = $product->whereRaw("MATCH(elast_title, elast_text) AGAINST(? IN BOOLEAN MODE)", [$request->simpleSearch])->get();
 			
 			$results = Elastic_Posts::where('elast_title', 'LIKE', "%{$request->simpleSearch}%")->orWhere('elast_text', 'LIKE', "%{$request->simpleSearch}%")->get();
 			//dd($results);
 			
-			return view('elastic.index')->with(compact('results')); 
+			$endMicroSec = microtime(true); //microseconds for Benchmark
+			$benchmarkTime = $endMicroSec - $startMicroSec;
+			
+			return view('elastic.index')->with(compact('results', 'benchmarkTime')); 
 		}
 		//End if user submitted Simple Search 
 		
@@ -65,6 +70,8 @@ class ElasticController extends Controller
 		//https://github.com/ErickTamayo/laravel-scout-elastic
 	    if ($request->has('elastic-search')) { // equivalent if (isset($search_data) && !empty($search_data) )
 
+            $startMicroSec = microtime(true); //microseconds for Benchmark  
+			
 		    //dd("Elastic search value =>  " . $request->input('elastic-search'));
 		    
 			
@@ -144,8 +151,10 @@ class ElasticController extends Controller
 		    //dd($elasticResults['results'][0]['_meta']['engine']); //if 2nd json_decode() arg is true, i.e returns array
 			//dd($elasticResults->results[0]->_meta->engine);         //if 2nd json_decode() is false, i.e returns object
 			
+			$endMicroSec = microtime(true); //microseconds for Benchmark
+			$benchmarkTime = $endMicroSec - $startMicroSec;
 			
-			return view('elastic.index')->with(compact('elasticResults')); 
+			return view('elastic.index')->with(compact('elasticResults', 'benchmarkTime')); 
 		}
 		//End if user submitted Elastic Search Search (works on Elastic Cloud, not localhost)  -----------------------------------------
 		
@@ -159,21 +168,21 @@ class ElasticController extends Controller
 	
 	
 	 /**
-     * Page to show one product, when user clicked on link in Elastic Cloud Search Result List 
+     * Page to show one product (table{elast_search}), when user clicked on link in Elastic Cloud Search Result List 
 	 * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function showOneProduct($id)
     { 
 	    //additional check in case user directly intentionally navigates to this URL with not-existing ID
-	    if (!ShopSimple::where('shop_id', $id)->exists()) { 
-	        throw new \App\Exceptions\myException('Product ' . $id . ' does not exist');
+	    if (!Elastic_Posts::where('elast_id', $id)->exists()) { 
+	        throw new \App\Exceptions\myException('Product ' . $id . ' does not exist in table {elast_search}');
 	    }
 		
 		//find the product by id
-		$productOne = ShopSimple::where('shop_id', $id)->get();
+		$productOne = Elastic_Posts::where('elast_id', $id)->get();
 		
-		$model = new ShopSimple(); //to call model method, e.g truncateTextProcessor($text, $maxLength)
+		//$model = new ShopSimple(); //to call model method, e.g truncateTextProcessor($text, $maxLength)
 	    
 		
 		return view('elastic.showOneProduct')->with(compact('productOne', 'model')); 
@@ -182,13 +191,90 @@ class ElasticController extends Controller
 	 
 	 
 	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	 /**
-     * Do Elastic Undexing here
+     * Do Elastic Undexing here. Index all the table. Suitable when index a table for the first time. When index already exists and u run this it just updates everything as ID are the same
      * @return \Illuminate\Http\Response
+	 * https://www.elastic.co/guide/en/app-search/current/documents.html
      */
     public function doElasIndexing()
     { 
-	    dd("Index");
+	    //dd("Index");
+		
+		$tableResults = Elastic_Posts::all(); //get all the DB table data
+		//dd($tableResults);
+		
+		//construct the url to use in cURL
+        $url = "https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/my-elastic-enginez/documents"; //URL //my-elastic-enginez is my engine
+        $authorization = "Authorization: Bearer " . env('ElasticPrivate_Api_Key'); //Inject the token (Private Api Key) into the header
+  
+            //cURL Start-> Version for localhost and 000webhost.com, cURL is not supported on zzz.com.ua hosting
+
+            $curl = curl_init();
+  
+            //$dataX = '{"id":"' . $this->UUID . '" ,"type": "Feature","geometry": {"coordinates": [' . $myLng . ',' . $myLat . '],"type": "Point"}, "properties": {"title":"' . $myName . '", "description":"' . $myDescript.'"} }'; //MEGA FIX->mega Error was here, {$myName, $myDescript} must be in {""}
+            //$dataX = '{"query": "kingston"}';
+			//$dataX = '{"query":"' . $request->input('elastic-search') . '" }';  
+			//$dataX = '[ {"id": 1, "shop_id":"19","shop_title":"NameXZZZ", "shop_price":"2","shop_currency":"$","shop_descr":"CANO AF","shop_categ":"1","shop_created_at":"2020-12-03 15:57:15","sh_device_type":"Camera"} ]';
+
+
+            //construct the data (array of arrays) to be used in cURL POST (to be indexed)
+			$dataX = array(); //final array of arrays to contain all data, e.g [ ["id" => 1, "elast_title" => "text1"], ["id" => 2, "elast_title" => "text2"] ] 
+			
+			foreach($tableResults as $t ){
+				//mandatory specify the id key (same as SQL table row id), otherwise the ElasticCloud will generate it by itself (e.g "doc-4545") and we won't be able to update and when making the whole table indexing if prev index exists, it will not update it but create dublicates
+			   $temp = [ "id" => $t->elast_id, "elast_title" => $t->elast_title, "elast_text" => $t->elast_text, "elast_created_at" => $t->elast_created_at ] ;
+               array_push($dataX, $temp );
+			}
+			
+			
+			$dataX = json_encode($dataX); //converts array [ ["id" => 1, "elast_title" => "text1"], ["id" => 2, "elast_title" => "text2"] ] to json
+			//dd($dataX);
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL            => $url,
+	            CURLOPT_HTTPHEADER     => array('Content-Type: application/json' , $authorization ), //Inject the token into the header
+                CURLOPT_RETURNTRANSFER => true,
+				//CURLOPT_USERPWD => 'user:pass', //authorization variant 2
+                CURLOPT_ENCODING       => "",
+                CURLOPT_MAXREDIRS      => 10,
+                CURLOPT_TIMEOUT        => 30,
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST   => "POST",
+                CURLOPT_POSTFIELDS      => $dataX,//"{\n  \"customer\" : \"con\",\n  \"customerID\" : \"5108\",\n  \"customerEmail\" : \"jordi@correo.es\",\n  \"Phone\" : \"34600000000\",\n  \"Active\" : false,\n  \"AudioWelcome\" : \"https://audio.com/welcome-defecto-es.mp3\"\n\n}",
+                /*CURLOPT_HTTPHEADER => array(
+                  "cache-control: no-cache",
+                  "content-type: application/json",
+                  "x-api-key: whateveriyouneedinyourheader"
+                ),*/
+            ));
+            //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); //must option to Kill SSL, otherwise sets an error
+
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl); //return string with last error or if no errof empty string
+
+            curl_close($curl);
+
+            if ($err) {
+                //echo "cURL Error #:" . $err;
+				//$elasticResults = "cURL Error #:" . $err;
+				throw new \App\Exceptions\myException("cURL Exception happened while Elastic Cloud Search " . $err);
+
+            } else {
+                //echo "<p> FEATURE STATUS=></p><p>Below is response from API-></p>";
+                echo "Index was created successfully. Elastic Cloud response is => " . $response;
+				$elasticResults = $response;
+            }
+			
 	}
 	
 }

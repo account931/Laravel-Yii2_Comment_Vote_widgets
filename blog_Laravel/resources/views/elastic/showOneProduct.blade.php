@@ -74,8 +74,9 @@
                 <div class="panel-body shop">
 				
 				    <div class="col-sm-10 col-xs-10">
-                        <h1>One product </h1>
-						<p>Modified for Elastic views/ShopPaypalSimple/partial/oneProduct_with_hiddenModal.blade.php</p>
+                        <h1> One product </h1>
+						<p>Display One product from table {elast_search}</p>
+						<p>Uses Modified for Elastic view /views/ShopPaypalSimple/partial/oneProduct_with_hiddenModal.blade.php</p>
 		            </div>	
 				
 				   
@@ -112,10 +113,10 @@
 					
 					
 					<div class="col-sm-12 col-xs-12 list-group-item alert alert-success">
-					    <p class="list-group-item"> {{$productOne[0]->shop_title}}</p>
-						<p class="list-group-item"> {{$productOne[0]->shop_price}}</p> 
-						<p class="list-group-item"> {{$productOne[0]->shop_descr}}</p> 
-						<p class="list-group-item"> <img class=" my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$productOne[0]['shop_image'] }}"  alt="a" /></p>
+					    <p class="list-group-item"> {{$productOne[0]->elast_title}}</p>
+						<p class="list-group-item"> {{$productOne[0]->elast_text}}</p> 
+						<p class="list-group-item"> {{$productOne[0]->elast_created_at}}</p> 
+						<!--<p class="list-group-item"> <img class=" my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$productOne[0]['shop_image'] }}"  alt="a" /></p>-->
 					</div>
 					
 					

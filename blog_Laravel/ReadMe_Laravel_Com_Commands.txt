@@ -2645,14 +2645,16 @@ If use Laravel < 5.6 => composer require laravel/socialite "^3.2.0"
 
 38.1 ElasticSearch server on localhost (failed to implement due to Java version conflict)
    #Requires Java to be installed
+   #Uses package "elasticsearch/elasticsearch": "^7.11"
    #Install Elastic Server via zip or msi. For zip version => download, unzip, CLI to folder and started from the command line =>  .\bin\elasticsearch.bat
    #Available by /GET at => http://localhost:9200
 
 -----------------------------------------------------
 
 38.2 ElasticSearch on ElasticSearch Cloud. See example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Elastic/ElasticController.php
-Works on Engines API => docs => https://www.elastic.co/guide/en/app-search/current/engines.html
-Steps:
+  #Works on Engines API => docs => https://www.elastic.co/guide/en/app-search/current/engines.html
+  #DOES NOT Use package "elasticsearch/elasticsearch": "^7.11"
+#Steps:
    #Registered, got an endpoint e.g https://myelasticz.ent.us-central1.gcp.cloud.es.io/. Endpoint is used for personal account dashboard and as url to make API requests.
    
    #HOW TO SEARCH (ElasticSearch Cloud) => 
@@ -2660,14 +2662,16 @@ Steps:
        #Via REST API (Engines API)      =>
 	      #cURL Queries must include authentication in headers (Public_Search_Key)
 	      #can make Search queries via /GET (via browser) https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/my-elastic-enginez/search?query=kingston (username/password will be propted if not logged to web account version)
-                               or via /POST (via cURL, passing query in body and passing Public_Search_Key token in Headers) => see more at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Elastic/ElasticController.php
+                               or via /POST (via cURL, passing query in body and passing Public_Search_Key token in Headers) => see example at => function index(Request $request) =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Elastic/ElasticController.php
    
    #HOW TO INDEX DOCUMENTS (ElasticSearch Cloud) =>
        #Via personal account dashboard => (via web not REST Api): go to endpoint ->Elastic App Search->Engines->create or select your engine->Documents->paste your JSON(can create json file in PhpAdmin). Be sure the structure of JSON you paste is [ {id": "park_rock1","title": "Rocky Mount2"}, {id": "park_rock2","title": "Rocky Mount2"}]
-       #Via REST API (Engines API)      =>
+       #Via REST API (Engines API)      => make cURL => see example => function doElasIndexing()
+	   #When indexing via REST API mandatory specify the id key (same as SQL table row id), otherwise the ElasticCloud will generate it by itself (e.g "doc-4545") and we won't be able to update and when making the whole table indexing if prev index exists, it will not update it but create dublicates
+
 	   
-	   
-   # If Api returns results with only document id(e.g "id":{"raw":"doc-619ccb07cb9751408b3905d1"), go to Panel->Result Setting->tick the SQL columns to be returned
+   # If Api returns results with only document id(e.g "id":{"raw":"doc-619ccb07cb9751408b3905d1"), go to Elastic App Search->Engines->Select your Engine->Result Setting->tick the SQL columns to be returned
+   # If Api result return nothing => Elastic App Search->Engines->Select your Engine->Relevance turning-> and set value < 1 to your field
 
 
 
@@ -3155,10 +3159,15 @@ RewriteRule ^ public [L]
 # Line => <hr>
 
 #Panel Styling =>
-<div class="panel panel-default">
-    <div class="panel-heading">text</div>
-	<div class="panel-heading">text</div>
-</div>
+    <div class="panel panel-default">
+        <div class="panel-heading">text</div>
+	    <div class="panel-heading">text</div>
+    </div>
+
+#List-group-item Styling(best) =>
+    <div class="col-sm-12 col-xs-12 list-group-item alert alert-success">
+        <p class="list-group-item"> {{$productOne[0]->shop_title}}</p>
+    </div>
 
  # Bootstrap small red font-size =>  <span class='small font-italic text-danger'>
  
@@ -3241,7 +3250,7 @@ $listOfLanguages = array(
 
 # GD Library, save text to image =>  public function index() => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/CaptchaController.php
 
-# curl example (POST with data and header)=> https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Elastic/ElasticController.php
+# curl example (POST with data and header)=> see index(Request $request) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Elastic/ElasticController.php
 
 ---------------------- END PHP ----------
 
@@ -4035,6 +4044,7 @@ are the central place of all Laravel application bootstrapping. Your own applica
  10. Spatie Laravel Permission => https://spatie.be/docs/laravel-permission/v4/introduction
  11. Laravel Intervention (not package, just using Intervention Library in Laravel )
  12. Passport Api
+ 13. ElasticSearch Cloud (used without package "elasticsearch/elasticsearch": "^7.11",)
  
  #Pending: Passport, Avored, Aimeos, appzcoder/crud-generator, Zofe_Rapyd
 
