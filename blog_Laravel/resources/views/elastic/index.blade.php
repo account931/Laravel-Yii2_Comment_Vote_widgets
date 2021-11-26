@@ -172,8 +172,99 @@
 					<!--------------- End Elastic Search Results  ------------------->
                     
                   
-
+				  
+				  
+				  
+				  
+				  
+				  
+                    
 					
+					
+					
+                    <!--------------- Gii CRUD Panel fot table {elastic_search} (to trigger and test Observer indexing new entry on save/edeit/delete)------------------->
+					<div class="col-sm-12 col-xs-12">
+					    <h4 class="alert alert-success">Gii CRUD Panel fot table {elastic_search} (to trigger and test Observer indexing new entry on save/edeit/delete)<i class="fa fa-search-plus" style="font-size:26px"></i></h4> 
+				        <!-- Button "Create new" -->
+                        <button class="btn btn-info">
+						    <a href="#"> <!--<a href = 'gii-create-new-post'> --> 
+							<span class="link-text" onclick="return confirm('Are you sure to create new?')">Create new/POST(N/A)  </span></a> <!--<img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/> --> 
+						</button> 
+						
+						
+						<div class="col-sm-12 col-xs-12  list-group-item shadowX head-name">
+							
+						<div class="col-sm-2 col-xs-12"> <!-- hidden-xs -->
+							Post id
+					    </div>
+							
+						<div class="col-sm-2 col-xs-12">
+							Post name
+					    </div>
+							
+					    <div class="col-sm-2 col-xs-12">
+							Post title
+						</div>
+							
+						<div class="col-sm-2 col-xs-12">
+							Author
+						</div>
+						
+								
+						<div class="col-sm-2 col-xs-12">
+							Buttons
+					    </div>
+									
+					</div>
+							
+                            
+							
+				
+					<!-- display all posts for Gii table -->		
+				    @foreach ($allTableResults as $x)
+					    <div class="col-sm-12 col-xs-12 list-group-item bg-success cursorX shadowX crud-div"> <!-- class="row gii-content" -->
+                            
+							<div class="col-sm-2 col-xs-12">
+							    {{ $x->elast_id }}
+							</div>
+                                    
+                            <div class="col-sm-2 col-xs-12">
+							    {{ $x->elast_title }}
+							</div>
+
+                            <div class="col-sm-2 col-xs-12">
+							    {{ substr($x->elast_text, 0, 12) }}
+							</div>
+                                    
+                            <div class="col-sm-2 col-xs-12">
+							    {{ $x->elast_created_at}}
+							</div>
+
+                         
+									
+							<div class="col-sm-2 col-xs-12">
+							    <p class="hidden-sm"></p> <!-- hidden in desktop-->
+							    <button class="btn btn-info">
+								    <a href = 'elast-gii-edit-post/{{ $x->elast_id  }}'>  
+								        <span class="link-text" onclick="return confirm('Are you sure to edit?')">Edit via /PUT  </span></a> <!--<img class="deletee"  src="{{URL::to("/")}}/images/edit.png"  alt="edit"/> --> 
+								</button>  
+								
+								<button class="btn btn-danger" onclick="return confirm('Are you sure to delete post {{$x->id}}  ?')"> Delete (N/A) </button>
+							</div>
+						</div>	
+					@endforeach	
+					
+					</div>
+					{{ $allTableResults->links() }} <!-- Pagination links -->
+					<!--------------- END Gii CRUD Panel fot table {elastic_search} (to trigger and test Observer indexing new entry on save/edeit/delete)----------------------->
+
+
+
+
+
+
+
+
                 </div>
 				
             </div>

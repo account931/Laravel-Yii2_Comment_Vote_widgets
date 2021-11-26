@@ -192,6 +192,11 @@ Route::get('/elas-one-product/{id}', 'Elastic\ElasticController@showOneProduct')
 Route::get('/elastic-indexing',      'Elastic\ElasticController@doElasIndexing') ->name('elastic-indexing'); //page to do Elastic indexing for a Sql table
 
 
+// Elastic Search Gii table Section, show edit page
+Route::get('elast-gii-edit-post/{id}', 'Elastic\ElasticController@editProduct')  ->name('elast-gii-edit-post/{id}'); //display form to edit an existing post table {elastic_search}
+Route::put('elast-update-post',        'Elastic\ElasticController@updateProduct')->name('elast-update-post'); //$_PUT to update existing post
+
+
 
 //SQL: Where vs Having(Controller is in subfolder)
 Route::get('/where_having', 'SQL_where_having_Contr\Where_havingController@index') ->name('where_having');

@@ -3252,6 +3252,8 @@ $listOfLanguages = array(
 
 # curl example (POST with data and header)=> see index(Request $request) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Elastic/ElasticController.php
 
+# Convert array to json => $myJSONA = json_encode($dataX); //converts array [ ["id" => 1, "elast_title" => "text1"], ["id" => 2, "elast_title" => "text2"] ] to json '{"id": 1, "elast_title": "text1"}, {"id": 2, "elast_title": "text2"} '
+
 ---------------------- END PHP ----------
 
 

@@ -20,8 +20,8 @@ use App\Http\Controllers\Controller; //to place controller in subfolder
 //use App\models\Polymorphic\Polymorphic_Images;   //model for DB table {polymorphic_images}
 //use App\models\Polymorphic\Polymorphic_Users;   //model for DB table {polymorphic_images}
 use App\models\Elastic_search\Elastic_Posts;        //model for all elastic posts (test posts to perform search
-use App\models\ShopSimple\ShopSimple;     //model for DB table 
-
+//use App\models\ShopSimple\ShopSimple;     //model for DB table 
+use App\Http\Requests\Elastic\ElasticUpdateRequest; //Validation via Request Class (both for create and update)
 
 
 class ElasticController extends Controller
@@ -39,7 +39,7 @@ class ElasticController extends Controller
      */
     public function index(Request $request) 
     { 
-
+        $allTableResults = Elastic_Posts::paginate(2); //get all the DB table data for Gii CRUD PAnel
 		
 	    //if user submitted Simple Search 
 	    if ($request->has('simpleSearch')) { // equivalent if (isset($search_data) && !empty($search_data) )
@@ -60,7 +60,7 @@ class ElasticController extends Controller
 			$endMicroSec = microtime(true); //microseconds for Benchmark
 			$benchmarkTime = $endMicroSec - $startMicroSec;
 			
-			return view('elastic.index')->with(compact('results', 'benchmarkTime')); 
+			return view('elastic.index')->with(compact('results', 'benchmarkTime', 'allTableResults')); 
 		}
 		//End if user submitted Simple Search 
 		
@@ -154,13 +154,13 @@ class ElasticController extends Controller
 			$endMicroSec = microtime(true); //microseconds for Benchmark
 			$benchmarkTime = $endMicroSec - $startMicroSec;
 			
-			return view('elastic.index')->with(compact('elasticResults', 'benchmarkTime')); 
+			return view('elastic.index')->with(compact('elasticResults', 'benchmarkTime', 'allTableResults')); 
 		}
 		//End if user submitted Elastic Search Search (works on Elastic Cloud, not localhost)  -----------------------------------------
 		
 		
 		//if no Serach is submitted, just render the view
-        return view('elastic.index');
+        return view('elastic.index')->with(compact('allTableResults'));
     }
 	
 	
@@ -207,6 +207,8 @@ class ElasticController extends Controller
      */
     public function doElasIndexing()
     { 
+	    //NEED ADDITIONALLY IMPLEMENT HERE INDEXING BY MORE MORE THAN 100 DOCUMENTS (DOUBLE LOOP)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
 	    //dd("Index");
 		
 		$tableResults = Elastic_Posts::all(); //get all the DB table data
@@ -236,7 +238,7 @@ class ElasticController extends Controller
 			}
 			
 			
-			$dataX = json_encode($dataX); //converts array [ ["id" => 1, "elast_title" => "text1"], ["id" => 2, "elast_title" => "text2"] ] to json
+			$dataX = json_encode($dataX); //converts array [ ["id" => 1, "elast_title" => "text1"], ["id" => 2, "elast_title" => "text2"] ] to json '{"id": 1, "elast_title": "text1"}, {"id": 2, "elast_title": "text2"} '
 			//dd($dataX);
 
             curl_setopt_array($curl, array(
@@ -276,5 +278,149 @@ class ElasticController extends Controller
             }
 			
 	}
+	
+	
+	
+	
+	
+	/**
+     * Display form to edit an existing product(to trigger and test an Observer indexing an updated entry) 
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editProduct($id)
+    { 
+	    //additional check in case user directly intentionally navigates to this URL with not-existing ID
+	    if (!Elastic_Posts::where('elast_id', $id)->exists()) { 
+	        throw new \App\Exceptions\myException('Product ' . $id . ' does not exist');
+	    }
+		
+		//find the product by id
+		$productOne = Elastic_Posts::where('elast_id', $id)->get();
+		
+		return view('elastic.edit-product')->with(compact('productOne'));  
+	}
+	
+	
+	
+	
+	
+	
+	/**
+     * $_PUT request to update/edit a one single post
+     * @param  \Illuminate\Http\PostPolymUpdateReques  $request
+     * @return \Illuminate\Http\Response
+	 *
+     */
+	 
+    public function updateProduct (ElasticUpdateRequest $request)
+	{
+		//dd($request->all()); //all form input (is shown always even if validation fails)
+		
+	
+		//commented {function withValidator} and decommented {function failedValidation} in Requests\Polymorphic\PostPolymUpdateRequest in order if Validation fails, the Controller will still execute code
+		//if validation fails
+		if (isset($request->validator) && $request->validator->fails()) {
+            return redirect()->back()->withInput()->with('flashMessageFailX', 'Validation Failedd!!!' )->withErrors($request->validator->messages()); //Error was here ->withErrors($validator);
+		    
+			/*
+			return response()->json([
+               'error' => true, 
+               'data' => 'Was seem to be OK, but validation crashes', 
+               'validateErrors'=>  $request->validator->messages()]);
+			*/
+		}
+		
+		
+		//$request->input('role_sel'); vs $request->all()
+		return "Validation is OK";
+		
+		
+		/*
+		//additional check in case user directly intentionally navigates to  ../blog_Laravel/public/delete/12 to not his record
+	        try{
+	            $articleOne = wpress_blog_post::where('wpBlog_id',$id)->firstOrFail(); //find the article by id  ->firstOrFail();
+	        } catch (\Exception $e) {
+	            //if(!$articleOne){
+	            throw new \App\Exceptions\myException('Article does not exist');
+	        }
+		*/
+		
+		//dd($request->all());
+		//dd($request->input('product-name'));
+		//dd($request->image->getSize() . ' byte'); //image size
+		
+		$form_data = array(
+            'post_name'      =>  $request->input('product-name'), //DB column => input name
+            'post_text'      =>  $request->input('product-desr'),
+			'author_id'      =>  $request->input('article-author'), //$request->article-author, //won't work
+			
+			/*
+			'phone'       =>  $request->user_phone,
+			'username'    =>  $request->user_n,
+			'rank_id'     =>  $request->user_rank,
+			'superior_id' =>  $request->user_superior,
+			'salary'      =>  $request->user_salary,
+			'hired_at'    =>  $request->user_hired_at,
+			'image'       =>  $imageName, //$request->image,
+			*/
+        );    
+
+        //Updating the Post (table {polymorphic_posts}) 
+        if (Polymorphic_Posts::whereId($request->input('hidden-prod-id'))->update($form_data)) { //request->hidden-prod-id
+            
+			if(!$request->has('remember')) { //code below if only user did not ticked "Do not update image"
+				
+			    //remove the prev image from folder (100%).........
+			    //delete a prev/old image from folder '/images/polymorphic/'
+		        $product = Polymorphic_Images::where('imageable_id', $request->input('hidden-prod-id'))->first(); //found image 
+		    
+			    $pieces = explode("/images/polymorphic/", $product->url); //as db column saves image url as "/images/polymorphic/someName" we need to "someName" first
+			    if(file_exists(public_path('images/polymorphic/' . $pieces[1]))){ //$pieces[1] is an image name without "/images/polymorphic/
+		            \Illuminate\Support\Facades\File::delete('images/polymorphic/' . $pieces[1]);
+		        }
+			
+			
+			
+			
+			    //update the image in table Polymorphic_Images ------------------------------------------
+			
+			    //getting Image info for Flash Message
+		        $imageName      = time(). '_' . $request->image->getClientOriginalName();
+		        $sizeInByte     = $request->image->getSize() . ' byte';
+		        $sizeInKiloByte = round( ($request->image->getSize() / 1024), 2 ). ' kilobyte'; //round 10.55364364 to 10.5
+		        $fileExtens     =     $request->image->getClientOriginalExtension();
+		        //getting Image info for Flash Message
+			
+			    //Move uploaded image to the specified folder 
+		        request()->image->move(public_path('images/polymorphic'), $imageName);
+		
+		        //update image itself, table { polymorphic_images}
+			    Polymorphic_Images::where('imageable_id', $request->input('hidden-prod-id') )->update([  'url' => '/images/polymorphic/' . $imageName, /* 'wpBlog_title' => $data['title'], */  ]);
+            
+			} else { // end if(!$request->has('remember')) 
+			    $imageName  = " User opted not to update the imaged";
+			    $sizeInByte = "";
+			}
+			
+			//End update the image in table Polymorphic_Images -------------------------------------
+
+
+
+			
+			
+			//return response()->json(['success' => 'Data is successfully updated.]); //Version for JSON
+			return redirect()->back()->withInput()->with('flashMessageX', 'Data is successfully updated! Connected image is: <b> ' . $imageName . ' ' . $sizeInByte  . ' </b>');
+
+		} else {
+			//return response()->json(['success' => 'Failed to update']);             //Version for JSON
+			return redirect()->back()->withInput()->with('flashMessageFailX', 'Failed to update!!!' );
+
+
+		}
+	}
+	
+	
+	
 	
 }
