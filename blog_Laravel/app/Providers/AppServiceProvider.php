@@ -5,6 +5,10 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 //use Laravel\Dusk\DuskServiceProvider; //mine
 
+//For Observe register
+use App\models\Elastic_search\Elastic_Posts;
+use App\Observers\Elastic\ElasticSearchObserver;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -14,8 +18,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //register my Observer
+		Elastic_Posts::observe(ElasticSearchObserver::class); // here
     }
+
+
 
     /**
      * Register any application services.

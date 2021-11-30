@@ -72,7 +72,7 @@
 							 <br>  
 						</p>
 				        
-						&nbsp;<i class="fa fa-arrow-circle-o-left" style="font-size:24px"></i>&nbsp;       <a href="{{ url('/polymorphic') }}">back to View all Polymorphic posts </a><br>
+						&nbsp;<i class="fa fa-arrow-circle-o-left" style="font-size:24px"></i>&nbsp;  <a href="{{ url('/elastic') }}">back to View all Elastic Gii </a><br>
                     </div>
 					
 					
@@ -117,57 +117,58 @@
 
 
                         <div class="col-sm-12 col-xs-12"">
-						
+						    <p> Apart from DB updating, this entry will reindexed on Elastic Cloud </p>
+							
                             <!--------- Form to a add new item   --------------->
-				            <form class="form-horizontal" method="post" action="{{url('elast-update-post')}}" enctype="multipart/form-data">
+				            <form class="form-horizontal" method="post" action="{{url('elast-update-post/' . $productOne[0]->elast_id )}}" enctype="multipart/form-data">
 			                
-							<input name="_method" type="hidden" value="PUT">  <!--{!!  method_field('PUT') !!} --> <!-- Fix for PUT -->
+							    <input name="_method" type="hidden" value="PUT">  <!--{!!  method_field('PUT') !!} --> <!-- Fix for PUT -->
                             
-                            <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
-                            <input type="hidden" value="{{ $productOne[0]->id }}" name="hidden-prod-id" /> <!-- product ID -->
+                                <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
+                                <input type="hidden" value="{{ $productOne[0]->elast_id }}" name="hidden-prod-id" /> <!-- product ID as hidden. NOT NECESSARY HERE, as we pass id in action route -->
 
  
-                            <!-- Post Titel, product name -->
-                            <div class="form-group{{ $errors->has('product-name') ? ' has-error' : '' }}">
-                                <label for="product-name" class="col-md-4 control-label">Product name</label>
+                                <!-- Post Titel, product name -->
+                                <div class="form-group{{ $errors->has('product-name') ? ' has-error' : '' }}">
+                                    <label for="product-name" class="col-md-4 control-label">Product name</label>
 
-                                <div class="col-md-6">
-                                    <input id="product-name" type="text" class="form-control" name="product-name" value="{{old('product-name', $productOne[0]->elast_title)}}" required autofocus>
+                                    <div class="col-md-6">
+                                        <input id="product-name" type="text" class="form-control" name="product-name" value="{{old('product-name', $productOne[0]->elast_title)}}" required autofocus>
                                                                                        
-                                    @if ($errors->has('product-name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('product-name') }}</strong>
-                                    </span>
-                                    @endif 
-							     </div>
-                            </div>	    
+                                        @if ($errors->has('product-name'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('product-name') }}</strong>
+                                        </span>
+                                        @endif 
+							        </div>
+                                </div>	    
                            
 						   
 						   
-						    <!-- Post Text, product description -->
-                            <div class="form-group{{ $errors->has('product-desr') ? ' has-error' : '' }}">
-                                <label for="product-desr" class="col-md-4 control-label">Description</label>
+						        <!-- Post Text, product description -->
+                                <div class="form-group{{ $errors->has('product-desr') ? ' has-error' : '' }}">
+                                    <label for="product-desr" class="col-md-4 control-label">Description</label>
 
-                                <div class="col-md-6">
-                                    <textarea cols="5" rows="5" id="product-desr"  class="form-control" name="product-desr" required> {{old('product-desr', $productOne[0]->elast_text)}} </textarea>
+                                    <div class="col-md-6">
+                                        <textarea cols="5" rows="5" id="product-desr"  class="form-control" name="product-desr" required> {{old('product-desr', $productOne[0]->elast_text)}} </textarea>
                                                                                                                                     
-                                    @if ($errors->has('product-desr'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('product-desr') }}</strong>
-                                    </span>
-                                    @endif 
-							     </div>
-                            </div>	 
+                                        @if ($errors->has('product-desr'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('product-desr') }}</strong>
+                                        </span>
+                                        @endif 
+							        </div>
+                                </div>	 
 							
-							<!-- If looking for full example with image, dropdown, checkbox, see example at =>views/polymorphic/ -->
+							    <!-- If looking for full example with image, dropdown, checkbox, see example at =>views/polymorphic/ -->
 							
 							
-							<!-- Submit Button --> 
-                            <div class="form-group">
-                                <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary"> Edit </button>
+							    <!-- Submit Button --> 
+                                <div class="form-group">
+                                    <div class="col-md-8 col-md-offset-4">
+                                        <button type="submit" class="btn btn-primary"> Edit </button>
+                                    </div>
                                 </div>
-                            </div>
 
 								
                                 

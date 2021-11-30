@@ -187,14 +187,15 @@ Route::post('create-new-polym-post', 'Polymorphic_Controller\PolymorphicControll
 
 
 //Elastic Search (Controller is in subfolder)
-Route::get('/elastic',               'Elastic\ElasticController@index')          ->name('elastic');          //page with forms for simplle and elastic search
-Route::get('/elas-one-product/{id}', 'Elastic\ElasticController@showOneProduct') ->name('elas-one-product'); //show one product by ID (when u click in Elastic Cloud Search results)
-Route::get('/elastic-indexing',      'Elastic\ElasticController@doElasIndexing') ->name('elastic-indexing'); //page to do Elastic indexing for a Sql table
+Route::get('/elastic',               'Elastic\ElasticController@index')          ->name('elastic');            //page with forms for simplle and elastic search
+Route::get('/elas-one-product/{id}', 'Elastic\ElasticController@showOneProduct') ->name('elas-one-product');   //show one product by ID (when u click in Elastic Cloud Search results)
+Route::get('/elastic-indexing',      'Elastic\ElasticController@doElasIndexing') ->name('elastic-indexing');   //page to do Elastic indexing for a whole Sql table
+Route::get('/elast-show-engines',    'Elastic\ElasticController@showEngines')    ->name('elast-show-engines'); //page to show My Elastic Cloud Engines (no view)
 
 
 // Elastic Search Gii table Section, show edit page
 Route::get('elast-gii-edit-post/{id}', 'Elastic\ElasticController@editProduct')  ->name('elast-gii-edit-post/{id}'); //display form to edit an existing post table {elastic_search}
-Route::put('elast-update-post',        'Elastic\ElasticController@updateProduct')->name('elast-update-post'); //$_PUT to update existing post
+Route::put('elast-update-post/{id}',    'Elastic\ElasticController@updateProduct')->name('elast-update-post/{id}'); //$_PUT to update existing post
 
 
 

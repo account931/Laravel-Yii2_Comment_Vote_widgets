@@ -64,6 +64,7 @@ Table of Content:
 27. CLI command => call controller via command line
 28. PhpUnit tests vs Laravel Dusk
 29. Events/Listeners
+29.1 Analogue of Events/Listeners in form of Observer 
 34.Highlight active menu item
 35. Middleware
 35.1 Middleware (CORS example)
@@ -2538,7 +2539,7 @@ Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7
 ======= NB about some buil-in Events functionality ====================
 
 Built-in event 'Illuminate\Auth\Events\Login' works like a charm, though a built-in event 'eloquent.deleting' does not work that way.
-While trying to emulate Yii2 analogue of beforeDeleted() event I tried to emplement it as specified above in {# How to implement Events/Listeners:} but it did not work. Plus I tried to implement it in App/Traits/trait UserStampsTrait and use this Train in model App/User. It should fire when I manually dellete a user with ID 999, but it does not work.
+While trying to emulate Yii2 analogue of beforeDeleted() (beforeSave) event I tried to emplement it as specified above in {# How to implement Events/Listeners:} but it did not work. Plus I tried to implement it in App/Traits/trait UserStampsTrait and use this Train in model App/User. It should fire when I manually dellete a user with ID 999, but it does not work.
 So, the only working way to emulate Yii2 analogue of beforeDeleted() event is use this code in  model App/User (fires when u delete any user, i.e model User instance) => see example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/User.php
     public static function boot()
     {
@@ -2553,6 +2554,32 @@ Plus, there is a bug: {User::where('id',999)->delete();} in Contoller delete an 
 
 
 
+
+//================================================================================================
+29.1 Analogue of Events/Listeners in form of Observer 
+
+   # Yii2 analogue of beforeSave, afterSave, etc => via modelor Observer => https://www.larashout.com/how-to-use-laravel-model-observers
+   #Steps to implement Observer (e.g u want on every time a row(belonging to model Elastic_Posts) is deleted to fire an Observer & execute some code) =>
+      
+	  # create trait Searchable & connect Observer => see example at app\Traits\ElasticSearchMy\Searchable => 
+       	                   trait Searchable { public static function bootSearchable(){static::observe(ElasticSearchObserver::class) } 
+      
+	  # create Observer & specify what to observe  => see example at => app\Observers\Elastic\ElasticSearchObserver
+	                       class ElasticSearchObserver { public function deleting (Elastic_Posts $item){
+		                   //do your stuff here
+		                   \Illuminate\Support\Facades\Log::info("Observer fired " . date('Y-m-d H:i:s') ); }
+						   
+	  # use your trait in model Elastic_Posts => see example at => app\models\Elastic_search\Elastic_Posts.php
+	                            use App\Traits\ElasticSearchMy\Searchable;
+                                 class Elastic_Posts extends Model{ use Searchable; //use my trait
+		 
+	   # Optional ?? => providers/AppServiceProvider => 
+                            public function boot(){
+                                //register my Observer 
+		                        Elastic_Posts::observe(ElasticSearchObserver::class); // here
+                            }
+
+    #NB: In Laravel 5.X same issue applies as for Events/Listeners => saving/saved/updating/updating events are not monitored, only deleting works if you delete in this way {User::where('id',999)->first()->delete();}. This way won't work {User::where('id',999)->delete();}
 
 //================================================================================================ 
 34.Highlight active menu item
@@ -2653,6 +2680,7 @@ If use Laravel < 5.6 => composer require laravel/socialite "^3.2.0"
 
 38.2 ElasticSearch on ElasticSearch Cloud. See example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Elastic/ElasticController.php
   #Works on Engines API => docs => https://www.elastic.co/guide/en/app-search/current/engines.html
+  # Have 14 days free trial only, see credentials at => PayPal_and_tokens.txt (or ukr.net mail)
   #DOES NOT Use package "elasticsearch/elasticsearch": "^7.11"
 #Steps:
    #Registered, got an endpoint e.g https://myelasticz.ent.us-central1.gcp.cloud.es.io/. Endpoint is used for personal account dashboard and as url to make API requests.
@@ -2927,6 +2955,7 @@ On cliking submit sends $_Post ajax to
    In '/routes/web.php'  => Route::get('/showOneProduct/{id}', 'ShopPayPalSimpleController@showOneProductt')->name('showOneProduct');
    In view Var_1 => <a href="{{ route('showOneProduct', ['id'=> 3]) }}">  // ..blog_Laravel/public/showOneProduct/3
    In view Var_2(Best) => <a href="{{ url('/admin-edit-product')}}/{{$productOne[0]->shop_id }}" >
+   In view Var_3 => action="{{url('elast-update-post/' . $productOne[0]->elast_id )}}"
    
    
 
@@ -3132,7 +3161,6 @@ RewriteRule ^ public [L]
 
 # Errors "Class not found " while => new DOMDocument('1.0'); new SimpleXMLElement();
  Use global namespace => new \DOMDocument('1.0');
-
 
 
 
@@ -3621,6 +3649,7 @@ $("#game").stop().fadeOut(/*"slow"*/ 200 ,function(){  $(this).html(result)}).fa
 
 # ErrorException file_put_contents failed to open stream: No such file or directory =>  php artisan cache:clear    php artisan config:cache
 
+# On login error "TokenMismatchException" => /config/session.php set that info 'expire_on_close' => true
 =============================
 
 если токен не принимается обработчиком, то варианта существует по сути два – либо он не отправляется в запросе (отсутствует csrf_field() в форме, или нет нужного значения в аякс-запросе – там он может передаваться как в данных так и в заголовках запроса), либо на стороне сервера не загружается сессия – именно в ней сохраняется токен на стороне сервера, чтобы было с чем сравнить то что пришло в запросе.

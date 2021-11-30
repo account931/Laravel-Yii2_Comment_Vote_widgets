@@ -32,16 +32,16 @@ class ElasticUpdateRequest extends FormRequest
     public function rules()
     {
 		//$RegExp_Phone = '/^[+]380[\d]{1,4}[0-9]+$/'; //phone regexp
-		$RegExp_Title = '/^Post [0-9]+$/'; //phone regexp
+		//$RegExp_Title = '/^Post [0-9]+$/'; //phone regexp
 		
         return [
             //
-			'product-name'     => ['required', 'string',   'min:3', "regex: $RegExp_Title"], //Post title form field
+			'product-name'     => ['required', 'string',   'min:3', /* "regex: $RegExp_Title" */], //Post title form field
 			'product-desr'     => ['required',  'string', 'min:8'],                          //Post text form field
-			'article-author'   => ['required',  'integer', ], //'integer'                    //Author form field
+			//'article-author'   => ['required',  'integer', ], //'integer'                    //Author form field
 			
 			//image file is required is only if checkbox 'remember' is unticked
-			'image'            => ['required_without:remember',  'mimes:jpeg,png,jpg,gif,svg', 'max:5120' ], //2mb = 2048 //'mimes:jpeg,png,jpg,gif,svg' //'required_with:remember'
+			//'image'            => ['required_without:remember',  'mimes:jpeg,png,jpg,gif,svg', 'max:5120' ], //2mb = 2048 //'mimes:jpeg,png,jpg,gif,svg' //'required_with:remember'
             //'u_email'          => [ 'required', 'email' ] ,
         ];
     }
@@ -62,11 +62,11 @@ class ElasticUpdateRequest extends FormRequest
         return [
 		   'product-name.required'       => 'Kindly ask you to specify the title',
 		   'product-name.min'            => 'Post title can"t be less than 3 chars',
-		   'product-name.regex'          => 'Post title must be in format Post + number....',
-		   'article-author.required'     => 'Kindly ask you to specify the author',
-		   'article-author.integer'      => 'Author must be integer',
-		   'image.required'              => 'Kindly ask you to specify the image',
-		   'image.mimes'                 => 'Image must be jpeg,png,jpg,gif,svg',
+		   //'product-name.regex'          => 'Post title must be in format Post + number....',
+		   //'article-author.required'     => 'Kindly ask you to specify the author',
+		   //'article-author.integer'      => 'Author must be integer',
+		   //'image.required'              => 'Kindly ask you to specify the image',
+		   //'image.mimes'                 => 'Image must be jpeg,png,jpg,gif,svg',
 		   
 		   
            //'username.required' => Lang::get('userpasschange.usernamerequired'),

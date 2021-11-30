@@ -97,6 +97,8 @@ class ElasticController extends Controller
 		    $Private_Api_Key   = env('ElasticPrivate_Api_Key');   //.env variable
 		    $Public_Search_Key = env('ElasticPublic_Search_Key'); //.env variable
 		
+		    //dd(env('ElasticPublic_Search_Key'));
+			
 		    //construct the url to use in cURL
             $url = "https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/my-elastic-enginez/search"; //URL //my-elastic-enginez is my engine
             $authorization = "Authorization: Bearer " . $Public_Search_Key; //Inject the token (Private Api Key) into the header
@@ -143,7 +145,7 @@ class ElasticController extends Controller
             } else {
                 //echo "<p> FEATURE STATUS=></p><p>Below is response from API-></p>";
                 //echo "Elastic Cloud response is => " . $response;
-				$elasticResults = $response;
+				$elasticResults = $response; 
             }
 			
 			$elasticResults = json_decode($elasticResults, false);//Decode the result from JSON to array or object,  true used for ARRAY [], not  used  for OBJECT '->'
@@ -201,7 +203,7 @@ class ElasticController extends Controller
 	 
 	 
 	 /**
-     * Do Elastic Undexing here. Index all the table. Suitable when index a table for the first time. When index already exists and u run this it just updates everything as ID are the same
+     * Do Elastic Indexing here. Index all the table. Suitable when index a table for the first time. When index already exists and u run this it just updates everything as ID are the same
      * @return \Illuminate\Http\Response
 	 * https://www.elastic.co/guide/en/app-search/current/documents.html
      */
@@ -218,6 +220,16 @@ class ElasticController extends Controller
         $url = "https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/my-elastic-enginez/documents"; //URL //my-elastic-enginez is my engine
         $authorization = "Authorization: Bearer " . env('ElasticPrivate_Api_Key'); //Inject the token (Private Api Key) into the header
   
+  
+            //According to Elastic Documnentation you can index nore more than 100 documents (100 DB rows) at one request
+			/*
+			for($i = 0; $i < count($tableResults); $i+=100){
+				for($j = Si; $j < count($tableResults); $j++){
+					//get dataX and cURL
+				}
+			}
+			*/
+			
             //cURL Start-> Version for localhost and 000webhost.com, cURL is not supported on zzz.com.ua hosting
 
             $curl = curl_init();
@@ -273,7 +285,7 @@ class ElasticController extends Controller
 
             } else {
                 //echo "<p> FEATURE STATUS=></p><p>Below is response from API-></p>";
-                echo "Index was created successfully. Elastic Cloud response is => " . $response;
+                echo "Index was for all table was created successfully. Elastic Cloud response is => " . $response;
 				$elasticResults = $response;
             }
 			
@@ -313,11 +325,16 @@ class ElasticController extends Controller
 	 *
      */
 	 
-    public function updateProduct (ElasticUpdateRequest $request)
+    public function updateProduct (ElasticUpdateRequest $request, $id)
 	{
+		//just to test Observer on delete event
+		//Elastic_Posts::where('elast_id',999)->first()->delete();
+		//return "false";
+		
+		
+		//dd($id);
 		//dd($request->all()); //all form input (is shown always even if validation fails)
 		
-	
 		//commented {function withValidator} and decommented {function failedValidation} in Requests\Polymorphic\PostPolymUpdateRequest in order if Validation fails, the Controller will still execute code
 		//if validation fails
 		if (isset($request->validator) && $request->validator->fails()) {
@@ -333,7 +350,7 @@ class ElasticController extends Controller
 		
 		
 		//$request->input('role_sel'); vs $request->all()
-		return "Validation is OK";
+		//return "Validation is OK";
 		
 		
 		/*
@@ -351,9 +368,11 @@ class ElasticController extends Controller
 		//dd($request->image->getSize() . ' byte'); //image size
 		
 		$form_data = array(
-            'post_name'      =>  $request->input('product-name'), //DB column => input name
-            'post_text'      =>  $request->input('product-desr'),
-			'author_id'      =>  $request->input('article-author'), //$request->article-author, //won't work
+            'elast_title'      =>  $request->input('product-name'), //DB column => input name
+            'elast_text'       =>  $request->input('product-desr'),
+			'elast_created_at' =>  Carbon::now()->format('Y-m-d H:i:s'),
+			      
+			//'author_id'      =>  $request->input('article-author'), //$request->article-author, //won't work
 			
 			/*
 			'phone'       =>  $request->user_phone,
@@ -366,52 +385,21 @@ class ElasticController extends Controller
 			*/
         );    
 
-        //Updating the Post (table {polymorphic_posts}) 
-        if (Polymorphic_Posts::whereId($request->input('hidden-prod-id'))->update($form_data)) { //request->hidden-prod-id
+        //dd($request->input('hidden-prod-id'));
+        //Updating the Post (table {Elastic_Posts})  
+        if (Elastic_Posts::where('elast_id', $id /*$request->input('hidden-prod-id')*/ )->update($form_data)) { //can use both $id or $request->input('hidden-prod-id') (/id vs hidden input)
             
-			if(!$request->has('remember')) { //code below if only user did not ticked "Do not update image"
-				
-			    //remove the prev image from folder (100%).........
-			    //delete a prev/old image from folder '/images/polymorphic/'
-		        $product = Polymorphic_Images::where('imageable_id', $request->input('hidden-prod-id'))->first(); //found image 
-		    
-			    $pieces = explode("/images/polymorphic/", $product->url); //as db column saves image url as "/images/polymorphic/someName" we need to "someName" first
-			    if(file_exists(public_path('images/polymorphic/' . $pieces[1]))){ //$pieces[1] is an image name without "/images/polymorphic/
-		            \Illuminate\Support\Facades\File::delete('images/polymorphic/' . $pieces[1]);
-		        }
+		    //Update the one document index on Elastic Cloud (on one Post update)
+			//Was intendent to implement this indexing via Observer ElasticSearchObserver and trait Searchable injected in Model, but for some bizzare reason Updating event is not triggered in Obserever. While testin worked only Deleted Event and only if use this construction Elastic_Posts::where('id',999)->first()->delete();
+		    $model = new Elastic_Posts();
+		    if ($r = $model->updateOneElasticCloudIndex($id, $request)){  
+			     //dd($r);
 			
-			
-			
-			
-			    //update the image in table Polymorphic_Images ------------------------------------------
-			
-			    //getting Image info for Flash Message
-		        $imageName      = time(). '_' . $request->image->getClientOriginalName();
-		        $sizeInByte     = $request->image->getSize() . ' byte';
-		        $sizeInKiloByte = round( ($request->image->getSize() / 1024), 2 ). ' kilobyte'; //round 10.55364364 to 10.5
-		        $fileExtens     =     $request->image->getClientOriginalExtension();
-		        //getting Image info for Flash Message
-			
-			    //Move uploaded image to the specified folder 
-		        request()->image->move(public_path('images/polymorphic'), $imageName);
-		
-		        //update image itself, table { polymorphic_images}
-			    Polymorphic_Images::where('imageable_id', $request->input('hidden-prod-id') )->update([  'url' => '/images/polymorphic/' . $imageName, /* 'wpBlog_title' => $data['title'], */  ]);
-            
-			} else { // end if(!$request->has('remember')) 
-			    $imageName  = " User opted not to update the imaged";
-			    $sizeInByte = "";
+			    //return response()->json(['success' => 'Data in table Elastic_Posts is successfully updated.]); //Version for JSON
+			    return redirect()->back()->withInput()->with('flashMessageX', 'Data is successfully updated! Elastic cloud index was successfully updated as well');
+            } else {
+				return redirect()->back()->withInput()->with('flashMessageFailX', 'Data is successfully updated! Elastic cloud indexing FAILED ');
 			}
-			
-			//End update the image in table Polymorphic_Images -------------------------------------
-
-
-
-			
-			
-			//return response()->json(['success' => 'Data is successfully updated.]); //Version for JSON
-			return redirect()->back()->withInput()->with('flashMessageX', 'Data is successfully updated! Connected image is: <b> ' . $imageName . ' ' . $sizeInByte  . ' </b>');
-
 		} else {
 			//return response()->json(['success' => 'Failed to update']);             //Version for JSON
 			return redirect()->back()->withInput()->with('flashMessageFailX', 'Failed to update!!!' );
@@ -423,4 +411,42 @@ class ElasticController extends Controller
 	
 	
 	
+	/**
+     * Display existing my Elastic Cloud Engines. Has No view file
+     * @param 
+     * @return \Illuminate\Http\Response
+     */
+    public function showEngines()
+    {
+		$enginesURL = "https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/";
+		$authorization = "Authorization: Bearer " . env('ElasticPrivate_Api_Key'); //Inject the token (Private Api Key) into the header
+  
+        $curl = curl_init();
+		curl_setopt_array($curl, array(
+                CURLOPT_URL            => $enginesURL,
+	            CURLOPT_HTTPHEADER     => array('Content-Type: application/json' , $authorization ), //Inject the token into the header
+                CURLOPT_RETURNTRANSFER => true,
+				//CURLOPT_USERPWD => 'user:pass', //authorization variant 2
+                CURLOPT_ENCODING       => "",
+                CURLOPT_MAXREDIRS      => 10,
+                CURLOPT_TIMEOUT        => 30,
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST   => "GET",
+                //CURLOPT_POSTFIELDS      => $dataX,//"{\n  \"customer\" : \"con\",\n  \"customerID\" : \"5108\",\n  \"customerEmail\" : \"jordi@correo.es\",\n  \"Phone\" : \"34600000000\",\n  \"Active\" : false,\n  \"AudioWelcome\" : \"https://audio.com/welcome-defecto-es.mp3\"\n\n}",
+           
+            ));
+            //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); //must option to Kill SSL, otherwise sets an error
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl); //return string with last error or if no errof empty string
+            curl_close($curl);
+
+            if ($err) {
+				throw new \App\Exceptions\myException("cURL Exception happened while getting Elastic Cloud Engines  " . $err);
+
+            } else {
+                echo "See the list=> " . $response;
+            }
+		
+	}
 }

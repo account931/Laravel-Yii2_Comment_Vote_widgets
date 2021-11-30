@@ -27,7 +27,7 @@ return [
     | to be allowed to remain idle before it expires. If you want them
     | to immediately expire on the browser closing, set that option.
     |
-    */
+    // */
 
     'lifetime' => 120,
 
