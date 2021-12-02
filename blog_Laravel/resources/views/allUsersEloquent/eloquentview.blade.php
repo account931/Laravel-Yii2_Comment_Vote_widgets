@@ -44,7 +44,7 @@
 		<div class="col-md-12">
 		   <h4>All users list by Eloquent  <i class="fa fa-free-code-camp" style="font-size:2em; color:red;" aria-hidden="true"></i></h4>
 		   {{-- HTMLimage('images/cph.jpg', 'alt text', array('class' = 'css-class')) --}}
-		   <img class="img-responsive my-cph" src="{{URL::to('/')}}/images/item.png"  alt=""/> <!-- image -->
+		   <img class="img-responsive my-cph" style="width:17%" src="{{URL::to('/')}}/images/item.png"  alt=""/> <hr><!-- image -->
            
 		   
 		   

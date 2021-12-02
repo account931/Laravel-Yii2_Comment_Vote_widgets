@@ -50,7 +50,7 @@
 						   </b>
 						</p>
                     </h3>
-                    <p><a href="{{ route('elastic-indexing') }}"><button class="btn btn-success"> Make Elastic indexing. Index the whole table(elastic_search), if index exists update it</button></a></p> 
+                    <p><a href="{{ route('elastic-indexing') }}"><button class="btn btn-success"> Make Elastic indexing. Index the whole table(elastic_search), if index exists, it got updated &nbsp;&nbsp; <i class="fa fa-refresh" style="font-size:26px"></i></button></a></p> 
                     <p><a href="{{ route('elast-show-engines') }}"><button class="btn btn-info"> Show my Elastic Cloud engines</button></a></p> 
 
 					<p></p>                  
@@ -181,11 +181,12 @@
 							
 							<!-- If Elastic results contains ERROR. show the error -->
 							@if(!empty($elasticResults->error))
-								<h3 class="alert alert-danger"> Elastic Error:  {{ $elasticResults->error }} </h3>
+								<h4 class="alert alert-danger"> 
+							        <i class="fa fa-exclamation-triangle" style="font-size:38px;color:red"></i>
+							        Elastic Search Api Error:  <b>{{ $elasticResults->error }} </b> 
+								</h4>
 							@endif
-								
-							
-							
+	
 							
                         @endif
 						
@@ -207,6 +208,7 @@
 					
                     <!--------------- Gii CRUD Panel fot table {elastic_search} (to trigger and test Observer indexing new entry on save/edeit/delete)------------------->
 					<div class="col-sm-12 col-xs-12">
+					    <hr><hr><hr><hr><hr><hr>
 					    <h4 class="alert alert-success">Gii CRUD Panel for table {elastic_search} (to trigger and test Observer indexing new entry on save/edeit/delete)<i class="fa fa-search-plus" style="font-size:26px"></i></h4> 
 				        <p class="alert alert-success"> Observer malworks, so reindexing is done via model method </p>
 						<!-- Button "Create new" -->

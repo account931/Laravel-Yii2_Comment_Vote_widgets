@@ -137,10 +137,23 @@
 
 ![Screenshot](public/images/Screenshots/43.png)
 
-## Elastic Search on Cloud
+## Elastic Search on Cloud (old(first) variant (on table "shop_simple"))
 
 ![Screenshot](public/images/Screenshots/44.png)
 ![Screenshot](public/images/Screenshots/45.png)
+
+## Elastic Search on Cloud (final variant (on table "elastic_search"))
+
+![Screenshot](public/images/Screenshots/45.1.png)
+
+## Elastic Search on Cloud when REST API response returns error (e.g Api key is incorrect)
+
+![Screenshot](public/images/Screenshots/45.2.png)
+
+## When updating one post (in Gii), the post is re-indexed on Elastic Cloud
+
+![Screenshot](public/images/Screenshots/46.png)
+![Screenshot](public/images/Screenshots/47.png)
 
 
 

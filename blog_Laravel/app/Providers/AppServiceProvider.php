@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //register my Observer
-		Elastic_Posts::observe(ElasticSearchObserver::class); // here
+		//Elastic_Posts::observe(ElasticSearchObserver::class); // here
     }
 
 
@@ -39,11 +39,12 @@ class AppServiceProvider extends ServiceProvider
 		*/
 		
 		
-		//bind Elastic search
+		//bind Elastic search. CAUSED form token error ????????????
+		/*
 		$this->app->bind(
             \App\ElasticRepository\ArticlesRepositoryInterface::class,
             \App\ElasticRepository\EloquentRepository::class
-        );
+        ); */
 		
     }
 }

@@ -27,7 +27,7 @@ use App\Http\Requests\Elastic\ElasticUpdateRequest; //Validation via Request Cla
 class ElasticController extends Controller
 {
     public function __construct(){
-	    $this->middleware('auth');	   
+	    $this->middleware('auth'); //logged users only	   
 	}
 	
 	
@@ -70,13 +70,11 @@ class ElasticController extends Controller
 		//https://github.com/ErickTamayo/laravel-scout-elastic
 	    if ($request->has('elastic-search')) { // equivalent if (isset($search_data) && !empty($search_data) )
 
+            //dd(env('ElasticPublic_Search_Key')); //check if .env var is available, if returns null =>  php artisan config:cache   php artisan config:clear (or key expired)
             $startMicroSec = microtime(true); //microseconds for Benchmark  
 			
 		    //dd("Elastic search value =>  " . $request->input('elastic-search'));
 		    
-			
-			//dd(env('ElasticPublic_Search_Key')); /check if .env var is available
-	
 	        //Test Elastic cloud
 		
 		    //https://www.elastic.co/guide/en/app-search/7.15/authentication.html //Search Api Docs
@@ -96,9 +94,7 @@ class ElasticController extends Controller
 		    //Elastic Cloud Api Keys. SENSITIVE DATA. Gets real values from .env!!!!!!!!
 		    $Private_Api_Key   = env('ElasticPrivate_Api_Key');   //.env variable
 		    $Public_Search_Key = env('ElasticPublic_Search_Key'); //.env variable
-		
-		    //dd(env('ElasticPublic_Search_Key'));
-			
+					
 		    //construct the url to use in cURL
             $url = "https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/my-elastic-enginez/search"; //URL //my-elastic-enginez is my engine
             $authorization = "Authorization: Bearer " . $Public_Search_Key; //Inject the token (Private Api Key) into the header
@@ -203,91 +199,112 @@ class ElasticController extends Controller
 	 
 	 
 	 /**
-     * Do Elastic Indexing here. Index all the table. Suitable when index a table for the first time. When index already exists and u run this it just updates everything as ID are the same
+     * Do Elastic Indexing here. Index all the table colims. Suitable when index a table for the first time. When index already exists and u run this it just updates everything as ID are the same
      * @return \Illuminate\Http\Response
 	 * https://www.elastic.co/guide/en/app-search/current/documents.html
      */
     public function doElasIndexing()
     { 
 	    //NEED ADDITIONALLY IMPLEMENT HERE INDEXING BY MORE MORE THAN 100 DOCUMENTS (DOUBLE LOOP)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		
-	    //dd("Index");
-		
-		$tableResults = Elastic_Posts::all(); //get all the DB table data
+				
+		$tableResults = Elastic_Posts::all(); //get all the DB table data. Type: Object
 		//dd($tableResults);
+		//dd(gettype($tableResults));
 		
 		//construct the url to use in cURL
         $url = "https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/my-elastic-enginez/documents"; //URL //my-elastic-enginez is my engine
         $authorization = "Authorization: Bearer " . env('ElasticPrivate_Api_Key'); //Inject the token (Private Api Key) into the header
   
-  
-            //According to Elastic Documnentation you can index nore more than 100 documents (100 DB rows) at one request
-			/*
-			for($i = 0; $i < count($tableResults); $i+=100){
-				for($j = Si; $j < count($tableResults); $j++){
+            //According to Elastic Documnentation you can index no more than 100 documents (i.e 100 DB rows) at one request. So split index table columns by 100 batch and sens each batch separately via cURL
+			$maxBatch = 100;//max amount of documents (i.e DB rows) allowed by one request (restricted by Elastic Documnentation)
+			for($i = 0; $i < count($tableResults); $i+=100){ //iteration by 100 increment, 1st $i==0, 2nd  $i==100, 3rd $i==200, etc
+				
+				for($j = $i; $j < count($tableResults); $j++){ //iteration starts by $i (e.g, 0, 100, 200, etc), $j is just ++1 , (e.g if $i==100. $j will be 100, 101, 102, etc)
+					
 					//get dataX and cURL
-				}
-			}
-			*/
 			
-            //cURL Start-> Version for localhost and 000webhost.com, cURL is not supported on zzz.com.ua hosting
-
-            $curl = curl_init();
+			
   
-            //$dataX = '{"id":"' . $this->UUID . '" ,"type": "Feature","geometry": {"coordinates": [' . $myLng . ',' . $myLat . '],"type": "Point"}, "properties": {"title":"' . $myName . '", "description":"' . $myDescript.'"} }'; //MEGA FIX->mega Error was here, {$myName, $myDescript} must be in {""}
-            //$dataX = '{"query": "kingston"}';
-			//$dataX = '{"query":"' . $request->input('elastic-search') . '" }';  
-			//$dataX = '[ {"id": 1, "shop_id":"19","shop_title":"NameXZZZ", "shop_price":"2","shop_currency":"$","shop_descr":"CANO AF","shop_categ":"1","shop_created_at":"2020-12-03 15:57:15","sh_device_type":"Camera"} ]';
+                    //$dataX = '{"id":"' . $this->UUID . '" ,"type": "Feature","geometry": {"coordinates": [' . $myLng . ',' . $myLat . '],"type": "Point"}, "properties": {"title":"' . $myName . '", "description":"' . $myDescript.'"} }'; //MEGA FIX->mega Error was here, {$myName, $myDescript} must be in {""}
+                    //$dataX = '{"query": "kingston"}';
+			        //$dataX = '{"query":"' . $request->input('elastic-search') . '" }';  
+			        //$dataX = '[ {"id": 1, "shop_id":"19","shop_title":"NameXZZZ", "shop_price":"2","shop_currency":"$","shop_descr":"CANO AF","shop_categ":"1","shop_created_at":"2020-12-03 15:57:15","sh_device_type":"Camera"} ]';
 
+                   
 
-            //construct the data (array of arrays) to be used in cURL POST (to be indexed)
-			$dataX = array(); //final array of arrays to contain all data, e.g [ ["id" => 1, "elast_title" => "text1"], ["id" => 2, "elast_title" => "text2"] ] 
+                    //construct the data (array of arrays) to be used in cURL POST (to be indexed)
+			        $dataX = array(); //final array of arrays to contain all data, e.g [ ["id" => 1, "elast_title" => "text1"], ["id" => 2, "elast_title" => "text2"] ] 
+			        
+				    //$tableResults1 = (array)$tableResults; //typecast Object to array, as slice aceepts array only
+					//$tempo_One_Hundred_array = array_slice($tableResults1, $i, $i+=100); //create a temp array with length no more than 100
+					//dd($tempo_One_Hundred_array);
+					//$tempo_One_Hundred_array1 = (object)$tempo_One_Hundred_array; //typecast  array back to Object
+					
+					//Calculate the loop start and end values, as we can't take/put more than 100 records to array $dataX (and send via cURL). E.g we have 102 records, for first $i loop($i==0), we will have start==0, end==100. For second $i loop($i==100), we will have start==100, end==102
+			        //foreach($tableResults as $t ){
+					if(count($tableResults) - ($maxBatch * $i) >= $maxBatch){ // if current loop still have 100 records to take
+						$iteratorX = $maxBatch + ($maxBatch * $i);
+						
+					} else { // if current loop has LESS THAN 100 records, e.g if has only 40 records, e.g if count($tableResults) == 240 and it is the 2nd $i loop, i.e Si == 200 and we have to cover only 40 records not 100 
+						$it = count($tableResults) - ($maxBatch * $i);
+						$iteratorX = ($maxBatch * $i) + $it;
+					}
+					//Fill in array $dataX with data (with calculated start, end loop values)
+					for($k = $i; $k < $iteratorX ; $k++){  //count($tableResults)
+				        //mandatory specify the id key (same as SQL table row id), otherwise the ElasticCloud will generate it by itself (e.g "doc-4545") and we won't be able to update and when making the whole table indexing if prev index exists, it will not update it but create dublicates
+			            //$temp = [ "id" => $t->elast_id, "elast_title" => $t->elast_title, "elast_text" => $t->elast_text, "elast_created_at" => $t->elast_created_at ] ;
+                        $temp = [ "id" => $tableResults[$k]->elast_id, "elast_title" => $tableResults[$k]->elast_title, "elast_text" => $tableResults[$k]->elast_text, "elast_created_at" => $tableResults[$k]->elast_created_at ] ;
+						array_push($dataX, $temp);
+			        }
 			
-			foreach($tableResults as $t ){
-				//mandatory specify the id key (same as SQL table row id), otherwise the ElasticCloud will generate it by itself (e.g "doc-4545") and we won't be able to update and when making the whole table indexing if prev index exists, it will not update it but create dublicates
-			   $temp = [ "id" => $t->elast_id, "elast_title" => $t->elast_title, "elast_text" => $t->elast_text, "elast_created_at" => $t->elast_created_at ] ;
-               array_push($dataX, $temp );
-			}
 			
-			
-			$dataX = json_encode($dataX); //converts array [ ["id" => 1, "elast_title" => "text1"], ["id" => 2, "elast_title" => "text2"] ] to json '{"id": 1, "elast_title": "text1"}, {"id": 2, "elast_title": "text2"} '
-			//dd($dataX);
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL            => $url,
-	            CURLOPT_HTTPHEADER     => array('Content-Type: application/json' , $authorization ), //Inject the token into the header
-                CURLOPT_RETURNTRANSFER => true,
-				//CURLOPT_USERPWD => 'user:pass', //authorization variant 2
-                CURLOPT_ENCODING       => "",
-                CURLOPT_MAXREDIRS      => 10,
-                CURLOPT_TIMEOUT        => 30,
-                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST   => "POST",
-                CURLOPT_POSTFIELDS      => $dataX,//"{\n  \"customer\" : \"con\",\n  \"customerID\" : \"5108\",\n  \"customerEmail\" : \"jordi@correo.es\",\n  \"Phone\" : \"34600000000\",\n  \"Active\" : false,\n  \"AudioWelcome\" : \"https://audio.com/welcome-defecto-es.mp3\"\n\n}",
-                /*CURLOPT_HTTPHEADER => array(
-                  "cache-control: no-cache",
-                  "content-type: application/json",
-                  "x-api-key: whateveriyouneedinyourheader"
-                ),*/
-            ));
-            //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); //must option to Kill SSL, otherwise sets an error
+			        $dataX = json_encode($dataX); //converts array [ ["id" => 1, "elast_title" => "text1"], ["id" => 2, "elast_title" => "text2"] ] to json '{"id": 1, "elast_title": "text1"}, {"id": 2, "elast_title": "text2"} '
+			        //dd($dataX);
 
 
-            $response = curl_exec($curl);
-            $err = curl_error($curl); //return string with last error or if no errof empty string
 
-            curl_close($curl);
+                } //end for loop 2 ($j)
+                    
+					//Send cURL to Elastic Cloud to upload 100 documents indexes. E.g => We have 102 records, for first $i loop($i==0), we send first 100 documnets. For second $i loop($i==100), we send only 2 left documents
+                    //cURL Start-> Version for localhost and 000webhost.com, cURL is not supported on zzz.com.ua hosting
+                    $curl = curl_init();
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL            => $url,
+	                    CURLOPT_HTTPHEADER     => array('Content-Type: application/json' , $authorization ), //Inject the token into the header
+                        CURLOPT_RETURNTRANSFER => true,
+				        //CURLOPT_USERPWD => 'user:pass', //authorization variant 2
+                        CURLOPT_ENCODING       => "",
+                        CURLOPT_MAXREDIRS      => 10,
+                        CURLOPT_TIMEOUT        => 30,
+                        CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST   => "POST",
+                        CURLOPT_POSTFIELDS      => $dataX,//"{\n  \"customer\" : \"con\",\n  \"customerID\" : \"5108\",\n  \"customerEmail\" : \"jordi@correo.es\",\n  \"Phone\" : \"34600000000\",\n  \"Active\" : false,\n  \"AudioWelcome\" : \"https://audio.com/welcome-defecto-es.mp3\"\n\n}",
+                        /*CURLOPT_HTTPHEADER => array(
+                           "cache-control: no-cache",
+                           "content-type: application/json",
+                           "x-api-key: whateveriyouneedinyourheader"
+                       ),*/
+                    ));
+                    //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); //must option to Kill SSL, otherwise sets an error
 
-            if ($err) {
-                //echo "cURL Error #:" . $err;
-				//$elasticResults = "cURL Error #:" . $err;
-				throw new \App\Exceptions\myException("cURL Exception happened while Elastic Cloud Search " . $err);
 
-            } else {
-                //echo "<p> FEATURE STATUS=></p><p>Below is response from API-></p>";
-                echo "Index was for all table was created successfully. Elastic Cloud response is => " . $response;
-				$elasticResults = $response;
-            }
+                    $response = curl_exec($curl);
+                    $err = curl_error($curl); //return string with last error or if no errof empty string
+
+                    curl_close($curl);
+
+                    if ($err) {
+                        //echo "cURL Error #:" . $err;
+				        //$elasticResults = "cURL Error #:" . $err;
+				        throw new \App\Exceptions\myException("cURL Exception happened while Elastic Cloud Search " . $err);
+
+                    } else {
+                        //echo "<p> FEATURE STATUS=></p><p>Below is response from API-></p>";
+                        echo "Index was for all table was created successfully. Elastic Cloud response is => " . $response;
+				        $elasticResults = $response;
+                    }
+				
+			} //for loop 1 ($i)
 			
 	}
 	
@@ -392,17 +409,27 @@ class ElasticController extends Controller
 		    //Update the one document index on Elastic Cloud (on one Post update)
 			//Was intendent to implement this indexing via Observer ElasticSearchObserver and trait Searchable injected in Model, but for some bizzare reason Updating event is not triggered in Obserever. While testin worked only Deleted Event and only if use this construction Elastic_Posts::where('id',999)->first()->delete();
 		    $model = new Elastic_Posts();
-		    if ($r = $model->updateOneElasticCloudIndex($id, $request)){  
-			     //dd($r);
+		    if ($r = $model->updateOneElasticCloudIndex($id, $request)){ 
+                $r = json_decode($r); //decode json to Object			
+			    //dd($r);
+				if(!empty($r->error)){ //if Elastic Rest API response returns any error
+					//dd("api error");
+					return redirect()->back()->withInput()->with('flashMessageFailX', '<i class="fa fa-exclamation-triangle" style="font-size:28px;color:red"></i> Data was successfully updated but Elastic cloud indexing a post faild. Elastic Api error is => <b> ' .  $r->error . ' </b>');
+
+				} else { //if Elastic Rest API response returns NO error, mening all os OK
+					//dd("NO api error");
+					return redirect()->back()->withInput()->with('flashMessageX', 'Data is successfully updated! Elastic cloud index was successfully updated as well');
+                    //return response()->json(['success' => 'Data in table Elastic_Posts is successfully updated.]); //Version for JSON
+				}
 			
-			    //return response()->json(['success' => 'Data in table Elastic_Posts is successfully updated.]); //Version for JSON
-			    return redirect()->back()->withInput()->with('flashMessageX', 'Data is successfully updated! Elastic cloud index was successfully updated as well');
             } else {
-				return redirect()->back()->withInput()->with('flashMessageFailX', 'Data is successfully updated! Elastic cloud indexing FAILED ');
+				
+				//method updateOneElasticCloudIndex() failed (may be due to cURL failure)
+				return redirect()->back()->withInput()->with('flashMessageFailX', 'Data is successfully updated! Elastic cloud indexing FAILED (may be cURL failed) ');
 			}
 		} else {
 			//return response()->json(['success' => 'Failed to update']);             //Version for JSON
-			return redirect()->back()->withInput()->with('flashMessageFailX', 'Failed to update!!!' );
+			return redirect()->back()->withInput()->with('flashMessageFailX', 'Failed to update the post + Elastic indexing failed!!!' );
 
 
 		}

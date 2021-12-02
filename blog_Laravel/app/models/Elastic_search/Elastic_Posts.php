@@ -54,7 +54,8 @@ class Elastic_Posts extends Model
      * @return \Illuminate\Http\Response
      */
     public function updateOneElasticCloudIndex($id, $request)
-    {
+    {   
+	    //dd( env('ElasticPrivate_Api_Key')); //check if .env var is available, if returns null =>  php artisan config:cache   php artisan config:clear (or key expired)
 		//construct the url to use in cURL
         $url = "https://myelasticz.ent.us-central1.gcp.cloud.es.io/api/as/v1/engines/my-elastic-enginez/documents"; //URL //my-elastic-enginez is my engine
         $authorization = "Authorization: Bearer " . env('ElasticPrivate_Api_Key'); //Inject the token (Private Api Key) into the header

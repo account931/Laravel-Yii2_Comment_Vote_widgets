@@ -250,7 +250,7 @@
 </div> <!-- end . animate-bottom -->
 
 <!-- Include js/css file for this view only -->
- <script src="{{ asset('js/Polymorphic/product_tabs.js') }}"></script> <!--  JS for W3school Full Page Tabs (uses css + js) https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
+ <!--<script src="{{ asset('js/Polymorphic/product_tabs.js') }}"></script>--> <!--  JS for W3school Full Page Tabs (uses css + js) https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
  <script src="{{ asset('js/Polymorphic/preview_form_image.js') }}"></script> <!--  JS to view an uploaded form image -->
 
 <!-- Include js/css file for this view only -->
