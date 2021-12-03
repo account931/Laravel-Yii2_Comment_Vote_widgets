@@ -191,6 +191,7 @@ Route::get('/elastic',               'Elastic\ElasticController@index')         
 Route::get('/elas-one-product/{id}', 'Elastic\ElasticController@showOneProduct') ->name('elas-one-product');   //show one product by ID (when u click in Elastic Cloud Search results)
 Route::get('/elastic-indexing',      'Elastic\ElasticController@doElasIndexing') ->name('elastic-indexing');   //page to do Elastic indexing for a whole Sql table
 Route::get('/elast-show-engines',    'Elastic\ElasticController@showEngines')    ->name('elast-show-engines'); //page to show My Elastic Cloud Engines (no view)
+Route::get('/run-query-job',         'Elastic\ElasticController@runQueryJob')    ->name('run-query-job');      //page to run Query-job
 
 
 // Elastic Search Gii table Section, show edit page

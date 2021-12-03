@@ -46,12 +46,13 @@
                         Elastic Search on DB Table {elastic_search}<span class="small text-danger">*</span>
 						<p style="border:1px solid black; padding:0.5em;">
 						    <b> 
-						    So far, works only simple SQL Search + ElasticSearch on Cloud, Elastic search on localhost does not work as failed to install Elastic server 9200 (via zip, msi, as Java not compatible (version conflict).)
+						    So far, works only simple SQL Search + ElasticSearch on Cloud(14 days trial). Elastic search on localhost does not work as failed to install Elastic server 9200 (via zip, msi, as Java not compatible (version conflict).)
 						   </b>
 						</p>
                     </h3>
-                    <p><a href="{{ route('elastic-indexing') }}"><button class="btn btn-success"> Make Elastic indexing. Index the whole table(elastic_search), if index exists, it got updated &nbsp;&nbsp; <i class="fa fa-refresh" style="font-size:26px"></i></button></a></p> 
-                    <p><a href="{{ route('elast-show-engines') }}"><button class="btn btn-info"> Show my Elastic Cloud engines</button></a></p> 
+                    <p><a href="{{ route('elastic-indexing') }}">   <button class="btn btn-success"> Make Elastic indexing. Index the whole table(elastic_search), if index exists, it got updated &nbsp;&nbsp; <i class="fa fa-refresh" style="font-size:26px"></i></button></a></p> 
+                    <p><a href="{{ route('elast-show-engines') }}"> <button class="btn btn-info">    Show my Elastic Cloud engines</button></a></p> 
+					<p><a href="{{ route('run-query-job') }}">      <button class="btn btn-info">    Query Job Test, does the whole index same as 1st button but via Job Queque</button></a></p>
 
 					<p></p>                  
                 </div>
@@ -103,7 +104,7 @@
 						
 						@if(empty($results))
 							<br>
-                            <p>Data does not exist (you did not search anything)</p>
+                            <p>Simple Search Results Data does not exist (you did not search anything)</p>
                         @else
 							<br>
                             <p>Your data is here! Benchmark: it took <b> {{$benchmarkTime}} microseconds </b> to get result</p>

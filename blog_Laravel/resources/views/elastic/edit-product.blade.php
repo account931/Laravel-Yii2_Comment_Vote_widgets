@@ -99,7 +99,7 @@
                 <div class="panel-body shop">
 				
 				    <div class="col-sm-10 col-xs-10">
-                        <h1>Edit an Elast Post item</h1>
+                        <h1>Edit an Elast Post item + Elastic Re-index </h1>
 		            </div>	
 				
 				  
@@ -166,7 +166,7 @@
 							    <!-- Submit Button --> 
                                 <div class="form-group">
                                     <div class="col-md-8 col-md-offset-4">
-                                        <button type="submit" class="btn btn-primary"> Edit </button>
+                                        <button type="submit" class="btn btn-primary"> Edit + Elastic re-index</button>
                                     </div>
                                 </div>
 

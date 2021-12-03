@@ -145,6 +145,7 @@
 ## Elastic Search on Cloud (final variant (on table "elastic_search"))
 
 ![Screenshot](public/images/Screenshots/45.1.png)
+![Screenshot](public/images/Screenshots/45.11.png)
 
 ## Elastic Search on Cloud when REST API response returns error (e.g Api key is incorrect)
 
@@ -155,6 +156,13 @@
 ![Screenshot](public/images/Screenshots/46.png)
 ![Screenshot](public/images/Screenshots/47.png)
 
+## Elastic Cloud UI Overview
+![Screenshot](public/images/Screenshots/53.png)
+![Screenshot](public/images/Screenshots/48.png)
+![Screenshot](public/images/Screenshots/49.png)
+![Screenshot](public/images/Screenshots/50.png)
+![Screenshot](public/images/Screenshots/51.png)
+![Screenshot](public/images/Screenshots/52.png)
 
 
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>

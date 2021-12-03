@@ -3163,7 +3163,10 @@ RewriteRule ^ public [L]
  Use global namespace => new \DOMDocument('1.0');
 
 
-
+# Job queque => 
+  # create a Job in App\Jobs and put in its handler the code u want to run =>  public function handle(){ $res = app('App\Http\Controllers\Elastic\ElasticController')->doElasIndexing(); //call Controller method from other code  place => see example at => \app\Jobs\ElasticSearch\ProcessElasticIndexing.php
+  # trigger/fire/put the Job in queuque (put somewhere u need  in Controller method) =>  \App\Jobs\ElasticSearch\ProcessElasticIndexing::dispatch($text);
+  # Run all queque. In my case job is done without it => php artisan queue:work
 
 
 
@@ -3281,6 +3284,10 @@ $listOfLanguages = array(
 # curl example (POST with data and header)=> see index(Request $request) => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Elastic/ElasticController.php
 
 # Convert array to json => $myJSONA = json_encode($dataX); //converts array [ ["id" => 1, "elast_title" => "text1"], ["id" => 2, "elast_title" => "text2"] ] to json '{"id": 1, "elast_title": "text1"}, {"id": 2, "elast_title": "text2"} '
+
+# Batch example, send cURL by 100 entries limit => function doElasIndexing() => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Elastic/ElasticController.php
+
+# Call Controller method from other code  place  => res = app('App\Http\Controllers\Elastic\ElasticController')->doElasIndexing(); 
 
 ---------------------- END PHP ----------
 
@@ -3649,7 +3656,7 @@ $("#game").stop().fadeOut(/*"slow"*/ 200 ,function(){  $(this).html(result)}).fa
 
 # ErrorException file_put_contents failed to open stream: No such file or directory =>  php artisan cache:clear    php artisan config:cache
 
-# On login error "TokenMismatchException" => /config/session.php set that info 'expire_on_close' => true
+# On login error "TokenMismatchException" => /config/session.php set that info 'expire_on_close' => false +  App\Providers\AppServiceProvider contained binding to non-existing repositort
 =============================
 
 если токен не принимается обработчиком, то варианта существует по сути два – либо он не отправляется в запросе (отсутствует csrf_field() в форме, или нет нужного значения в аякс-запросе – там он может передаваться как в данных так и в заголовках запроса), либо на стороне сервера не загружается сессия – именно в ней сохраняется токен на стороне сервера, чтобы было с чем сравнить то что пришло в запросе.

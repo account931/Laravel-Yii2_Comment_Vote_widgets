@@ -20,7 +20,7 @@ class ElasticSeeder extends Seeder {
 
         //$gender = $faker->randomElement(['male', 'female']);
 
-    	foreach (range(1,102) as $index) {
+    	foreach (range(1, 102) as $index) {
 		
 	
             DB::table('elastic_search')->insert([

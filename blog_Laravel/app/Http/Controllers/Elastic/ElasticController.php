@@ -476,4 +476,20 @@ class ElasticController extends Controller
             }
 		
 	}
+	
+	
+	/**
+     * Run Query Job. Do the same as {method doElasIndexing()} but via Async Job Queque. Has. Works. No view file
+     * @param 
+     * @return \Illuminate\Http\Response
+     */
+    public function runQueryJob()
+	{
+	    $text = " JOB done ";
+		$res = \App\Jobs\ElasticSearch\ProcessElasticIndexing::dispatch($text); //Put the task in Queque (and execute??)
+		//$res = app('App\Http\Controllers\Elastic\ElasticController')->doElasIndexing(); //call Controller method from other code  place
+		return $text; //it returns what returns method doElasIndexing() + $text
+	}
+	
+	
 }
