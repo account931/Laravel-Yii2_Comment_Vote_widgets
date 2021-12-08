@@ -29,13 +29,17 @@
    25.9 Vue store Vuex
    25.9.1 Vue Router
    26. Unsorted Vue (uplift to parent, pass to child, etc)
+   
+   
    ------------------------------
    25.1 Change css based on props =>
             <div class="panel-body" :class="cssState? ' text-danger' : ''"> <!-- change css based on props -->
 			<div class="col-sm-12 col-xs-12 alert alert-info" :class="this.cssStateFlag ? ' text-danger' : 'text-info' "   id="userNameHint"> <!-- change css based on data -->
 	
-        Display data =>  <div v-if="status_msg" class="alert-danger alert" role="alert"> {{ status_msg }} </div>	
-  
+        # Display data =>  <div v-if="status_msg" class="alert-danger alert" role="alert"> {{ status_msg }} </div>	
+        # let that = this; //"that" has been assigned the value of "this" at the top to avoid context related issues. Used in .then or ajax callbacks (success/failure)
+		
+		
   ------------------------------
    25.2 Vue ajax =>  
        Ajax in Vue can be used in different ways: can be used directly in component and set result to local data; or u can dispatch/trigger a Vuex Store method in local component, specify the logic/mutation in Vuex Store and use in local component as {this.$store.state.adm_posts_qunatity}
