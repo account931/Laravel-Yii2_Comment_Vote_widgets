@@ -155,7 +155,7 @@
 							<!-- If Elastic results contains no Error, show the results -->
 							@if(empty($elasticResults->error))
 								
-								<!-- check if 14-days trial ends and Elastic Cloud returns "ok": false, message: "Unknown resource" -->
+								<!-- check if 14-days trial ends and Elastic Cloud returns {"ok": false, message: "Unknown resource"} -->
 								@if($elasticResults->ok == false)
 									<p>Elastic error => <b> {{ $elasticResults->message }} </b></p>
 								    <p> If u see this, it is probably because Elastic Cloud 14-days trial ends </p>

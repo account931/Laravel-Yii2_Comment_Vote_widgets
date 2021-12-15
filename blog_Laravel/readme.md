@@ -164,6 +164,9 @@
 ![Screenshot](public/images/Screenshots/51.png)
 ![Screenshot](public/images/Screenshots/52.png)
 
+## Elastic Cloud Search JSON response
+![Screenshot](public/images/Screenshots/54.png)
+
 
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 

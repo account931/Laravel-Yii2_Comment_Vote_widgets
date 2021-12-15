@@ -38,6 +38,8 @@
 	
         # Display data =>  <div v-if="status_msg" class="alert-danger alert" role="alert"> {{ status_msg }} </div>	
         # let that = this; //"that" has been assigned the value of "this" at the top to avoid context related issues. Used in .then or ajax callbacks (success/failure)
+		                   //Explaination => if you use this.data, it is incorrect, because when 'this' reference the vue-app, you could use this.data, but here (ajax success callback function), this does not reference to vue-app, instead 'this' reference to whatever who called this function(ajax call)
+
 		
 		
   ------------------------------
@@ -483,3 +485,29 @@
 
             #if in subcomponent in nested for loops u can't get passed from Parents props, then use computed to get them => 
                 => computed: { fkGetVertical () { return this.verticalX;}, }
+				
+				
+				
+		    ------------------------------------------
+			# Check in Vue if image url is invalid or broken or image physically not available in folder => use @error="imageUrlAlt" => see example at => \resources\assets\js\WpBlog_Vue\components\pages\blog_2021.vue
+			    <img v-if="post.get_images.length" class="card-img-top my-img" :src="`images/wpressImages/${post.get_images[0].wpImStock_name}`" @error="imageUrlAlt" />       <!-- @error - is a method to run if image url is invalid or broken or image physically not available in folder -->
+			
+			    methods: {
+				    imageUrlAlt(event) {
+                        event.target.src = "images/image-corrupted.jpg"
+						
+                    },
+			-----------------------------------------
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			

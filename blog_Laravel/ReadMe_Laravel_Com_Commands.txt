@@ -2812,6 +2812,21 @@ $listOfLanguages = array(
 
 # Call Controller method from other code  place  => res = app('App\Http\Controllers\Elastic\ElasticController')->doElasIndexing(); 
 
+# Generators => PHP 5.5 =>  механизм для циклической обработки данных, без необходимости создавать массив данных в памяти. Генератор выглядит как функция, но ведет себя как итератор, yield (состояние сохраняется в памяти) => https://myrusakov.ru/php-generators-tutorial.html
+ 
+    function getRange( $max = 10 ) {
+        for( $i = 1; $i < $max; $i++ ) {
+            yield $i;   //instead of => $array[] = $i;
+        }  
+                       //insead of => return $array;
+    }
+
+    foreach (getRange(PHP_INT_MAX) as $range) { //foreach (getRange(15) as $range) {
+        echo "Данные {$range} <br>";
+    }
+	
+	
+	
 ---------------------- END PHP ----------
 
 
@@ -3547,7 +3562,7 @@ NB: this example is not 100% Repository, better look for Repository example at =
        
 ------------------------------------------------
 402.9 Observer, Adopter, Decorator => https://medium.com/@ivorobioff/the-5-most-common-design-patterns-in-php-applications-7f33b6b7d8d6
-
+See Observer example at => https://github.com/account931/CPH_miscellaneous_2021/blob/main/Observer_pattern/index.php
 
 -------------------------------------------------
 

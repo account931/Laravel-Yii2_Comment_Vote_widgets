@@ -417,7 +417,7 @@ class ElasticController extends Controller
 					return redirect()->back()->withInput()->with('flashMessageFailX', '<i class="fa fa-exclamation-triangle" style="font-size:28px;color:red"></i> Data was successfully updated but Elastic cloud indexing a post faild. Elastic Api error is => <b> ' .  $r->error . ' </b>');
 
 				} else { //if Elastic Rest API response returns NO error, meaning all os OK
-				    //check if 14-days trial ends and Elastic Cloud returns "ok": false, message: "Unknown resource" 
+				    //check if 14-days trial ends and Elastic Cloud returns {"ok": false, message: "Unknown resource"} 
 				    if($r->ok == false){
 						return redirect()->back()->withInput()->with('flashMessageFailX', 'Data is successfully updated, But Elastic cloud index failed due to Elastic error => <b>' . $r->message . '</b>. Probably 14-days trial ends.');
 					
