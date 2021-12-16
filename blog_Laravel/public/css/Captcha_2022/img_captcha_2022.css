@@ -1,0 +1,23 @@
+ /*---------------------------  */
+
+.container {color:red;}
+
+.captcha-img     {border: 1px solid black; cursor:pointer;}
+.captcha-img img {width:98%;}
+.captcha-img:hover {background:yellow; border: 1px solid red;}
+
+.captcha-header{padding-top: 2em; padding-bottom: 2em; padding-left: 1em; background: lavender;}
+
+
+ /* Clicked captcha css */
+.captcha-clicked{border-radius: 15px;  border: 2px solid red; opacity:40%;}
+
+
+.form {margin-top: 6em; padding:2em; border-radius:15px; border: 1px solid lavender; }
+ /* Mobile */
+ @media screen and (max-width: 480px) { 
+  
+ }
+
+ 
+ 

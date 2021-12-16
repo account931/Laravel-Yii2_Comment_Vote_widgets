@@ -196,7 +196,7 @@ Route::get('/run-query-job',         'Elastic\ElasticController@runQueryJob')   
 
 // Elastic Search Gii table Section, show edit page
 Route::get('elast-gii-edit-post/{id}', 'Elastic\ElasticController@editProduct')  ->name('elast-gii-edit-post/{id}'); //display form to edit an existing post table {elastic_search}
-Route::put('elast-update-post/{id}',    'Elastic\ElasticController@updateProduct')->name('elast-update-post/{id}'); //$_PUT to update existing post
+Route::put('elast-update-post/{id}',   'Elastic\ElasticController@updateProduct')->name('elast-update-post/{id}'); //$_PUT to update existing post
 
 
 
@@ -204,6 +204,10 @@ Route::put('elast-update-post/{id}',    'Elastic\ElasticController@updateProduct
 Route::get('/where_having', 'SQL_where_having_Contr\Where_havingController@index') ->name('where_having');
 
 
+
+
+//Self-made Captcha 2022 with images (Controller is in subfolder)
+Route::get('/img-captcha_2022', 'Captcha_2022\Img_Captcha_2022_Controller@index')  ->name('img-captcha_2022');   //page with Self-made Captcha 2022 with images
 
 
 

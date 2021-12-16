@@ -1555,6 +1555,7 @@ class User extends Authenticatable implements JWTSubject
  #Loading CSS and JS files on specific views in Laravel 5.2. include css
 
   #Variant 1 (most working)(use/include in main layout, i.e /views/layout/blade.php)!!! =>
+  
     <!-- To register JS/CSS file for specific view only (In layout template) -->
     @if (in_array(Route::getFacadeRoot()->current()->uri(), ['testRest', 'register', 'showOneProduct/{id}']))
         <script src="{{ asset('js/test-rest/test-rest.js') }}"></script>
@@ -1562,15 +1563,35 @@ class User extends Authenticatable implements JWTSubject
     @endif	
 	
 	
-	
-	#Variant 2 (working) (use/include in any child view before {@endsection}, i.e /views/auth/login). OR right after @section('content') (if u don't want to encounter div loads for 1 sec without css styling) =>
+	--------
+		
+    #Variant 2.1 (better than 2.2)=> see example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/elastic/edit-product.blade.php
+	    @extends('layouts.app')
+        @section('content')
+
+        <!-- Include js/css file for this view only + SEE ONE JS AT THE BOTTOM -->
+        <link href="{{ asset('css/Polymorphic/product_tabs.css') }}" rel="stylesheet"> <!-- Css for W3school Full Page Tabs (uses css + js) https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  -->
+
+        <!-- Sweet Alerts -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> <!-- Sweet Alert CSS -->
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script> <!--Sweet Alert JS-->
+		div class="container">
+		    <!-- Some html -->
+		</div>
+		<script src="{{ asset('js/Polymorphic/preview_form_image.js') }}"></script> <!--  JS to view an uploaded form image -->
+
+        <!-- Include js/css file for this view only -->
+        @endsection
+		
+    ---------
+	#Variant 2.2 (working) (use/include in any child view before {@endsection}, i.e /views/auth/login). OR right after @section('content') (if u don't want to encounter div loads for 1 sec without css styling) =>
 	    => see example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/ShopPaypalSimple_AdminPanel/shop-products/edit-product.blade.php
 		<!-- Include js/css file for this view only -->
         <script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>
         <link href="{{ asset('css/ShopPaypalSimple/shopSimple.css') }}" rel="stylesheet">
-        @endsection	
-    ---------
- 
+        @endsection	 
+		
+    -------
     #Variant 3, in Blade =>
 	    @section('content')
 	        some content
@@ -3622,7 +3643,7 @@ are the central place of all Laravel application bootstrapping. Your own applica
  12. Passport Api
  13. ElasticSearch Cloud (used without package "elasticsearch/elasticsearch": "^7.11",)
  
- #Pending: Passport, Avored, Aimeos, appzcoder/crud-generator, Zofe_Rapyd
+ #Pending: anhskohbo/no-captcha Package, Passport, Avored, Aimeos, appzcoder/crud-generator, Zofe_Rapyd
 
 402.1 Used PHP Libraries(in other projects, not Laravel)
    1. SimpleXLSX Lib (read Excel files)
