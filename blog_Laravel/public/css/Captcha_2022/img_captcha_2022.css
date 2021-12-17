@@ -14,6 +14,13 @@
 
 
 .form {margin-top: 6em; padding:2em; border-radius:15px; border: 1px solid lavender; }
+
+.my-cph {position: relative; z-index:3;} /* captcha image, z-index is bigger than .watermark's to be able to click on image, even on watermark as it is below but seen as image is transparent  */
+.watermark{position: absolute; top: 40px; left: 40px; display:none; z-index:2; border: 1px solid black; border-radius:25px; padding:0.1em;}  /* Check icon to appear on click */
+
+
+
+
  /* Mobile */
  @media screen and (max-width: 480px) { 
   

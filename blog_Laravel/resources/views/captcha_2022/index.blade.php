@@ -100,9 +100,15 @@
 						    @foreach($randomNine as $randomOne)
 						        <div class="col-sm-4 col-xs-4 captcha-img">
 								    <center>
-							        <img src="{{URL::to("/")}}/images/Captcha_2022/{{$randomOne}}"  class="img-responsive my-cph" alt="a"/> 
+							        <img src="{{URL::to("/")}}/images/Captcha_2022/{{$randomOne}}"  class="img-responsive my-cph" alt="a"/>
+                                    <i class="fa fa-check watermark" style="font-size:44px; color:black;"></i>									
 									</center>
 							    </div>
+								
+								
+								    
+								
+								
 						        <?php $i++; ?>
 						    @endforeach
 							</div>

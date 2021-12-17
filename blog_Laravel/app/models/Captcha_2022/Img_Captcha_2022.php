@@ -40,18 +40,21 @@ class Img_Captcha_2022 extends Model
 			$randomCategory = rand($min, $max); //get the rabdom category in array $allImages, i.e cats, cars, boats
 		
 		    $keys = array_keys($allImages); // as long as $allImages is associative array & we can reach only by index i.e $allImages['cats']. In order to reach by int index use array_keys
-            //return $allImages[$keys[$randomCategory]][0]; //e.g cats category 1st elem, e.g returns "cat1.jpg"
+            
+			//dd($allImages[$keys[$randomCategory]][0]); //e.g cats category 1st elem, e.g returns "cat1.jpg"
 		    //return count($allImages[$keys[$randomCategory]]); //length, eg 3
 		
 		
 		    //dd($allImages[$keys[$randomCategory]]); //returns the whole array, e.g array:4 [▼0 => "cat1.jpg", 1 => "cat2.jpeg", 2 => "cat3.jpg", 3 => "cat4.jpg"]
-			//dd($keys[$randomCategory]); //returns name/key of the array, eg "cats"
-				
+			//dd($keys[$randomCategory]); //returns name/key of the array (name of subfolder), eg "Cats"
+			$subFolderName = $keys[$randomCategory]; //returns name/key of the array (name of subfolder), eg "Cats"
+			
 		    $random = rand($min, count($allImages[$keys[$randomCategory] ]) -1 ); //gets the random int for selected category subarray
 			//dd($random);
-			//dd($allImages[$keys[$randomCategory]][$random]); //e.g returns "car2.jpg"
-		    if ( !in_array($allImages[$keys[$randomCategory]][$random], $randArray)){
-			    array_push($randArray, $allImages[$keys[$randomCategory]][$random]);
+			//dd($allImages[$keys[$randomCategory]]); // returns the whole array, e.g array("boat1.jpg", "boat2.jpg", "boat3.jpg")
+			//dd($allImages[$keys[$randomCategory]][$random]); //e.g returns file name "car2.jpg"
+		    if ( !in_array($subFolderName . "/" .$allImages[$keys[$randomCategory]][$random], $randArray)){ //$subFolderName . "/" .$allImages[$keys[$randomCategory]][$random] => folder/fileName => "Boats/boat3.jpg"
+			    array_push($randArray,  $subFolderName . "/" .$allImages[$keys[$randomCategory]][$random]); //push folder/fileName => "Boats/boat3.jpg"
 		    }
 			
 			
@@ -65,7 +68,7 @@ class Img_Captcha_2022 extends Model
 	
 	
 	/**
-    * Function to get random array category to check captcha
+    * Function to get random array category to check captcha. NOT USED //NOT used any more!!!!!!
 	* @param int $min
     * @param int $max
 	* @param array $allImages
