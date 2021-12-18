@@ -124,7 +124,7 @@
                             <li class="{{ Request::is('polymorphic*') ? 'active' : '' }}">       <a href="{{ route('polymorphic') }}">      Polymorphic Rel + Gii </a></li>
                             <li class="{{ Request::is('elastic*') ? 'active' : '' }}">           <a href="{{ route('elastic') }}">          Elastic serach        </a></li>
                             <li class="{{ Request::is('where_having*') ? 'active' : '' }}">      <a href="{{ route('where_having') }}">     SQL Where vs Having   </a></li>
-							<li class="{{ Request::is('img-captcha_2022*') ? 'active' : '' }}">  <a href="{{ route('img-captcha_2022') }}"> ImgCapcha_2022         </a></li>
+							<li class="{{ Request::is('img-captcha_2022*') ? 'active' : '' }}">  <a href="{{ route('img-captcha_2022') }}"> Image Capcha_V_2022         </a></li>
 
 						</ul>
                     </li>

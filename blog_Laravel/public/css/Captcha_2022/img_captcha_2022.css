@@ -6,7 +6,7 @@
 .captcha-img img {width:98%;}
 .captcha-img:hover {background:yellow; border: 1px solid red;}
 
-.captcha-header{padding-top: 2em; padding-bottom: 2em; padding-left: 1em; background: lavender;}
+.captcha-header{padding-top: 2em; padding-bottom: 2em; padding-left: 1em; background: lavender; margin: 1em 0em 1em 0em;}
 
 
  /* Clicked captcha css */

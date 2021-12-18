@@ -2850,7 +2850,7 @@ $listOfLanguages = array(
 	
 ---------------------- END PHP ----------
 
-
+# Recursive function to take path as arg and read all images from subfolders => function readSubfoldersDirs($path, $subfolderName = null) =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/Captcha_2022/Img_Captcha_2022.php
 
 
 

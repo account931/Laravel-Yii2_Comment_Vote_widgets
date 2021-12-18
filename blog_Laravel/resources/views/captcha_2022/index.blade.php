@@ -79,7 +79,7 @@
 					<div class="col-sm-12 col-xs-12">
 					    <hr> <i class="fa fa-retweet" style="font-size:36px"></i> <hr>
 						
-						<!-- just show arry images -->
+						<!-- just show all array images -->
 						<div class="col-sm-4 col-xs-4">
                         @foreach($allImages as $one)
 						    @foreach($one as $oneImage)
@@ -95,13 +95,18 @@
 						<div class="col-sm-12 col-xs-12">
 						    <div class="col-sm-8 col-xs-12">
 							
-						    <h3 class="captcha-header"> Select all images containing <b> {{ $checkCategory }} </b></h3>
-						    <?php $i = 0; ?>
-						    @foreach($randomNine as $randomOne)
+							    <div class="captcha-header">
+						            <h3> Select all images containing <b> {{ $checkCategory }} </b>.</h3>
+							        <p> Hint: there are <b> {{ $checkCategoryLength }} </b> of them. </b> </p>
+								</div>
+								
+								
+						        <?php $i = 0; ?>
+						        @foreach($randomNine as $randomOne)
 						        <div class="col-sm-4 col-xs-4 captcha-img">
 								    <center>
-							        <img src="{{URL::to("/")}}/images/Captcha_2022/{{$randomOne}}"  class="img-responsive my-cph" alt="a"/>
-                                    <i class="fa fa-check watermark" style="font-size:44px; color:black;"></i>									
+							        <img src="{{URL::to("/")}}/images/Captcha_2022/{{$randomOne}}"  class="img-responsive my-cph" alt="a"/> <!-- captcha image -->
+                                    <i class="fa fa-check watermark" style="font-size:44px; color:black;"></i>	                            <!-- watermark check -->								
 									</center>
 							    </div>
 								
@@ -109,8 +114,8 @@
 								    
 								
 								
-						        <?php $i++; ?>
-						    @endforeach
+						           <?php $i++; ?>
+						        @endforeach
 							</div>
 						</div>
 						<!-- End Build captcha based on 9 random images -->
@@ -147,7 +152,7 @@
                             <!-- Submit Button --> 
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary"> Edit + Elastic re-index</button>
+                                    <button type="submit" class="btn btn-primary"> Submit </button>
                                 </div>
                             </div>
 								
