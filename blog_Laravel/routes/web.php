@@ -207,7 +207,8 @@ Route::get('/where_having', 'SQL_where_having_Contr\Where_havingController@index
 
 
 //Self-made Captcha 2022 with images (Controller is in subfolder)
-Route::get('/img-captcha_2022', 'Captcha_2022\Img_Captcha_2022_Controller@index')  ->name('img-captcha_2022');   //page with Self-made Captcha 2022 with images
+Route::get('/img-captcha_2022', 'Captcha_2022\Img_Captcha_2022_Controller@index')      ->name('img-captcha_2022');   //page with Self-made Captcha 2022 with images
+Route::post('captcha-check',    'Captcha_2022\Img_Captcha_2022_Controller@checkCaptcha')->name('captcha-check'); //$_POST to handle from submission
 
 
 

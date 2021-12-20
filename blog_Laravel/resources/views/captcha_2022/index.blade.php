@@ -131,8 +131,12 @@
 					<!---------- Form ---------->
 					<div class="col-sm-12 col-xs-12 form">
 					    
-					    <form class="form-horizontal" method="post" action="{{url('#' )}}" enctype="multipart/form-data">
+					    <form class="form-horizontal" method="post" action="{{url('captcha-check' )}}" enctype="multipart/form-data">
 						    
+							<input type="hidden" value="{{csrf_token()}}" name="_token" />  <!-- csrf-->
+                            <input type="hidden"  name="hidden-captcha-array" id="captcha-array"/>          <!-- captcha JSON array -->
+							
+							
 							<!-- Post Titel, product name -->
                             <div class="form-group{{ $errors->has('product-name') ? ' has-error' : '' }}">
                                 <label for="product-name" class="col-md-4 control-label">Product name</label>

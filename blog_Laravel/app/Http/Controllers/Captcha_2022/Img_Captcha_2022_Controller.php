@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 //use Illuminate\Support\Facades\Validator;
 //use Illuminate\Contracts\Validation\Validator;
 //use Illuminate\Support\Facades\Validator; //from ABZ + Controllers/WpBlog_Admin_Part/WpBlog_Admin_Rest_API_Contoller.php
-
+use Illuminate\Support\Facades\Session;
 //use Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -20,11 +20,26 @@ use App\Http\Controllers\Controller; //to place controller in subfolder
 //use App\Http\Requests\Elastic\ElasticUpdateRequest; //Validation via Request Class (both for create and update)
 use App\models\Captcha_2022\Img_Captcha_2022; //my model, not connected to DB
 
+
 class Img_Captcha_2022_Controller extends Controller
 {
     public function __construct(){
-	    $this->middleware('auth'); //logged users only	   
+	    $this->middleware('auth'); //logged users only	
+        session_start();		
 	}
+	
+	
+	
+	
+	
+	
+
+
+
+   
+   
+ 
+	
 	
 	
 	
@@ -50,11 +65,8 @@ class Img_Captcha_2022_Controller extends Controller
 
 
         //Read subfolders and get all images.Recursive Function to Read all captcha images by path 'images/Captcha_2022'
-        $readImg = $model->readSubfoldersDirs('images/Captcha_2022'); //returns array("Cats"  => array("cat1.jpg", "cat2.jpeg", "cat3.jpg"), "Cars"  => array("car1.jpg", "car2.jpeg", "car3.jpg"));
-        //dd($readImg);
-        //dd("screw");
-
-        $allImages = $readImg; 
+        $allImages = $model->readSubfoldersDirs('images/Captcha_2022'); //returns array("Cats"  => array("cat1.jpg", "cat2.jpeg", "cat3.jpg"), "Cars"  => array("car1.jpg", "car2.jpeg", "car3.jpg"));
+       
 		array_pop($allImages); //Mega Lame Fix, re-write it (deletes the last array element, that happens to be bizzare "")
 		//dd($allImages); //final check
 
@@ -80,6 +92,7 @@ class Img_Captcha_2022_Controller extends Controller
 		$correctCaptchaImages = $model->getCorrectImagesSelection($allImages, $randomNine, $checkCategory); var_dump($correctCaptchaImages);
 		//dd($correctCaptchaImages);
 		//NOT PASSING IT IN VIEW, SAVE TO SESSION .......................
+		Session::put('correctCaptchaSet', json_encode($correctCaptchaImages));	
 		
 		
 		//Gets the length of check category, i.e how many relevant pictures user has to select to pass the captcha..........
@@ -91,6 +104,53 @@ class Img_Captcha_2022_Controller extends Controller
 	
 	
 	
+	
+	
+	/**
+     * Show start page with form and ajax self-made image captcha
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function checkCaptcha(Request $request) 
+    {   
+	    $flag = False;
+		
+	    //Get correct captcha set from session
+	    $sessionCorrectCatchachaSet = json_decode( session()->get('correctCaptchaSet')); //array ["Turns/turn3.jpg", "Turns/turn1.jpg"] 
+		//dd($sessionCorrectCatchachaSet);
+		
+		//Get user's answered captcha set
+		$userCatchachaSet = json_decode($request->input('hidden-captcha-array')); //array ["turn3.jpg", "turn1.jpg"] 
+		//dd($userCatchachaSet);
+		
+		//dd($userCatchachaSet);
+		//dd($request->all());
+		
+		if(count($sessionCorrectCatchachaSet) != count($userCatchachaSet) ){
+			return "Your captcha does not equal length";
+		}
+		
+		foreach($sessionCorrectCatchachaSet as $correct){ //$correct is "Boatss/boat3.jpg"
+			
+			    $oneImg = explode("/", $correct)[1]; //dd($oneImg); //e.g  "boat1.jpeg"
+				
+				if (!in_array($oneImg,  $userCatchachaSet)) {
+				//if (!array_search($oneImg, $userCatchachaSet)){
+					$flag = False; //dd("Stopped. Incorrect captcha");
+					break;
+					
+				} else {
+					$flag = True;
+				}
+		}
+		
+		if($flag == True){
+			return "Capctha correct";
+		} else {
+			return "Capctha failed";
+		}
+		 
+	}
 	
 	
 	

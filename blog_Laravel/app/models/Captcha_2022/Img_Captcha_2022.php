@@ -96,21 +96,28 @@ class Img_Captcha_2022 extends Model
     */
 	 //Recursive Function to Read all captcha images by path 'images/Captcha_2022'. Read path and all subfolders's images and save to array $allImages in format => $allImages = array( "folderName1"  => array("img1.jpg", "img2.jpg"), "folderName2"  => array("img1.jpg", "img2.jpg")), i.e in format => $allImages = array("Cats"  => array("cat1.jpg", "cat2.jpeg", "cat3.jpg"), "Cars"  => array("car1.jpg", "car2.jpeg", "car3.jpg"));
 	public function readSubfoldersDirs($path, $subfolderName = null){
+		
         //static $allImages = array(); //array to contain all images by subfolders in format $allImages = array("cats"  => array("cat1.jpg", "cat2.jpeg", "cat3.jpg", "cat4.jpg"),"cars"  => array("car1.jpg", "car2.jpeg", "car3.jpg", "car4.jpg"),);
         static $allImages = array(); //"static" is a must-have, otherwise u have to use global $allImages //array to contain all images by subfolders in format $allImages = array("Cats"  => array("cat1.jpg", "cat2.jpeg"), "Cars"  => array("car1.jpg", "car2.jpeg")); i.e in format => $allImages = array( "folderName1"  => array("img1.jpg", "img2.jpg"), "folderName2"  => array("img1.jpg", "img2.jpg"))
 			
-	    $tempArr   = array(); //temp array to hold e.g "cats"  => array("cat1.jpg", "cat2.jpeg", "cat3.jpg", "cat4.jpg")
-	    $tempArr1   = array();
+	    $tempArr    = array(); //temp array to hold e.g "cats"  => array("cat1.jpg", "cat2.jpeg", "cat3.jpg", "cat4.jpg")
+	  
 		
+		$dirHandle = opendir($path); //dd($dirHandle);
+		
+		
+
+		
+		//$files = preg_grep('/^([^.])/', scandir($path));
+		
+		
+        while($item = readdir($dirHandle)) {  //scandir //readdir takes hidden files in consideration too
 			
-			
-		$dirHandle = opendir($path);
-			
-        while($item = readdir($dirHandle)) {  
-            $newPath = $path."/".$item;
+            $newPath = $path."/" . $item; //dd($item);
 				
-		    //if $item is folder
+		    //if $item is folder //i.e 'images/Captcha_2022' + '/Cats'
             if(is_dir($newPath) && $item != '.' && $item != '..') {   // && $item != $path
+			    //dd($newPath);
                 //echo "Found Folder $newPath<br>";  
 				//dd($item); //Folder name, eg "boat"
 						
@@ -120,10 +127,20 @@ class Img_Captcha_2022 extends Model
 				//array_push($allImages, $b);
 					
 			//if $item is Not a folder
-            } else{ 
-						
+            } else{
+                
+				
+				
 			    //if $item is an image in subfolder
-				if($item != '.' && $item != '..' ) { 
+				if($item != '.' && $item != '..' ) {  
+				    
+					//dd($newPath);
+					
+					
+					if($subfolderName == null){
+					    throw new \App\Exceptions\myException('File Structure is wrong. There should not be images standalone without folder in root folder.  There must be one root folder containing sub-folders with images.'); 
+                    }
+					
 				    //dd("Subfolder name is =>  " . $subfolderName); //$subfolderName is Subfolder name
                     //echo 'Found File ' . $item . '<br>'; //$item is an image name, e.g "cat.jpeg"
 							
@@ -135,8 +152,10 @@ class Img_Captcha_2022 extends Model
 							
 						
                     //if $item is NOT an image in subfolder						
-				} else {
+				} else { 
+					continue;
 					//echo 'Found Non-File Entity Assert  '.$item.'<br>';
+					
 				}
             }
 					
@@ -144,10 +163,13 @@ class Img_Captcha_2022 extends Model
         }
 	    $allImages[$subfolderName] = $tempArr; //$allImages['Boats'] = array("boat1.jpg", "boat2.jpg)
 			
-			
-		//dd($allImages);
+		//dd(count($allImages));	
+		//dd($allImages); //here returns only one 1st array "Boats" => array:3 ["boats1.jpeg", "boats2.jpeg"] as dd() stopps it at 1st iteration
 		//dd($allImages['Boats'][0]);
-			
+		//array_pop($allImages); //Mega Lame Fix, re-write it (deletes the last array element, that happens to be bizzare "")
+		
+		
+		
 	    return $allImages;
     }  
 

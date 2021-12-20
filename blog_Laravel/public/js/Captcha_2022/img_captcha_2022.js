@@ -2,7 +2,7 @@
 
 $(document).ready(function(){
 	
-	let captchaValuesArr = []; // array for all values;
+	let captchaValuesArr = []; // array to store selected all captcha values;
 	
 	/*
     |--------------------------------------------------------------------------
@@ -45,6 +45,13 @@ $(document).ready(function(){
 		
 		//alert(captchaValuesArr);
         //swal({html:true, title:'Attention!', text:'You selected <b> ' + imgName + ' </b>.</br>  .', type: 'error'});
+		
+		
+		//Atttach captchaValuesArr to form input name="hidden-captcha-array' id='captcha-array'
+		let myJSON = JSON.stringify(captchaValuesArr); 
+		$('input:hidden[name=hidden-captcha-array]').val(myJSON); //this variant since the input is hidden
+		//$('[name="hidden-captcha-array[]"]').val(myJSON);
+		
 	});
 	
 	
