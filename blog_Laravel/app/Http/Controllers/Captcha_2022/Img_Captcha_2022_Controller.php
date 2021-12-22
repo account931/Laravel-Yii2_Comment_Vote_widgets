@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
-//use App\Http\Requests\Polymorphic\PostPolymUpdateRequest; //Validation via Request Class (both for create and update)
+use App\Http\Requests\Captcha_2020\FormValidateRequest; //Form Validation via Request Class 
 
 use App\Http\Controllers\Controller; //to place controller in subfolder
 //use App\models\Elastic_search\Elastic_Posts;        //model for all elastic posts (test posts to perform search
@@ -89,7 +89,7 @@ class Img_Captcha_2022_Controller extends Controller
 		
 	
 		//Function to get correct captcha images, i.e user has to choose to pass the captcha
-		$correctCaptchaImages = $model->getCorrectImagesSelection($allImages, $randomNine, $checkCategory); var_dump($correctCaptchaImages);
+		$correctCaptchaImages = $model->getCorrectImagesSelection($allImages, $randomNine, $checkCategory); //var_dump($correctCaptchaImages);
 		//dd($correctCaptchaImages);
 		//NOT PASSING IT IN VIEW, SAVE TO SESSION .......................
 		Session::put('correctCaptchaSet', json_encode($correctCaptchaImages));	
@@ -107,49 +107,37 @@ class Img_Captcha_2022_Controller extends Controller
 	
 	
 	/**
-     * Show start page with form and ajax self-made image captcha
-     * @param Request $request
+     * Fucntion to handle form $_POST, checks validation + check if captcha is correct
+     * @param FormValidateRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function checkCaptcha(Request $request) 
+    public function checkCaptcha(FormValidateRequest $request) //Validate via Request Class  //Request $request
     {   
-	    $flag = False;
-		
-	    //Get correct captcha set from session
-	    $sessionCorrectCatchachaSet = json_decode( session()->get('correctCaptchaSet')); //array ["Turns/turn3.jpg", "Turns/turn1.jpg"] 
-		//dd($sessionCorrectCatchachaSet);
-		
-		//Get user's answered captcha set
-		$userCatchachaSet = json_decode($request->input('hidden-captcha-array')); //array ["turn3.jpg", "turn1.jpg"] 
-		//dd($userCatchachaSet);
-		
-		//dd($userCatchachaSet);
-		//dd($request->all());
-		
-		if(count($sessionCorrectCatchachaSet) != count($userCatchachaSet) ){
-			return "Your captcha does not equal length";
+	
+	    //commented {function withValidator} and decommented {function failedValidation} in Requests\Polymorphic\PostPolymUpdateRequest in order if Validation fails, the Controller will still execute code
+		//if validation fails
+		if (isset($request->validator) && $request->validator->fails()) {
+            return redirect()->back()->withInput()->with('flashMessageFailX', '<i class="fa fa-exclamation-circle" style="font-size:48px;color:red"></i> Validation Failed!!! ' )->withErrors($request->validator->messages()); //Error was here ->withErrors($validator);
+		    
+			/*
+			return response()->json([
+               'error' => true, 
+               'data' => 'Was seem to be OK, but validation crashes', 
+               'validateErrors'=>  $request->validator->messages()]);
+			*/
 		}
 		
-		foreach($sessionCorrectCatchachaSet as $correct){ //$correct is "Boatss/boat3.jpg"
-			
-			    $oneImg = explode("/", $correct)[1]; //dd($oneImg); //e.g  "boat1.jpeg"
-				
-				if (!in_array($oneImg,  $userCatchachaSet)) {
-				//if (!array_search($oneImg, $userCatchachaSet)){
-					$flag = False; //dd("Stopped. Incorrect captcha");
-					break;
-					
-				} else {
-					$flag = True;
-				}
-		}
 		
-		if($flag == True){
-			return "Capctha correct";
+		
+	    //Function to check user's captcha and Server-side correct answer
+		$model  = new Img_Captcha_2022(); //
+		if($model->checkIfCaptchaCorrect($request) == true){
+			//All is good, do here what ever you want with form inputs.....
+			//...................
+			return "Captcha was successfully solved!!! Validation was also OK (was runned before captcha check. Do further what u want....)";
 		} else {
-			return "Capctha failed";
+		    return redirect()->back()->withInput()->with('flashMessageFailX', 'Captcha is incorrect. Try harder !!!' ); //->withErrors($request->validator->messages()); //Error was here ->withErrors($validator);
 		}
-		 
 	}
 	
 	

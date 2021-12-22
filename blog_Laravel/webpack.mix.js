@@ -12,8 +12,9 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')  //Vue.js; Source-> Destination
-   .js('resources/assets/js/Appointment/appoint-vue-start.js', 'public/js/Appointment')  //Vue.js //source-> destination
-   .js('resources/assets/js/WpBlog_Vue/wpblog-vue-start.js',   'public/js/Wpress_Vue_JS')  //Vue.js; Source-> Destination
+   .js('resources/assets/js/Appointment/appoint-vue-start.js',               'public/js/Appointment')      //Vue.js  source-> destination
+   .js('resources/assets/js/WpBlog_Vue/wpblog-vue-start.js',                 'public/js/Wpress_Vue_JS')    //Vue.js; Source-> Destination
+   .js('resources/assets/js/Captcha_Vue_2022/img_captcha_2022_vue_start.js', 'public/js/Captcha_Vue_2022') //Vue.js; Source-> Destination. //Image captcha 2022 on Vue framework
 
 /*  
    .js('resources/assets/js/wpress_blog.js', 'public/js')

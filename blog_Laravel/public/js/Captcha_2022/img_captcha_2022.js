@@ -6,7 +6,7 @@ $(document).ready(function(){
 	
 	/*
     |--------------------------------------------------------------------------
-    | ????
+    | If user clicks any captcha images
     |--------------------------------------------------------------------------
     |
     |
@@ -15,11 +15,11 @@ $(document).ready(function(){
 	$(document).on("click", '.my-cph', function() {   // this  click  is  used  to   react  to  newly generated cicles;
 	    
 		
-	    let selectedRoleText = this.getAttribute('src');
+	    let selectedRoleText = this.getAttribute('src'); //http://localhost/laravel+Yii2_comment_widget/blog_Laravel/public/images/Captcha_2022/Turntables/turn4.jpg
 		const myArray = selectedRoleText.split("/");
-		let imgName = myArray[myArray.length -1]; //img name
+		let imgName = myArray[myArray.length -2] + "/" + myArray[myArray.length -1]; //folder + img name, i.e returns "Turntables/turn2.jpg"
 		
-		//if element is already clicked/selected, then unclick it 
+		//if element is already clicked/selected, then unclick it and delete from array
 		if ($(this).hasClass("captcha-clicked")) {
 			$(this).removeClass("captcha-clicked");
 			
@@ -31,7 +31,7 @@ $(document).ready(function(){
 			console.log($(this).next());
 			$(this).next().css({"display": "none"});
 		
-        //if element has not been clicked, then make it clicked/selected	
+        //if element has not been clicked, then make it clicked/selected and add to array	
 		} else {
 			$(this).addClass("captcha-clicked");
 			//add to array 
@@ -53,6 +53,24 @@ $(document).ready(function(){
 		//$('[name="hidden-captcha-array[]"]').val(myJSON);
 		
 	});
+	
+	
+	
+	/*
+    |--------------------------------------------------------------------------
+    | If user clicks form submit button client-side check if any captcah was selected
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+	
+	$(document).on("click", '#submBtn', function(e) {   // this  click  is  used  to   react  to  newly generated cicles;
+	    if( $('input:hidden[name=hidden-captcha-array]').val() == "" || $('input:hidden[name=hidden-captcha-array]').val() == "[]" ){
+			swal({html:true, title:'Attention!', text:'No captcha was <b> selected </b>.</br>  Back-end validation is also available.', type: 'error'});
+			e.preventDefault();
+
+		}
+	});    
 	
 	
 });

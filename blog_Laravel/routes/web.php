@@ -213,6 +213,19 @@ Route::post('captcha-check',    'Captcha_2022\Img_Captcha_2022_Controller@checkC
 
 
 
+//Self-made Vue Captcha 2022 with images (Controller is in subfolder). Same as perv, but ON VUE FRAMEWORK.
+Route::get('/img-captcha_22_vue', 'Captcha_Vue_2022\Img_Captcha_Vue_2022_Controller@index')      ->name('img-captcha_22_vue');   //page with Self-made Vue Captcha 2022 with images
+//Route::post('captcha-check',    'Captcha_Vue_2022\Img_Captcha_Vue_2022_Controller@checkCaptcha')->name('captcha-check'); //$_POST to handle from submission
+
+
+
+
+
+
+
+
+
+
 
 //test route to call controller via command-line. Actually does not need any Route as called via CLI Tinker just to check it works. Controller function just saves current time to log.
 Route::get('/cli', 'CliCommandController@index')->name('cli'); //

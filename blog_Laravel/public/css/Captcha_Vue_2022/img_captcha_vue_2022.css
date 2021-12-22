@@ -1,0 +1,31 @@
+ /*---------------------------  */
+
+.container {color:red;}
+
+.captcha-img     {border: 1px solid black; cursor:pointer;}
+.captcha-img img {width:98%;}
+.captcha-img:hover {background:yellow; border: 1px solid red;}
+
+.captcha-header{padding-top: 2em; padding-bottom: 2em; padding-left: 1em; background: lavender; margin: 1em 0em 1em 0em;}
+
+
+ /* Clicked captcha css */
+.captcha-clicked{border-radius: 15px;  border: 2px solid red; opacity:40%;}
+
+
+.form {margin-top: 6em; padding:2em; border-radius:15px; border: 1px solid lavender; }
+
+.my-cph {position: relative; z-index:3;} /* captcha image, z-index is bigger than .watermark's to be able to click on image, even on watermark as it is below but seen as image is transparent  */
+.watermark{position: absolute; top: 40px; left: 40px; display:none; z-index:2; border: 1px solid black; border-radius:25px; padding:0.1em;}  /* Check icon to appear on click */
+
+
+
+
+ /* Mobile */
+ @media screen and (max-width: 480px) { 
+     .captcha-img  { padding: 0.3em;}
+	 .watermark{position: absolute; top: 0.1em; left: 0.1em; display:none; z-index:2; border: 1px solid black; border-radius:25px; padding:0.1em;}  /* Check icon to appear on click */
+ }
+
+ 
+ 

@@ -117,14 +117,15 @@
 							<li><a href="{{ route('register') }}">Booking(N/A)</a></li>
 							<li><a href="{{ route('register') }}">Passport Api(N/A)</a></li>
 							<li><a href="{{ route('register') }}">Vue JS(N/A)</a></li>
-                            <li class="{{ Request::is('service-layout*') ? 'active' : '' }}">    <a href="{{ route('service-layout') }}">   Service Layout        </a></li>
-						    <li class="{{ Request::is('socialite*') ? 'active' : '' }}">         <a href="{{ route('socialite') }}">        Facebook Socialite    </a></li>
-                            <li class="{{ Request::is('rozetk*') ? 'active' : '' }}">            <a href="{{ route('rozetk') }}">           Rozetk XML/YML        </a></li>
-                            <li class="{{ Request::is('captcha*') ? 'active' : '' }}">           <a href="{{ route('captcha') }}">          Capcha+Notify         </a></li>
-                            <li class="{{ Request::is('polymorphic*') ? 'active' : '' }}">       <a href="{{ route('polymorphic') }}">      Polymorphic Rel + Gii </a></li>
-                            <li class="{{ Request::is('elastic*') ? 'active' : '' }}">           <a href="{{ route('elastic') }}">          Elastic serach        </a></li>
-                            <li class="{{ Request::is('where_having*') ? 'active' : '' }}">      <a href="{{ route('where_having') }}">     SQL Where vs Having   </a></li>
-							<li class="{{ Request::is('img-captcha_2022*') ? 'active' : '' }}">  <a href="{{ route('img-captcha_2022') }}"> Image Capcha_V_2022         </a></li>
+                            <li class="{{ Request::is('service-layout*') ? 'active' : '' }}">    <a href="{{ route('service-layout') }}">     Service Layout           </a></li>
+						    <li class="{{ Request::is('socialite*') ? 'active' : '' }}">         <a href="{{ route('socialite') }}">          Facebook Socialite       </a></li>
+                            <li class="{{ Request::is('rozetk*') ? 'active' : '' }}">            <a href="{{ route('rozetk') }}">             Rozetk XML/YML           </a></li>
+                            <li class="{{ Request::is('captcha*') ? 'active' : '' }}">           <a href="{{ route('captcha') }}">            Capcha+Notify            </a></li>
+                            <li class="{{ Request::is('polymorphic*') ? 'active' : '' }}">       <a href="{{ route('polymorphic') }}">        Polymorphic Rel + Gii    </a></li>
+                            <li class="{{ Request::is('elastic*') ? 'active' : '' }}">           <a href="{{ route('elastic') }}">            Elastic serach           </a></li>
+                            <li class="{{ Request::is('where_having*') ? 'active' : '' }}">      <a href="{{ route('where_having') }}">       SQL Where vs Having      </a></li>
+							<li class="{{ Request::is('img-captcha_2022*') ? 'active' : '' }}">  <a href="{{ route('img-captcha_2022') }}">   Image Capcha_2022        </a></li> <!-- Self made image captcha -->
+                            <li class="{{ Request::is('img-captcha_22_vue*') ? 'active' : '' }}"><a href="{{ route('img-captcha_22_vue') }}"> Image Capcha_2022 on Vue </a></li> <!-- Self made image captcha on Vue Framework-->
 
 						</ul>
                     </li>
