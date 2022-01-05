@@ -1,6 +1,6 @@
  /*---------------------------  */
 
-.container {color:red;}
+.container {color:green;}
 
 .captcha-img     {border: 1px solid black; cursor:pointer;}
 .captcha-img img {width:98%;}
@@ -28,4 +28,16 @@
  }
 
  
+ 
+ 
+ 
+/* -- Loader */
+.loader-x  {position:absolute; top:16em; left:40em;width:99%; display:none;}
+.loader-x img {width:13%;}
+
+/* ---------------------------------------- Mobile */
+@media screen and (max-width: 480px) { 
+  .loader-x  {position:absolute; top:16em; left:8em; width:99%;}
+  .loader-x img {width:43%;}  
+}
  

@@ -56,24 +56,60 @@
 						    <b> Custom made </b>
 						</p>
                     </h3>
-                    <p><a href="{{ route('elastic-indexing') }}">   <button class="btn btn-success"> Delete me <i class="fa fa-refresh" style="font-size:26px"></i></button></a></p> 
                     
 					<p></p>                  
                 </div>
+
+
+
+
+
+                <!---------- Modal window with hint ------------------->
+		        <div class="col-sm-12 col-xs-12">
+		        
+		            <!-- Button to Open the Modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-top:1em;">
+                        See a hint
+                    </button>
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="myModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Hint is here</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+									<img src="{{URL::to("/")}}/images/captcha_disclaimer.png"  style="width:99%;" class="x" alt="a"/>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+				
+		        </div>	
+                <!---------- End Modal window with hint --------------->		
+
+
+
+
+
 
 
                 <div class="panel-body">
 				    
 			
            
-                
-				
-				
-				
-                
-				   
-
-
                    
                     <!--------------- Image captcha 2022 ----------------------->
 					<div class="col-sm-12 col-xs-12">

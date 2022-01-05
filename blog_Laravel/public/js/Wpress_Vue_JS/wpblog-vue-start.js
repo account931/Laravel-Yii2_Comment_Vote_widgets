@@ -24562,7 +24562,7 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(24);
-//Vuex store
+//Vuex store, used in /js/WpBlog_Vue (done only 60%). If want to see the full code of WpBlog_Vue => go to => https://github.com/account931/Laravel_Vue_Blog_V6_Passport
 
 
 

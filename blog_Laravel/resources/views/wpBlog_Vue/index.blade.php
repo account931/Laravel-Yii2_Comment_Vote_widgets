@@ -33,8 +33,9 @@
 					
 					<p><a href="{{ route('createNewWpressImg') }}"><button class="btn btn-large btn-success">Create new</button></a></p>
 				
-				
-				
+				    <div class="alert alert-success borderX">
+				        This WpBlog_Vue is done only up to 60% only. If want to see full code of WpBlog_Vue => go to <b> Laravel_Vue_Blog_V6_Passport</b>
+				    </div>
 
 					<!-- Not used, reassigned to Vue component -->
                     <div class="alert alert-info borderX">

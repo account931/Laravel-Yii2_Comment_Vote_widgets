@@ -19,7 +19,7 @@ window.Vue = require('vue');
 
 // Blog
 //window.Vue = require('vue');
-//import store from '../store/index'; //import Vuex Store
+  import store from './store/index';//import store from '../store/index'; //import Vuex Store
 //import ElementUI from 'element-ui'; //import ElementUI pop-up modal window
 //import 'element-ui/lib/theme-chalk/index.css'; //moved as sepearate CSS Fileto css in /layout/app.php
 
@@ -48,7 +48,7 @@ Vue.component('captcha-component', require('./components/pages/captcha-div.vue')
 
 //Component to Show div with Captcha
 const appQuant = new Vue({
-	//store, //connect Vuex store, must-have
+	store, //connect Vuex store, must-have
     el: '#captchaVue'
 });
 

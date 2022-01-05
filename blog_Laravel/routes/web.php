@@ -217,7 +217,7 @@ Route::post('captcha-check',    'Captcha_2022\Img_Captcha_2022_Controller@checkC
 Route::get('/img-captcha_22_vue', 'Captcha_Vue_2022\Img_Captcha_Vue_2022_Controller@index')      ->name('img-captcha_22_vue');   //page with Self-made Vue Captcha 2022 with images
 //Route::post('captcha-check',    'Captcha_Vue_2022\Img_Captcha_Vue_2022_Controller@checkCaptcha')->name('captcha-check'); //$_POST to handle from submission
 
-
+//Some Vue Captcha 2022 Rest Api routes are additionally specified in /routes/api.php!!!!!!!!!
 
 
 

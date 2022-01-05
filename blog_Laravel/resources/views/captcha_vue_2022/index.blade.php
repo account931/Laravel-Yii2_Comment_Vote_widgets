@@ -146,6 +146,13 @@
 </div>
 
 
+
+<!--------- Loader (for ajax, hidden by default) ----------------->
+<div class="loader-x">
+    <img src="{{URL::to("/")}}/images/loader-black.gif"  alt="a"/>
+</div>
+<!--------- Loader (for ajax, hidden by default)  ----------------->
+
 <script>
 </script>
 

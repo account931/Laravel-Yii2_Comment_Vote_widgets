@@ -1,4 +1,4 @@
-//Vuex store
+//Vuex store, used in /js/WpBlog_Vue (done only 60%). If want to see the full code of WpBlog_Vue => go to => https://github.com/account931/Laravel_Vue_Blog_V6_Passport
 import Vue from 'vue';
 import Vuex from 'vuex';
 
