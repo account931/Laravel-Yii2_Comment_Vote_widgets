@@ -401,7 +401,7 @@
             },
 			
 		# How to get route ID => e.g "wpBlogVueFrameWork#/details/2", gets 2. See example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/pages/details.vue
-	       var ID = this.$route.params.Pid; //gets 2  //{Pid} is set in 'pages/home' in => this.$router.push({name:'details',params:{Pid:proId}})
+	       var ID = this.$route.params.Pid; //gets 2  //{Pid} is set in 'pages/home' in => this.$router.ni({name:'details',params:{Pid:proId}})
 
         # Pass var from php to vue component => 
             1.  in view => <vue-router-menu-with-link-content-display v-bind:current-user='{!! Auth::user()->toJson() !!}'>  //User array contains id, name, api_token, etc
@@ -432,7 +432,7 @@
         
         # Vue comment => {{ /* checkStore */ }}  VS <!--{{ this.$store.state.posts.length }}-->
         
-        # Vue assign id => <div v-for="(postAdmin, i) in booksGet" :key=i class="col-sm-12 col-xs-12 oneAdminPost" :id="postAdmin.wpBlog_id"> 
+        # Vue assign id / set id dynamically => <div v-for="(postAdmin, i) in booksGet" :key=i class="col-sm-12 col-xs-12 oneAdminPost" :id="postAdmin.wpBlog_id"> 
         # Vue get id of clicked => @click="deletePost(postAdmin.wpBlog_id)   => https://github.com/account931/Laravel_Vue_Blog/blob/main/resources/assets/js/WpBlog_Admin_Part/components/pages/list_all.vue
         # Vue set inpt value with ajax response => v-model="inputTitleValue" => https://github.com/account931/Laravel_Vue_Blog/tree/main/resources/assets/js/WpBlog_Admin_Part/components/pages/editItem.vue
 
@@ -502,7 +502,7 @@
 			
 			
 			
-			
+			# Vue animation (fade in out)=> https://ru.vuejs.org/v2/guide/transitions.html
 			
 			
 			

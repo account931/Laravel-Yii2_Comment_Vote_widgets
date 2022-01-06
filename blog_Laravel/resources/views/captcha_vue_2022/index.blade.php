@@ -56,7 +56,10 @@
 						    <b> Custom made </b>
 						</p>
                     </h3>
-                    <p><a href="{{ route('elastic-indexing') }}">   <button class="btn btn-success"> Delete me <i class="fa fa-refresh" style="font-size:26px"></i></button></a></p> 
+                    <p>
+					    <a href="{{ route('elastic-indexing') }}">   <button class="btn btn-success"> Delete me <i class="fa fa-refresh" style="font-size:26px"></i></button></a>
+						<i class="fa fa-retweet" style="font-size:36px"></i>
+					</p> 
                     
 					<p></p>                  
                 </div>
@@ -77,7 +80,7 @@
                    
                     <!--------------- Image captcha 2022 ----------------------->
 					<div class="col-sm-12 col-xs-12">
-					    <hr> <i class="fa fa-retweet" style="font-size:36px"></i> <hr>
+					   
 						
 					
 						
@@ -111,7 +114,7 @@
                                 <label for="product-name" class="col-md-4 control-label">Product name</label>
 
                                 <div class="col-md-6">
-                                    <input id="product-name" type="text" class="form-control" name="product-name" value="{{old('product-name')}}" required autofocus>
+                                    <input id="product-name" type="text" class="form-control" name="product-name" value="{{old('product-name')}}" required>
                                                                                        
                                     @if ($errors->has('product-name'))
                                     <span class="help-block">
@@ -125,7 +128,7 @@
                             <!-- Submit Button --> 
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" id="submBtn" class="btn btn-primary"> Submit </button>
+                                    <button type="submit" id="submBtn" class="btn btn-primary"> NOT USED!!!! </button>
                                 </div>
                             </div>
 								

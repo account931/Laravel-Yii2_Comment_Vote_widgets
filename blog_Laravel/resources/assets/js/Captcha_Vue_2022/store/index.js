@@ -13,6 +13,7 @@ export default new Vuex.Store({
 		randomNine         : [], //store var to keep 9 captcha images, returned by axios to 'api/getCaptchaSet'
 		checkCategory      : '',        //selected captcha category for user to choose images
 		checkCategoryLength: '', //number of images user has to find
+		show: false, //for css animation
 		 
 	    //posts used in Vue blog
 	    //posts              : [], //posts: [{"wpBlog_id":1,"wpBlog_title":"Guadalupe Runolfsdottir", "wpBlog_text":"Store text 1", ,"wpBlog_category":4,"wpBlog_status":"1", "get_images":[{"wpImStock_id":16,"wpImStock_name":"product6.png","wpImStock_postID":1,"created_at":null,"updated_at":null}],"author_name":{"id":1,"name":"Admin","email":"admin@ukr.net","created_at":null,"updated_at":null},"category_names":{"wpCategory_id":4,"wpCategory_name":"Geeks","created_at":null,"updated_at":null}}, {"wpBlog_id":2,"wpBlog_title":"New", "wpBlog_text":"Store text 2"}],
@@ -58,24 +59,15 @@ export default new Vuex.Store({
 
     
     actions: {
-		/*
-	    async getAllPosts({ commit }) { 
-	        return commit('setCaptchaToSore', await fetch('http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public/post/get_all') )
-            //return commit('setCaptchaToSore', await api.get('/post/get_all'))
-        }, */
-	  
-        //on Login success save data to Store (trigger mutation)
-        changeVuexStoreLogged({ commit }, dataTestX) { 
-            return commit('setLoginResults', dataTestX ); //sets dataTestX to store via mutation
-        },
+	
         
-        //NOT USED HERE??????      
+        /*     
         //working example how to change Vuex store from child component //Catch a passed api token from VueRouterMenu, triggered in beforeMount()
 	    changeVuexStoreTokenFromChild({ commit }, dataTestX) { 
 	        //var dataTest = {"error":false,"data":[{"wpBlog_id":1,"wpBlog_title":"Dima", "wpBlog_text":"Store 1", "get_images":[]}, {"wpBlog_id":2,"wpBlog_title":"Dima 2", "wpBlog_text":"Store 2", "get_images":[]}]};
 	        alert('store token ' + dataTestX);
 		    return commit('setApiToken', dataTestX ); //sets dataTestX to store via mutation
-	    },
+	    }, */
       
       
 	  
@@ -131,8 +123,9 @@ export default new Vuex.Store({
                 
                 //change for Axios
                 if (dataZ.data.error == false){  //All Is OK
-                    alert('dataZ.data.error 4 ' + dataZ.data.error);
-                    swal("Done", "Captcha set is loaded (axios) (Vuex store)", "success");
+                    //alert('dataZ.data.error 4 ' + dataZ.data.error);
+					const myTimeout = setTimeout(function(){ swal("Done", "Captcha set is loaded (axios) (Vuex store)", "success"); }, 2000);
+                    
 	                return commit('setCaptchaToSore', dataZ.data ); //sets ajax results to store via mutation
                 }
             })
@@ -192,10 +185,24 @@ export default new Vuex.Store({
 		//sets the store vars, returned by getCaptchaSet({ commit, state  })
         setCaptchaToSore(state, response) {  
             console.log('Set captcha mutation successfully');
-            state.randomNine          = response.randomNine;          //set to store 9 captcha images, returned by axios to 'api/getCaptchaSet'
+			
+			//Here var response.randomNine = ["Cars/car1.jpeg", "Boats/boat3.jpeg" ], next we transform it to tempAarray = [ {id:0, imageName: "Cars/car1.jpeg" }, {id:1, imageName: "Boats/boat3.jpeg" } ]; We tried assign ids in order to emulate in Vue  JQ (this), it was not neede, but let this stucture remains
+			/*
+			let tempAarray = [];
+			for(let i = 0; i < response.randomNine.length; i++){
+				let tempObject = {};
+				tempObject['id'] = i;
+				tempObject['imageName'] = response.randomNine[i];
+				tempAarray.push(tempObject);
+			} */
+			
+			
+			
+            state.randomNine          = response.randomNine; //tempAarray; //response.randomNine;          //set to store 9 captcha images, returned by axios to 'api/getCaptchaSet',  response.randomNine is ["Cars/car1.jpeg", "Boats/boat3.jpeg" ]
 			state.checkCategory       = response.checkCategory;       //set to store selected captcha category for user to choose images
 		    state.checkCategoryLength = response.checkCategoryLength; //set to store number of images user has to find
 	        console.log('setCaptchaToSore executed in store' + response.checkCategory);
+			state.show = true;
         },
      
     
