@@ -79,6 +79,7 @@ class Rest_Api_Captcha_Vue_2022_Controller extends Controller
 		//NOT PASSING IT IN VIEW, SAVE TO SESSION .......................
 		Session::put('correctCaptchaSet', json_encode($correctCaptchaImages));	
 		
+		//dd(session()->get('correctCaptchaSet'));
 		
 		//Gets the length of check category, i.e how many relevant pictures user has to select to pass the captcha..........
 		$checkCategoryLength = count($correctCaptchaImages);
@@ -93,6 +94,32 @@ class Rest_Api_Captcha_Vue_2022_Controller extends Controller
 			'checkCategoryLength' => $checkCategoryLength  //number of images user has to find
 		]);	
     }
+	
+	
+	
+	
+	/**
+     * REST API endpoint /POST, that checks user's selected images against saved in session randomly generated captcha set of 9 images.
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function checkIfCaptchaCorrect() 
+    {
+		
+		//dd(session()->get('correctCaptchaSet'));
+		//dd($_POST);
+		$request = $_POST;
+		$model  = new Img_Captcha_2022(); //model
+		$captchaCheckResult = $model->checkIfCaptchaCorrect($request);
+		($captchaCheckResult) ? $capthaCorrect = true  : $capthaCorrect= false; //$capthaCorrect = "Solved Captcha Correctly "  : $capthaCorrect= "Solved Captcha Wrong";
+		
+        return response()->json([
+		    'error'          => false,
+			//'data'         => 'hello',
+			'CaptchaCheck'   => $capthaCorrect	  
+    	]);	
+	  
+	}
 	
 	
 	

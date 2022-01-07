@@ -86,11 +86,8 @@ export default new Vuex.Store({
 	        $('.loader-x').fadeIn(800); //show loader
             //alert('start (True) Disable 2nd alert in AllPosts beforeMount');
             
-            
             // If you prefer Fetch method http variant, see instructions at => getAllPosts({ commit, state  }) => /Laravel_Vue_Blog_V6_Passport/blob/main/resources/assets/js/store/index.js
-            
-            
-            
+          
             //Axios method http variant , to see detailed specifics, see  => /Laravel_Vue_Blog_V6_Passport/blob/main/resources/assets/js/store/index.js
 
             
@@ -123,11 +120,20 @@ export default new Vuex.Store({
                 
                 //change for Axios
                 if (dataZ.data.error == false){  //All Is OK
+				    
                     //alert('dataZ.data.error 4 ' + dataZ.data.error);
 					const myTimeout = setTimeout(function(){ swal("Done", "Captcha set is loaded (axios) (Vuex store)", "success"); }, 2000);
                     
 	                return commit('setCaptchaToSore', dataZ.data ); //sets ajax results to store via mutation
-                }
+                } else {
+					//NOT Ok
+					//additional check
+					if(dataZ.data.randomNine == null){
+						swal("Danger", "Returned data is corrupted", "error");
+					}
+				}
+				
+				 
             })
 	        .catch(function(err){ 
                 $('.loader-x').fadeOut(800);  //hide loader

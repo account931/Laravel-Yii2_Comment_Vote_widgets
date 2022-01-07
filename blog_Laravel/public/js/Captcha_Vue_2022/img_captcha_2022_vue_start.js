@@ -14027,9 +14027,7 @@ var debug = "development" !== 'production';
             $('.loader-x').fadeIn(800); //show loader
             //alert('start (True) Disable 2nd alert in AllPosts beforeMount');
 
-
             // If you prefer Fetch method http variant, see instructions at => getAllPosts({ commit, state  }) => /Laravel_Vue_Blog_V6_Passport/blob/main/resources/assets/js/store/index.js
-
 
             //Axios method http variant , to see detailed specifics, see  => /Laravel_Vue_Blog_V6_Passport/blob/main/resources/assets/js/store/index.js
 
@@ -14063,12 +14061,19 @@ var debug = "development" !== 'production';
                 //change for Axios
                 if (dataZ.data.error == false) {
                     //All Is OK
+
                     //alert('dataZ.data.error 4 ' + dataZ.data.error);
                     var myTimeout = setTimeout(function () {
                         swal("Done", "Captcha set is loaded (axios) (Vuex store)", "success");
                     }, 2000);
 
                     return commit('setCaptchaToSore', dataZ.data); //sets ajax results to store via mutation
+                } else {
+                    //NOT Ok
+                    //additional check
+                    if (dataZ.data.randomNine == null) {
+                        swal("Danger", "Returned data is corrupted", "error");
+                    }
                 }
             }).catch(function (err) {
                 $('.loader-x').fadeOut(800); //hide loader
@@ -15113,7 +15118,7 @@ exports = module.exports = __webpack_require__(7)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n\r\n/* ---  Vue animation */\r\n\r\n/*--- Animation Var 1 */\n.fade-enter-active[data-v-bf8060aa], .fade-leave-active[data-v-bf8060aa] {\r\n  transition: opacity 6.5s;\n}\n.fade-enter[data-v-bf8060aa], .fade-leave-to[data-v-bf8060aa] /* .fade-leave-active до версии 2.1.8 */ {\r\n  opacity: 0;\n}\r\n\r\n/*--- Animation Var 2 */\n.bounce-enter-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 2.5s; /* fade in time */\n}\n.bounce-leave-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 1.5s reverse;\n}\n@keyframes bounce-in-data-v-bf8060aa {\n0%   { transform: scale(0);\n}\n50% { -webkit-transform : rotate(480deg) scale(0.3); /* Chrome, Opera 15+, Safari 3.1+ */  transform: rotate(490deg) scale(0.2); /* Firefox 16+, IE 10+, Opera */\n}     /* transform: scale(1.5); */\n100% { transform: scale(1);\n}\n}\r\n/* --- End  Vue animation */\r\n\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n\r\n/* ---  Vue animation */\r\n\r\n/*--- Animation Var 1 */\n.fade-enter-active[data-v-bf8060aa], .fade-leave-active[data-v-bf8060aa] {\r\n  transition: opacity 6.5s;\n}\n.fade-enter[data-v-bf8060aa], .fade-leave-to[data-v-bf8060aa] /* .fade-leave-active до версии 2.1.8 */ {\r\n  opacity: 0;\n}\r\n\r\n/*--- Animation Var 2 */\n.bounce-enter-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 2.5s; /* fade in time */\n}\n.bounce-leave-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 1.5s reverse;\n}\n@keyframes bounce-in-data-v-bf8060aa {\n0%   { transform: scale(0);\n}\n50% { -webkit-transform : rotate(480deg) scale(0.3); /* Chrome, Opera 15+, Safari 3.1+ */  transform: rotate(490deg) scale(0.2); /* Firefox 16+, IE 10+, Opera */\n}     /* transform: scale(1.5); */\n100% { transform: scale(1);\n}\n}\r\n/* --- End  Vue animation */\r\n\r\n", ""]);
 
 // exports
 
@@ -15125,6 +15130,12 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+//
+//
+//
+//
 //
 //
 //
@@ -15181,11 +15192,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	name: 'Captcha',
 	data: function data() {
 		return {
+			csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'), //DON"T NEED
 			title: 'Captcha ',
 			isCaptchaClicked: false, //CSS flag
 			captchaValuesArr: [], // array to store all captcha images selected by the user (+ is sent to back-end for checking);
 			selected: undefined,
-			active_el: undefined
+			active_el: undefined, //not used
+			isCheckingCaptcha: false
 
 		};
 	},
@@ -15278,14 +15291,123 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   |
   |
   */
-		sendAjaxCaptchaCheck: function sendAjaxCaptchaCheck() {
-
+		sendAjaxCaptchaCheck: function sendAjaxCaptchaCheck(e) {
+			//alert(this.csrf);
 			if (this.captchaValuesArr.length <= 0) {
 				swal("Nothing selected", "Select some images", "error");
 				return false;
 			}
 
-			swal("OK", "Sending ajax", "success");
+			//swal("OK", "Sending ajax", "success");
+
+			e.preventDefault();
+			/*
+               if (!this.validateForm()) {
+                   return false;
+               } */
+
+			//Form //PROBLEM HERE
+			this.isCheckingCaptcha = true;
+
+			//Use Formdata to bind inpts and images upload
+			var that = this; //Explanation => if you use this.data, it is incorrect, because when 'this' reference the vue-app, you could use this.data, but here (ajax success callback function), this does not reference to vue-app, instead 'this' reference to whatever who called this function(ajax call)
+			var formData = new FormData(); //new FormData(document.getElementById("myFormZZ"));
+			//formData.append('_token', this.csrf);
+			//formData.append('userCaptcha', this.captchaValuesArr);
+
+
+			$.each(this.captchaValuesArr, function (key, imageV) {
+				formData.append('userCaptcha[' + key + ']', imageV);
+				//imagesUploaded.push(`images[${key}]`, imageV);
+				//imagesUploaded.test = imageV;
+			});
+
+			//Add Bearer token to headers
+
+			/*
+   $.ajaxSetup({
+        headers: {"X-CSRFToken": this.csrf } //DON"T NEED
+       //headers: { 'X-CSRF-TOKEN': this.csrf }
+                   //headers: { 'Authorization': 'Bearer '  + this.$store.state.passport_api_tokenY }
+               }); */
+
+			//Vue.http.headers.common['X-CSRF-TOKEN'] = this.csrf;
+
+			$.ajax({
+				url: 'api/checkIfCaptchaCorrectlySelected',
+				type: 'POST', //POST is to create a new user
+				cache: false,
+				dataType: 'json',
+				processData: false,
+				contentType: false,
+				//contentType:"application/json; charset=utf-8",						  
+				//contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+				//contentType: 'multipart/form-data',
+				//crossDomain: true,
+				//headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + this.$store.state.api_tokenY},
+				//headers: { 'Content-Type': 'application/json',  },
+				//contentType: false,
+				//dataType: 'json', //In Laravel causes crash!!!!!// without this it returned string(that can be alerted), now it returns object
+
+				//passing the data
+				data: formData, //dataX//JSON.stringify(dataX)  ('#createNew').serialize()
+
+				success: function success(data) {
+					alert("success");
+					alert("success" + JSON.stringify(data, null, 4));
+
+					if (data.error == true) {
+						//if Rest API endpoint returns any predefined validation error
+						var errorText = data.data;
+						swal("Check", errorText, "error");
+
+						//if validation errors (i.e if REST Contoller returns json ['error': true, 'data': 'Good, but validation crashes', 'validateErrors': title['Validation err text'],  body['Validation err text']])
+						/*
+      if(data.validateErrors){
+          var tempoArray = []; //temporary array
+          for (var key in data.validateErrors) { //Object iterate
+              var t = data.validateErrors[key][0]; //gets validation err message, e.g validateErrors.title[0]
+              tempoArray.push(t);
+          }
+                                  that.errroList = tempoArray; //change state errroList //{this-that} fix
+      } */
+
+						//if load new is OK
+					} else if (data.error == false) {
+						//alert(data.CaptchaCheck);
+
+						//if captcha is correct
+						if (data.CaptchaCheck == true) {
+							swal("Good", "Solved Captcha Correctly", "success");
+
+							//if captcha is wrong
+						} else if (data.CaptchaCheck == false) {
+							swal("Wrong", "Solved Captcha Wrong", "error");
+						}
+
+						//swal("Good", "Bearer Token is OK", "success");
+						//swal("Good",  data.data, "success");
+
+						//clear the form fields after successfull saving
+						//that.clearInputFieldsAndFiles();
+					}
+					that.isCheckingCaptcha = false; //change button text            
+				}, //end success
+
+				error: function error(errorZ) {
+					alert("Crashed");
+					alert("error" + JSON.stringify(errorZ, null, 4));
+					console.log("type is => " + (typeof errorZ === 'undefined' ? 'undefined' : _typeof(errorZ)));
+					//console.log(errorZ.responseText);
+					//alert(errorZ.responseText);
+					//alert("this " + errorZ.responseJSON.error);
+					console.log(errorZ);
+
+					that.isCheckingCaptcha = false; //change button text   
+				}
+			});
+			//END AJAXed  part 
+
 		},
 
 
@@ -15405,12 +15527,34 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c(
+                  "form",
+                  {
+                    staticStyle: { display: "none" },
+                    attrs: { id: "logout-form", action: "#", method: "POST" }
+                  },
+                  [
+                    _c("input", {
+                      attrs: { type: "hidden", name: "_token" },
+                      domProps: { value: _vm.csrf }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
                   "button",
                   {
                     staticClass: "btn btn-success",
                     on: { click: _vm.sendAjaxCaptchaCheck }
                   },
-                  [_vm._v(" Send me ")]
+                  [
+                    _vm._v(
+                      " " +
+                        _vm._s(
+                          _vm.isCheckingCaptcha ? "Checking..." : "Check me"
+                        ) +
+                        " "
+                    )
+                  ]
                 )
               ],
               2

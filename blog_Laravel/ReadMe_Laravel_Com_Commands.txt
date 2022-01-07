@@ -2713,7 +2713,20 @@ RewriteRule ^ public [L]
   # Run all queque. In my case job is done without it => php artisan queue:work
 
 
+# If Api route does not see session => Laravel API does not have "session", you might be able to add it manually => 
+    1. go to =>  app/Http/Kernel.php and add your custom middleware 'myCustomSessionsX' (that uses Session enabling)
+	    protected $middlewareGroups = [
+	      'web' => [ /* ...... */],
+		  'api' => [ /* ...... */],
+		  'myCustomSessionsX' => [ \Illuminate\Session\Middleware\StartSession::class, ]
+		      
+    2. In routes/api.php use  custom middleware 'myCustomSessionsX' => 
+	    Route::group(['middleware' => ['myCustomSessionsX']], function () {
+            Route::resource(...);
+        });
 
+
+#END of .Miscellaneous VA Laravel
 
 
 //================================================================================================

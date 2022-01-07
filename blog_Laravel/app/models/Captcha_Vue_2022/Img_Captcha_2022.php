@@ -228,13 +228,15 @@ class Img_Captcha_2022 extends Model
 	    $sessionCorrectCatchachaSet = json_decode( session()->get('correctCaptchaSet')); //E.g => array ["Turns/turn3.jpg", "Turns/turn1.jpg"] 
 		//dd($sessionCorrectCatchachaSet);
 		
+		//dd($request['userCaptcha']);
 		//Get user's answered captcha set
-		$userCatchachaSet = json_decode($request->input('hidden-captcha-array')); // E.g => array ["Turns/turn3.jpg", "Turns/turn1.jpg"]
+		//$userCatchachaSet = json_decode($request->input('hidden-captcha-array')); // E.g => array ["Turns/turn3.jpg", "Turns/turn1.jpg"]
+		//$userCatchachaSet = json_decode($request['userCaptcha']); // E.g => array ["Turns/turn3.jpg", "Turns/turn1.jpg"]
 		//dd($userCatchachaSet);
 		
 		//dd($userCatchachaSet);
 		//dd($request->all());
-		
+		$userCatchachaSet = $request['userCaptcha'];
 		if(count($sessionCorrectCatchachaSet) != count($userCatchachaSet) ){
 			return false; //"Your captcha does not equal length";
 		}

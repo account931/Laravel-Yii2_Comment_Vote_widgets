@@ -33,8 +33,12 @@
 			    </center>
 		    </div>
 			
+			<form id="logout-form" action="#" method="POST" style="display: none;">
+                <input type="hidden" name="_token" :value="csrf">
+            </form>
+			
 			<!-- Button to send ajax captcha check (at back-end)--> 
-			<button v-on:click="sendAjaxCaptchaCheck" class="btn btn-success"> Send me </button>
+			<button v-on:click="sendAjaxCaptchaCheck" class="btn btn-success"> {{ isCheckingCaptcha ? "Checking..." : "Check me" }} </button>
 			
 		</div>
 		</transition>
@@ -54,11 +58,13 @@
 		name:'Captcha',
 		data (){
 			return{
+			    csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),  //DON"T NEED
 				title:'Captcha ',
 				isCaptchaClicked: false, //CSS flag
 				captchaValuesArr: [],   // array to store all captcha images selected by the user (+ is sent to back-end for checking);
 				selected: undefined,
-				active_el:undefined,
+				active_el:undefined, //not used
+				isCheckingCaptcha: false,
 				 
 			}
 		},
@@ -156,18 +162,144 @@
             |
             |
             */
-            sendAjaxCaptchaCheck(){
-			
+            sendAjaxCaptchaCheck(e){
+			    //alert(this.csrf);
 			    if(this.captchaValuesArr.length <= 0){
 				    swal("Nothing selected", "Select some images", "error");
 					return false;
 				}
 				
-				swal("OK", "Sending ajax", "success");
+				//swal("OK", "Sending ajax", "success");
+				
+				e.preventDefault();
+				/*
+                if (!this.validateForm()) {
+                    return false;
+                } */
+	  
+	            //Form //PROBLEM HERE
+                this.isCheckingCaptcha = true;
+      
+                //Use Formdata to bind inpts and images upload
+                var that = this; //Explanation => if you use this.data, it is incorrect, because when 'this' reference the vue-app, you could use this.data, but here (ajax success callback function), this does not reference to vue-app, instead 'this' reference to whatever who called this function(ajax call)
+                var formData = new FormData(); //new FormData(document.getElementById("myFormZZ"));
+                //formData.append('_token', this.csrf);
+				//formData.append('userCaptcha', this.captchaValuesArr);
+				
+				
+				 $.each(this.captchaValuesArr, function (key, imageV) {
+                    formData.append(`userCaptcha[${key}]`, imageV);
+                    //imagesUploaded.push(`images[${key}]`, imageV);
+                    //imagesUploaded.test = imageV;
+                });
+				
+     
+				//Add Bearer token to headers
+                
+				/*
+				$.ajaxSetup({
+				     headers: {"X-CSRFToken": this.csrf } //DON"T NEED
+				    //headers: { 'X-CSRF-TOKEN': this.csrf }
+                    //headers: { 'Authorization': 'Bearer '  + this.$store.state.passport_api_tokenY }
+                }); */
+				
+
+			    
+				//Vue.http.headers.common['X-CSRF-TOKEN'] = this.csrf;
+				
+				$.ajax({
+		            url: 'api/checkIfCaptchaCorrectlySelected', 
+                    type: 'POST', //POST is to create a new user
+                    cache : false,
+                    dataType    : 'json',
+                    processData : false,
+                    contentType: false,
+                    //contentType:"application/json; charset=utf-8",						  
+                    //contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                    //contentType: 'multipart/form-data',
+			        //crossDomain: true,
+			        //headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + this.$store.state.api_tokenY},
+                    //headers: { 'Content-Type': 'application/json',  },
+			        //contentType: false,
+			        //dataType: 'json', //In Laravel causes crash!!!!!// without this it returned string(that can be alerted), now it returns object
+           
+			        //passing the data
+                    data: formData, //dataX//JSON.stringify(dataX)  ('#createNew').serialize()
+		   
+                    success: function(data) {
+                        alert("success");            
+                        alert("success" + JSON.stringify(data, null, 4));
+                
+                
+                
+                        if(data.error == true ){ //if Rest API endpoint returns any predefined validation error
+                            var errorText = data.data;
+                            swal("Check", errorText, "error");
+                    
+                            //if validation errors (i.e if REST Contoller returns json ['error': true, 'data': 'Good, but validation crashes', 'validateErrors': title['Validation err text'],  body['Validation err text']])
+                            /*
+						    if(data.validateErrors){
+                                var tempoArray = []; //temporary array
+                                for (var key in data.validateErrors) { //Object iterate
+                                    var t = data.validateErrors[key][0]; //gets validation err message, e.g validateErrors.title[0]
+                                    tempoArray.push(t);
+                                }
+                       
+                                that.errroList = tempoArray; //change state errroList //{this-that} fix
+                            } */
+                        
+                  
+                            //if load new is OK
+                        } else if(data.error == false){
+						    //alert(data.CaptchaCheck);
+                            
+							//if captcha is correct
+						    if(data.CaptchaCheck == true){ 
+							    swal("Good", "Solved Captcha Correctly", "success")
+								
+							//if captcha is wrong
+							} else if (data.CaptchaCheck == false){ 
+							    swal("Wrong", "Solved Captcha Wrong", "error");
+							}
+							
+                            //swal("Good", "Bearer Token is OK", "success");
+                            //swal("Good",  data.data, "success");
+                        
+                            //clear the form fields after successfull saving
+                            //that.clearInputFieldsAndFiles();
+                        
+                        }
+			            that.isCheckingCaptcha = false; //change button text            
+                    },  //end success
+            
+			        error: function (errorZ) {
+                        alert("Crashed"); 
+			            alert("error" +  JSON.stringify(errorZ, null, 4));
+                        console.log("type is => " + typeof(errorZ));
+                        //console.log(errorZ.responseText);
+                        //alert(errorZ.responseText);
+                        //alert("this " + errorZ.responseJSON.error);
+                        console.log(errorZ);
+                                  
+                
+                        that.isCheckingCaptcha = false; //change button text   
+			        }	  
+                });                             
+                //END AJAXed  part 
 			
 			
 			
             }, 
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
 		    /*
             |--------------------------------------------------------------------------
