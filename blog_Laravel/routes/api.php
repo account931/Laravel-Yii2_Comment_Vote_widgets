@@ -33,10 +33,17 @@ Route::get('/getCalendar', 'AppointmentRest@getCalendar');      // http://localh
 
 
 //Captcha_Vue_2022 Rest Api Endpoint
-Route::group(['middleware' => 'myCustomSessionsX', ], function () {
+//As Api routes does not use/see session (as 'middleware' => 'api' by default does not include '\Illuminate\Session\Middleware\StartSession::class' in /app/http/Kernel.php), you need to add it manually => 'middleware' => 'myCustomSessionsX'
+Route::group(['middleware' => ['myCustomSessionsX', /* 'myCustomCSRF' */ ], /* 'prefix' => 'post' */ ], function () {
     Route::get('/getCaptchaSet',                    'Captcha_Vue_2022\Rest_Api_Captcha_Vue_2022_Controller@getRandomCaptchaSet');   //Endpoint that returns randomly generated captcha set of 9 images //http://localhost/laravel+Yii2_comment_widget/blog_Laravel/public/api/getCaptchaSet
     Route::post('/checkIfCaptchaCorrectlySelected', 'Captcha_Vue_2022\Rest_Api_Captcha_Vue_2022_Controller@checkIfCaptchaCorrect'); //Endpoint that checks user's selected images against saved in session randomly generated captcha set of 9 images & returns if user has passed the captcha or not  //http://localhost/laravel+Yii2_comment_widget/blog_Laravel/public/api/checkIfCaptchaCorrectlySelected
 });
 
-//middleware' => ['web']
-//Route::group(['middleware' => 'auth', 'prefix' => 'post'], function () { //url must contain /post/, i.e /post/get_all
+
+
+
+
+
+
+
+

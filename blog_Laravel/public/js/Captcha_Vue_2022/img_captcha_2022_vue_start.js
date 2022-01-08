@@ -15118,7 +15118,7 @@ exports = module.exports = __webpack_require__(7)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n\r\n/* ---  Vue animation */\r\n\r\n/*--- Animation Var 1 */\n.fade-enter-active[data-v-bf8060aa], .fade-leave-active[data-v-bf8060aa] {\r\n  transition: opacity 6.5s;\n}\n.fade-enter[data-v-bf8060aa], .fade-leave-to[data-v-bf8060aa] /* .fade-leave-active до версии 2.1.8 */ {\r\n  opacity: 0;\n}\r\n\r\n/*--- Animation Var 2 */\n.bounce-enter-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 2.5s; /* fade in time */\n}\n.bounce-leave-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 1.5s reverse;\n}\n@keyframes bounce-in-data-v-bf8060aa {\n0%   { transform: scale(0);\n}\n50% { -webkit-transform : rotate(480deg) scale(0.3); /* Chrome, Opera 15+, Safari 3.1+ */  transform: rotate(490deg) scale(0.2); /* Firefox 16+, IE 10+, Opera */\n}     /* transform: scale(1.5); */\n100% { transform: scale(1);\n}\n}\r\n/* --- End  Vue animation */\r\n\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n\r\n/* ---  Vue animation */\r\n\r\n/*--- Animation Var 1 */\n.fade-enter-active[data-v-bf8060aa], .fade-leave-active[data-v-bf8060aa] {\r\n  transition: opacity 6.5s;\n}\n.fade-enter[data-v-bf8060aa], .fade-leave-to[data-v-bf8060aa] /* .fade-leave-active до версии 2.1.8 */ {\r\n  opacity: 0;\n}\r\n\r\n/*--- Animation Var 2 */\n.bounce-enter-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 2.5s; /* fade in time */\n}\n.bounce-leave-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 1.5s reverse;\n}\n@keyframes bounce-in-data-v-bf8060aa {\n0%   { transform: scale(0);\n}\n50% { -webkit-transform : rotate(480deg) scale(0.3); /* Chrome, Opera 15+, Safari 3.1+ */  transform: rotate(490deg) scale(0.2); /* Firefox 16+, IE 10+, Opera */\n}     /* transform: scale(1.5); */\n100% { transform: scale(1);\n}\n}\r\n/* --- End  Vue animation */\r\n\r\n", ""]);
 
 // exports
 
@@ -15192,7 +15192,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	name: 'Captcha',
 	data: function data() {
 		return {
-			csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'), //DON"T NEED
+			csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'), //csrf from global template /views/layouts/app.php. Not needed if csrf is not eneabled by default for route in  /routes/api.php. Needed if route uses middleware 'myCustomCSRF 
 			title: 'Captcha ',
 			isCaptchaClicked: false, //CSS flag
 			captchaValuesArr: [], // array to store all captcha images selected by the user (+ is sent to back-end for checking);
@@ -15241,7 +15241,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 		/*
            |--------------------------------------------------------------------------
-           | If user clicks/select any captcha image, set CSS and add this image to temp array
+           | If user clicks/select any captcha image, set CSS style 'clicked' and add this image to temp array (that will be sent to back-end for check)
            |--------------------------------------------------------------------------
            |
            |
@@ -15286,7 +15286,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 		/*
   |--------------------------------------------------------------------------
-  | If user clicks button to send his captcha images selected for check at back-end
+  | If user clicks button to send his selected captcha images for check at back-end
   |--------------------------------------------------------------------------
   |
   |
@@ -15312,7 +15312,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			//Use Formdata to bind inpts and images upload
 			var that = this; //Explanation => if you use this.data, it is incorrect, because when 'this' reference the vue-app, you could use this.data, but here (ajax success callback function), this does not reference to vue-app, instead 'this' reference to whatever who called this function(ajax call)
 			var formData = new FormData(); //new FormData(document.getElementById("myFormZZ"));
-			//formData.append('_token', this.csrf);
+			formData.append('_token', this.csrf); //duplicate of headers
 			//formData.append('userCaptcha', this.captchaValuesArr);
 
 
@@ -15322,14 +15322,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				//imagesUploaded.test = imageV;
 			});
 
-			//Add Bearer token to headers
-
-			/*
-   $.ajaxSetup({
-        headers: {"X-CSRFToken": this.csrf } //DON"T NEED
-       //headers: { 'X-CSRF-TOKEN': this.csrf }
-                   //headers: { 'Authorization': 'Bearer '  + this.$store.state.passport_api_tokenY }
-               }); */
+			//Add csrf token to headers. Not needed if csrf is not eneabled by default for route in  /routes/api.php. Needed if route uses middleware 'myCustomCSRF 
+			$.ajaxSetup({
+				headers: { "X-CSRF-TOKEN": this.csrf //DON"T NEED
+					//headers: { 'X-CSRF-TOKEN': this.csrf }
+					//headers: { 'Authorization': 'Bearer '  + this.$store.state.passport_api_tokenY }
+				} });
 
 			//Vue.http.headers.common['X-CSRF-TOKEN'] = this.csrf;
 
@@ -15349,16 +15347,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				//contentType: false,
 				//dataType: 'json', //In Laravel causes crash!!!!!// without this it returned string(that can be alerted), now it returns object
 
-				//passing the data
+				//passing the data with selected captcha images
 				data: formData, //dataX//JSON.stringify(dataX)  ('#createNew').serialize()
 
 				success: function success(data) {
 					alert("success");
 					alert("success" + JSON.stringify(data, null, 4));
 
+					//Check if Rest API endpoint returns any predefined  error
 					if (data.error == true) {
-						//if Rest API endpoint returns any predefined validation error
-						var errorText = data.data;
+						var errorText = data.data; //e.g "Error happened: Can not check captcha as Post data or Session is missing"
 						swal("Check", errorText, "error");
 
 						//if validation errors (i.e if REST Contoller returns json ['error': true, 'data': 'Good, but validation crashes', 'validateErrors': title['Validation err text'],  body['Validation err text']])
@@ -15372,17 +15370,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                                   that.errroList = tempoArray; //change state errroList //{this-that} fix
       } */
 
-						//if load new is OK
+						//if ajax send is OK, i.e if Rest API endpoint returns no predefined  error
 					} else if (data.error == false) {
 						//alert(data.CaptchaCheck);
 
 						//if captcha is correct
 						if (data.CaptchaCheck == true) {
-							swal("Good", "Solved Captcha Correctly", "success");
+							swal("Good", "You solved Captcha Correctly", "success");
 
 							//if captcha is wrong
 						} else if (data.CaptchaCheck == false) {
-							swal("Wrong", "Solved Captcha Wrong", "error");
+							swal("Wrong", "You was mistaken while solving captcha", "error");
 						}
 
 						//swal("Good", "Bearer Token is OK", "success");
@@ -15395,8 +15393,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				}, //end success
 
 				error: function error(errorZ) {
-					alert("Crashed");
-					alert("error" + JSON.stringify(errorZ, null, 4));
+					swal("Error happened", "Your checking crashed", "error");
+					//alert("Crashed"); 
+					//alert("error" +  JSON.stringify(errorZ, null, 4));
 					console.log("type is => " + (typeof errorZ === 'undefined' ? 'undefined' : _typeof(errorZ)));
 					//console.log(errorZ.responseText);
 					//alert(errorZ.responseText);
@@ -15526,19 +15525,10 @@ var render = function() {
                   )
                 }),
                 _vm._v(" "),
-                _c(
-                  "form",
-                  {
-                    staticStyle: { display: "none" },
-                    attrs: { id: "logout-form", action: "#", method: "POST" }
-                  },
-                  [
-                    _c("input", {
-                      attrs: { type: "hidden", name: "_token" },
-                      domProps: { value: _vm.csrf }
-                    })
-                  ]
-                ),
+                _c("form", {
+                  staticStyle: { display: "none" },
+                  attrs: { id: "logout-form", action: "#", method: "POST" }
+                }),
                 _vm._v(" "),
                 _c(
                   "button",

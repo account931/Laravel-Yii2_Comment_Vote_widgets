@@ -385,7 +385,10 @@
 	        </a>
             <!-- End VUE Image with LightBox -->
 			
-			
+		
+
+		
+		# Csrf => also see section  #Ajax CSRF 	in => ReadMe_Laravel_Com_Commands
 		# How to refer laravel csrf field inside a vue template => Variant 1 => 
 		     <input type="hidden" name="_token" :value="tokenXX" /> <!-- csfr token -->
 			 //...
@@ -414,7 +417,10 @@
 			3. In ajax => 
 			    data: {  _token: this.tokenXX, }//csrf token
 			
-			
+		
+
+
+		
 		# How to get route ID => e.g "wpBlogVueFrameWork#/details/2", gets 2. See example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/pages/details.vue
 	       var ID = this.$route.params.Pid; //gets 2  //{Pid} is set in 'pages/home' in => this.$router.ni({name:'details',params:{Pid:proId}})
 

@@ -106,8 +106,17 @@ class Rest_Api_Captcha_Vue_2022_Controller extends Controller
     public function checkIfCaptchaCorrect() 
     {
 		
+		//Additional check if No $_Post is sent or Session does not exist, then stop anything further
+		if( !isset($_POST['userCaptcha']) || session()->get('correctCaptchaSet') == null  ){  //!isset($_SESSION['correctCaptchaSet'])
+			return response()->json([
+		        'error'      => true,
+			    'data'       => 'Error happened: Can not check captcha as Post data or Session is missing',  
+    	    ]);	
+		}
+		
 		//dd(session()->get('correctCaptchaSet'));
 		//dd($_POST);
+		//Do the checking users captcha vs Session captcha here 
 		$request = $_POST;
 		$model  = new Img_Captcha_2022(); //model
 		$captchaCheckResult = $model->checkIfCaptchaCorrect($request);

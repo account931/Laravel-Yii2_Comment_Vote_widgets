@@ -41,9 +41,17 @@ class Kernel extends HttpKernel
             'bindings',
         ],
 		
+		//my custom middleware that enable Session, used in /routes/api.php in Captcha_Vue_2022 Rest Api Endpoint.
+		//As Api routes does not use/see session, (as 'middleware' => 'api' by default does not include '\Illuminate\Session\Middleware\StartSession::class' in /app/Http/Kernel.php), you need to add it manually in /routes/api.php => 'middleware' => 'myCustomSessionsX'
 		'myCustomSessionsX' => [
             \Illuminate\Session\Middleware\StartSession::class,
-        ]
+        ],
+		
+		//my custom middleware that enable CSRF check, used in /routes/api.php in Captcha_Vue_2022 Rest Api Endpoint. //DOES NOT WORK CORRECTLY, requeires csrf but issue a mistake even if csrf is passed in ajax
+		'myCustomCSRF' => [
+            \App\Http\Middleware\VerifyCsrfToken::class,
+        ],
+		
     ];
 
     /**

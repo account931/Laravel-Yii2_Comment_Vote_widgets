@@ -34,7 +34,7 @@
 		    </div>
 			
 			<form id="logout-form" action="#" method="POST" style="display: none;">
-                <input type="hidden" name="_token" :value="csrf">
+                <!-- <input type="hidden" name="_token" :value="csrf"> -->
             </form>
 			
 			<!-- Button to send ajax captcha check (at back-end)--> 
@@ -58,7 +58,7 @@
 		name:'Captcha',
 		data (){
 			return{
-			    csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),  //DON"T NEED
+			    csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),  //csrf from global template /views/layouts/app.php. Not needed if csrf is not eneabled by default for route in  /routes/api.php. Needed if route uses middleware 'myCustomCSRF 
 				title:'Captcha ',
 				isCaptchaClicked: false, //CSS flag
 				captchaValuesArr: [],   // array to store all captcha images selected by the user (+ is sent to back-end for checking);
@@ -110,7 +110,7 @@
             
 			/*
             |--------------------------------------------------------------------------
-            | If user clicks/select any captcha image, set CSS and add this image to temp array
+            | If user clicks/select any captcha image, set CSS style 'clicked' and add this image to temp array (that will be sent to back-end for check)
             |--------------------------------------------------------------------------
             |
             |
@@ -157,7 +157,7 @@
     		
             /*
             |--------------------------------------------------------------------------
-            | If user clicks button to send his captcha images selected for check at back-end
+            | If user clicks button to send his selected captcha images for check at back-end
             |--------------------------------------------------------------------------
             |
             |
@@ -183,7 +183,7 @@
                 //Use Formdata to bind inpts and images upload
                 var that = this; //Explanation => if you use this.data, it is incorrect, because when 'this' reference the vue-app, you could use this.data, but here (ajax success callback function), this does not reference to vue-app, instead 'this' reference to whatever who called this function(ajax call)
                 var formData = new FormData(); //new FormData(document.getElementById("myFormZZ"));
-                //formData.append('_token', this.csrf);
+                formData.append('_token', this.csrf); //duplicate of headers
 				//formData.append('userCaptcha', this.captchaValuesArr);
 				
 				
@@ -194,14 +194,12 @@
                 });
 				
      
-				//Add Bearer token to headers
-                
-				/*
+				//Add csrf token to headers. Not needed if csrf is not eneabled by default for route in  /routes/api.php. Needed if route uses middleware 'myCustomCSRF 
 				$.ajaxSetup({
-				     headers: {"X-CSRFToken": this.csrf } //DON"T NEED
+				     headers: {"X-CSRF-TOKEN": this.csrf } //DON"T NEED
 				    //headers: { 'X-CSRF-TOKEN': this.csrf }
                     //headers: { 'Authorization': 'Bearer '  + this.$store.state.passport_api_tokenY }
-                }); */
+                }); 
 				
 
 			    
@@ -223,7 +221,7 @@
 			        //contentType: false,
 			        //dataType: 'json', //In Laravel causes crash!!!!!// without this it returned string(that can be alerted), now it returns object
            
-			        //passing the data
+			        //passing the data with selected captcha images
                     data: formData, //dataX//JSON.stringify(dataX)  ('#createNew').serialize()
 		   
                     success: function(data) {
@@ -231,9 +229,9 @@
                         alert("success" + JSON.stringify(data, null, 4));
                 
                 
-                
-                        if(data.error == true ){ //if Rest API endpoint returns any predefined validation error
-                            var errorText = data.data;
+                        //Check if Rest API endpoint returns any predefined  error
+                        if(data.error == true ){ 
+                            var errorText = data.data; //e.g "Error happened: Can not check captcha as Post data or Session is missing"
                             swal("Check", errorText, "error");
                     
                             //if validation errors (i.e if REST Contoller returns json ['error': true, 'data': 'Good, but validation crashes', 'validateErrors': title['Validation err text'],  body['Validation err text']])
@@ -249,17 +247,17 @@
                             } */
                         
                   
-                            //if load new is OK
+                        //if ajax send is OK, i.e if Rest API endpoint returns no predefined  error
                         } else if(data.error == false){
 						    //alert(data.CaptchaCheck);
                             
 							//if captcha is correct
 						    if(data.CaptchaCheck == true){ 
-							    swal("Good", "Solved Captcha Correctly", "success")
+							    swal("Good", "You solved Captcha Correctly", "success")
 								
 							//if captcha is wrong
 							} else if (data.CaptchaCheck == false){ 
-							    swal("Wrong", "Solved Captcha Wrong", "error");
+							    swal("Wrong", "You was mistaken while solving captcha", "error");
 							}
 							
                             //swal("Good", "Bearer Token is OK", "success");
@@ -273,8 +271,9 @@
                     },  //end success
             
 			        error: function (errorZ) {
-                        alert("Crashed"); 
-			            alert("error" +  JSON.stringify(errorZ, null, 4));
+					    swal("Error happened", "Your checking crashed", "error");
+                        //alert("Crashed"); 
+			            //alert("error" +  JSON.stringify(errorZ, null, 4));
                         console.log("type is => " + typeof(errorZ));
                         //console.log(errorZ.responseText);
                         //alert(errorZ.responseText);

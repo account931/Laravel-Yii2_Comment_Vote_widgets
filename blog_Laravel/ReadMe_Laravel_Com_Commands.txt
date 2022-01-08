@@ -1215,7 +1215,8 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
    
    #Ajax CSRF => 
    #Variant_1: 
-       Form must have csrf_token =>  <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
+       Form must have csrf_token in form =>  <input type="hidden" value="{{csrf_token()}}" name="_token" /><!-- csrf-->
+	   
    #Variant_2:
        # Html must contain =>  <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- CSFR meta token --> 
        # In JS before ajax =>
@@ -1225,14 +1226,19 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 }
             });
-            
+     
+
+    ------------------------	
+    NB: by default CSRF check (i.e \App\Http\Middleware\VerifyCsrfToken::class) is used only for routes specified in /routes/web.php. I.e only used for middleware ['web'] as specified in /app/Http/Kernel.php
+	Not tested => If you want to use CSRF check for some routes in /routes/api.php, specify and use for this route your custom middleware that includes "\App\Http\Middleware\VerifyCsrfToken::class", see similar example with session at => If Api route does not see session
+	
     ------------------------
     #If you have issue with PUT method (update) => see example at => https://github.com/dimmm931/Laravel_Yajra_DataTables_AdminLTE/blob/main/resources/views/admin-lte/admin-lte.blade.php
     to solve this you have to send a POST request, with a POST param _method with value PUT. Or if use {formData}=> 
         var formData = new FormData(thatX)
         formData. append("_method", "PUT"); //fix for PUT method
 
-
+    ----------------------
      
    # REST DELETE => return value 
      204: The server has successfully fulfilled the request and that there is no additional content to send in the response payload body.
@@ -2617,9 +2623,26 @@ Pass var from controller to view =>  return view('home2', compact('user'));
 
 # To prevent users entering get url for post method, i.e if user enter /checkOut manually in browser (use in routes/web.php) =>
         Route::get('/checkOut', function () { throw new \App\Exceptions\myException('Bad request. Not POST request, You are not expected to enter this page.'); });  
+
+
   
 # Session set => use Illuminate\Support\Facades\Session; Session::put('backUrl', url()->previous());
 # Session get => session()->get('backUrl');	
+
+# If Api route does not see session => Laravel API does not have "session", you might be able to add it manually => 
+    1. go to =>  app/Http/Kernel.php and add your custom middleware 'myCustomSessionsX' (that uses Session enabling)
+	    protected $middlewareGroups = [
+	      'web' => [ /* ...... */],
+		  'api' => [ /* ...... */],
+		  'myCustomSessionsX' => [ \Illuminate\Session\Middleware\StartSession::class, ]
+		      
+    2. In routes/api.php use  custom middleware 'myCustomSessionsX' => 
+	    Route::group(['middleware' => ['myCustomSessionsX']], function () {
+            Route::resource(...);
+        });
+		
+		
+		
 
 # Get id of new last saved row/Get the Last Inserted Id => $m->save(); $id = $m->id;  see function saveFields_to_shopOrdersMain at example at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/ShopSimple/ShopOrdersMain.php
 # Get Last saved ID in model Example1 => saveNewProduct($data, $imageName)   => https://github.com/dimmm931/Laravel_Shop/blob/master/app/models/ShopSimple/ShopSimple.php
@@ -2713,17 +2736,7 @@ RewriteRule ^ public [L]
   # Run all queque. In my case job is done without it => php artisan queue:work
 
 
-# If Api route does not see session => Laravel API does not have "session", you might be able to add it manually => 
-    1. go to =>  app/Http/Kernel.php and add your custom middleware 'myCustomSessionsX' (that uses Session enabling)
-	    protected $middlewareGroups = [
-	      'web' => [ /* ...... */],
-		  'api' => [ /* ...... */],
-		  'myCustomSessionsX' => [ \Illuminate\Session\Middleware\StartSession::class, ]
-		      
-    2. In routes/api.php use  custom middleware 'myCustomSessionsX' => 
-	    Route::group(['middleware' => ['myCustomSessionsX']], function () {
-            Route::resource(...);
-        });
+
 
 
 #END of .Miscellaneous VA Laravel
