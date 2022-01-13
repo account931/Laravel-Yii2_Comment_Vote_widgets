@@ -105,7 +105,7 @@
 					    
 					    <form class="form-horizontal" method="post" action="{{url('captcha-check' )}}" enctype="multipart/form-data">
 						    
-							<input type="hidden" value="{{csrf_token()}}" name="_token" />  <!-- csrf-->
+							<!-- <input type="hidden" value="{{csrf_token()}}" name="_token" /> --> <!-- csrf-->
                             <input type="hidden"  name="hidden-captcha-array" id="captcha-array"/>          <!-- captcha JSON array, attached via JS, see /js/img_captcha_2022.js -->
 							
 							

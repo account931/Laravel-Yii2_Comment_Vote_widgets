@@ -3097,6 +3097,8 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 # fetch http example (with then promises)       => https://github.com/account931/Laravel_Vue_Blog_V6_Passport/blob/main/resources/assets/js/store/index.js
 # axios example and difference from fetch      => https://github.com/account931/Laravel_Vue_Blog_V6_Passport/blob/main/resources/assets/js/store/index.js
 
+#Promise example (scroll only if Div is in DOM) => new Promise(function(resolveX, rejectMe)  => https://github.com/account931/blankspace_vue_2022/blob/main/src/components/Blankspace/Blankspace.vue
+
 //with animation
 $("#game").stop().fadeOut(/*"slow"*/ 200 ,function(){  $(this).html(result)}).fadeIn(2000);
 

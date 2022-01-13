@@ -15118,7 +15118,7 @@ exports = module.exports = __webpack_require__(7)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n\r\n/* ---  Vue animation */\r\n\r\n/*--- Animation Var 1 */\n.fade-enter-active[data-v-bf8060aa], .fade-leave-active[data-v-bf8060aa] {\r\n  transition: opacity 6.5s;\n}\n.fade-enter[data-v-bf8060aa], .fade-leave-to[data-v-bf8060aa] /* .fade-leave-active до версии 2.1.8 */ {\r\n  opacity: 0;\n}\r\n\r\n/*--- Animation Var 2 */\n.bounce-enter-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 2.5s; /* fade in time */\n}\n.bounce-leave-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 1.5s reverse;\n}\n@keyframes bounce-in-data-v-bf8060aa {\n0%   { transform: scale(0);\n}\n50% { -webkit-transform : rotate(480deg) scale(0.3); /* Chrome, Opera 15+, Safari 3.1+ */  transform: rotate(490deg) scale(0.2); /* Firefox 16+, IE 10+, Opera */\n}     /* transform: scale(1.5); */\n100% { transform: scale(1);\n}\n}\r\n/* --- End  Vue animation */\r\n\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n\r\n/* ---  Vue animation */\r\n\r\n/*--- Animation Var 1 */\n.fade-enter-active[data-v-bf8060aa], .fade-leave-active[data-v-bf8060aa] {\r\n  transition: opacity 6.5s;\n}\n.fade-enter[data-v-bf8060aa], .fade-leave-to[data-v-bf8060aa] /* .fade-leave-active до версии 2.1.8 */ {\r\n  opacity: 0;\n}\r\n\r\n/*--- Animation Var 2 */\n.bounce-enter-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 2.5s; /* fade in time */\n}\n.bounce-leave-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 1.5s reverse;\n}\n@keyframes bounce-in-data-v-bf8060aa {\n0%   { transform: scale(0);\n}\n50% { -webkit-transform : rotate(480deg) scale(0.3); /* Chrome, Opera 15+, Safari 3.1+ */  transform: rotate(490deg) scale(0.2); /* Firefox 16+, IE 10+, Opera */\n}     /* transform: scale(1.5); */\n100% { transform: scale(1);\n}\n}\r\n/* --- End  Vue animation */\r\n\r\n", ""]);
 
 // exports
 
@@ -15130,6 +15130,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 //
@@ -15187,6 +15189,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	name: 'Captcha',
@@ -15292,7 +15295,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   |
   */
 		sendAjaxCaptchaCheck: function sendAjaxCaptchaCheck(e) {
-			//alert(this.csrf);
+			alert(this.csrf);
 			if (this.captchaValuesArr.length <= 0) {
 				swal("Nothing selected", "Select some images", "error");
 				return false;
@@ -15312,7 +15315,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			//Use Formdata to bind inpts and images upload
 			var that = this; //Explanation => if you use this.data, it is incorrect, because when 'this' reference the vue-app, you could use this.data, but here (ajax success callback function), this does not reference to vue-app, instead 'this' reference to whatever who called this function(ajax call)
 			var formData = new FormData(); //new FormData(document.getElementById("myFormZZ"));
-			formData.append('_token', this.csrf); //duplicate of headers
+			formData.append('_token', this.csrf); //duplicate of headers   //"_token": "{{ csrf_token() }}",
 			//formData.append('userCaptcha', this.captchaValuesArr);
 
 
@@ -15322,9 +15325,60 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				//imagesUploaded.test = imageV;
 			});
 
+			//Axios http varinat-------------------------------------------------------------
+			/*  
+   axios({
+                   method: 'post', //you can set what request you want to be
+                   url: 'api/checkIfCaptchaCorrectlySelected',
+                   data: formData, //{id: varID},
+                   headers: {
+                       //'Content-Type': 'application/json', 'Authorization': 'Bearer ' + state.passport_api_tokenY
+                   },
+               })
+               //.then(response => {
+                   //$('.loader-x').fadeOut(800);  //hide loader
+                   //return response.json(); //Fetch feature //In Axios responses are already served as javascript object, no need to parse, simply get response and access data.
+                   //alert(1);
+               //}) 
+               .then(dataZ => {
+                   //var dataZ = JSON.stringify(dataVV);
+                   console.log(dataZ);
+                   console.log("type is => " + typeof(dataZ));
+                })
+            .catch(function(err){ 
+                   $('.loader-x').fadeOut(800);  //hide loader
+                   console.log("Getting articles failed ( in store/index.js). Check if ure logged =>  " + err);
+                   swal("Crashed", "You are in catch", "error");
+                   alert("err " + err);
+               }); // catch any error
+   
+   return false; //!!!!!!!!!!!!!!!!!
+   */
+			//End Axios http variant  ----------------------- 
+
+
+			//Fetch http variant------------------------------------
+			/*
+         fetch('api/checkIfCaptchaCorrectlySelected', formData, { 
+                   method: 'POST',
+       
+          //headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+                  //contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+          data :   {'_token': document.head.querySelector('meta[name="csrf-token"]').content,},
+         })
+               .then((res) => { 
+             console.log(res);
+                });
+   
+         return false; //!!!!!!!!!!!!!!!!
+            */
+			//End Fetch http variant------------------------------------
+
+
+			//Ajax http Variant---------------------------------------------------
 			//Add csrf token to headers. Not needed if csrf is not eneabled by default for route in  /routes/api.php. Needed if route uses middleware 'myCustomCSRF 
 			$.ajaxSetup({
-				headers: { "X-CSRF-TOKEN": this.csrf //DON"T NEED
+				headers: { "X-CSRF-TOKEN": this.csrf, "X-Requested-With": "XMLHttpRequest" //headers: {"X-CSRF-TOKEN":  "{{ csrf_token() }}" }, //DON"T NEED if use pure api middleware
 					//headers: { 'X-CSRF-TOKEN': this.csrf }
 					//headers: { 'Authorization': 'Bearer '  + this.$store.state.passport_api_tokenY }
 				} });
@@ -15336,15 +15390,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				type: 'POST', //POST is to create a new user
 				cache: false,
 				dataType: 'json',
-				processData: false,
-				contentType: false,
+				processData: false, //must-have
+				//
 				//contentType:"application/json; charset=utf-8",						  
+				//contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+				//headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				contentType: false,
 				//contentType: 'application/x-www-form-urlencoded; charset=utf-8',
 				//contentType: 'multipart/form-data',
 				//crossDomain: true,
 				//headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + this.$store.state.api_tokenY},
 				//headers: { 'Content-Type': 'application/json',  },
-				//contentType: false,
 				//dataType: 'json', //In Laravel causes crash!!!!!// without this it returned string(that can be alerted), now it returns object
 
 				//passing the data with selected captcha images
@@ -15380,7 +15436,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 							//if captcha is wrong
 						} else if (data.CaptchaCheck == false) {
-							swal("Wrong", "You was mistaken while solving captcha", "error");
+							swal("Wrong", "You solved the captcha incorrectly", "error");
 						}
 
 						//swal("Good", "Bearer Token is OK", "success");

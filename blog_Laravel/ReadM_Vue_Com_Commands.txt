@@ -311,6 +311,20 @@
 		
 		-------------------------------------------------
 		26. Unsorted Vue (uplift to parent, pass to child, etc)
+		
+		# get form input =>
+		    <textarea v-model="userInput" class="form-control" rows="6" placeholder="Your text here.."  required></textarea>
+			<script>
+                export default {
+                    name: 'Blankspace',
+                    data () {
+                        return {
+                            msg           : 'Welcome to Blankspace App',
+			                userInput     : '', //textarea input
+		
+		
+		
+		
 		------------------------------------------------
 		# how to use data (equivalent of React state)=>
 		     <template> {{count}} </template>
@@ -521,11 +535,30 @@
 			-----------------------------------------
 			
 			
+			# CSS flag switch show/hidden => 
+			    html =>  
+				    <div v-on:click="showHighLightedErrors" class="cursor-x"> show highlighted errors >> </div> <!-- btn to switch  --> 
+				    <div v-if="this.showHighLightErrorsFlag"> {{ this.someData}} </div>                         <!-- some div to be shown/hidden --> 
+					
+				script => 	
+				    data () {
+                        return {
+					        showHighLightErrorsFlag: false,
+						} },
+					    
+				    methods: {
+			           //function to switch CSS to show/hide HighLighted Errors text
+		                showHighLightedErrors(){
+		                    this.showHighLightErrorsFlag = !this.showHighLightErrorsFlag; //switch state to change class.
+		                },
+			
+			------------------------------------------------------------
+			
 			
 			
 			# Vue animation (fade in out)=> https://ru.vuejs.org/v2/guide/transitions.html
 			
-			
+			# To display unescaped HTML =>  <div v-html="this.fixedUserInput"> </div> <!--  v-html to display unescaped HTML (with html tages). Instead of {{ this.fixedUserInput }} -->
 			
 			
 			

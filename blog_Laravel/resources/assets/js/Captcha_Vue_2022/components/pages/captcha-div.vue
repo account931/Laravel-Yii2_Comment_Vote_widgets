@@ -54,6 +54,7 @@
 
 
 <script>
+    import axios from 'axios';
 	export default{
 		name:'Captcha',
 		data (){
@@ -73,6 +74,7 @@
 		    checkCSS() {
 			   return this.isCaptchaClicked;
 			},
+			
 		},
 		
 		 //before mount
@@ -163,7 +165,7 @@
             |
             */
             sendAjaxCaptchaCheck(e){
-			    //alert(this.csrf);
+			    alert(this.csrf);
 			    if(this.captchaValuesArr.length <= 0){
 				    swal("Nothing selected", "Select some images", "error");
 					return false;
@@ -183,7 +185,7 @@
                 //Use Formdata to bind inpts and images upload
                 var that = this; //Explanation => if you use this.data, it is incorrect, because when 'this' reference the vue-app, you could use this.data, but here (ajax success callback function), this does not reference to vue-app, instead 'this' reference to whatever who called this function(ajax call)
                 var formData = new FormData(); //new FormData(document.getElementById("myFormZZ"));
-                formData.append('_token', this.csrf); //duplicate of headers
+                formData.append('_token', this.csrf); //duplicate of headers   //"_token": "{{ csrf_token() }}",
 				//formData.append('userCaptcha', this.captchaValuesArr);
 				
 				
@@ -194,9 +196,91 @@
                 });
 				
      
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	            //Axios http varinat-------------------------------------------------------------
+				/*  
+				axios({
+                    method: 'post', //you can set what request you want to be
+                    url: 'api/checkIfCaptchaCorrectlySelected',
+                    data: formData, //{id: varID},
+                    headers: {
+                        //'Content-Type': 'application/json', 'Authorization': 'Bearer ' + state.passport_api_tokenY
+                    },
+                })
+                //.then(response => {
+                    //$('.loader-x').fadeOut(800);  //hide loader
+                    //return response.json(); //Fetch feature //In Axios responses are already served as javascript object, no need to parse, simply get response and access data.
+                    //alert(1);
+                //}) 
+                .then(dataZ => {
+                    //var dataZ = JSON.stringify(dataVV);
+                    console.log(dataZ);
+                    console.log("type is => " + typeof(dataZ));
+
+                })
+	            .catch(function(err){ 
+                    $('.loader-x').fadeOut(800);  //hide loader
+                    console.log("Getting articles failed ( in store/index.js). Check if ure logged =>  " + err);
+                    swal("Crashed", "You are in catch", "error");
+                    alert("err " + err);
+                }); // catch any error
+				
+				return false; //!!!!!!!!!!!!!!!!!
+				*/
+                //End Axios http variant  ----------------------- 
+				  	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	            //Fetch http variant------------------------------------
+				/*
+		        fetch('api/checkIfCaptchaCorrectlySelected', formData, { 
+                    method: 'POST',
+		      
+			        //headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+                   //contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+			        data :   {'_token': document.head.querySelector('meta[name="csrf-token"]').content,},
+		        })
+                .then((res) => { 
+		            console.log(res);
+
+                });
+				
+		        return false; //!!!!!!!!!!!!!!!!
+	            */
+	            //End Fetch http variant------------------------------------
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	             //Ajax http Variant---------------------------------------------------
 				//Add csrf token to headers. Not needed if csrf is not eneabled by default for route in  /routes/api.php. Needed if route uses middleware 'myCustomCSRF 
 				$.ajaxSetup({
-				     headers: {"X-CSRF-TOKEN": this.csrf } //DON"T NEED
+				     headers: {"X-CSRF-TOKEN": this.csrf, "X-Requested-With": "XMLHttpRequest" } //headers: {"X-CSRF-TOKEN":  "{{ csrf_token() }}" }, //DON"T NEED if use pure api middleware
 				    //headers: { 'X-CSRF-TOKEN': this.csrf }
                     //headers: { 'Authorization': 'Bearer '  + this.$store.state.passport_api_tokenY }
                 }); 
@@ -210,15 +294,17 @@
                     type: 'POST', //POST is to create a new user
                     cache : false,
                     dataType    : 'json',
-                    processData : false,
-                    contentType: false,
-                    //contentType:"application/json; charset=utf-8",						  
+                    processData : false, //must-have
+                    //
+					//contentType:"application/json; charset=utf-8",						  
+                    //contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+					//headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+					contentType: false,
                     //contentType: 'application/x-www-form-urlencoded; charset=utf-8',
                     //contentType: 'multipart/form-data',
 			        //crossDomain: true,
 			        //headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer ' + this.$store.state.api_tokenY},
                     //headers: { 'Content-Type': 'application/json',  },
-			        //contentType: false,
 			        //dataType: 'json', //In Laravel causes crash!!!!!// without this it returned string(that can be alerted), now it returns object
            
 			        //passing the data with selected captcha images
@@ -257,7 +343,7 @@
 								
 							//if captcha is wrong
 							} else if (data.CaptchaCheck == false){ 
-							    swal("Wrong", "You was mistaken while solving captcha", "error");
+							    swal("Wrong", "You solved the captcha incorrectly", "error");
 							}
 							
                             //swal("Good", "Bearer Token is OK", "success");
