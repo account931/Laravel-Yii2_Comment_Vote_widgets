@@ -2790,6 +2790,16 @@ RewriteRule ^ public [L]
 }
 
 
+# Gif loader =>https://github.com/account931/Laravel_Vue_Blog_V6_Passport/blob/main/resources/views/wpBlog_Vue/index.blade.php
+
+
+#End 356.Miscellaneous VA HTML/CSS ----------------------------------------------------------------------------------
+
+
+
+
+
+
 
 
 //================================================================================================
@@ -2872,11 +2882,12 @@ $listOfLanguages = array(
         echo "Данные {$range} <br>";
     }
 	
-	
-	
----------------------- END PHP ----------
 
 # Recursive function to take path as arg and read all images from subfolders => function readSubfoldersDirs($path, $subfolderName = null) =>  https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/models/Captcha_2022/Img_Captcha_2022.php
+
+// End  357.Miscellaneous Php ***************************************************
+
+
 
 
 
@@ -2885,6 +2896,8 @@ $listOfLanguages = array(
 
 
 #Github Readme.md => Markdown is a lightweight markup language => See example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/readme_template_example.md
+# See Markdown Cheatsheet => https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code
+
 Create Anchor => 
     - [1. Go to My Acnchored Section 1](#1-real-cool-heading1)    ## 1. Real Cool Heading1
    Some my text
@@ -2957,7 +2970,7 @@ Create Anchor =>
 # git: 5 steps to change GitHub default branch from master to main => git branch -m master main  git push -u origin main   git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main    => https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
 
 	
-// End Git Section ***********************************************************************
+// End 357.1 Miscellaneous Untitled (Git, etc) ***********************************************************************
 	
 	
 	
@@ -3102,6 +3115,8 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 //with animation
 $("#game").stop().fadeOut(/*"slow"*/ 200 ,function(){  $(this).html(result)}).fadeIn(2000);
 
+
+# End 357.2 Miscellaneous JS  --------------------------------
 
 
 
@@ -3676,9 +3691,11 @@ are the central place of all Laravel application bootstrapping. Your own applica
 402.1 Used PHP Libraries(in other projects, not Laravel)
    1. SimpleXLSX Lib (read Excel files)
    2. SimpleXLSXGen (write Excel files)
-   3. Php fPDF library
+   3. Php fPDF library, PHPMailer, PhpQRCode, SimpleHTMLdom
 
-  Mapbox JS GL API, Mapbox Datasets, MapBox Direction Api 
+  402.2 Api: Mapbox JS GL API, Mapbox Datasets, MapBox Direction Api, Facebook, Google, Vk, GoogleMaps, MapBox, OpenWeather, Openexchangerates. TextBelt 
+  
+  402.3 JS Libraries: Crypto JS, Typo JS, Chart.js, filesaver.js, jspdf.min.js, QRCode.js, CryptoJS, xDomain 
   
   
   /*

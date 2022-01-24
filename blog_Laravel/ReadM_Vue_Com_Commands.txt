@@ -32,6 +32,8 @@
    
    
    ------------------------------
+   
+   
    25.1 Change css based on props =>
             <div class="panel-body" :class="cssState? ' text-danger' : ''"> <!-- change css based on props -->
 			<div class="col-sm-12 col-xs-12 alert alert-info" :class="this.cssStateFlag ? ' text-danger' : 'text-info' "   id="userNameHint"> <!-- change css based on data -->
@@ -39,9 +41,36 @@
         # Display data =>  <div v-if="status_msg" class="alert-danger alert" role="alert"> {{ status_msg }} </div>	
         # let that = this; //"that" has been assigned the value of "this" at the top to avoid context related issues. Used in .then or ajax callbacks (success/failure)
 		                   //Explaination => if you use this.data, it is incorrect, because when 'this' reference the vue-app, you could use this.data, but here (ajax success callback function), this does not reference to vue-app, instead 'this' reference to whatever who called this function(ajax call)
-
+    
+	    #<button v-on:click="sendAjaxCaptchaCheck" class="btn btn-success"> {{ isCheckingCaptcha ? "Checking..." : "Check me" }} </button>	<!-- chamge text on Flag -->
 		
 		
+		
+	
+    ----------------------------------------------------------------------------
+	
+		
+	    # CSS flag switch show/hidden => 
+			    html =>  
+				    <div v-on:click="showHighLightedErrors" class="cursor-x"> show highlighted errors >> </div> <!-- btn to switch  --> 
+				    <div v-if="this.showHighLightErrorsFlag"> {{ this.someData}} </div>                         <!-- some div to be shown/hidden --> 
+					
+				script => 	
+				    data () {
+                        return {
+					        showHighLightErrorsFlag: false,
+						} },
+					    
+				    methods: {
+			           //function to switch CSS to show/hide HighLighted Errors text
+		                showHighLightedErrors(){
+		                    this.showHighLightErrorsFlag = !this.showHighLightErrorsFlag; //switch state to change class.
+		                },
+			
+			------------------------------------------------------------
+			
+			
+	
   ------------------------------
    25.2 Vue ajax =>  
        Ajax in Vue can be used in different ways: can be used directly in component and set result to local data; or u can dispatch/trigger a Vuex Store method in local component, specify the logic/mutation in Vuex Store and use in local component as {this.$store.state.adm_posts_qunatity}
@@ -515,7 +544,7 @@
             # {{index * 3 + index2}} <!-- fu**ing iterator for 2 loops one in other, just tobreplace simple i++ -->
             
             #   //this.gameHits[item] = "x"; //add to main array //VUE ALERT: this approach is NOT reactive
-                this.gameHits.splice(item, 0, "x"); //to ensure reactivity should use this approach to change array
+                this.gameHits.splice(item, 0, "x"); //to ensure reactivity should use this approach to change array (item is a position to insert)
 
 
             #if in subcomponent in nested for loops u can't get passed from Parents props, then use computed to get them => 
@@ -534,25 +563,7 @@
                     },
 			-----------------------------------------
 			
-			
-			# CSS flag switch show/hidden => 
-			    html =>  
-				    <div v-on:click="showHighLightedErrors" class="cursor-x"> show highlighted errors >> </div> <!-- btn to switch  --> 
-				    <div v-if="this.showHighLightErrorsFlag"> {{ this.someData}} </div>                         <!-- some div to be shown/hidden --> 
-					
-				script => 	
-				    data () {
-                        return {
-					        showHighLightErrorsFlag: false,
-						} },
-					    
-				    methods: {
-			           //function to switch CSS to show/hide HighLighted Errors text
-		                showHighLightedErrors(){
-		                    this.showHighLightErrorsFlag = !this.showHighLightErrorsFlag; //switch state to change class.
-		                },
-			
-			------------------------------------------------------------
+		
 			
 			
 			

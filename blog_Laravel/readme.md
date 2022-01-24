@@ -1,7 +1,8 @@
 ## Miscellaneous Laravel application.
 
-- <p>Application utilizes miscellaneous aspects. See screenshots .</p>
+> Application utilizes miscellaneous aspects
 
+- <p>Application utilizes miscellaneous aspects. See screenshots .</p>
 
 ## Brief overview of the application
 

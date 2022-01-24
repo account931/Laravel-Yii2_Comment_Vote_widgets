@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 238);
+/******/ 	return __webpack_require__(__webpack_require__.s = 239);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -13871,20 +13871,20 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 238:
+/***/ 239:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(239);
+module.exports = __webpack_require__(240);
 
 
 /***/ }),
 
-/***/ 239:
+/***/ 240:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_index__ = __webpack_require__(240);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_index__ = __webpack_require__(241);
 //ENTRY POINT
 
 /**
@@ -13937,14 +13937,14 @@ var appQuant = new Vue({
 
 /***/ }),
 
-/***/ 240:
+/***/ 241:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -14138,13 +14138,6 @@ var debug = "development" !== 'production';
 
 /***/ }),
 
-/***/ 241:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(242);
-
-/***/ }),
-
 /***/ 242:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14152,7 +14145,7 @@ module.exports = __webpack_require__(242);
 
 
 var utils = __webpack_require__(5);
-var bind = __webpack_require__(82);
+var bind = __webpack_require__(83);
 var Axios = __webpack_require__(244);
 var defaults = __webpack_require__(61);
 
@@ -14187,9 +14180,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(86);
+axios.Cancel = __webpack_require__(87);
 axios.CancelToken = __webpack_require__(258);
-axios.isCancel = __webpack_require__(85);
+axios.isCancel = __webpack_require__(86);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -14353,7 +14346,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(84);
+var createError = __webpack_require__(85);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -14780,7 +14773,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(5);
 var transformData = __webpack_require__(255);
-var isCancel = __webpack_require__(85);
+var isCancel = __webpack_require__(86);
 var defaults = __webpack_require__(61);
 
 /**
@@ -14937,7 +14930,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(86);
+var Cancel = __webpack_require__(87);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -15118,7 +15111,7 @@ exports = module.exports = __webpack_require__(7)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n\r\n/* ---  Vue animation */\r\n\r\n/*--- Animation Var 1 */\n.fade-enter-active[data-v-bf8060aa], .fade-leave-active[data-v-bf8060aa] {\r\n  transition: opacity 6.5s;\n}\n.fade-enter[data-v-bf8060aa], .fade-leave-to[data-v-bf8060aa] /* .fade-leave-active до версии 2.1.8 */ {\r\n  opacity: 0;\n}\r\n\r\n/*--- Animation Var 2 */\n.bounce-enter-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 2.5s; /* fade in time */\n}\n.bounce-leave-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 1.5s reverse;\n}\n@keyframes bounce-in-data-v-bf8060aa {\n0%   { transform: scale(0);\n}\n50% { -webkit-transform : rotate(480deg) scale(0.3); /* Chrome, Opera 15+, Safari 3.1+ */  transform: rotate(490deg) scale(0.2); /* Firefox 16+, IE 10+, Opera */\n}     /* transform: scale(1.5); */\n100% { transform: scale(1);\n}\n}\r\n/* --- End  Vue animation */\r\n\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n\r\n/* ---  Vue animation */\r\n\r\n/*--- Animation Var 1 */\n.fade-enter-active[data-v-bf8060aa], .fade-leave-active[data-v-bf8060aa] {\r\n  transition: opacity 6.5s;\n}\n.fade-enter[data-v-bf8060aa], .fade-leave-to[data-v-bf8060aa] /* .fade-leave-active до версии 2.1.8 */ {\r\n  opacity: 0;\n}\r\n\r\n/*--- Animation Var 2 */\n.bounce-enter-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 2.5s; /* fade in time */\n}\n.bounce-leave-active[data-v-bf8060aa] {\r\n  animation: bounce-in-data-v-bf8060aa 1.5s reverse;\n}\n@keyframes bounce-in-data-v-bf8060aa {\n0%   { transform: scale(0);\n}\n50% { -webkit-transform : rotate(480deg) scale(0.3); /* Chrome, Opera 15+, Safari 3.1+ */  transform: rotate(490deg) scale(0.2); /* Firefox 16+, IE 10+, Opera */\n}     /* transform: scale(1.5); */\n100% { transform: scale(1);\n}\n}\r\n/* --- End  Vue animation */\r\n\r\n", ""]);
 
 // exports
 
@@ -15130,7 +15123,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -15215,15 +15208,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	//before mount
 	beforeMount: function beforeMount() {
-		this.$store.dispatch('getCaptchaSet'); //trigger ajax function getCaptchaSet(), which is executed in Vuex store to REST Endpoint => /public/post/get_all	
+		var that = this; //  this issue fix, 'this' reference the vue-app, you could use this.data, but here (ajax success callback function), this does not reference to vue-app, instead 'this' reference to whatever who called this function(ajax call)
+
+		//get the set of 9 random captcha images (is run in store)
+		this.$store.dispatch('getCaptchaSet') //trigger ajax function getCaptchaSet(), which is executed in Vuex store to REST Endpoint => /public/post/get_all	
+		.then(function () {
+			var myTimeout = setTimeout(function () {
+				that.scrollResults("#captchaSet");
+			}, 3000); //problem here, Promise does not work 100% correct,  without delay the "#captchaSet" is not seen in DOM
+		});
 	},
 	mounted: function mounted() {
 		//Scroll to results in Mobile only (use with delay or it won't see the DOM)
 		//if(screen.width <= 640){ 
-		var that = this;
-		var myTimeout = setTimeout(function () {
-			that.scrollResults("#captchaSet");
-		}, 3000);;
+		/*
+  var that = this;
+  const myTimeout = setTimeout(function(){ that.scrollResults("#captchaSet"); }, 3000);	
+  */
 		//}
 	},
 
@@ -15691,7 +15692,7 @@ module.exports = function listToStyles (parentId, list) {
 "use strict";
 
 
-var bind = __webpack_require__(82);
+var bind = __webpack_require__(83);
 var isBuffer = __webpack_require__(243);
 
 /*global toString:true*/
@@ -16019,10 +16020,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(83);
+    adapter = __webpack_require__(84);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(83);
+    adapter = __webpack_require__(84);
   }
   return adapter;
 }
@@ -16412,6 +16413,13 @@ function applyToTag (styleElement, obj) {
 /***/ 82:
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(242);
+
+/***/ }),
+
+/***/ 83:
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -16428,7 +16436,7 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ 83:
+/***/ 84:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16439,7 +16447,7 @@ var settle = __webpack_require__(246);
 var buildURL = __webpack_require__(248);
 var parseHeaders = __webpack_require__(249);
 var isURLSameOrigin = __webpack_require__(250);
-var createError = __webpack_require__(84);
+var createError = __webpack_require__(85);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(251);
 
 module.exports = function xhrAdapter(config) {
@@ -16616,7 +16624,7 @@ module.exports = function xhrAdapter(config) {
 
 /***/ }),
 
-/***/ 84:
+/***/ 85:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16642,7 +16650,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 /***/ }),
 
-/***/ 85:
+/***/ 86:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16655,7 +16663,7 @@ module.exports = function isCancel(value) {
 
 /***/ }),
 
-/***/ 86:
+/***/ 87:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

@@ -1,4 +1,4 @@
-<!-- Display captcha set -->
+<!-- Display captcha set, captcha set is loaded in beforeMount() -->
 
 <template>
 	<div class="blog">
@@ -79,15 +79,22 @@
 		
 		 //before mount
         beforeMount() {
-		    this.$store.dispatch('getCaptchaSet'); //trigger ajax function getCaptchaSet(), which is executed in Vuex store to REST Endpoint => /public/post/get_all	
+		    var that = this; //  this issue fix, 'this' reference the vue-app, you could use this.data, but here (ajax success callback function), this does not reference to vue-app, instead 'this' reference to whatever who called this function(ajax call)
 			
+		    //get the set of 9 random captcha images (is run in store)
+		    this.$store.dispatch('getCaptchaSet')   //trigger ajax function getCaptchaSet(), which is executed in Vuex store to REST Endpoint => /public/post/get_all	
+			    .then(()=> {
+                    const myTimeout = setTimeout(function(){ that.scrollResults("#captchaSet"); }, 3000);	//problem here, Promise does not work 100% correct,  without delay the "#captchaSet" is not seen in DOM
+                });
 		},
 		
 		mounted(){ 
 		    //Scroll to results in Mobile only (use with delay or it won't see the DOM)
 		    //if(screen.width <= 640){ 
+			    /*
 			    var that = this;
-			    const myTimeout = setTimeout(function(){ that.scrollResults("#captchaSet"); }, 3000);;	
+			    const myTimeout = setTimeout(function(){ that.scrollResults("#captchaSet"); }, 3000);	
+				*/
 		    //}
 		},
 		
