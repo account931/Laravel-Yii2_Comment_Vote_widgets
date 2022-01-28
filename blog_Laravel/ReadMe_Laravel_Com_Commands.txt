@@ -89,7 +89,7 @@ Table of Content:
 400.SOLID principles
 401.Design Patterns
 402.Used Laravel Packages
-
+403.DDD Domain Driven Design 
 
 //================================================
 1.How to install Laravel
@@ -1936,7 +1936,11 @@ Star a new project =>
     # npm install
     # npm run dev   => it will launch it on http://localhost:8080/. Watch will be done automatically. NB: OpenServer must run too ???? (CHECK)
     # npm run build => to build product to folder /build (for production). Goes to folder /dist, not /build!!!!
+	
+	
     NB: after {npm run build}, just like in React, u have to go /dist/index.html and replace all {/static} to {{static}}, otherwise it won't run
+    #If image does not load in production (i.e if u use Vue standalone and run /dist/index.html) => go /dist/static/js/app.0c92b9222d87befdbadb.js => find the image in code and repalce =>
+	     t.exports=s.p+"static/img/loader-black.bb533f7.gif"  to   t.exports="static/img/loader-black.bb533f7.gif"
 
 
 
@@ -2829,6 +2833,9 @@ RewriteRule ^ public [L]
                         assign value => return $cache['key'] ??= getSomeVal('key')
 # Nullable types => defines ?int as either int or null => function nullOrInt(?int $arg)
 
+# Fn arrow function (fn keyword  PHP < 7.4) => $my_function = fn($a) => $str . $a;  i.e  fn(arguments) => expression to be returned;
+
+
 # Array search examples
 $listOfLanguages = array(
 	"English" => array("langName" => "en", "langFlagImg" => "en-US.svg"),
@@ -3115,6 +3122,11 @@ Inet example => https://appdividend.com/2018/02/05/laravel-multiple-images-uploa
 //with animation
 $("#game").stop().fadeOut(/*"slow"*/ 200 ,function(){  $(this).html(result)}).fadeIn(2000);
 
+//Get selected of <select> <option> by pure JS => 
+    let selects      = document.getElementsByTagName('select');//gets all <select> array
+	let e            = selects[i];                         //gets the currect <select>
+    let textSelected = e.options[e.selectedIndex].text;   //get selected text of this currect <select>, e.g "awoke"
+    //let value      = e.options[e.selectedIndex].value;  //gets value
 
 # End 357.2 Miscellaneous JS  --------------------------------
 
@@ -3666,6 +3678,36 @@ class MyController extends Controller
 402.11 Service providers 
 are the central place of all Laravel application bootstrapping. Your own application, as well as all of Laravel's core services, are bootstrapped via service providers.
 
+
+
+----------------------------------
+403.DDD Domain Driven Design 
+DDD  Domain Driven Design  => Value Object ( three main characteristics: immutability, structural equality, and self-validation.)
+    final class Price {
+        const USD = 'USD';
+        const CAD = 'CAD';
+
+    /** @var float */
+    private $amount;
+
+    /** @var string */
+    private $currency;
+
+        public function __construct(float $amount, string $currency = 'USD'){
+            if ($amount < 0) {throw new \InvalidArgumentException("Amount should be a positive value: {$amount}.");}
+
+            if (!in_array($currency, $this->getAvailableCurrencies())) { throw new \InvalidArgumentException("Currency should be a valid one: {$currency}.");}
+
+            $this->amount = $amount;
+            $this->currency = $currency;
+        }
+
+        private function getAvailableCurrencies(): array{ return [self::USD, self::CAD];}
+
+        public function getAmount(): float    { return $this->amount;}
+
+        public function getCurrency(): string { return $this->currency; }
+}
 
 
 

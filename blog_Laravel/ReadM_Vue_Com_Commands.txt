@@ -552,7 +552,19 @@
 				
 				
 				
-		    ------------------------------------------
+		   ---------------------------------------
+			
+		    # Image in Vue =>
+			    <img :src="imageMineLoader" alt="a"/>  <!-- image path is speficied in data => imageMineLoader -->
+			
+			    <script>
+			    data () {
+                    return {
+					    imageMineLoader : require('@/assets/loader-black.gif'), //image for loader
+			
+			----------------------------------------
+			
+			
 			# Check in Vue if image url is invalid or broken or image physically not available in folder => use @error="imageUrlAlt" => see example at => \resources\assets\js\WpBlog_Vue\components\pages\blog_2021.vue
 			    <img v-if="post.get_images.length" class="card-img-top my-img" :src="`images/wpressImages/${post.get_images[0].wpImStock_name}`" @error="imageUrlAlt" />       <!-- @error - is a method to run if image url is invalid or broken or image physically not available in folder -->
 			
@@ -563,9 +575,10 @@
                     },
 			-----------------------------------------
 			
-		
+			# If image does not load in production (i.e if u use Vue standalone and run /dist/index.html after {npm run build}) => see 25.1.1.1 Vue standalone (without Laravel) in => ReadMe_Laravel_Com_Commands.txt
 			
 			
+			-----------------------------------------
 			
 			# Vue animation (fade in out)=> https://ru.vuejs.org/v2/guide/transitions.html
 			
