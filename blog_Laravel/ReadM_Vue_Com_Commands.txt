@@ -585,7 +585,14 @@
 			# To display unescaped HTML =>  <div v-html="this.fixedUserInput"> </div> <!--  v-html to display unescaped HTML (with html tages). Instead of {{ this.fixedUserInput }} -->
 			
 			
+			----------------------------------------------------
 			
+			# In Vue DOM rerefresh is done async (like state in React) => to achieve code synchronized do => 
+			    this.message = 'new value'; //change data
+                
+                this.$nextTick(function () {
+                    //do what u need synchronized
+                })
 			
 			
 			

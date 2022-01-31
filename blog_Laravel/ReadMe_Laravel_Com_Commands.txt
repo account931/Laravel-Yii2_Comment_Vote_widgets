@@ -2709,6 +2709,7 @@ Pass var from controller to view =>  return view('home2', compact('user'));
 
 
 # Slug URL via 'cviebrock/eloquent-sluggable' => https://cleverman.org/post/laravel-5-5-i-slug-chto-takoe-slagi-i-zachem-oni-nuzhny
+
 # Docker in 15 min => https://laravel.demiart.ru/dockerizing-laravel-in-15-minutes/
 
 # Change default home route => Route::get('/', ['uses'=>'BandController@index']);
