@@ -552,7 +552,14 @@
 				
 				
 				
-		   ---------------------------------------
+			--------------------------------------
+
+            vue Sweet alert 2 Toast	=> https://github.com/account931/CPH_miscellaneous_2021/blob/main/Tic_tac_Vue_Framework/src/components/TicTac/TicTacStart.vue		
+				
+				
+				
+				
+		    ---------------------------------------
 			
 		    # Image in Vue =>
 			    <img :src="imageMineLoader" alt="a"/>  <!-- image path is speficied in data => imageMineLoader -->
@@ -587,7 +594,7 @@
 			
 			----------------------------------------------------
 			
-			# In Vue DOM rerefresh is done async (like state in React) => to achieve code synchronized do => 
+			# In Vue DOM refreshes async (like state in React) => to achieve code synchronized do => 
 			    this.message = 'new value'; //change data
                 
                 this.$nextTick(function () {

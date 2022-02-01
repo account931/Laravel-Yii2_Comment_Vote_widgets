@@ -52,7 +52,7 @@
 
                 <div class="panel-body">
 				    
-					<p><a href="{{ route('handcaptcha') }}">
+					<p><a href="#">
                         <button class="btn btn-large btn-success">Send notification(N/A)</button>
                     </a></p>
                     

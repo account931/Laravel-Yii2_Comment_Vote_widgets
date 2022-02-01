@@ -3252,7 +3252,8 @@ $("#game").stop().fadeOut(/*"slow"*/ 200 ,function(){  $(this).html(result)}).fa
     Solution 1 => style="position:relative; z-index:9999999999;"
 	Solution 2 => on IOS, safari JS click fix => add empty {onClick}  => <span onClick="" id="someID"></span>   OR => cursor: pointer;
 
-# Laravel notify toasts are hidden by menu bar => wrap  @include('notify::messages') in <div style="position:relative;z-index:99999999999999999;"></div>	
+# Laravel notify toasts are hidden by menu bar => wrap  @include('notify::messages') in <div style="position:relative;z-index:99999999999999999;"></div> 
+     => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/CaptchaController.php	
 
 # Error => Out of memory (allocated 1570766848) (tried to allocate 4096 bytes) 
     => COMPOSER_MEMORY_LIMIT=-1 composer install
