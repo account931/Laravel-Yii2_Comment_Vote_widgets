@@ -94,12 +94,14 @@ Table of Content:
 //================================================
 1.How to install Laravel
 http://laravel.su/docs/5.4/installation
+NB: SEE INSTALL INSRUCTIONS for LARAVEL 6 LTS at =>  201. Laravel 6 LTS 
 
 1. If first time ever, install global installer=>  composer global require "laravel/installer"
 2. Navigate to necessary folder and =>    laravel new yourProjectName   Var2 => composer create-project laravel/laravel  Var3 => composer create-project --prefer-dist laravel/laravel blog "6.*"
 3. To add authentication (login/register) (or read manual => https://vegibit.com/how-to-create-user-registration-in-laravel/ )=>
        CLI=> php artisan make:auth
 
+ 
 Эту команду надо использовать на свежем приложении, она установит шаблоны для регистрации и входа, а также роуты для всех конечных точек аутентификации. Также будет сгенерирован HomeController, который обслуживает запросы к панели настроек вашего приложения после входа. Но вы можете изменить или даже удалить это контроллер, если это необходимо для вашего приложения.
 
 
@@ -147,7 +149,10 @@ USAGE
  
  #if change "composer.json" => use {composer update}
 
-
+ Update Composer to version 2.0.8 (stable channel).
+     c:\users\dima\desktop\server\ospanel\modules\php\PHP_7.2\composer self-update //???
+    composer self-update              => update composer to last version (i.e 2)
+    composer self-update --rollback   => to return to prev version 1.7.2
 
 //============================================	
 3. Blade
@@ -173,10 +178,16 @@ USAGE
 #Blade echo => {{ $user  }}	 
 
 #Blade Foreach =>
-           @foreach ($articles as $a)
-					    <p> Article {{ $loop->iteration }}  </p>  <!-- {{ $loop->iteration }} is Blade equivalentof $i++ -->
-                        <p>Title {{ $a->wpBlog_title }}</p>
+        @if ($articles->count())
+                          
+            @foreach ($articles as $a)
+			    <p> Article {{ $loop->iteration }}  </p>  <!-- {{ $loop->iteration }} is Blade equivalentof $i++ -->
+                <p>Title {{ $a->wpBlog_title }}</p>
             @endforeach
+		   
+		@else
+		    Not found	
+        @endif
 					
 					
 #Blade For Loop =>					
@@ -580,7 +591,18 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
    # Image Validation rules example (via Request Class) see at => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Requests/Polymorphic/PostPolymUpdateRequest.php
    # Upload image example (Controller) => see {function updateProduct (PostPolymUpdateRequest $request)}  => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Polymorphic_Controller/PolymorphicController.php
    # Upload form => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/views/polymorphic/edit-product.blade.php
-   
+
+ # Example 4 => Laravel images array validation =>
+    public function rules() {
+        return [       
+            'imagesSet'    => 'required|array',                                               //validation for array of images
+            'imagesSet.*'  => 'image|mimes:jpg,jpeg,gif,svg,png|max:255',  //validation for array of images
+
+    On client side use <input type="file" name="imagesSet[]"/>  or below is example for Vue)=>
+        $.each(this.imageList, function (key, imageV) {
+           formData.append(`imagesSet[${key}]`, imageV);
+    });
+ 
 ---------------------------------------
 #u can get image via request =>  $request->image (DONT USE $request->input('image') as IT WON"T WORK)
 # get file extension => $request->image->getClientOriginalExtension();
@@ -2032,10 +2054,7 @@ composer require laravel/browser-kit-testing --dev  =>  https://github.com/larav
 composer require --dev laravel/dusk v1.1    => only this is OK for Laravel 5.4 !!!!!!!!!!!!!!
 
 
-//update Composer
- c:\users\dima\desktop\server\ospanel\modules\php\PHP_7.2\composer self-update
-Updating to version 2.0.8 (stable channel).
-Use composer self-update --rollback to return to version 522ea033a3c6e72d72954f7cd019a3b75e28f391
+
 //================================================================================================
 
 
@@ -2266,12 +2285,14 @@ If use Laravel < 5.6 => composer require laravel/socialite "^3.2.0"
 
 # IMPLEMENTED IN {abz_Laravel_6_LTS}
 
-#Install =>  composer create-project --prefer-dist laravel/laravel blog "6.*"
-#Make Auth => 
+#Install =>  composer create-project --prefer-dist laravel/laravel NANE_HERE "6.*"
+#Make Auth (cd to folder /NANE_HERE) => 
       composer require laravel/ui "^1.0" --dev
-	  php artisan ui vue --auth    (if this requires, do in Win cmd => npm install  var2 => npm install && npm run dev )
+	  php artisan ui vue --auth    (if this requires in CLI as next step, do in Win cmd => npm install  var2(tested) => npm install && npm run dev )
 	  php artisan migrate
 
+	  
+	  
 
 # Yajra Datatables =>  https://www.positronx.io/laravel-datatables-example/
                    =>  https://datatables.yajrabox.com/starter
@@ -2764,7 +2785,7 @@ RewriteRule ^ public [L]
 										   
 # Line => <hr>
 
-#Panel Styling =>
+#Panel Styling (for Bootstrap v3, for v4 change ".panel" to ".card") =>
     <div class="panel panel-default">
         <div class="panel-heading">text</div>
 	    <div class="panel-heading">text</div>
@@ -2776,6 +2797,9 @@ RewriteRule ^ public [L]
     </div>
 
  # Bootstrap small red font-size =>  <span class='small font-italic text-danger'>
+ 
+ #Migrating from Bootstrap v3 to Bootstrap v4 => e.g change .panel-body to .card-body. =>
+     https://getbootstrap.com/docs/4.0/migration/
  
 /* ---------------------------------------- Mobile */
 @media screen and (max-width: 480px) { 
@@ -2842,14 +2866,17 @@ $listOfLanguages = array(
 	"English" => array("langName" => "en", "langFlagImg" => "en-US.svg"),
 	"Dansk"   => array("langName" => "dk", "langFlagImg" => "dk-DK.svg") );
 	
-# To find "English" in for{} loop ???
-   $key = array_search ($a, $listOfLanguages); //e.g returns "English"
+# To find "English" u can use  for{} loop
+   $a = "Dansk"; 
+   $keysArr = array_keys($listOfLanguages);   //fn array_keys() returns an array containing the keys, i.e array("English", "Dansk")
+   $key = array_search ($a, $keysArr); //e.g returns 1 //works for non-multidimensional arrays only
+	
    {array_search} returns the index of value, e.g => $array = array(0 => 'blue', 1 => 'red'); $key = array_search('red', $array);    // $key = 1;
    
 # To find "langFlagImg" value in array $listOfLanguages if you know that "langName" value is "dk" 
-  $found = array_search($lang, array_column($listOfLanguages, 'langName')); //returns 3
-  $keys = array_keys($listOfLanguages);
-  $imageX = $listOfLanguages[$keys[$found]]['langFlagImg'];
+  $found = array_search($lang, array_column($listOfLanguages, 'langName')); //returns 3  //fn array_column() returns array of 'langName', i.e array("en", "dk")
+  $keys = array_keys($listOfLanguages); //fn array_keys() returns an array containing the keys, i.e array("English", "Dansk")
+  $imageX = $listOfLanguages[$keys[$found]]['langFlagImg']; //gets for example "en-US.svg"
 
 # END  Array search (Move it to Yii)
 
@@ -2975,7 +3002,11 @@ Create Anchor =>
 	
 # git: check repo consistency => { git fsck } , if "error: refs/remotes/origin/master: Invalid sha1 pointer", do {git pull} and create new commit as usual (git add .  git commit)
 
-# git: 5 steps to change GitHub default branch from master to main => git branch -m master main  git push -u origin main   git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main    => https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
+# git: 5 steps to change GitHub default branch from master to main =>  https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
+    git branch -m master main                                          (creates a local branch called ‘main’ using the history from ‘master’.)
+	git push -u origin main                                            (push local ‘main’ to remote repo)  
+	git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main (Point local HEAD to ‘main’ branch) 
+    Change default branch to ‘main’ on GitHub site + Delete ‘master’ branch on the remote repo	
 
 	
 // End 357.1 Miscellaneous Untitled (Git, etc) ***********************************************************************

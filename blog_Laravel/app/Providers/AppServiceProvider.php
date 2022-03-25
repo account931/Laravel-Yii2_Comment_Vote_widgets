@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 //For Observe register
 use App\models\Elastic_search\Elastic_Posts;
 use App\Observers\Elastic\ElasticSearchObserver;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //register my Observer
 		//Elastic_Posts::observe(ElasticSearchObserver::class); // here
+		Schema::defaultStringLength(191);
     }
 
 

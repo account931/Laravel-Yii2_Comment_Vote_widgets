@@ -601,5 +601,17 @@
                     //do what u need synchronized
                 })
 			
-			
-			
+			-------------------------------------------------
+			#If u want to address Vuex Store value as {posts} instead of {this.$store.state.posts} =>
+            <script>
+               import { mapState } from 'vuex';
+              //data() { return {  //posts: [],     }; },  //not needed posts in data
+              computed: {
+                 ...mapState(['posts']), //the same name as in Vuex store
+              },
+
+             And can address it  => {{ this.posts }}
+			 
+			 
+			 
+			 
