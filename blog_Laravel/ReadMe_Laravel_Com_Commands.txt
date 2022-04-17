@@ -1776,6 +1776,28 @@ Just use them where needed =>
 # Example Check role in Controller => $user->hasRole(['AdminX', 'moderator']);
 # Blade role check in views => @role('writer') I am a writer!  @else  I am not a writer... @endrole
 
+------
+
+NB: Spatie API ERROR_FIX => There is no permission named `edit_project` for guard `api`
+If encounter error when working with API (& Passport) "spatie/laravel-permission There is no permission named `edit_project` for guard `api` =>
+   1.create manually(via phpMyAdmin) special api permission in table {permissions} with "guard_name" = api
+   1.1.assign manually created permission ID to user ID in table {model_has_permissions}
+   Or may alternatively create in seeder=>
+       // Create a manager role for users authenticating with the api guard:
+       $role = Role::create(['guard_name' => 'api', 'name' => 'manager']);
+       // Define a `edit_project` permission for the admin users belonging to the api guard
+       $permission = Permission::create(['guard_name' => 'api', 'name' => 'edit_project']);
+   
+   2. in config/auth.php cahnge the guardrs order, so "api" goes first =>
+     'guards' => [
+        'api' => ['driver' => 'passport', 'provider' => 'users',],
+        'web' => ['driver' => 'session',  'provider' => 'users',],
+      ]
+   3.php artisan cache:clear
+
+
+
+
 
 
 //================================================================================================
