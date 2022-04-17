@@ -88,8 +88,10 @@ Table of Content:
 358.Known Errors
 400.SOLID principles
 401.Design Patterns
-402.Used Laravel Packages
+
 403.DDD Domain Driven Design 
+404.Used Laravel Packages
+
 
 //================================================
 1.How to install Laravel
@@ -614,6 +616,10 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 
 
 # U can as well upload an image using Intervention Library methods (not only upload, but resize, watermark, etc), see => 205. Laravel Intervention => (IMPLEMENTED IN {abz_Laravel_6_LTS})
+
+
+------------
+# Image upload and validation Example_2022 => https://github.com/account931/Laravel_Gii_Crud_2022
 
 
 
@@ -1160,6 +1166,10 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
     12.4 Read example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
 	                     public function products(){}
 
+						 
+------------------------------------						 
+						 
+	#CRUD example_2022 => https://github.com/account931/Laravel_Gii_Crud_2022
 //================================================================================================
 
 
@@ -1409,9 +1419,10 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 #NB: more detailed Passport info is at README.md & Readme_This_Project_itself.txt => at =>  https://github.com/account931/Laravel_Vue_Blog_V6_Passport
 
 #Passport 
+  composer require laravel/passport
   composer require laravel/passport "4.0.3" for L 5.4
   
-  and proceed with complete set-up specified in documentation(migrate, passport:install, add {HasApiTokens} trait to model {User}, 
+  and proceed with complete set-up specified in documentation(migrate, passport:install, add {HasApiTokens} trait to model {User}, add to config/auth => 'api' => ['driver' => 'passport', // set this to passport 'provider' => 'users', 'hash' => false, ],
   in {app/Providers/AuthServiceProvider} add use Laravel\Passport\Passport; public function boot(){ $this->registerPolicies(); Passport::routes();}, in {/config/auth.php} => 'guards' => [ 'api' => [ 'driver'   => 'passport' ]], etc)
     #Set-up manual => https://www.twilio.com/blog/build-secure-api-php-laravel-passport
     #Manual        => https://tutsforweb.com/laravel-passport-create-rest-api-with-authentication
@@ -1730,8 +1741,20 @@ Requires composer installing package Zizaco/Entrust
 17.1 RBAC on Spatie Laravel Permission. Works on Laravel < 5.8. 
 Substitution for Zizaco/entrust that does not work on Lavaravel > 6
     https://spatie.be/docs/laravel-permission/v4/introduction
-    Install => composer require spatie/laravel-permission
+	
+	Steps:
+    #Install => composer require spatie/laravel-permission
+	
+	# Add to model/User => 
+	     use Spatie\Permission\Traits\HasRoles; //Spatie Laravel RBAC Permission
+		 class User extends Authenticatable {
+	         use HasRoles; //Spatie Laravel RBAC Permission
+			 
+    # Publish migration => php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+	#Clear config cache = > php artisan optimize:clear
+	# Run migartion     => php artisan migrate
     
+	
 # it is strongly recommended to always use permission directives, instead of role directives.
 
 # Unlike Entrust Rbac, Spatie Rbac has buil-in models {Permission, Role}, so u don't need to create them manually.
@@ -2286,8 +2309,8 @@ If use Laravel < 5.6 => composer require laravel/socialite "^3.2.0"
 # IMPLEMENTED IN {abz_Laravel_6_LTS}
 
 #Install =>  composer create-project --prefer-dist laravel/laravel NANE_HERE "6.*"
-#Make Auth (cd to folder /NANE_HERE) => 
-      composer require laravel/ui "^1.0" --dev
+#Make Auth (cd to folder /NANE_HERE) =>  
+      composer require laravel/ui "^1.0" --dev    OR  composer require laravel/ui
 	  php artisan ui vue --auth    (if this requires in CLI as next step, do in Win cmd => npm install  var2(tested) => npm install && npm run dev )
 	  php artisan migrate
 
@@ -3304,7 +3327,11 @@ $("#game").stop().fadeOut(/*"slow"*/ 200 ,function(){  $(this).html(result)}).fa
 # ErrorException file_put_contents failed to open stream: No such file or directory =>  php artisan cache:clear    php artisan config:cache
 
 # On login error "TokenMismatchException" => /config/session.php set that info 'expire_on_close' => false +  App\Providers\AppServiceProvider contained binding to non-existing repositort
+
+#  <input type="file" name="filename2[]" class="form-control my-img-input-x" id="imgPrimary" /> on upload error and double validations error display => just forgot to add to <form> enctype="multipart/form-data"
+
 =============================
+
 
 если токен не принимается обработчиком, то варианта существует по сути два – либо он не отправляется в запросе (отсутствует csrf_field() в форме, или нет нужного значения в аякс-запросе – там он может передаваться как в данных так и в заголовках запроса), либо на стороне сервера не загружается сессия – именно в ней сохраняется токен на стороне сервера, чтобы было с чем сравнить то что пришло в запросе.
 
@@ -3744,9 +3771,17 @@ DDD  Domain Driven Design  => Value Object ( three main characteristics: immutab
 
 
 
+//===============================================================================================
+Programming types
+# OOP vs Procedural programming ()
+# Functional programming(pure (чистые) functions, higher-order-function (accepts other functions as args or can return functions))
+# Imperative programming(loop) vs Declarative (no loops, i.e $b = array_map('strtoupper', $names))
+
+
+
 
 //================================================================================================
-402.Used Laravel Packages
+404.Used Laravel Packages
  1. Laravel Notify           => https://github.com/mckenziearts/laravel-notify
  2. Mews\Captcha             => https://github.com/mewebstudio/captcha     
  3. Zizaco/Entrust
@@ -3763,14 +3798,14 @@ DDD  Domain Driven Design  => Value Object ( three main characteristics: immutab
  
  #Pending: anhskohbo/no-captcha Package, Passport, Avored, Aimeos, appzcoder/crud-generator, Zofe_Rapyd
 
-402.1 Used PHP Libraries(in other projects, not Laravel)
+404.1 Used PHP Libraries(in other projects, not Laravel)
    1. SimpleXLSX Lib (read Excel files)
    2. SimpleXLSXGen (write Excel files)
    3. Php fPDF library, PHPMailer, PhpQRCode, SimpleHTMLdom
 
-  402.2 Api: Mapbox JS GL API, Mapbox Datasets, MapBox Direction Api, Facebook, Google, Vk, GoogleMaps, MapBox, OpenWeather, Openexchangerates. TextBelt 
+  404.2 Api: Mapbox JS GL API, Mapbox Datasets, MapBox Direction Api, Facebook, Google, Vk, GoogleMaps, MapBox, OpenWeather, Openexchangerates. TextBelt 
   
-  402.3 JS Libraries: Crypto JS, Typo JS, Chart.js, filesaver.js, jspdf.min.js, QRCode.js, CryptoJS, xDomain 
+  404.3 JS Libraries: Crypto JS, Typo JS, Chart.js, filesaver.js, jspdf.min.js, QRCode.js, CryptoJS, xDomain 
   
   
   /*

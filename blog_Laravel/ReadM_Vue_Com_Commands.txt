@@ -125,7 +125,7 @@
     --------------------------------
     
     25.4.4 Iterate loop over  Vuex store, adding a "col-sm-12 col-xs-12"  after every 2nd "col-sm-6 col-xs-6" 
-    
+          + dynamically assign value in loop
     <div class="row">
         
             <!-- Original -->
@@ -331,10 +331,22 @@
 		25.9.1 Vue Router
 		npm install vue-router --save
 		
+		#If problems after install, consider the version conflict, i.e "vue": "^2.5.17", while "vue-router": "^4" (too new), => see example =>https://github.com/account931/Laravel_Vue_Blog_V6_Passport/blob/main/package.json
+		   "devDependencies": {
+               "vue": "^2.5.17",
+           },
+           "dependencies": {
+               "element-ui": "^2.15.1",
+               "vue-router": "^3.5.1",
+		
+		
+		
 		# Router example => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/router/index.js
 	    # Component with Menu Vue-Router is inited here   => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/wpblog-vue-start.js
 		# Component with Menu Vue-Router Links and with view area <router-view/> => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/VueRouterMenu.vue
 		# Vue-Router Menu's pages are in => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/tree/master/blog_Laravel/resources/assets/js/WpBlog_Vue/components/pages
+		
+		#More route examples at => https://github.com/account931/Laravel_Vue_Blog_V6_Passport
 		
 		
 		
@@ -614,4 +626,11 @@
 			 
 			 
 			 
+			 
+			---------------------------------
+            # import JQuery
+			</template>
+            </template>
+            <script>
+                import $ from "jquery";			
 			 
