@@ -79,6 +79,7 @@ Table of Content:
 205. Laravel Intervention => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 206. Laravel Voyager      => (IMPLEMENTED IN {abz_Laravel_6_LTS})
 207. Laravel Gii Crud Generators 
+208. Laravel Horizon
 
 355.Miscellaneous VA Laravel
 356.Miscellaneous VA HTML/CSS
@@ -526,7 +527,9 @@ See example with Range in message => https://github.com/account931/Laravel-Yii2_
 	See example_2 Controller => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/Polymorphic_Controller/PolymorphicController.php
 	See example_2 Request    => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Requests/Polymorphic/PostPolymUpdateRequest.php
 	
-    In Request => protected function failedValidation(Validator $validator){$this->validator = $validator;}
+    In Request => 
+	     public $validator = null;   
+	     protected function failedValidation(Validator $validator){$this->validator = $validator;}
     In Controller =>
         public function createPost(SaveNewArticleRequest $request) {
             if (isset($request->validator) && $request->validator->fails()) {
@@ -2330,13 +2333,16 @@ If use Laravel < 5.6 => composer require laravel/socialite "^3.2.0"
 
 # IMPLEMENTED IN {abz_Laravel_6_LTS}
 
+Install Laravel 6 LTS 
 #Install =>  composer create-project --prefer-dist laravel/laravel NANE_HERE "6.*"
 #Make Auth (cd to folder /NANE_HERE) =>  
       composer require laravel/ui "^1.0" --dev    OR  composer require laravel/ui
 	  php artisan ui vue --auth    (if this requires in CLI as next step, do in Win cmd => npm install  var2(tested) => npm install && npm run dev )
 	  php artisan migrate
 
-	  
+#If after install css crashes (not found app.css & app.js) -> npm intall -> npm run production
+
+===========================	  
 	  
 
 # Yajra Datatables =>  https://www.positronx.io/laravel-datatables-example/
@@ -2552,6 +2558,21 @@ On cliking submit sends $_Post ajax to
 
 #Hand-made Gii example, see => https://github.com/account931/Laravel-Yii2_Comment_Vote_widgets/blob/master/blog_Laravel/app/Http/Controllers/ShopPayPalSimple_AdminPanel.php
  or see => CRUD section
+
+ 
+ 
+ 
+===================================
+
+208. Laravel Horizon
+    #Install:
+        composer require laravel/horizon    
+        php artisan horizon:install
+	
+	# If "composer require laravel/horizon" fails use composer require laravel/horizon:4.3.5 --ignore-platform-reqs
+	
+	# composer require predis/predis     OR if fails  =>  composer require predis/predis --ignore-platform-reqs
+	#Url => /horizon
 
 
 
@@ -2830,7 +2851,7 @@ RewriteRule ^ public [L]
 										   
 # Line => <hr>
 
-#Panel Styling (for Bootstrap v3, for v4 change ".panel" to ".card") =>
+#Panel Styling (example for Bootstrap v3; for v4 change ".panel" to ".card") =>  for Migrating from BStrap v3 to v4 see example => https://github.com/account931/Laravel_Gii_Crud_2022/blob/main/resources/views/crud_simple/index.blade.php
     <div class="panel panel-default">
         <div class="panel-heading">text</div>
 	    <div class="panel-heading">text</div>
