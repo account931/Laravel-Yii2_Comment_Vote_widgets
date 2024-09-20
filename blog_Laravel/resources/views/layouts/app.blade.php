@@ -126,6 +126,7 @@
                             <li class="{{ Request::is('where_having*') ? 'active' : '' }}">      <a href="{{ route('where_having') }}">       SQL Where vs Having      </a></li>
 							<li class="{{ Request::is('img-captcha_2022*') ? 'active' : '' }}">  <a href="{{ route('img-captcha_2022') }}">   Image Capcha_2022        </a></li> <!-- Self made image captcha -->
                             <li class="{{ Request::is('img-captcha_22_vue*') ? 'active' : '' }}"><a href="{{ route('img-captcha_22_vue') }}"> Image Capcha_2022 on Vue </a></li> <!-- Self made image captcha on Vue Framework-->
+                            <li class="{{ Request::is('testing-2024*') ? 'active' : '' }}"><a href="{{ route('testing-2024') }}"> Some testing 2024 </a></li> <!-- some testing in 2024-->
 
 						</ul>
                     </li>

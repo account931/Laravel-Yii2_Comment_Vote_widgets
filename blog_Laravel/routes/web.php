@@ -220,9 +220,8 @@ Route::get('/img-captcha_22_vue', 'Captcha_Vue_2022\Img_Captcha_Vue_2022_Control
     // '/api/checkIfCaptchaCorrectlySelected')
 //Route::post('/checkIfCaptchaCorrectlySelected', 'Captcha_Vue_2022\Rest_Api_Captcha_Vue_2022_Controller@checkIfCaptchaCorrect'); //Endpoint that checks user's selected images against saved in session randomly generated captcha set of 9 images & returns if user has passed the captcha or not  //http://localhost/laravel+Yii2_comment_widget/blog_Laravel/public/api/checkIfCaptchaCorrectlySelected
 
-
-
-
+//My testing-2024
+Route::get('/testing-2024', 'My_testing_2024\My_Test_Controller@index')->name('testing-2024');   //page with testing-2024
 
 
 
