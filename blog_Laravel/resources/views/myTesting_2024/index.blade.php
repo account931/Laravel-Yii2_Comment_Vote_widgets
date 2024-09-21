@@ -42,7 +42,7 @@
 
                     <div class="panel-body">
 					
-					Example: NB: <b>%</b> is <b>Modulus</b> not <b>devision</b>, it returns the Remainder of $x divided by $y, i.e  (5%2 = 1, 8%2=0, 1%2=0, 3%2=1)</br>
+					Example: NB: <b>%</b> is <b>Modulus</b> not <b>devision</b>, it returns the Remainder of $x divided by $y, i.e  (5%2 = 1, 8%2=0, 1%2=0, 3%2=1, 1%2=1)</br>
 					<code></br>
 					$a = '1112031584'; </br>
 		            $s = ''; </br>
